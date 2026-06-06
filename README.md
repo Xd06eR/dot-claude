@@ -83,6 +83,15 @@ git pull
 
 Then rerun `./setup` or `bash setup` to pick up any new skills and refresh copies.
 
+If using gstack as a submodule (already configured), update with:
+
+```bash
+cd ~/.claude/skills/gstack && git pull
+cd ~/.claude
+git add skills/gstack
+git commit -m "chore: update gstack submodule"
+```
+
 ### 3. Restore plugins
 
 Plugin artifacts are excluded. Register marketplaces and install plugins manually.
