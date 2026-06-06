@@ -1,0 +1,25 @@
+# Allowlist: ignore all root-level files and directories except what we track
+*
+
+# Repo files
+!.gitattributes
+!.gitignore
+!README.md
+
+# Claude Code instructions and config
+!CLAUDE.md
+!GSTACK.md
+!RTK.md
+!settings.json
+!*.bak
+
+# Claude Code extensions (agents, hooks, rules, skills)
+!agents/
+!agents/**
+!hooks/
+!hooks/**
+!rules/
+!rules/**
+!skills/
+!skills/**
+skills/gstack/              # gstack plugin — managed separately, not our config
