@@ -37,7 +37,8 @@ Organized by phase.
 - **Plan** — Numbered checklist: what each step produces, how it's verified.
 - **Goal** — Transform tasks into verifiable goals. Strong criteria = loop independently; weak criteria ('make it work') = constant clarification. "Fix bug" → "Write reproducing test, then pass."
 - **Verify** — Every output checkable against criteria set in advance. Can't verify → can't ship.
-- **Gravity** — Every output will be reviewed by another model. Write accordingly.
+- **Gravity** — Every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
+- **Fidelity** — For documents, reports, and summaries: preserve all details. Prefer complete-but-segmented over terse-but-lossy.
 
 ### Build
 - **Simplify** — Minimum code. No speculative features, no single-use abstractions. If 200 lines could be 50, rewrite.
