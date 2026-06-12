@@ -14,7 +14,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `agents/` | Agent definitions |
 | `hooks/` | Lifecycle hooks |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules (all subdirectories except `gstack/`) |
+| `skills/` | Skill modules (our curated skills; gstack-managed skills excluded — see below) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -23,23 +23,24 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 
 ## Excluded Data
 
-All other paths are excluded by the allowlist pattern. Excluded data falls into three categories:
+All other paths are excluded by the allowlist pattern. Excluded data falls into four categories:
 
 1. **Runtime artifacts** — logs, caches, session transcripts, file history, environment snapshots, telemetry, etc.
 2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
 3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
+4. **Gstack skill catalog** — `skills/gstack/` clone and its copied/symlinked skill directories. Gstack is an external repo managed independently; its skills are installed locally by running `./setup` inside the gstack clone and excluded from tracking to avoid duplicating content owned by that repo.
 
-## Restoration
+## Quick Reference
 
-### 1. Clone into `~/.claude`
+### Initialize the repo
 
-**Fresh machine** (`~/.claude` does not exist):
+Fresh machine (`~/.claude` does not exist):
 
 ```bash
 git clone https://github.com/Xd06eR/dot-claude.git ~/.claude
 ```
 
-**Existing `.claude`** (has runtime data, caches, etc.):
+Existing `.claude` (has runtime data, caches, etc.):
 
 ```bash
 cd ~/.claude
@@ -48,23 +49,25 @@ git remote add origin https://github.com/Xd06eR/dot-claude.git
 git pull origin main
 ```
 
-Because the repo only tracks configuration files, `git pull` will only touch those files. All logs, caches, and session data remain untouched.
+Only configuration files are tracked — logs, caches, and session data remain untouched.
 
 `settings.json` configures a `PreToolUse` hook that requires RTK (`rtk`) to be installed and available on `PATH`. See `RTK.md` for install instructions.
 
-### 2. Restore the gstack skill catalog
+### Update the repo
 
-`skills/gstack/` is excluded. Clone and run the setup script:
+```bash
+cd ~/.claude && git pull
+```
+
+### Get gstack (first time)
+
+`skills/gstack/` is excluded from tracking. Clone and run setup:
 
 ```bash
 cd ~/.claude/skills
 git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git
 cd gstack
-```
 
-Run the setup script for your platform:
-
-```bash
 # macOS / Linux
 ./setup
 
@@ -74,25 +77,21 @@ bash setup
 
 Requires **bun** (`>=1.0`). The setup script copies (Windows) or symlinks (macOS/Linux) gstack skill modules into `~/.claude/skills/`.
 
-To update the catalog later:
+### Update gstack
 
 ```bash
 cd ~/.claude/skills/gstack
 git pull
+
+# Rerun setup to refresh copies/symlinks
+# macOS / Linux
+./setup
+
+# Windows (Git Bash / WSL)
+bash setup
 ```
 
-Then rerun `./setup` or `bash setup` to pick up any new skills and refresh copies.
-
-If using gstack as a submodule (already configured), update with:
-
-```bash
-cd ~/.claude/skills/gstack && git pull
-cd ~/.claude
-git add skills/gstack
-git commit -m "chore: update gstack submodule"
-```
-
-### 3. Restore plugins
+### Restore plugins
 
 Plugin artifacts are excluded. `settings.json` contains both `extraKnownMarketplaces` and `enabledPlugins` — Claude Code reads these on startup and installs all listed plugins automatically. No manual install step required.
 
@@ -144,7 +143,7 @@ claude plugin install supabase@claude-plugins-official
 claude plugin install vercel@claude-plugins-official
 ```
 
-### 4. Fix the status line path
+### Fix the status line path
 
 `settings.json` contains a host-specific path in `statusLine.command`. After reinstalling the caveman plugin, locate the new `caveman-statusline` script in the plugin cache and update `settings.json` to point to it:
 
