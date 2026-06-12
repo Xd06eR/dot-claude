@@ -22,4 +22,6 @@
 !rules/**
 !skills/
 !skills/**
-skills/gstack/              # gstack plugin — managed separately, not our config
+
+# gstack plugin — managed separately, not our config
+skills/gstack/
