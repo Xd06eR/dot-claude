@@ -78,6 +78,19 @@
     }
   },
   "hooks": {
+    "PostToolUse": [
+      {
+        "_gstack_source": "plan-tune-cathedral",
+        "hooks": [
+          {
+            "command": "C:/Users/User/.claude/skills/gstack/hosts/claude/hooks/question-log-hook",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "(AskUserQuestion|mcp__.*__AskUserQuestion)"
+      }
+    ],
     "PreToolUse": [
       {
         "hooks": [
@@ -91,6 +104,17 @@
           }
         ],
         "matcher": "Bash"
+      },
+      {
+        "_gstack_source": "plan-tune-cathedral",
+        "hooks": [
+          {
+            "command": "C:/Users/User/.claude/skills/gstack/hosts/claude/hooks/question-preference-hook",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "(AskUserQuestion|mcp__.*__AskUserQuestion)"
       }
     ]
   },
