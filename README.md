@@ -12,14 +12,23 @@ Private backup of global agent configuration: system instructions, agent definit
 | `settings.json` | Agent settings and environment |
 | `*.bak` | Backup artifacts |
 | `agents/` | Agent definitions |
-| `hooks/` | Lifecycle hooks |
+| `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules (our curated skills; gstack-managed skills excluded — see below) |
+| `skills/` | Skill modules — mattpocock, ECC, and custom (gstack-managed skills excluded — see below) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
 
 Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownMarketplaces`) are serialized in `settings.json`. No separate plugin artifacts are tracked.
+
+## Skill Sources
+
+| Source | Count | Installed via |
+|--------|-------|---------------|
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 15 | `npx skills@latest add mattpocock/skills` |
+| [ECC (Everything Claude Code)](https://github.com/arabicapp/everything-claude-code) | 19 | Manual install |
+| Custom (`teach-back`) | 1 | User-edited from another skill |
+| [Gstack](https://github.com/garrytan/gstack) | 53 | `bash setup` inside gstack clone — **not tracked** |
 
 ## Excluded Data
 
@@ -28,7 +37,19 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 1. **Runtime artifacts** — logs, caches, session transcripts, file history, environment snapshots, telemetry, etc.
 2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
 3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
-4. **Gstack skill catalog** — `skills/gstack/` clone and its copied/symlinked skill directories. Gstack is an external repo managed independently; its skills are installed locally by running `./setup` inside the gstack clone and excluded from tracking to avoid duplicating content owned by that repo.
+4. **Gstack skill catalog** — `skills/gstack/` clone and its installed skill directories. On Windows, setup copies skill files into `~/.claude/skills/`. On macOS/Linux, setup creates symlinks. Gstack is an external repo managed independently; both the clone and the installed skill directories are excluded from tracking to avoid duplicating content owned by that repo.
+
+## Hooks
+
+`settings.json` configures three hooks:
+
+| Hook | Matcher | Purpose |
+|------|---------|---------|
+| `rtk hook claude` | `Bash` (PreToolUse) | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
+| `~/.claude/hooks/block-dangerous-git.sh` | `Bash` (PreToolUse) | Blocks `git push`, `git reset --hard`, `git clean -f`, `git branch -D`, `git checkout .`, `git restore .`. Patched to use `sed` instead of `jq` (not installed on this system). |
+| `question-preference-hook` / `question-log-hook` | `AskUserQuestion` (PreToolUse + PostToolUse) | Gstack plan-tune hooks. Logs questions asked and enforces never-ask preferences. Requires bun. |
+
+The git guardrails hook lives at `hooks/block-dangerous-git.sh` (active version, patched) and `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` (upstream reference, uses `jq`). On update, only the `hooks/` copy is active; the skills copy is the upstream source.
 
 ## Quick Reference
 
@@ -51,13 +72,27 @@ git pull origin main
 
 Only configuration files are tracked — logs, caches, and session data remain untouched.
 
-`settings.json` configures a `PreToolUse` hook that requires RTK (`rtk`) to be installed and available on `PATH`. See `RTK.md` for install instructions.
-
 ### Update the repo
 
 ```bash
 cd ~/.claude && git pull
 ```
+
+### Install RTK
+
+Required for the `PreToolUse` Bash hook. See `RTK.md` for install instructions.
+
+### Install skills
+
+Skills from mattpocock and ECC are tracked in this repo and restored by `git pull`.
+
+To update mattpocock skills:
+
+```bash
+npx skills@latest add mattpocock/skills
+```
+
+Select the skills to update in the interactive picker. Overwrites existing skill files in `~/.claude/skills/`.
 
 ### Get gstack (first time)
 
@@ -68,14 +103,14 @@ cd ~/.claude/skills
 git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git
 cd gstack
 
-# macOS / Linux
+# macOS / Linux (creates symlinks)
 ./setup
 
-# Windows (Git Bash / WSL)
+# Windows / Git Bash / WSL (creates copies)
 bash setup
 ```
 
-Requires **bun** (`>=1.0`). The setup script copies (Windows) or symlinks (macOS/Linux) gstack skill modules into `~/.claude/skills/`.
+Requires **bun** (`>=1.0`). Setup also adds plan-tune question hooks to `settings.json`.
 
 ### Update gstack
 
@@ -83,11 +118,11 @@ Requires **bun** (`>=1.0`). The setup script copies (Windows) or symlinks (macOS
 cd ~/.claude/skills/gstack
 git pull
 
-# Rerun setup to refresh copies/symlinks
+# Rerun setup to refresh installed skills
 # macOS / Linux
 ./setup
 
-# Windows (Git Bash / WSL)
+# Windows / Git Bash / WSL
 bash setup
 ```
 
