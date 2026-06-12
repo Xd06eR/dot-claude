@@ -94,52 +94,54 @@ git commit -m "chore: update gstack submodule"
 
 ### 3. Restore plugins
 
-Plugin artifacts are excluded. Register marketplaces and install plugins manually.
+Plugin artifacts are excluded. `settings.json` contains both `extraKnownMarketplaces` and `enabledPlugins` — Claude Code reads these on startup and installs all listed plugins automatically. No manual install step required.
+
+If auto-install fails, register marketplaces and install plugins manually.
 
 **Register marketplaces:**
 
 ```bash
-claude plugins marketplace add anthropic-agent-skills
-claude plugins marketplace add caveman
-claude plugins marketplace add impeccable
-claude plugins marketplace add karpathy-skills
-claude plugins marketplace add openai-codex
+claude plugin marketplace add anthropics/skills
+claude plugin marketplace add JuliusBrussee/caveman
+claude plugin marketplace add pbakaus/impeccable
+claude plugin marketplace add forrestchang/andrej-karpathy-skills
+claude plugin marketplace add openai/codex-plugin-cc
 ```
 
 **Install enabled plugins:**
 
 ```bash
-claude plugins install andrej-karpathy-skills@karpathy-skills
-claude plugins install caveman@caveman
-claude plugins install chrome-devtools-mcp@claude-plugins-official
-claude plugins install claude-code-setup@claude-plugins-official
-claude plugins install claude-md-management@claude-plugins-official
-claude plugins install code-review@claude-plugins-official
-claude plugins install code-simplifier@claude-plugins-official
-claude plugins install commit-commands@claude-plugins-official
-claude plugins install context7@claude-plugins-official
-claude plugins install document-skills@anthropic-agent-skills
-claude plugins install feature-dev@claude-plugins-official
-claude plugins install frontend-design@claude-plugins-official
-claude plugins install hookify@claude-plugins-official
-claude plugins install impeccable@impeccable
-claude plugins install playwright@claude-plugins-official
-claude plugins install pr-review-toolkit@claude-plugins-official
-claude plugins install pyright-lsp@claude-plugins-official
-claude plugins install ralph-loop@claude-plugins-official
-claude plugins install security-guidance@claude-plugins-official
-claude plugins install skill-creator@claude-plugins-official
-claude plugins install superpowers@claude-plugins-official
-claude plugins install typescript-lsp@claude-plugins-official
+claude plugin install andrej-karpathy-skills@karpathy-skills
+claude plugin install caveman@caveman
+claude plugin install chrome-devtools-mcp@claude-plugins-official
+claude plugin install claude-code-setup@claude-plugins-official
+claude plugin install claude-md-management@claude-plugins-official
+claude plugin install code-review@claude-plugins-official
+claude plugin install code-simplifier@claude-plugins-official
+claude plugin install commit-commands@claude-plugins-official
+claude plugin install context7@claude-plugins-official
+claude plugin install document-skills@anthropic-agent-skills
+claude plugin install feature-dev@claude-plugins-official
+claude plugin install frontend-design@claude-plugins-official
+claude plugin install hookify@claude-plugins-official
+claude plugin install impeccable@impeccable
+claude plugin install playwright@claude-plugins-official
+claude plugin install pr-review-toolkit@claude-plugins-official
+claude plugin install pyright-lsp@claude-plugins-official
+claude plugin install ralph-loop@claude-plugins-official
+claude plugin install security-guidance@claude-plugins-official
+claude plugin install skill-creator@claude-plugins-official
+claude plugin install superpowers@claude-plugins-official
+claude plugin install typescript-lsp@claude-plugins-official
 ```
 
 **Install disabled plugins (optional):**
 
 ```bash
-claude plugins install codex@openai-codex
-claude plugins install github@claude-plugins-official
-claude plugins install supabase@claude-plugins-official
-claude plugins install vercel@claude-plugins-official
+claude plugin install codex@openai-codex
+claude plugin install github@claude-plugins-official
+claude plugin install supabase@claude-plugins-official
+claude plugin install vercel@claude-plugins-official
 ```
 
 ### 4. Fix the status line path
