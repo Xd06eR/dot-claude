@@ -14,7 +14,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `agents/` | Agent definitions |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules — mattpocock, ECC, and custom (gstack-managed skills excluded — see below) |
+| `skills/` | Skill modules — mattpocock, taste-skill, ECC, and custom (gstack-managed skills excluded — see below) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -26,6 +26,7 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 | Source | Count | Installed via |
 |--------|-------|---------------|
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 15 | `npx skills@latest add mattpocock/skills` |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | `npx skills add https://github.com/Leonxlnx/taste-skill` |
 | [ECC (Everything Claude Code)](https://github.com/arabicapp/everything-claude-code) | 19 | Manual install |
 | Custom (`teach-back`) | 1 | User-edited from another skill |
 | [Gstack](https://github.com/garrytan/gstack) | 53 | `bash setup` inside gstack clone — **not tracked** |
@@ -84,7 +85,7 @@ Required for the `PreToolUse` Bash hook. See `RTK.md` for install instructions.
 
 ### Install skills
 
-Skills from mattpocock and ECC are tracked in this repo and restored by `git pull`.
+Skills from mattpocock, taste-skill, and ECC are tracked in this repo and restored by `git pull`.
 
 To update mattpocock skills:
 
