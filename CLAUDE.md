@@ -119,7 +119,7 @@ Auto-invoke when relevant. Heavy or long-running skills — ask first.
 - **Never run `git commit`, `git push`, or destructive ops.** Output exact command(s) as text for user to run manually.
 - **No attribution on commits.** Never add `Co-authored-by`, `Generated-by-Claude`, or any assistant-origin markers to commit messages.
 - One logical change per commit.
-- Commit messages: subject line only, no body unless asked. Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `perf:`, `ci:`).
+- Commit messages: subject line only, no body unless asked. Make the subject **descriptive** — name what the change actually does; don't sacrifice clarity for brevity (a longer, clear subject beats a terse, vague one). Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `perf:`, `ci:`).
 - Resolve merge conflicts manually. Never `git push --force` without approval.
 
 ## Security
