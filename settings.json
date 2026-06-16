@@ -5,7 +5,6 @@
   },
   "autoCompactEnabled": false,
   "autoUpdatesChannel": "latest",
-  "effortLevel": "max",
   "enabledPlugins": {
     "andrej-karpathy-skills@karpathy-skills": true,
     "caveman@caveman": true,
@@ -22,7 +21,7 @@
     "frontend-design@claude-plugins-official": true,
     "github@claude-plugins-official": false,
     "hookify@claude-plugins-official": true,
-    "impeccable@impeccable": true,
+    "impeccable@impeccable": false,
     "playwright@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
@@ -80,7 +79,6 @@
   "hooks": {
     "PostToolUse": [
       {
-        "_gstack_source": "plan-tune-cathedral",
         "hooks": [
           {
             "command": "C:/Users/User/.claude/skills/gstack/hosts/claude/hooks/question-log-hook",
@@ -106,7 +104,6 @@
         "matcher": "Bash"
       },
       {
-        "_gstack_source": "plan-tune-cathedral",
         "hooks": [
           {
             "command": "C:/Users/User/.claude/skills/gstack/hosts/claude/hooks/question-preference-hook",
