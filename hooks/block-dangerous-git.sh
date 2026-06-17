@@ -5,6 +5,7 @@ INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | sed -n 's/.*"command"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
 
 DANGEROUS_PATTERNS=(
+  "git commit"
   "git push"
   "git reset --hard"
   "git clean -fd"
