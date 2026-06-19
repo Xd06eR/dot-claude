@@ -23,6 +23,7 @@
     "hookify@claude-plugins-official": true,
     "impeccable@impeccable": false,
     "playwright@claude-plugins-official": true,
+    "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
@@ -74,6 +75,13 @@
         "repo": "openai/codex-plugin-cc",
         "source": "github"
       }
+    },
+    "ponytail": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
     }
   },
   "hooks": {
@@ -116,7 +124,7 @@
     ]
   },
   "statusLine": {
-    "command": "powershell -ExecutionPolicy Bypass -File \"C:\\Users\\User\\.claude\\plugins\\cache\\caveman\\caveman\\655b7d9c5431\\src\\hooks\\caveman-statusline.ps1\"",
+    "command": "powershell -ExecutionPolicy Bypass -Command \"& 'C:\\Users\\User\\.claude\\plugins\\cache\\caveman\\caveman\\655b7d9c5431\\src\\hooks\\caveman-statusline.ps1'; [Console]::Write(' '); & 'C:\\Users\\User\\.claude\\plugins\\cache\\ponytail\\ponytail\\4.7.0\\hooks\\ponytail-statusline.ps1'\"",
     "type": "command"
   },
   "teammateMode": "auto",

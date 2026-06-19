@@ -141,6 +141,7 @@ claude plugin marketplace add JuliusBrussee/caveman
 claude plugin marketplace add pbakaus/impeccable
 claude plugin marketplace add forrestchang/andrej-karpathy-skills
 claude plugin marketplace add openai/codex-plugin-cc
+claude plugin marketplace add DietrichGebert/ponytail
 ```
 
 **Install enabled plugins:**
@@ -161,6 +162,7 @@ claude plugin install frontend-design@claude-plugins-official
 claude plugin install hookify@claude-plugins-official
 claude plugin install impeccable@impeccable
 claude plugin install playwright@claude-plugins-official
+claude plugin install ponytail@ponytail
 claude plugin install pr-review-toolkit@claude-plugins-official
 claude plugin install pyright-lsp@claude-plugins-official
 claude plugin install ralph-loop@claude-plugins-official
@@ -181,11 +183,12 @@ claude plugin install vercel@claude-plugins-official
 
 ### Fix the status line path
 
-`settings.json` contains a host-specific path in `statusLine.command`. After reinstalling the caveman plugin, locate the new `caveman-statusline` script in the plugin cache and update `settings.json` to point to it:
+`settings.json` contains a host-specific `statusLine.command` that runs both plugin statusline scripts in a single PowerShell `-Command` invocation — caveman (`[CAVEMAN]` badge, orange) then ponytail (`[PONYTAIL]` badge, teal), separated by a space. The single `-Command` form keeps the `;` separator inside PowerShell so it is independent of the shell Claude Code spawns. After reinstalling either plugin, locate the new statusline script in its plugin cache and update `settings.json`:
 
 ```bash
-# Example path after reinstalling caveman plugin
+# Example paths after reinstalling plugins
 # ~/.claude/plugins/cache/caveman/caveman/<version>/src/hooks/caveman-statusline.ps1
+# ~/.claude/plugins/cache/ponytail/ponytail/<version>/hooks/ponytail-statusline.ps1
 ```
 
 ## Security
