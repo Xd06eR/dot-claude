@@ -85,18 +85,7 @@
     }
   },
   "hooks": {
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "C:/Users/User/.claude/skills/gstack/hosts/claude/hooks/question-log-hook",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "(AskUserQuestion|mcp__.*__AskUserQuestion)"
-      }
-    ],
+    "PostToolUse": [],
     "PreToolUse": [
       {
         "hooks": [
@@ -110,16 +99,6 @@
           }
         ],
         "matcher": "Bash"
-      },
-      {
-        "hooks": [
-          {
-            "command": "C:/Users/User/.claude/skills/gstack/hosts/claude/hooks/question-preference-hook",
-            "timeout": 5,
-            "type": "command"
-          }
-        ],
-        "matcher": "(AskUserQuestion|mcp__.*__AskUserQuestion)"
       }
     ]
   },
