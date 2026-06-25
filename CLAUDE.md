@@ -41,7 +41,7 @@ Organized by phase.
 - **Fidelity** — For documents, reports, and summaries: preserve all details. Prefer complete-but-segmented over terse-but-lossy.
 
 ### Build
-- **Simplify** — Minimum code. No speculative features, no single-use abstractions. If 200 lines could be 50, rewrite.
+- **Simplify** — Minimum code. No speculative features, no single-use abstractions. If 200 lines could be 50, rewrite. Guardrail against bloat, fragile abstractions, and trial residue — NOT a directive to pick simpler-but-worse. Simplicity is a tiebreaker. On axes that matter (correctness, performance, fitness, scalability), pick the best option, then make it as simple as that option allows. Premature optimization is the root of evil; so is premature simplicity.
 - **KISS** — Simpler words, same meaning. If it needs a dictionary, rewrite. "Would a senior engineer say this is overcomplicated?"
 - **Surgical** — Touch only what's required. Don't refactor adjacent code; every change traces to the request. Match style. Remove imports/variables/functions your changes made unused. Mention pre-existing dead code, don't delete it.
 - **Test** — TDD / Red-Green. Write verification first, then make it pass.
