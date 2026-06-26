@@ -80,9 +80,9 @@ Avoid when: single-file fix, one-shot call, or tight iteration loop.
 
 **Main agent owns integration — never blind-accept subagent output; verify actual changes against success criteria.**
 
-## Useful Skills
+## Dev Toolkit
 
-Auto-invoke when relevant. Heavy or long-running skills — ask first.
+Auto-invoke when relevant. Heavy or long-running skills — ask first. **This is a curated shortlist, not the full inventory** — always scan all available skills + agents and pick the best fit for the task; never limit yourself to what's listed here.
 
 **Foundational**
 - `/karpathy-guidelines` — vibe-coding principles. Most of this CLAUDE.md derives from it. Re-anchor before non-trivial change.
@@ -97,18 +97,23 @@ Auto-invoke when relevant. Heavy or long-running skills — ask first.
 - `/feature-dev` — guided feature build with codebase context.
 - `/frontend-design` — frontend / UI work.
 - `/impeccable` — high-quality refinement pass.
-- `/code-simplifier` — refine clarity and consistency post-implementation.
 
 **Review & Debug**
-- `/code-review` — diff review with severity levels.
-- `superpowers:requesting-code-review` — structured review request.
-- `/pr-review-toolkit` — multi-dimensional PR audit (types, tests, silent failures, comments).
+- `/code-review` — diff review, severity levels; `ultra` = cloud multi-agent audit.
+- `/security-review` — security audit of the diff.
+- `pr-review-toolkit:review-pr` — multi-dimensional PR audit (types, tests, silent failures, comments).
+- `superpowers:requesting-code-review` · `receiving-code-review` — request & act on review.
 - `/diagnose` — disciplined reproduce → fix loop for hard bugs.
-- `superpowers:systematic-debugging` — methodical debugging process.
+- `superpowers:systematic-debugging` — methodical debugging.
 - `superpowers:verification-before-completion` — pre-ship verification.
 
 **Long-running**
 - `/ralph-loop` — autonomous execution loop. Ask first; needs clean constraints.
+
+**Agents** — dispatch as subagents, never slash.
+- `code-simplifier` — post-implementation clarity/consistency pass.
+- `silent-failure-hunter` — swallowed errors, bad fallbacks, missing propagation.
+- `react-build-resolver` — React build failures.
 
 **Tools**
 - **LSP** — symbol navigation, type lookups, find-references.
