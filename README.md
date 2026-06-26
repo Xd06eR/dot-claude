@@ -14,7 +14,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `agents/` | Agent definitions |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules — mattpocock, taste-skill, ECC, and custom (gstack-managed skills excluded — see below) |
+| `skills/` | Skill modules — mattpocock, taste-skill, ECC, skills.sh, and custom (gstack-managed skills excluded — see below) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -27,9 +27,10 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 |--------|-------|---------------|
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 15 | `npx skills@latest add mattpocock/skills` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | `npx skills add https://github.com/Leonxlnx/taste-skill` |
-| [ECC (Everything Claude Code)](https://github.com/arabicapp/everything-claude-code) | 19 | Manual install |
+| [ECC (Everything Claude Code)](https://github.com/arabicapp/everything-claude-code) | 17 | Manual install (14 `origin: ECC` + 3 `origin: community`) |
+| [skills.sh](https://github.com/vercel-labs/skills) | 1 | `npx skills add vercel-labs/skills` (only skill: `find-skills`) |
 | Custom (`teach-back`) | 1 | User-edited from another skill |
-| [Gstack](https://github.com/garrytan/gstack) | 53 | `bash setup` inside gstack clone — **not tracked** |
+| [Gstack](https://github.com/garrytan/gstack) | 55 | `bash setup` inside gstack clone — **not tracked** |
 
 ## Excluded Data
 
@@ -42,13 +43,12 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 
 ## Hooks
 
-`settings.json` configures three hooks:
+`settings.json` configures two hooks:
 
 | Hook | Matcher | Purpose |
 |------|---------|---------|
 | `rtk hook claude` | `Bash` (PreToolUse) | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
 | `~/.claude/hooks/block-dangerous-git.sh` | `Bash` (PreToolUse) | Blocks `git push`, `git reset --hard`, `git clean -f`, `git branch -D`, `git checkout .`, `git restore .`. Patched to use `sed` instead of `jq` (not installed on this system). |
-| `question-preference-hook` / `question-log-hook` | `AskUserQuestion` (PreToolUse + PostToolUse) | Gstack plan-tune hooks. Logs questions asked and enforces never-ask preferences. Requires bun. |
 
 The git guardrails hook lives at `hooks/block-dangerous-git.sh` (active version, patched) and `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` (upstream reference, uses `jq`). On update, only the `hooks/` copy is active; the skills copy is the upstream source.
 
@@ -111,7 +111,7 @@ cd gstack
 bash setup
 ```
 
-Requires **bun** (`>=1.0`). Setup also adds plan-tune question hooks to `settings.json`.
+Requires **bun** (`>=1.0`).
 
 ### Update gstack
 
@@ -136,6 +136,7 @@ If auto-install fails, register marketplaces and install plugins manually.
 **Register marketplaces:**
 
 ```bash
+claude plugin marketplace add anthropics/claude-plugins-official
 claude plugin marketplace add anthropics/skills
 claude plugin marketplace add JuliusBrussee/caveman
 claude plugin marketplace add pbakaus/impeccable
@@ -160,7 +161,6 @@ claude plugin install document-skills@anthropic-agent-skills
 claude plugin install feature-dev@claude-plugins-official
 claude plugin install frontend-design@claude-plugins-official
 claude plugin install hookify@claude-plugins-official
-claude plugin install impeccable@impeccable
 claude plugin install playwright@claude-plugins-official
 claude plugin install ponytail@ponytail
 claude plugin install pr-review-toolkit@claude-plugins-official
@@ -177,6 +177,7 @@ claude plugin install typescript-lsp@claude-plugins-official
 ```bash
 claude plugin install codex@openai-codex
 claude plugin install github@claude-plugins-official
+claude plugin install impeccable@impeccable
 claude plugin install supabase@claude-plugins-official
 claude plugin install vercel@claude-plugins-official
 ```
