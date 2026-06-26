@@ -25,7 +25,7 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 
 | Source | Count | Installed via |
 |--------|-------|---------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 15 | `npx skills@latest add mattpocock/skills` |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 14 | `npx skills@latest add mattpocock/skills` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | `npx skills add https://github.com/Leonxlnx/taste-skill` |
 | [ECC (Everything Claude Code)](https://github.com/arabicapp/everything-claude-code) | 17 | Manual install (14 `origin: ECC` + 3 `origin: community`) |
 | [skills.sh](https://github.com/vercel-labs/skills) | 1 | `npx skills add vercel-labs/skills` (only skill: `find-skills`) |
