@@ -69,7 +69,8 @@ Rules live in `~/.claude/rules/`. **When starting work in a language, proactivel
 - **Python** — python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md · python/patterns.md
 - **TypeScript** — typescript/coding-style.md · typescript/testing.md · typescript/security.md · typescript/patterns.md
 - **Web** — web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/patterns.md
-- **Common** — common/development-workflow.md · common/testing.md · common/git-workflow.md · common/patterns.md
+- **React** — react/coding-style.md · react/hooks.md · react/patterns.md · react/security.md · react/testing.md
+- **Common** — common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md
 
 ## Subagents over Agent Teams
 
@@ -83,6 +84,13 @@ Avoid when: single-file fix, one-shot call, or tight iteration loop.
 ## Dev Toolkit
 
 Auto-invoke when relevant. Heavy or long-running skills — ask first. **This is a curated shortlist, not the full inventory** — always scan all available skills + agents and pick the best fit for the task; never limit yourself to what's listed here.
+
+**Skill Composition — stack orthogonal skills, not singletons.** Real tasks span concerns; one skill rarely covers end-to-end. Build a small stack per task, picked freely from the category lists in Dev Toolkit below and GSTACK.md. No fixed recipes — judge per task.
+
+- **Phase** — pull a skill per phase of the workflow above that applies (design / plan / build / review / ship). Skip phases the task lacks.
+- **Concern** — within a phase, stack skills covering *different* concerns (e.g. structure + a11y + security). Orthogonal only.
+- **Dedupe** — never stack two skills doing the same job. The three review skills (`/code-review`, `pr-review-toolkit:review-pr`, `/review`) are substitutes — pick one. Same for design review, debug, generation.
+- **Budget** — every skill loads tokens. Default 1–3; justify more. Note: Gravity governs correctness of the work, not skill count — skipping a redundant skill is restraint, not omission.
 
 **Foundational**
 - `/karpathy-guidelines` — vibe-coding principles. Most of this CLAUDE.md derives from it. Re-anchor before non-trivial change.

@@ -17,9 +17,9 @@
 - **Design** — `/design-consultation`, `/design-shotgun`, `/design-html`, `/design-review`, `/ios-design-review`
 - **QA & debug** — `/qa`, `/qa-only`, `/investigate`, `/benchmark`, `/benchmark-models`, `/health`, `/landing-report`, `/devex-review`, `/ios-qa`, `/ios-fix`
 - **Ship & deploy** — `/ship`, `/land-and-deploy`, `/canary`, `/setup-deploy`, `/document-release`, `/document-generate`
-- **Browser & web** — `/browse`, `/open-gstack-browser` (`/connect-chrome`), `/setup-browser-cookies`, `/scrape`, `/skillify`
+- **Browser & web** — `/browse`, `/open-gstack-browser` (`/connect-chrome`), `/setup-browser-cookies`, `/scrape`
 - **Context & session** — `/context-save`, `/context-restore`, `/office-hours`, `/retro`
 - **Safety modes** — `/careful`, `/guard`, `/freeze`, `/unfreeze`
-- **Setup** — `/setup-gbrain`, `/sync-gbrain`, `/gstack-upgrade`, `/pair-agent`
+- **Setup** — `/setup-gbrain`, `/sync-gbrain`, `/gstack-upgrade`, `/pair-agent`, `/skillify`
 - **iOS** — `/ios-sync`, `/ios-clean`
 - **Other** — `/codex`, `/make-pdf`, `/diagram`, `/learn`
