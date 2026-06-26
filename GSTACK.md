@@ -22,4 +22,4 @@
 - **Safety modes** — `/careful`, `/guard`, `/freeze`, `/unfreeze`
 - **Setup** — `/setup-gbrain`, `/sync-gbrain`, `/gstack-upgrade`, `/pair-agent`
 - **iOS** — `/ios-sync`, `/ios-clean`
-- **Other** — `/codex`, `/make-pdf`, `/learn`
+- **Other** — `/codex`, `/make-pdf`, `/diagram`, `/learn`
