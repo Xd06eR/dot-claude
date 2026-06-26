@@ -1,6 +1,6 @@
 # GSTACK — Skill Catalog
 
-**Usage**: Browse web and invoke skills.
+**Usage**: Reference for browsing-tool selection and gstack skill lookup by category.
 
 ## Browsing Strategy
 
