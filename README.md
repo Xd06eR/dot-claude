@@ -14,7 +14,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `agents/` | Agent definitions |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules — mattpocock, taste-skill, ECC, skills.sh, and custom (gstack-managed skills excluded — see below) |
+| `skills/` | Skill modules — mattpocock, taste-skill, ECC, find-skills, and custom (gstack-managed skills excluded — see below) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -27,8 +27,8 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 |--------|-------|---------------|
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 14 | `npx skills@latest add mattpocock/skills` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | `npx skills add https://github.com/Leonxlnx/taste-skill` |
-| [ECC (Everything Claude Code)](https://github.com/arabicapp/everything-claude-code) | 17 | Manual install (14 `origin: ECC` + 3 `origin: community`) |
-| [skills.sh](https://github.com/vercel-labs/skills) | 1 | `npx skills add vercel-labs/skills` (only skill: `find-skills`) |
+| [ECC (Everything Claude Code)](https://github.com/affaan-m/ECC) | 17 | Manual install (14 `origin: ECC` + 3 `origin: community`) |
+| [vercel-labs/skills](https://github.com/vercel-labs/skills) | 1 | `npx skills add vercel-labs/skills` (only skill: `find-skills`; discover more at [skills.sh](https://www.skills.sh/)) |
 | Custom (`teach-back`) | 1 | User-edited from another skill |
 | [Gstack](https://github.com/garrytan/gstack) | 55 | `bash setup` inside gstack clone — **not tracked** |
 
