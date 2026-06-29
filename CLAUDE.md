@@ -121,7 +121,7 @@ Auto-invoke when relevant. Heavy or long-running skills: ask first. **This is a 
 - `/ralph-loop`: autonomous execution loop. Ask first; needs clean constraints.
 
 **Agents:** dispatch as subagents, never slash.
-- `code-simplifier`: post-implementation clarity/consistency pass.
+- `code-simplifier:code-simplifier`: post-implementation clarity/consistency pass. (`pr-review-toolkit:code-simplifier` is the same agent bundled in the toolkit; use the standalone.)
 - `silent-failure-hunter`: swallowed errors, bad fallbacks, missing propagation.
 - `react-build-resolver`: React build failures.
 
