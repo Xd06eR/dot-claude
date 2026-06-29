@@ -20,8 +20,8 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 
 Follow 4-phase approach. Main agent orchestrates; subagents implement.
 
-1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity: identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
-2. **Plan:** Write spec docs (.md) and task breakdown. Numbered checklist, each step states what it produces *and* how it's verified: `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
+1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity. Identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
+2. **Plan:** Write spec docs (.md) and task breakdown. Numbered checklist, each step states what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
 3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents (Task tool, parallel calls), integrate output yourself. Each subagent implements one component, includes lint + format + type-check + tests, verifies before returning.
 4. **Review:** Check diff against checklist and Principles. Verify against criteria set in advance. Show evidence (test output, return value). Can't verify → don't ship.
 
@@ -34,9 +34,9 @@ Organized by phase.
 ### Design
 - **Think:** State assumptions explicitly.
 - **Decompose:** Break into independent, low-coupling components. Design for replaceability.
-- **Goal:** Transform tasks into verifiable goals: 'make it work' is not a goal; 'reproducing test passes' is.
+- **Goal:** Transform tasks into verifiable goals. 'Make it work' is not a goal; 'reproducing test passes' is.
 - **Gravity:** Every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
-- **Fidelity:** For documents, reports, and summaries: preserve all details. Prefer complete-but-segmented over terse-but-lossy.
+- **Fidelity:** For documents, reports, and summaries, preserve all details. Prefer complete-but-segmented over terse-but-lossy.
 
 ### Build
 - **Simplify:** Minimum code; no speculative features, single-use abstractions, or trial residue. If 200 lines could be 50, rewrite.
@@ -55,7 +55,7 @@ Organized by phase.
 
 - **Python:** `ruff check` → `ruff format` → `mypy` → `pytest`.
 - **TypeScript / JavaScript:** `eslint` → `prettier` → `tsc --noEmit` → `npm test` (vitest / jest).
-- **US English everywhere:** identifiers, comments, docs, commit messages: `normalize`, `color`, `behavior` (‑ze / ‑or).
+- **US English everywhere:** identifiers, comments, docs, commit messages, e.g. `normalize`, `color`, `behavior` (‑ze / ‑or).
 - **Naming:** follow language convention (see `rules/`); booleans prefixed (`is_`/`has_`/`should_`/`can_`), constants `SCREAMING_SNAKE_CASE`; abbreviate in small scope, spell out cross-module; don't mix conventions within a module.
 - **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
 - **Name the design choice.** On a non-obvious choice, leave one-line comment on *why*, not mechanics. No silent magic.
@@ -92,7 +92,7 @@ Auto-invoke when relevant. Heavy or long-running skills: ask first. **This is a 
 - **Phase:** Pull a skill per phase of the workflow above that applies (design / plan / build / review / ship). Skip phases the task lacks.
 - **Concern:** Within a phase, stack skills covering *different* concerns (e.g. structure + a11y + security). Orthogonal only.
 - **Dedupe:** Never stack two skills doing the same job. The three review skills (`/code-review`, `pr-review-toolkit:review-pr`, `/review`) are substitutes, pick one. Same for design review, debug, generation.
-- **Budget:** Every skill loads tokens. Default 1–3; justify more. Note: Gravity governs correctness of the work, not skill count. Skipping a redundant skill is restraint, not omission.
+- **Budget:** Every skill loads tokens. Default 1–3; justify more. Note that Gravity governs correctness of the work, not skill count. Skipping a redundant skill is restraint, not omission.
 
 **Foundational**
 - `/karpathy-guidelines`: vibe-coding principles. Most of this CLAUDE.md derives from it. Re-anchor before non-trivial change.
