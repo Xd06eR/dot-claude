@@ -2,12 +2,12 @@
 
 ## How to Work With Me
 
-I work at the AI-engineer level — system design and trade-offs. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting.
+I work at the AI-engineer level: system design and trade-offs. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting.
 
 - Pitch at AI-engineer level: lead with design choice, trade-off, what you ruled out.
-- **When I ask "why", or when a call is non-obvious, go deep** — depth beats brevity.
+- **When I ask "why", or when a call is non-obvious, go deep.** Depth beats brevity.
 - Name ambiguity instead of guessing. List readings, state default, proceed. If uncertain, ask; if unclear, stop.
-- Push back *before* building when spec is flawed, simpler path exists, or constraint is missing.
+- Push back *before* building when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
 - For long sessions, summarize changes for big-picture context before I read the diff. Focus on why and what to check.
 - Surface design choices in output.
 
@@ -20,121 +20,121 @@ I work at the AI-engineer level — system design and trade-offs. I don't write 
 
 Follow 4-phase approach. Main agent orchestrates; subagents implement.
 
-1. **Design** — Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity — identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
-2. **Plan** — Write spec docs (.md) and task breakdown. Numbered checklist — each step states what it produces *and* how it's verified: `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
-3. **Build** — Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents (Task tool, parallel calls), integrate output yourself. Each subagent implements one component, includes lint + format + type-check + tests, verifies before returning.
-4. **Review** — Check diff against checklist and Principles. Verify against criteria set in advance — show evidence (test output, return value). Can't verify → don't ship.
+1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity: identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
+2. **Plan:** Write spec docs (.md) and task breakdown. Numbered checklist, each step states what it produces *and* how it's verified: `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
+3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents (Task tool, parallel calls), integrate output yourself. Each subagent implements one component, includes lint + format + type-check + tests, verifies before returning.
+4. **Review:** Check diff against checklist and Principles. Verify against criteria set in advance. Show evidence (test output, return value). Can't verify → don't ship.
 
-Skip phases only for trivial changes — typo, rename, one-liner with zero ambiguity.
+Skip phases only for trivial changes: typo, rename, one-liner with zero ambiguity.
 
 ## Principles
 
 Organized by phase.
 
 ### Design
-- **Think** — State assumptions explicitly.
-- **Decompose** — Break into independent, low-coupling components. Design for replaceability.
-- **Goal** — Transform tasks into verifiable goals — 'make it work' is not a goal; 'reproducing test passes' is.
-- **Gravity** — Every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
-- **Fidelity** — For documents, reports, and summaries: preserve all details. Prefer complete-but-segmented over terse-but-lossy.
+- **Think:** State assumptions explicitly.
+- **Decompose:** Break into independent, low-coupling components. Design for replaceability.
+- **Goal:** Transform tasks into verifiable goals: 'make it work' is not a goal; 'reproducing test passes' is.
+- **Gravity:** Every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
+- **Fidelity:** For documents, reports, and summaries: preserve all details. Prefer complete-but-segmented over terse-but-lossy.
 
 ### Build
-- **Simplify** — Minimum code; no speculative features, single-use abstractions, or trial residue. If 200 lines could be 50, rewrite.
-- **Tiebreaker** — On axes that matter (correctness, performance, fitness, scalability) pick the best option, then make it as simple as that option allows; never simpler-but-worse.
-- **KISS** — Simpler words, same meaning. If it needs a dictionary, rewrite. "Would a senior engineer say this is overcomplicated?"
-- **Surgical** — Touch only what's required. Don't refactor adjacent code; every change traces to the request. Match style. Remove imports/variables/functions your changes made unused. Mention pre-existing dead code, don't delete it.
-- **Test** — TDD / Red-Green. Write verification first, then make it pass.
-- **YAGNI** — No "flexibility" not asked for. No error handling for impossible scenarios.
+- **Simplify:** Minimum code; no speculative features, single-use abstractions, or trial residue. If 200 lines could be 50, rewrite.
+- **Tiebreaker:** On axes that matter (correctness, performance, fitness, scalability) pick the best option, then make it as simple as that option allows; never simpler-but-worse.
+- **KISS:** Simpler words, same meaning. If it needs a dictionary, rewrite. "Would a senior engineer say this is overcomplicated?"
+- **Surgical:** Touch only what's required. Don't refactor adjacent code; every change traces to the request. Match style. Remove imports/variables/functions your changes made unused. Mention pre-existing dead code, don't delete it.
+- **Test:** TDD / Red-Green. Write verification first, then make it pass.
+- **YAGNI:** No "flexibility" not asked for. No error handling for impossible scenarios.
 
 ### Refine
-- **Work** — Pass tests. Ship working thing first. Red → green.
-- **Right** — Review, simplify, apply Rule-of-Three DRY. Only abstract after 2+ real cases exist; premature DRY creates fragile abstractions. Refactor while green.
-- **Fast** — Profile first. Optimize only if metrics prove bottleneck is real.
+- **Work:** Pass tests. Ship working thing first. Red → green.
+- **Right:** Review, simplify, apply Rule-of-Three DRY. Only abstract after 2+ real cases exist; premature DRY creates fragile abstractions. Refactor while green.
+- **Fast:** Profile first. Optimize only if metrics prove bottleneck is real.
 
 ## Code Style
 
 - **Python:** `ruff check` → `ruff format` → `mypy` → `pytest`.
 - **TypeScript / JavaScript:** `eslint` → `prettier` → `tsc --noEmit` → `npm test` (vitest / jest).
-- **US English everywhere** — identifiers, comments, docs, commit messages: `normalize`, `color`, `behavior` (‑ze / ‑or).
-- **Naming** — follow language convention (see `rules/`); booleans prefixed (`is_`/`has_`/`should_`/`can_`), constants `SCREAMING_SNAKE_CASE`; abbreviate in small scope, spell out cross-module; don't mix conventions within a module.
-- **Comments explain *why*, not *what*** — non-obvious intent, trade-offs, gotchas. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
-- **Name the design choice.** On a non-obvious choice, leave one-line comment on *why* — not mechanics. No silent magic.
+- **US English everywhere:** identifiers, comments, docs, commit messages: `normalize`, `color`, `behavior` (‑ze / ‑or).
+- **Naming:** follow language convention (see `rules/`); booleans prefixed (`is_`/`has_`/`should_`/`can_`), constants `SCREAMING_SNAKE_CASE`; abbreviate in small scope, spell out cross-module; don't mix conventions within a module.
+- **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
+- **Name the design choice.** On a non-obvious choice, leave one-line comment on *why*, not mechanics. No silent magic.
 - Plain over clever unless cleverness is load-bearing.
-- **Never break an atomic unit across lines.** A word, sentence, token, string literal, link, code span, table row, or heading stays on one source line — however long; the editor soft-wraps for display. Break only *between* units, never *inside* one; if a unit would exceed a length limit, rewrite it shorter.
-- **Finish what you start — ship whole units, not fragments.** Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
-- **Code syntax follows the formatter, not this rule.** Ruff/prettier wrap long statements at operators — keep that. Atomicity still applies to comments, docstrings, and string literals; never split a token mid-word.
+- **Never break an atomic unit across lines.** A word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps for display. Break only *between* units, never *inside* one; if a unit would exceed a length limit, rewrite it shorter.
+- **Finish what you start: ship whole units, not fragments.** Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
+- **Code syntax follows the formatter, not this rule.** Ruff/prettier wrap long statements at operators. Keep that. Atomicity still applies to comments, docstrings, and string literals; never split a token mid-word.
 
 ## Language-Specific Rules
 
 Rules live in `~/.claude/rules/`. **When starting work in a language, proactively read the relevant rules into context.**
 
-- **Python** — python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md · python/patterns.md
-- **TypeScript** — typescript/coding-style.md · typescript/testing.md · typescript/security.md · typescript/patterns.md
-- **Web** — web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/patterns.md
-- **React** — react/coding-style.md · react/hooks.md · react/patterns.md · react/security.md · react/testing.md
-- **Common** — common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md
+- **Python:** python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md · python/patterns.md
+- **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md · typescript/patterns.md
+- **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/patterns.md
+- **React:** react/coding-style.md · react/hooks.md · react/patterns.md · react/security.md · react/testing.md
+- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md
 
 ## Subagents over Agent Teams
 
-Prefer **subagents** (Task tool — several calls in one message run in parallel) over agent teams. Subagents preserve my main context, run isolated, cost fewer tokens; agent teams add coordination overhead (shared board, team lead, messaging) that only pays off for long orchestrated runs.
+Prefer **subagents** (Task tool, several calls in one message run in parallel) over agent teams. Subagents preserve my main context, run isolated, cost fewer tokens; agent teams add coordination overhead (shared board, team lead, messaging) that only pays off for long orchestrated runs.
 
 Use when: task spans >2 files, independent work can run in parallel, or reviewer needs fresh context (security, types, adversarial diff).
 Avoid when: single-file fix, one-shot call, or tight iteration loop.
 
-**Main agent owns integration — never blind-accept subagent output; verify actual changes against success criteria.**
+**Main agent owns integration: never blind-accept subagent output; verify actual changes against success criteria.**
 
 ## Dev Toolkit
 
-Auto-invoke when relevant. Heavy or long-running skills — ask first. **This is a curated shortlist, not the full inventory** — always scan all available skills + agents and pick the best fit for the task; never limit yourself to what's listed here.
+Auto-invoke when relevant. Heavy or long-running skills: ask first. **This is a curated shortlist, not the full inventory.** Always scan all available skills + agents and pick the best fit for the task; never limit yourself to what's listed here.
 
-**Skill Composition — stack orthogonal skills, not singletons.** Real tasks span concerns; one skill rarely covers end-to-end. Build a small stack per task, picked freely from the category lists in Dev Toolkit below and GSTACK.md. No fixed recipes — judge per task.
+**Skill Composition: stack orthogonal skills, not singletons.** Real tasks span concerns; one skill rarely covers end-to-end. Build a small stack per task, picked freely from the category lists in Dev Toolkit below and GSTACK.md. No fixed recipes. Judge per task.
 
-- **Phase** — Pull a skill per phase of the workflow above that applies (design / plan / build / review / ship). Skip phases the task lacks.
-- **Concern** — Within a phase, stack skills covering *different* concerns (e.g. structure + a11y + security). Orthogonal only.
-- **Dedupe** — Never stack two skills doing the same job. The three review skills (`/code-review`, `pr-review-toolkit:review-pr`, `/review`) are substitutes — pick one. Same for design review, debug, generation.
-- **Budget** — Every skill loads tokens. Default 1–3; justify more. Note: Gravity governs correctness of the work, not skill count — skipping a redundant skill is restraint, not omission.
+- **Phase:** Pull a skill per phase of the workflow above that applies (design / plan / build / review / ship). Skip phases the task lacks.
+- **Concern:** Within a phase, stack skills covering *different* concerns (e.g. structure + a11y + security). Orthogonal only.
+- **Dedupe:** Never stack two skills doing the same job. The three review skills (`/code-review`, `pr-review-toolkit:review-pr`, `/review`) are substitutes, pick one. Same for design review, debug, generation.
+- **Budget:** Every skill loads tokens. Default 1–3; justify more. Note: Gravity governs correctness of the work, not skill count. Skipping a redundant skill is restraint, not omission.
 
 **Foundational**
-- `/karpathy-guidelines` — vibe-coding principles. Most of this CLAUDE.md derives from it. Re-anchor before non-trivial change.
+- `/karpathy-guidelines`: vibe-coding principles. Most of this CLAUDE.md derives from it. Re-anchor before non-trivial change.
 
 **Design & Plan**
-- `/grill-me`, `/grill-with-docs` — stress-test plan by interview. Ask first.
-- `superpowers:brainstorming` · `superpowers:writing-plans` — explore and structure.
+- `/grill-me`, `/grill-with-docs`: stress-test plan by interview. Ask first.
+- `superpowers:brainstorming` · `superpowers:writing-plans`: explore and structure.
 
 **Build**
-- `superpowers:test-driven-development` — TDD workflow.
-- `superpowers:subagent-driven-development` — patterns for dispatching and integrating subagents.
-- `/feature-dev` — guided feature build with codebase context.
-- `/frontend-design` — frontend / UI work.
-- `/impeccable` — high-quality refinement pass.
+- `superpowers:test-driven-development`: TDD workflow.
+- `superpowers:subagent-driven-development`: patterns for dispatching and integrating subagents.
+- `/feature-dev`: guided feature build with codebase context.
+- `/frontend-design`: frontend / UI work.
+- `/impeccable`: high-quality refinement pass.
 
 **Review & Debug**
-- `/code-review` — diff review, severity levels; `ultra` = cloud multi-agent audit.
-- `/security-review` — security audit of the diff.
-- `pr-review-toolkit:review-pr` — multi-dimensional PR audit (types, tests, silent failures, comments).
-- `superpowers:requesting-code-review` · `receiving-code-review` — request & act on review.
-- `/diagnose` — disciplined reproduce → fix loop for hard bugs.
-- `superpowers:systematic-debugging` — methodical debugging.
-- `superpowers:verification-before-completion` — pre-ship verification.
+- `/code-review`: diff review, severity levels; `ultra` = cloud multi-agent audit.
+- `/security-review`: security audit of the diff.
+- `pr-review-toolkit:review-pr`: multi-dimensional PR audit (types, tests, silent failures, comments).
+- `superpowers:requesting-code-review` · `receiving-code-review`: request & act on review.
+- `/diagnose`: disciplined reproduce → fix loop for hard bugs.
+- `superpowers:systematic-debugging`: methodical debugging.
+- `superpowers:verification-before-completion`: pre-ship verification.
 
 **Long-running**
-- `/ralph-loop` — autonomous execution loop. Ask first; needs clean constraints.
+- `/ralph-loop`: autonomous execution loop. Ask first; needs clean constraints.
 
-**Agents** — dispatch as subagents, never slash.
-- `code-simplifier` — post-implementation clarity/consistency pass.
-- `silent-failure-hunter` — swallowed errors, bad fallbacks, missing propagation.
-- `react-build-resolver` — React build failures.
+**Agents:** dispatch as subagents, never slash.
+- `code-simplifier`: post-implementation clarity/consistency pass.
+- `silent-failure-hunter`: swallowed errors, bad fallbacks, missing propagation.
+- `react-build-resolver`: React build failures.
 
 **Tools**
-- **LSP** — symbol navigation, type lookups, find-references.
-- **MCP** — context7 (library docs), chrome-devtools-mcp (debug/perf), playwright (browser). Full strategy in `@GSTACK.md`.
+- **LSP:** symbol navigation, type lookups, find-references.
+- **MCP:** context7 (library docs), chrome-devtools-mcp (debug/perf), playwright (browser). Full strategy in `@GSTACK.md`.
 
 ## Git
 
 - **Never run `git commit`, `git push`, or destructive ops.** Output exact command(s) as text for user to run manually.
 - **No attribution on commits.** Never add `Co-authored-by`, `Generated-by-Claude`, or any assistant-origin markers to commit messages.
 - One logical change per commit.
-- Commit messages: subject line only, no body unless asked. Make the subject **descriptive** — name what the change actually does; don't sacrifice clarity for brevity (a longer, clear subject beats a terse, vague one). Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `perf:`, `ci:`).
+- Commit messages: subject line only, no body unless asked. Make the subject **descriptive**: name what the change actually does; don't sacrifice clarity for brevity (a longer, clear subject beats a terse, vague one). Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `perf:`, `ci:`).
 - Resolve merge conflicts manually. Never `git push --force` without approval.
 
 ## Security
