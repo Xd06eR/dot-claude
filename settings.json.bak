@@ -1,31 +1,10 @@
 {
-  "env": {
-    "CLAUDE_CODE_DISABLE_TELEMETRY": "1",
-    "CLAUDE_CODE_EFFORT_LEVEL": "max",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "ENABLE_TOOL_SEARCH": "true"
-  },
   "attribution": {
     "commit": "",
     "pr": ""
   },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "powershell -ExecutionPolicy Bypass -File \"C:\\Users\\User\\.claude\\plugins\\cache\\caveman\\caveman\\655b7d9c5431\\src\\hooks\\caveman-statusline.ps1\""
-  },
+  "autoCompactEnabled": false,
+  "autoUpdatesChannel": "latest",
   "enabledPlugins": {
     "andrej-karpathy-skills@karpathy-skills": true,
     "caveman@caveman": true,
@@ -42,8 +21,9 @@
     "frontend-design@claude-plugins-official": true,
     "github@claude-plugins-official": false,
     "hookify@claude-plugins-official": true,
-    "impeccable@impeccable": true,
+    "impeccable@impeccable": false,
     "playwright@claude-plugins-official": true,
+    "ponytail@ponytail": true,
     "pr-review-toolkit@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
@@ -54,46 +34,78 @@
     "typescript-lsp@claude-plugins-official": true,
     "vercel@claude-plugins-official": false
   },
+  "env": {
+    "CLAUDE_CODE_DISABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "ENABLE_TOOL_SEARCH": "true"
+  },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
+      "autoUpdate": true,
       "source": {
-        "source": "github",
-        "repo": "anthropics/skills"
-      },
-      "autoUpdate": true
+        "repo": "anthropics/skills",
+        "source": "github"
+      }
     },
     "caveman": {
+      "autoUpdate": true,
       "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
-      },
-      "autoUpdate": true
+        "repo": "JuliusBrussee/caveman",
+        "source": "github"
+      }
     },
     "impeccable": {
+      "autoUpdate": true,
       "source": {
-        "source": "github",
-        "repo": "pbakaus/impeccable"
-      },
-      "autoUpdate": true
+        "repo": "pbakaus/impeccable",
+        "source": "github"
+      }
     },
     "karpathy-skills": {
+      "autoUpdate": true,
       "source": {
-        "source": "github",
-        "repo": "forrestchang/andrej-karpathy-skills"
-      },
-      "autoUpdate": true
+        "repo": "forrestchang/andrej-karpathy-skills",
+        "source": "github"
+      }
     },
     "openai-codex": {
+      "autoUpdate": true,
       "source": {
-        "source": "github",
-        "repo": "openai/codex-plugin-cc"
-      },
-      "autoUpdate": true
+        "repo": "openai/codex-plugin-cc",
+        "source": "github"
+      }
+    },
+    "ponytail": {
+      "autoUpdate": true,
+      "source": {
+        "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
     }
   },
-  "autoUpdatesChannel": "latest",
-  "theme": "light",
-  "autoCompactEnabled": false,
+  "hooks": {
+    "PostToolUse": [],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "rtk hook claude",
+            "type": "command"
+          },
+          {
+            "command": "~/.claude/hooks/block-dangerous-git.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ]
+  },
+  "statusLine": {
+    "command": "powershell -ExecutionPolicy Bypass -Command \"& 'C:\\Users\\User\\.claude\\plugins\\cache\\caveman\\caveman\\25d22f864ad6\\src\\hooks\\caveman-statusline.ps1'; [Console]::Write(' '); & 'C:\\Users\\User\\.claude\\plugins\\cache\\ponytail\\ponytail\\4.7.0\\hooks\\ponytail-statusline.ps1'\"",
+    "type": "command"
+  },
   "teammateMode": "auto",
-  "effortLevel": "max"
+  "theme": "light"
 }
