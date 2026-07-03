@@ -67,7 +67,7 @@ Before marking code complete:
 | `/diagnose` | Skill | Root cause analysis on bugs found |
 | `silent-failure-hunter` | Agent | Hunt swallowed errors, bad fallbacks, missing propagation |
 | `react-build-resolver` | Agent | React build failures found during review |
-| `code-simplifier` | Agent | Code clarity/consistency refinement (Opus) |
+| `code-simplifier` | Agent | Code clarity/consistency refinement |
 
 ## Review Workflow
 
