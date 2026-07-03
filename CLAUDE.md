@@ -66,22 +66,25 @@ Organized by phase.
 
 ## Language-Specific Rules
 
-Rules live in `~/.claude/rules/`. **When starting work in a language, proactively read the relevant rules into context.**
+Rules live in `~/.claude/rules/`. In Claude Code they auto-load: `common/` and `orchestration/` always, language dirs only when files matching their `paths:` frontmatter are read. **When starting work in a language, proactively read the relevant rules into context**; other agents do not auto-load them, and scoping can miss (e.g. React hook rules in a plain `.ts` file, or new files being written rather than read).
 
 - **Python:** python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md · python/patterns.md
 - **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md · typescript/patterns.md
 - **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/patterns.md
 - **React:** react/coding-style.md · react/hooks.md · react/patterns.md · react/security.md · react/testing.md
-- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md
+- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
+- **Orchestration:** orchestration/dispatch.md · orchestration/dispatch-templates.md
 
 ## Subagents over Agent Teams
 
 Prefer **subagents** (Task tool, several calls in one message run in parallel) over agent teams. Subagents preserve my main context, run isolated, cost fewer tokens; agent teams add coordination overhead (shared board, team lead, messaging) that only pays off for long orchestrated runs.
 
-Use when: task spans >2 files, independent work can run in parallel, or reviewer needs fresh context (security, types, adversarial diff).
-Avoid when: single-file fix, one-shot call, or tight iteration loop.
+Use when: only conclusions are needed (repo-wide mapping, bulk skims, web/docs research), independent work can run in parallel, or review/acceptance needs fresh context (security, types, adversarial diff).
+Avoid when: the files are the working set — anything you will edit or reason from directly, read yourself whatever the count; or a tight iteration loop.
 
 **Main agent owns integration: never blind-accept subagent output; verify actual changes against success criteria.**
+
+Full dispatch protocol (what to delegate, report contract, escalation levers): `rules/orchestration/dispatch.md`. Fill-in delegation templates: `rules/orchestration/dispatch-templates.md`. Thresholds for escalate / done / ask / switch-path: `rules/common/judgment-rubrics.md`.
 
 ## Dev Toolkit
 
@@ -106,7 +109,7 @@ Auto-invoke when relevant. Heavy or long-running skills: ask first. **This is a 
 - `superpowers:subagent-driven-development`: patterns for dispatching and integrating subagents.
 - `/feature-dev`: guided feature build with codebase context.
 - `/frontend-design`: frontend / UI work.
-- `/impeccable`: high-quality refinement pass.
+- `/impeccable`: high-quality refinement pass (if disabled in settings.json, enable before use).
 
 **Review & Debug**
 - `/code-review`: diff review, severity levels; `ultra` = cloud multi-agent audit.
