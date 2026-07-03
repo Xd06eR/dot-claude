@@ -1,3 +1,11 @@
+---
+paths:
+  - "**/*.css"
+  - "**/*.html"
+  - "**/*.tsx"
+  - "**/*.jsx"
+---
+
 # Web Security Rules
 
 ## Content Security Policy

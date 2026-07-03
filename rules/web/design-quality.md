@@ -1,3 +1,11 @@
+---
+paths:
+  - "**/*.css"
+  - "**/*.html"
+  - "**/*.tsx"
+  - "**/*.jsx"
+---
+
 # Web Design Quality Standards
 
 > This file extends [common/patterns.md](../common/patterns.md) with web-specific design-quality guidance.

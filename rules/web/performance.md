@@ -1,3 +1,11 @@
+---
+paths:
+  - "**/*.css"
+  - "**/*.html"
+  - "**/*.tsx"
+  - "**/*.jsx"
+---
+
 # Web Performance Rules
 
 ## Core Web Vitals Targets

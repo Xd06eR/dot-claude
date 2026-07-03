@@ -1,3 +1,11 @@
+---
+paths:
+  - "**/*.css"
+  - "**/*.html"
+  - "**/*.tsx"
+  - "**/*.jsx"
+---
+
 # Web Testing Rules
 
 > This file extends [common/testing.md](../common/testing.md) with web-specific testing content.
