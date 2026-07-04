@@ -36,9 +36,9 @@ New content goes into the one file that owns its topic; other files may point to
 
 1. **Backup:** copy the file next to itself before editing. Inside `rules/`, the backup name must not end in `.md` (a `foo.backup.md` would itself auto-load); use `foo.md.bak`. Bulk changes: copy the whole tree to `rules.backup-<date>/` at the repo root.
 2. **Frontmatter decision:** every new `rules/**` file states its loading cost. Scoped (`paths:` globs) when it applies to a file type; unscoped only if it must apply to every session, and then say why in the PR/summary.
-3. **Verify loading behavior when scoping changed** with a headless probe, for example:
-   `claude -p 'No tools. Is a rule titled "<TITLE>" in your context? yes/no'`
-   and a second probe that Reads a matching file first. Expected results: unscoped rules yes; scoped rules no before the read, yes after.
+3. **Verify loading behavior when scoping changed** with a headless probe:
+   - `claude -p 'No tools. Is a rule titled "<TITLE>" in your context? yes/no'`
+   - a second probe that Reads a matching file first. Expected results: unscoped rules yes; scoped rules no before the read, yes after.
 4. **Show the diff:** `git diff <file>` goes to the user before the change counts as done. A fresh-context agent read-back (does the file say what was intended?) is the acceptance check, per `rules/orchestration/dispatch.md` section 5.
 
 ## House style for durable files
