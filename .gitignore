@@ -16,6 +16,8 @@
 # Claude Code extensions (agents, hooks, rules, skills)
 !agents/
 !agents/**
+!commands/
+!commands/**
 !hooks/
 !hooks/**
 !rules/

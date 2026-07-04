@@ -12,6 +12,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `settings.json` | Agent settings and environment |
 | `*.bak` | Backup artifacts |
 | `agents/` | Agent definitions |
+| `commands/` | Custom slash commands (e.g., `harness-audit`) |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
 | `skills/` | Skill modules — mattpocock, taste-skill, ECC, find-skills, and custom (gstack-managed skills excluded — see below) |
