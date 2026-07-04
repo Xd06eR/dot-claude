@@ -64,6 +64,7 @@ Organized by phase.
 - **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
 - **Name the design choice.** On a non-obvious choice, leave one-line comment on *why*, not mechanics. No silent magic.
 - Plain over clever unless cleverness is load-bearing.
+- **Em-dash discipline:** AI prose overuses them as a default connector; prefer colon, period, comma, or parentheses. Reserve for a break or aside those would muddle; never two in one sentence.
 - **Never break an atomic unit across lines.** A word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps for display. Break only *between* units, never *inside* one; if a unit would exceed a length limit, rewrite it shorter.
 - **Finish what you start: ship whole units, not fragments.** Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
 - **Code syntax follows the formatter, not this rule.** Ruff/prettier wrap long statements at operators. Keep that. Atomicity still applies to comments, docstrings, and string literals; never split a token mid-word.
