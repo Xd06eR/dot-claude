@@ -160,7 +160,6 @@ claude plugin install context7@claude-plugins-official
 claude plugin install document-skills@anthropic-agent-skills
 claude plugin install feature-dev@claude-plugins-official
 claude plugin install frontend-design@claude-plugins-official
-claude plugin install hookify@claude-plugins-official
 claude plugin install playwright@claude-plugins-official
 claude plugin install ponytail@ponytail
 claude plugin install pr-review-toolkit@claude-plugins-official
@@ -177,6 +176,12 @@ claude plugin install typescript-lsp@claude-plugins-official
 ```bash
 claude plugin install codex@openai-codex
 claude plugin install github@claude-plugins-official
+# hookify: disabled — hooks call bare `python3`, which does not exist on Windows
+# Git Bash (only `python` / `py`). Errors on every PreToolUse / PostToolUse /
+# UserPromptSubmit / Stop. No `.claude/hookify.*.local.md` rule files configured,
+# so the plugin does nothing useful here. Re-enable + add a `python3` symlink if
+# custom hookify rules are ever wanted.
+claude plugin install hookify@claude-plugins-official
 claude plugin install impeccable@impeccable
 claude plugin install supabase@claude-plugins-official
 claude plugin install vercel@claude-plugins-official
