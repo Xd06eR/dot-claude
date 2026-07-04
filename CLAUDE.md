@@ -21,9 +21,13 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 Follow 4-phase approach. Main agent orchestrates; subagents implement.
 
 1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity. Identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
+   - **Surface blind spots:** Beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see. Resolve each before planning.
 2. **Plan:** Write spec docs (.md) and task breakdown. Numbered checklist, each step states what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
+   - **Standard artifacts:** spec docs (`<feature>-spec.md`) — what + why + success criteria; implementation plan (`<feature>-plan.md`) — technical approach plus task breakdown (decomposed steps as `[Step] → verify: [check]`, decisions likely to change first); implementation notes (`implementation-notes.md`) — deviations logged during build.
 3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents (Task tool, parallel calls), integrate output yourself. Each subagent implements one component, includes lint + format + type-check + tests, verifies before returning.
+   - **Log deviations:** When execution diverges from the plan, append to `implementation-notes.md` — what diverged, the conservative option taken, why. Review before accepting.
 4. **Review:** Check diff against checklist and Principles. Verify against criteria set in advance. Show evidence (test output, return value). Can't verify → don't ship.
+   - **Quiz before ship:** For non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 Skip phases only for trivial changes: typo, rename, one-liner with zero ambiguity.
 
