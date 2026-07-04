@@ -96,9 +96,31 @@
           {
             "command": "~/.claude/hooks/block-dangerous-git.sh",
             "type": "command"
+          },
+          {
+            "command": "~/.claude/hooks/block-secrets.sh",
+            "type": "command"
           }
         ],
         "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "~/.claude/hooks/skill-tracker.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Skill"
+      },
+      {
+        "hooks": [
+          {
+            "command": "~/.claude/hooks/protect-files.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|Write|MultiEdit"
       }
     ]
   },
