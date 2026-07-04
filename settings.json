@@ -99,15 +99,6 @@
           }
         ],
         "matcher": "Bash"
-      },
-      {
-        "hooks": [
-          {
-            "command": "~/.claude/hooks/skill-tracker.sh",
-            "type": "command"
-          }
-        ],
-        "matcher": "Skill"
       }
     ]
   },
