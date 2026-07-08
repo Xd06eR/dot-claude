@@ -90,51 +90,35 @@ Use the minimum number of dispatches necessary — 0–1 is normal; reach for mu
 
 Full dispatch protocol (what to delegate, report contract, escalation levers): `rules/orchestration/dispatch.md`. Fill-in delegation templates: `rules/orchestration/dispatch-templates.md`. Thresholds for escalate / done / ask / switch-path: `rules/common/judgment-rubrics.md`.
 
-## Dev Toolkit
+## Skill invocation (operative rule)
 
-Auto-invoke when relevant. Heavy or long-running skills: ask first. **This is a curated shortlist, not the full inventory.** Always scan all available skills + agents and pick the best fit for the task; never limit yourself to what's listed here.
+**Skill check happens at phase entry, before any other action.** "Available" ≠ "invoked" — the Skill-tool listing skills in context is not invocation; you must call the Skill tool. The Skill-tool's slash framing ("when the user types /name") is a default; the phase table below overrides it: at each phase, invoke the matching skill before answering, drafting, or editing.
 
-**Skill Composition: stack orthogonal skills, not singletons.** Real tasks span concerns; one skill rarely covers end-to-end. Build a small stack per task, picked freely from the category lists in Dev Toolkit below and GSTACK.md. No fixed recipes. Judge per task.
+Re-anchor with `andrej-karpathy-skills:karpathy-guidelines` before any non-trivial change.
 
-- **Phase:** Pull a skill per phase of the workflow above that applies (design / plan / build / review / ship). Skip phases the task lacks.
-- **Concern:** Within a phase, stack skills covering *different* concerns (e.g. structure + a11y + security). Orthogonal only.
-- **Dedupe:** Never stack two skills doing the same job. The three review skills (`/code-review`, `pr-review-toolkit:review-pr`, `/review`) are substitutes, pick one. Same for design review, debug, generation.
-- **Budget:** Every skill loads tokens. Default 1–3; justify more. Note that Gravity governs correctness of the work, not skill count. Skipping a redundant skill is restraint, not omission.
+**One skill per task is a failure mode.** Stack orthogonal skills across phases.
 
-**Foundational**
-- `/karpathy-guidelines`: vibe-coding principles. Most of this CLAUDE.md derives from it. Re-anchor before non-trivial change.
+Skill Composition:
+- **Phase** — one skill per workflow phase the task has (design / plan / build / review / ship). Skip phases the task lacks.
+- **Concern** — within a phase, stack skills covering different concerns. Orthogonal only.
+- **Dedupe** — never stack two skills doing the same job. The three review skills (`code-review`, `pr-review-toolkit:review-pr`, `review`) are substitutes; pick one.
+- **Budget** — default 1–3 skills; justify more.
 
-**Design & Plan**
-- `/grill-me`, `/grill-with-docs`: stress-test plan by interview. Ask first.
-- `superpowers:brainstorming` · `superpowers:writing-plans`: explore and structure.
+Phase-gate table (invoke at phase start, before other work):
 
-**Build**
-- `superpowers:test-driven-development`: TDD workflow.
-- `superpowers:subagent-driven-development`: patterns for dispatching and integrating subagents.
-- `/feature-dev`: guided feature build with codebase context.
-- `/frontend-design`: frontend / UI work.
-- `/impeccable`: high-quality refinement pass (if disabled in settings.json, enable before use).
+| Phase | Invoke one or more |
+|---|---|
+| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` |
+| Plan | `superpowers:writing-plans` |
+| Build | `superpowers:test-driven-development` · `superpowers:subagent-driven-development` |
+| QA | `qa` |
+| Review | `code-review` · `pr-review-toolkit:review-pr` · `silent-failure-hunter` |
+| Ship | `ship` · `land-and-deploy` · `canary` · `document-release` |
+| Debug | `superpowers:systematic-debugging` · `diagnose` |
 
-**Review & Debug**
-- `/code-review`: diff review, severity levels; `ultra` = cloud multi-agent audit.
-- `/security-review`: security audit of the diff.
-- `pr-review-toolkit:review-pr`: multi-dimensional PR audit (types, tests, silent failures, comments).
-- `superpowers:requesting-code-review` · `receiving-code-review`: request & act on review.
-- `/diagnose`: disciplined reproduce → fix loop for hard bugs.
-- `superpowers:systematic-debugging`: methodical debugging.
-- `superpowers:verification-before-completion`: pre-ship verification.
+Heavy or long-running skills (ralph-loop, autonomous loops): ask first.
 
-**Long-running**
-- `/ralph-loop`: autonomous execution loop. Ask first; needs clean constraints.
-
-**Agents:** dispatch as subagents, never slash.
-- `code-simplifier:code-simplifier`: post-implementation clarity/consistency pass. (`pr-review-toolkit:code-simplifier` is the same agent bundled in the toolkit; use the standalone.)
-- `silent-failure-hunter`: swallowed errors, bad fallbacks, missing propagation.
-- `react-build-resolver`: React build failures.
-
-**Tools**
-- **LSP:** symbol navigation, type lookups, find-references.
-- **MCP:** context7 (library docs), chrome-devtools-mcp (debug/perf), playwright (browser). Full strategy in `@GSTACK.md`.
+Fuller reference catalog (skills, agents, tools): `TOOLKIT.md`.
 
 ## Git
 
@@ -149,5 +133,5 @@ Auto-invoke when relevant. Heavy or long-running skills: ask first. **This is a 
 - Never commit secrets, API keys, or credentials.
 - Never access sensitive directories (`~/.ssh`, `~/Library/Keychains`).
 
-@GSTACK.md
 @RTK.md
+@TOOLKIT.md
