@@ -116,7 +116,7 @@ Phase-gate table (invoke at phase start, before other work):
 | Ship | `ship` · `land-and-deploy` · `canary` · `document-release` |
 | Debug | `superpowers:systematic-debugging` · `diagnose` |
 
-Heavy or long-running skills (ralph-loop, autonomous loops): ask first.
+Heavy or long-running skills (autonomous loops): ask first.
 
 Fuller reference catalog (skills, agents, tools): `TOOLKIT.md`.
 

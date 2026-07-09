@@ -60,9 +60,6 @@ Plan-review and security-audit work is verifier-shaped → best as fresh-context
 - `cso`: Chief Security Officer deep-audit mode.
 - `autoplan`: orchestrator; will dispatch the converted reviewers + synthesize.
 
-## Long-running
-- `/ralph-loop`: autonomous execution loop. Ask first; needs clean constraints.
-
 ## Agents
 Dispatch as subagents, never slash.
 - `code-simplifier:code-simplifier`: post-implementation clarity/consistency pass.
