@@ -103,7 +103,7 @@
     ]
   },
   "statusLine": {
-    "command": "powershell -ExecutionPolicy Bypass -Command \"& 'C:\\Users\\User\\.claude\\plugins\\cache\\caveman\\caveman\\25d22f864ad6\\src\\hooks\\caveman-statusline.ps1'; [Console]::Write(' '); & 'C:\\Users\\User\\.claude\\plugins\\cache\\ponytail\\ponytail\\4.7.0\\hooks\\ponytail-statusline.ps1'\"",
+    "command": "bash -c 'in=$(cat); printf \"%s\" \"$in\" | bash /home/paul_wong/.claude/plugins/marketplaces/caveman/src/hooks/caveman-statusline.sh; printf \" \"; printf \"%s\" \"$in\" | bash /home/paul_wong/.claude/plugins/marketplaces/ponytail/hooks/ponytail-statusline.sh'",
     "type": "command"
   },
   "teammateMode": "auto",
