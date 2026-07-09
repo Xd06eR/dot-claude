@@ -101,7 +101,7 @@ Re-anchor with `andrej-karpathy-skills:karpathy-guidelines` before any non-trivi
 Skill Composition:
 - **Phase** — one skill per workflow phase the task has (design / plan / build / review / ship). Skip phases the task lacks.
 - **Concern** — within a phase, stack skills covering different concerns. Orthogonal only.
-- **Dedupe** — never stack two skills doing the same job. The three review skills (`code-review`, `pr-review-toolkit:review-pr`, `review`) are substitutes; pick one.
+- **Dedupe** — never stack two skills doing the same job. The review skills (`code-review`, `pr-review-toolkit:review-pr`) are substitutes; pick one.
 - **Budget** — default 1–3 skills; justify more.
 
 Phase-gate table (invoke at phase start, before other work):
@@ -112,7 +112,7 @@ Phase-gate table (invoke at phase start, before other work):
 | Plan | `superpowers:writing-plans` |
 | Build | `superpowers:test-driven-development` · `superpowers:subagent-driven-development` |
 | QA | `qa` |
-| Review | `code-review` · `pr-review-toolkit:review-pr` · `silent-failure-hunter` |
+| Review | `code-review` (the built-in skill, not the `code-review:code-review` plugin) · `pr-review-toolkit:review-pr` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) |
 | Ship | `ship` · `land-and-deploy` · `canary` · `document-release` |
 | Debug | `superpowers:systematic-debugging` · `diagnose` |
 
