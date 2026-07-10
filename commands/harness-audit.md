@@ -23,11 +23,21 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 1. **Cross-file contradictions.** Rules in different files that conflict when both apply. Example: one file says "two retries max", another says "three".
 2. **Stale references.** File paths, tool names, MCP connectors, skill names, frontmatter `paths:` globs that no longer resolve.
 3. **Size budget.** Any single `rules/**` file beyond ~8 KB; unscoped set (`rules/common/*.md` + `rules/orchestration/*.md`) beyond ~40 KB total; `MEMORY.md` beyond ~30 lines. Measure with `wc -c`.
-4. **Weak-model-misread wording.** Abstract asks without criteria or examples ("maintain high quality", "be careful"). Every rule must be executable by a Sonnet-tier model: concrete, with judgment criteria, at least one positive example.
+4. **Weak-model-misread wording.** Abstract asks without criteria or examples ("maintain high quality", "be careful"). Every rule must be executable by a mid-tier model: concrete, with judgment criteria, at least one positive example.
 5. **Coverage gaps.** Task types appearing in real use but missing from `rules/orchestration/dispatch-templates.md` (search/implement/refactor/research/review).
 6. **Promotion candidates.** Lessons in memory that have held across 3+ sessions and read as stable rules, but are not yet in `rules/**`.
 7. **Orphaned memory.** Memory entries nothing links to (`[[name]]` pointing nowhere), or memory links pointing at deleted entries.
 8. **Rejected-proposal resurfacing.** Current state or recent changes re-propose something memory'd as a rejected proposal.
+
+### Skill and agent layer (harness-style target)
+
+Descriptions and frontmatter are load-bearing: a skill only fires if its description matches the situation, and a dangling install silently vanishes from the menu. Check `skills/*/SKILL.md` and `agents/*.md`:
+
+9. **Dead skill/agent installs.** A `SKILL.md` whose body references a bundled file, script, or sibling skill that is not on disk; a skill dir whose `SKILL.md` is a broken symlink (`find skills -xtype l`, want 0); an agent named in a phase-gate or chaining clause that has no `agents/*.md`. These read as "available" but fail at invocation.
+10. **Description drift (auto-invocation).** Descriptions keyed to trigger phrases ("use when the user says X") instead of intent/phase ("use at the [phase] when [situation]") — the former only fire on literal lexical matches and are the top cause of skills not auto-invoking. Also flag: a description whose chaining clause names a renamed, converted, or deleted skill.
+11. **Git-safety in skills.** Any skill body that executes `git commit`/`git push`/`gh pr create`/`glab mr create` or another remote mutation instead of emitting it as an output-for-the-user block. Mutations belong in a fenced block whose first line is an explicit do-not-execute marker; flag any that run directly (violates the never-run-git rule in `CLAUDE.md`).
+12. **Cross-platform commands.** Skill/hook commands assuming one OS: bare `python3` or bare `python` without a `command -v python3 || command -v python` detect chain; a file opener without an `open || xdg-open || start || echo` fallback; Linux-only tools (`lsof`, `xclip`, `xdg-*`) with no fallback. The harness runs on Linux, macOS, and Windows Git Bash.
+13. **Source-line readability.** Files (especially agent lens/data files) where a whole list or multi-sentence block is crammed onto one 400+ char source line. One list item per bullet line; long prose gets semantic line breaks. The atomic-unit rule forbids breaking inside a sentence, not putting each item on its own line.
 
 ### Project-style target
 
@@ -49,11 +59,13 @@ For project targets, do NOT duplicate work covered by `/review`, `/qa`, `/code-r
 
 This audit fans out: 2 subagent dispatches (investigator + adversarial reviewer) plus a full read of the target working set. Heavy; proceed.
 
-**Phase 1 — Map.** Dispatch a fresh-context investigator subagent to inventory relevant files (rules, memory, CLAUDE.md, project docs). It returns `file:line + one-line role` per item, not file contents.
+**Phase 1 — Map.** Dispatch a fresh-context investigator subagent to inventory relevant files (rules, memory, CLAUDE.md, project docs; for a harness target also `skills/*/SKILL.md` frontmatter + `agents/*.md`). It returns `file:line + one-line role` per item, not file contents. For the skill/agent layer it also returns each skill's `name` + `description` (the fields checks 9-13 judge) and flags any broken symlink or missing bundled file it hits.
 
 **Phase 2 — Audit.** Main agent reads the working set directly (the files findings will touch), runs the applicable checks above, drafts findings.
 
 **Phase 3 — Adversarial review.** Dispatch a fresh-context reviewer subagent. Brief the reviewer with `file:line` + finding only — not the auditor's reasoning — to avoid anchoring. Refute each finding; look specifically for rules fighting each other, stale path/tool names, and wording a weaker model would misread. Drop any finding that does not survive. Each surviving finding keeps `file:line + concrete failure scenario`. If the Agent tool is unavailable, fall back to a skeptical self re-read and tag each finding `Self-verified` so the user knows the no-fresh-context caveat.
+
+**Subagent gotcha:** if a `block-dangerous-git.sh`-style PreToolUse hook is active, a dispatched agent that runs `grep 'git commit'` in Bash gets killed — the hook pattern-matches the command string even inside a search. Tell dispatched agents to use the Grep tool (not Bash `grep`) for any search whose pattern contains a git-mutation literal.
 
 **Phase 4 — Apply per change tier** (per `rules/common/harness-maintenance.md`):
 - **Self-serve**: name-only dead-ref fixes (file/tool renamed, path moved — no behavior or routing change), `MEMORY.md` index line updates. Apply directly, show diff.
@@ -83,6 +95,8 @@ Mark what this audit CANNOT catch:
 - **Cross-session drift** is invisible; audit sees only current state. Note this in the summary.
 
 If uncertain: look it up. If unconfirmable: mark `UNVERIFIED`. Never fabricate.
+
+**Behavioral checks need the real runtime.** Whether a skill actually auto-invokes by phase cannot be judged by reading its description — it has to be observed in a normal **interactive** session. A headless `claude -p` probe suppresses phase-gated invocation (a single `-p` prompt reads as a one-off question), so a zero there is a false negative, not evidence the wiring is broken. If asked to confirm auto-invocation, say it needs an interactive check; do not assert pass/fail from a `-p` run.
 
 ## Ruled out (do not do)
 
