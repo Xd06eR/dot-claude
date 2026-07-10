@@ -7,7 +7,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | Path | Description |
 |---|---|
 | `CLAUDE.md` | Global system instructions |
-| `GSTACK.md` | Skill catalog reference |
+| `TOOLKIT.md` | Skill, agent, and tool catalog |
 | `RTK.md` | Proxy configuration |
 | `settings.json` | Agent settings and environment |
 | `*.bak` | Backup artifacts |
@@ -15,7 +15,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `commands/` | Custom slash commands (e.g., `harness-audit`) |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules — mattpocock, taste-skill, ECC, find-skills, and custom (gstack-managed skills excluded — see below) |
+| `skills/` | Skill modules — mattpocock, taste-skill, ECC, find-skills, custom, and 13 gstack-origin skills rewritten as owned (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -31,7 +31,7 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 | [ECC (Everything Claude Code)](https://github.com/affaan-m/ECC) | 17 | Manual install (14 `origin: ECC` + 3 `origin: community`) |
 | [vercel-labs/skills](https://github.com/vercel-labs/skills) | 1 | `npx skills add vercel-labs/skills` (only skill: `find-skills`; discover more at [skills.sh](https://www.skills.sh/)) |
 | Custom (`teach-back`) | 1 | User-edited from another skill |
-| [Gstack](https://github.com/garrytan/gstack) | 55 | `bash setup` inside gstack clone — **not tracked** |
+| Gstack-origin, now owned | 13 skills + 2 agents | Rewritten gstack-free from [gstack](https://github.com/garrytan/gstack) originals; tracked like any other skill. Skills: ship, spec, qa, diagram, make-pdf, deploy-watch, land-and-deploy, document-release, document-generate, design-html, design-consultation, design-variants, plan-review (+ its `lenses/`). Agents: plan-reviewer, security-auditor. |
 
 ## Excluded Data
 
@@ -40,7 +40,7 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 1. **Runtime artifacts** — logs, caches, session transcripts, file history, environment snapshots, telemetry, etc.
 2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
 3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
-4. **Gstack skill catalog** — `skills/gstack/` clone and its installed skill directories. On Windows, setup copies skill files into `~/.claude/skills/`. On macOS/Linux, setup creates symlinks. Gstack is an external repo managed independently; both the clone and the installed skill directories are excluded from tracking to avoid duplicating content owned by that repo.
+4. **Gstack clone guard** — `skills/gstack/` stays in `.gitignore` as a guard: the gstack clone was removed after the keeper skills were rewritten as owned, and the ignore line prevents a future clone from being tracked by accident. The rewritten skills themselves are tracked normally.
 
 ## Hooks
 
@@ -96,37 +96,9 @@ npx skills@latest add mattpocock/skills
 
 Select the skills to update in the interactive picker. Overwrites existing skill files in `~/.claude/skills/`.
 
-### Get gstack (first time)
+### Gstack (historical)
 
-`skills/gstack/` is excluded from tracking. Clone and run setup:
-
-```bash
-cd ~/.claude/skills
-git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git
-cd gstack
-
-# macOS / Linux (creates symlinks)
-./setup
-
-# Windows / Git Bash / WSL (creates copies)
-bash setup
-```
-
-Requires **bun** (`>=1.0`).
-
-### Update gstack
-
-```bash
-cd ~/.claude/skills/gstack
-git pull
-
-# Rerun setup to refresh installed skills
-# macOS / Linux
-./setup
-
-# Windows / Git Bash / WSL
-bash setup
-```
+Gstack is no longer installed. The 18 skills worth keeping were rewritten gstack-free and are tracked in this repo (see Skill Sources); 6 of those were further converted into the plan-review architecture (`skills/plan-review/` + `agents/plan-reviewer.md` + `agents/security-auditor.md`). Do not re-clone gstack to update them — they are owned and edited here directly. `skills/gstack/` remains git-ignored as a guard.
 
 ### Restore plugins
 
