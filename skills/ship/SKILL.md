@@ -1,6 +1,6 @@
 ---
 name: ship
-description: "Use at the ship phase, when a feature or fix is complete, tested, and ready to leave the branch: merges the base branch, runs the test suite, reviews the diff, bumps VERSION, updates CHANGELOG, and prepares the exact commit, push, and PR commands for you to run. After shipping, consider `canary` for post-deploy monitoring or `document-release` to update docs."
+description: "Use at the ship phase, when a feature or fix is complete, tested, and ready to leave the branch: merges the base branch, runs the test suite, reviews the diff, bumps VERSION, updates CHANGELOG, and prepares the exact commit, push, and PR commands for you to run. After shipping, consider `deploy-watch` for post-deploy monitoring or `document-release` to update docs."
 allowed-tools:
   - Bash
   - Read

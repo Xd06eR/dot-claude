@@ -109,11 +109,11 @@ Phase-gate table (invoke at phase start, before other work):
 | Phase | Invoke one or more |
 |---|---|
 | Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` |
-| Plan | `superpowers:writing-plans` |
+| Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) |
 | Build | `superpowers:test-driven-development` · `superpowers:subagent-driven-development` |
 | QA | `qa` |
 | Review | `code-review` (the built-in skill, not the `code-review:code-review` plugin) · `pr-review-toolkit:review-pr` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) |
-| Ship | `ship` · `land-and-deploy` · `canary` · `document-release` |
+| Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` |
 | Debug | `superpowers:systematic-debugging` · `diagnose` |
 
 Heavy or long-running skills (autonomous loops): ask first.

@@ -1,6 +1,6 @@
 ---
 name: design-consultation
-description: "Design-phase consultation for defining a project's visual system from scratch: understand the product, research the landscape, and propose one coherent system (aesthetic direction, typography, color, layout, spacing, motion) with rationale and rendered font and color previews, then capture it in DESIGN.md. Use when a project has no design system yet and needs its visual foundation set before UI work begins. Chain into design-shotgun to explore concrete UI variants, or design-html to finalize the system into production markup."
+description: "Design-phase consultation for defining a project's visual system from scratch: understand the product, research the landscape, and propose one coherent system (aesthetic direction, typography, color, layout, spacing, motion) with rationale and rendered font and color previews, then capture it in DESIGN.md. Use when a project has no design system yet and needs its visual foundation set before UI work begins. Chain into design-variants to explore concrete UI variants, or design-html to finalize the system into production markup."
 allowed-tools:
   - Bash
   - Read
@@ -238,7 +238,7 @@ Do not deviate without explicit user approval.
 
 Finally, list every decision back to the user and flag any that used your defaults without their explicit confirmation, so they know exactly what is shipping. Ask, in plain text, whether to ship it, change something, or start over. Write the files once confirmed.
 
-If the session produced screen-level mockups or page layouts, suggest finalizing the system into production markup with `design-html`; to explore concrete UI variants first, suggest `design-shotgun`.
+If the session produced screen-level mockups or page layouts, suggest finalizing the system into production markup with `design-html`; to explore concrete UI variants first, suggest `design-variants`.
 
 ## Important rules
 

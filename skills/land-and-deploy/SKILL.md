@@ -1,6 +1,6 @@
 ---
 name: land-and-deploy
-description: "Ship phase for landing and deploying a finished, reviewed, green branch: merge it to the base branch, deploy to whatever the repo already configures (CI-on-merge, or a platform CLI or deploy script run after your plain-text go-ahead), then verify the release is healthy with HTTP and smoke checks before walking away. Gates the irreversible merge behind a readiness check and hands the merge, push, and any revert back as commands you run. After it lands, chain `canary` for the post-deploy monitoring window and `document-release` to record what shipped; on a failed verify, hand off to `diagnose`."
+description: "Ship phase for landing and deploying a finished, reviewed, green branch: merge it to the base branch, deploy to whatever the repo already configures (CI-on-merge, or a platform CLI or deploy script run after your plain-text go-ahead), then verify the release is healthy with HTTP and smoke checks before walking away. Gates the irreversible merge behind a readiness check and hands the merge, push, and any revert back as commands you run. After it lands, chain `deploy-watch` for the post-deploy monitoring window and `document-release` to record what shipped; on a failed verify, hand off to `diagnose`."
 allowed-tools:
   - Bash
   - Read
@@ -156,7 +156,7 @@ Stream the result. Nonzero exit: show the output and offer the revert block (Ste
 
 ## Step 7: Verify the deploy is healthy
 
-Single-pass check that the release is actually up. (`canary` owns the extended monitoring loop.)
+Single-pass check that the release is actually up. (`deploy-watch` owns the extended monitoring loop.)
 
 You need a URL: use the argument, the `CLAUDE.md` production URL, or ask. No URL and not a web service: note "deployed, not verified" and go to Step 8.
 
@@ -189,8 +189,8 @@ Print (do not write a file) a compact summary: PR/MR number and title, merge SHA
 
 Then chain the natural next step:
 
-- Verified live: "Run `canary <url>` to watch it through the stabilization window."
-- Merged but unverified: "Check it manually, or run `canary <url>` once you have the URL."
+- Verified live: "Run `deploy-watch <url>` to watch it through the stabilization window."
+- Merged but unverified: "Check it manually, or run `deploy-watch <url>` once you have the URL."
 - Shipped something notable: "Run `document-release` to sync README, CHANGELOG, and docs with what landed."
 - Verify failed or reverted: "Run `diagnose` to find the root cause before re-shipping."
 
@@ -198,7 +198,7 @@ Then chain the natural next step:
 
 - **Never merge, push, tag, or create/merge a PR/MR against a remote yourself.** Output those as command blocks; the user runs them. Never a force or destructive variant.
 - **Deploy execution is allowed, but only after a plain-text go-ahead**, and never a force or destructive deploy. Watching an auto-deploy needs no go-ahead (it is read-only).
-- **Verification is single-pass.** `canary` owns the monitoring loop.
+- **Verification is single-pass.** `deploy-watch` owns the monitoring loop.
 - **Auto-detect everything** (PR, base branch, platform, deploy path, staging). Ask only when it genuinely cannot be inferred.
 - **Poll read-only, with sane intervals and caps** (roughly 30s, minutes not hours). Do not hammer the API.
 - **Stay inside the working repo.** Write no state, metrics, or report files anywhere; print the report instead.

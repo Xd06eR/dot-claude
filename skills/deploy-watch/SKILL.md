@@ -1,6 +1,6 @@
 ---
-name: canary
-description: "Post-deploy verification phase: after a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Polls health and smoke endpoints, tails deploy logs, re-runs critical-path checks, and compares against a pre-deploy baseline where one exists, then returns a verdict (healthy, degraded, or rollback-recommended) with evidence. Recommends and prints exact rollback commands on failure but never runs them. When the canary flags a regression hand off to `diagnose` for root cause; when it comes back clean consider `document-release` to record what shipped."
+name: deploy-watch
+description: "Post-deploy verification phase: after a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Polls health and smoke endpoints, tails deploy logs, re-runs critical-path checks, and compares against a pre-deploy baseline where one exists, then returns a verdict (healthy, degraded, or rollback-recommended) with evidence. Recommends and prints exact rollback commands on failure but never runs them. When the deploy-watch flags a regression hand off to `diagnose` for root cause; when it comes back clean consider `document-release` to record what shipped."
 allowed-tools:
   - Bash
   - Read
@@ -31,9 +31,9 @@ Decide the paths to watch. Use paths named in the inputs; else the homepage plus
 
 ## Step 2: Baseline (optional, strongest before the deploy)
 
-A canary compares against a reference. The best reference is a baseline captured on the old version before deploying; without one, the canary falls back to absolute checks (expect 2xx, expect smoke tests green).
+A deploy-watch compares against a reference. The best reference is a baseline captured on the old version before deploying; without one, the deploy-watch falls back to absolute checks (expect 2xx, expect smoke tests green).
 
-If invoked before the deploy to capture a baseline, run the Step 3 probes once against the current live version and keep the results (status, latency, error-log rate, smoke outcome) as the reference. Then tell the user: "Baseline captured. Deploy, then run canary against the same target to watch."
+If invoked before the deploy to capture a baseline, run the Step 3 probes once against the current live version and keep the results (status, latency, error-log rate, smoke outcome) as the reference. Then tell the user: "Baseline captured. Deploy, then run deploy-watch against the same target to watch."
 
 If invoked after the deploy with no baseline, note that you are running absolute checks and continue.
 
@@ -47,7 +47,7 @@ Use every probe the environment supports; skip the rest. The first two are unive
    ```
    Expect a 2xx or an intended redirect and a latency near the baseline.
 
-2. **Critical-path smoke tests.** Re-run the repo's fast critical-path checks if it has them: a `smoke` script (`npm run smoke`), a tagged e2e subset (`npm run test:e2e -- --grep @smoke`, `pytest -m smoke`), or a `smoke/` script. If none exist, curl each critical route and assert a 2xx plus a sentinel string in the body (a known element, an API field). Do not run the full test suite; the canary wants a fast signal.
+2. **Critical-path smoke tests.** Re-run the repo's fast critical-path checks if it has them: a `smoke` script (`npm run smoke`), a tagged e2e subset (`npm run test:e2e -- --grep @smoke`, `pytest -m smoke`), or a `smoke/` script. If none exist, curl each critical route and assert a 2xx plus a sentinel string in the body (a known element, an API field). Do not run the full test suite; the deploy-watch wants a fast signal.
 
 3. **Deploy logs (platform CLI, where available).** Read recent logs with a **bounded, one-shot** command and scan for an error spike. Never the streaming or follow forms (`-f`, `--tail`, plain `fly logs`): those are unbounded daemons.
    ```bash
@@ -123,7 +123,7 @@ Alerts:   <count> (<critical>/<high>/<medium>/<low>)
 Evidence: <log excerpts, screenshot paths, smoke output tails>
 ```
 
-The report is the deliverable; print it. If the user wants a durable record, save it to a repo-local path they choose (for example `canary-report.md`); write nothing outside the working repo.
+The report is the deliverable; print it. If the user wants a durable record, save it to a repo-local path they choose (for example `deploy-watch-report.md`); write nothing outside the working repo.
 
 ## Step 6: Rollback recommendation (only on ROLLBACK RECOMMENDED)
 
@@ -153,5 +153,5 @@ Keep only the lines for the actual platform; drop the rest. Then hand off to `di
 - **Bounded, no daemon.** Every watch has a hard deadline and a fixed interval. Never leave a streaming log follower or background loop running.
 - **Alert on change, tolerate transients.** Compare to the baseline; require a problem to persist across 2+ checks before alerting.
 - **Evidence with every alert.** A log excerpt, a curl result, or a screenshot path. No bare assertions.
-- **A baseline captured before the deploy makes the canary far sharper.** Encourage it; without one, fall back to absolute health checks and say so.
+- **A baseline captured before the deploy makes the deploy-watch far sharper.** Encourage it; without one, fall back to absolute health checks and say so.
 - **Stay inside the working repo.** Write no state, metrics, or files anywhere outside it; an optional report goes to a repo-local path the user picks.

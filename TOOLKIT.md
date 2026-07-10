@@ -22,7 +22,7 @@ The **Skill invocation operative rule** and **phase-gate table** (must-fire skil
 - `spec`: vague intent → executable spec, five phases.
 - `design-consultation`: propose a full design system (aesthetic, type, color, motion) + previews.
 - `design-html`: generate production HTML/CSS from a design (Pretext-native).
-- `design-shotgun`: generate UI variants + comparison board + structured feedback.
+- `design-variants`: generate UI variants + comparison board + structured feedback.
 
 ## Build
 - `superpowers:test-driven-development`: TDD workflow.
@@ -45,23 +45,22 @@ The **Skill invocation operative rule** and **phase-gate table** (must-fire skil
 ## Ship & Deploy
 - `ship`: merge base, tests, diff review, VERSION, CHANGELOG, commit, push, PR.
 - `land-and-deploy`: merge + deploy.
-- `canary`: post-deploy monitoring.
+- `deploy-watch`: post-deploy monitoring.
 - `document-release`: post-release doc update.
-- `landing-report`: release-queue dashboard.
 
 ## Docs & Artifacts
 - `document-generate`: docs from existing code.
 - `diagram`: English/mermaid → diagram triplet (.excalidraw + source).
 - `make-pdf`: markdown → publication-quality PDF.
 
-## Verifier candidates (planned agent conversion)
-Plan-review and security-audit work is verifier-shaped → best as fresh-context subagents (verifier beats self-critique). These skills are source material for forthcoming agents; until converted they run in-session.
-- `plan-ceo-review` · `plan-design-review` · `plan-devex-review` · `plan-eng-review`: four plan-review lenses (pick one per plan).
-- `cso`: Chief Security Officer deep-audit mode.
-- `autoplan`: orchestrator; will dispatch the converted reviewers + synthesize.
+## Plan Review
+- `plan-review`: orchestrator skill; dispatches the four lenses as parallel `plan-reviewer` agents (+ `security-auditor` when the plan touches a security surface), merges reports, auto-resolves via 6 decision principles, surfaces taste calls.
+- Lens files (data, not skills): `skills/plan-review/lenses/{ceo,design,devex,eng}.md` — consumed by `plan-reviewer`; dispatch one instance per lens for a single-lens review without the orchestrator.
 
 ## Agents
 Dispatch as subagents, never slash.
+- `plan-reviewer`: reviews a plan/spec through ONE named lens file; one instance per lens, parallel.
+- `security-auditor`: adversarial read-only security audit (codebase, diff, or plan); STRIDE + severity-ranked findings + ship/block verdict.
 - `code-simplifier:code-simplifier`: post-implementation clarity/consistency pass.
 - `silent-failure-hunter`: swallowed errors, bad fallbacks, missing propagation.
 - `react-build-resolver`: React build failures.
