@@ -168,7 +168,7 @@ Preserve the repo's existing VERSION format (segment count, `v` prefix). Sanity-
 
 ## Step 11: Output the commit, push, and PR-body update
 
-You have audited, edited, polished, and (if approved) bumped. Now assemble the commands. **Do NOT execute anything in this step: output the block for the user to run.**
+You have audited, edited, polished, and (if approved) bumped. Now assemble the commands. **Do NOT execute the commit/push/PR block below — output it for the user to run.** The `git status` precheck is read-only and fine to run yourself.
 
 First check whether any doc files were modified:
 

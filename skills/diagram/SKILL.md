@@ -1,6 +1,6 @@
 ---
 name: diagram
-description: "Design phase: turn an English description or mermaid source into a diagram source file (`.mmd`) plus rendered SVG/PNG. To edit visually, paste the mermaid source at excalidraw.com (auto-converts to editable elements). Chain into `document-generate` or `make-pdf` when a document needs the figure embedded."
+description: "Design phase: turn an English description or mermaid source into a diagram triplet: `.mmd` source, an editable `.excalidraw` file (flowcharts, via the bundled converter), and rendered SVG/PNG where mermaid-cli is installed. Chain into `document-generate` or `make-pdf` when a document needs the figure embedded."
 allowed-tools:
   - Bash
   - Read
@@ -17,9 +17,8 @@ Turn a description or mermaid source into a diagram artifact set. All outputs go
 | File | Purpose |
 |---|---|
 | `<slug>.mmd` | Mermaid source — the LLM-readable, version-controllable core |
+| `<slug>.excalidraw` | Editable Excalidraw file (flowcharts, via the bundled converter) |
 | `<slug>.svg` + `<slug>.png` | Rendered outputs (where mermaid-cli is installed) |
-
-**Excalidraw editing:** paste the `.mmd` source at https://excalidraw.com — it auto-converts mermaid to editable elements. No local `.excalidraw` file is generated; the web app's built-in converter is the reliable path (the `@excalidraw/mermaid-to-excalidraw` npm package requires a browser DOM and cannot run in Node.js).
 
 ## Step 1: Author the mermaid source
 
@@ -29,14 +28,20 @@ Keep node labels short; put detail in edge labels. 5-15 nodes is the readable ra
 
 Write the source file to `<outdir>/<slug>.mmd` using the Write tool.
 
-## Step 2: Excalidraw editing path (via excalidraw.com)
+## Step 2: Generate the .excalidraw file (flowcharts)
 
-Excalidraw's web app natively imports mermaid and converts it to editable elements. Do NOT hand-roll `.excalidraw` JSON: the schema binds text labels to shapes via `containerId`/`boundElements` (separate elements, not inline properties), and hand-rolled JSON opens with shapes but no labels. The official converter at excalidraw.com handles the binding correctly.
+For flowcharts (`graph LR`/`graph TD`), run the bundled converter — it emits valid Excalidraw JSON with text labels correctly bound to shapes via `containerId`/`boundElements`. Never hand-roll `.excalidraw` JSON yourself: inline `text` properties on shapes silently render with no labels.
 
-For the user:
-1. Open https://excalidraw.com
-2. Paste the `.mmd` source from Step 1
-3. Excalidraw auto-converts: flowcharts become editable boxes, arrows, and labels; other diagram types paste as an SVG image
+```bash
+PY=$(command -v python3 || command -v python)
+"$PY" <path-to-this-skill>/gen_excalidraw.py <outdir>/<slug>.mmd > <outdir>/<slug>.excalidraw
+```
+
+The converter writes the JSON to stdout (redirect it); on a non-flowchart input it exits 2 with a note and writes nothing, so an empty output file means skip and fall back to the paste path.
+
+The converter parses the flowchart subset (nodes, edges, labels, shapes); it skips subgraphs and styling directives and prints a note when it does. Layout is a simple layered grid — the file is a drag-to-refine starting point, not a finished layout; the SVG/PNG from Step 3 stays the ground-truth render.
+
+For non-flowchart types (sequence, state, ER), skip the converter and give the user the paste path instead: open https://excalidraw.com and paste the `.mmd` source (flowcharts become editable elements there; other types paste as an image). If the converter errors on a valid flowchart, fall back to the same paste note and say so.
 
 ## Step 3: Render to SVG and PNG (where mermaid-cli is installed)
 
@@ -68,8 +73,8 @@ For PNG, `-s 3` gives ~300dpi output. If mermaid-cli is missing, deliver `.mmd` 
 
 1. If `.png` was generated, read it with the Read tool so the user sees the diagram inline.
 2. List the generated file paths.
-3. Editability note: "Paste the `.mmd` source at https://excalidraw.com to edit visually."
-4. If the user wants changes, edit the `.mmd` source and re-run Step 3 — the source is the single source of truth.
+3. Editability note: "Open the `.excalidraw` file at excalidraw.com (or a local Excalidraw) to refine visually" — or the paste path for non-flowcharts.
+4. If the user wants changes, edit the `.mmd` source and re-run Steps 2-3 — the source is the single source of truth.
 
 ## Important rules
 
@@ -79,6 +84,6 @@ For PNG, `-s 3` gives ~300dpi output. If mermaid-cli is missing, deliver `.mmd` 
 
 ## Completion status
 
-- **DONE**: `.mmd` source plus rendered SVG/PNG delivered and shown.
-- **DONE_WITH_NOTE**: source delivered, rendering skipped due to missing mermaid-cli with installation guidance.
+- **DONE**: `.mmd` source, `.excalidraw` (flowcharts), and rendered SVG/PNG delivered and shown.
+- **DONE_WITH_NOTE**: source delivered; rendering or conversion skipped (missing mermaid-cli, non-flowchart type, or converter fallback) with guidance.
 - **BLOCKED**: unable to write outputs (permissions, disk full).

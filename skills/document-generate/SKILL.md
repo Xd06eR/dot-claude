@@ -254,7 +254,7 @@ git commit -m "docs: document <scope> (reference, how-to, tutorial, explanation 
 git push
 ```
 
-If a PR/MR exists for this branch, also output a docs section to add to its body (GitHub `gh pr edit --body`, GitLab `glab mr update --description`), listing each new file with its quadrant and a one-line description. Do not open a second PR/MR.
+If a PR/MR exists for this branch, also output the body-update command in the same OUTPUT ONLY form (GitHub `gh pr edit --body`, GitLab `glab mr update --description`) with a docs section listing each new file, its quadrant, and a one-line description. Never run it yourself; do not open a second PR/MR.
 
 Then report:
 
