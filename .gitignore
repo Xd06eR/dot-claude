@@ -24,5 +24,8 @@
 !skills/
 !skills/**
 
+# Backup files — never tracked
+**/*.bak
+
 # gstack plugin — managed separately, not our config
 skills/gstack/

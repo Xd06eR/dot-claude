@@ -34,7 +34,12 @@ New content goes into the one file that owns its topic; other files may point to
 
 ## Edit protocol (when a change is authorized)
 
-1. **Backup:** copy the file next to itself before editing. Inside `rules/`, the backup name must not end in `.md` (a `foo.backup.md` would itself auto-load); use `foo.md.bak`. Bulk changes: copy the whole tree to `rules.backup-<date>/` at the repo root. Skip the copy for small edits (typo, grammar, few lines added, content refined) when the tree is git-tracked — version control is the backup. Keep it for large restructures or full rewrites that change overall meaning.
+1. **Backup:** copy the file next to itself before editing.
+   - Append `.bak` after the full filename and extension (e.g. `foo.md.bak`), never `.bak.md`; a `.md` backup inside auto-loaded extension directories (`agents/`, `commands/`, `hooks/`, `rules/`, `skills/`, etc.) would be treated as a live module.
+   - Bulk changes: copy the whole tree to `rules.backup-<date>/` at the repo root.
+   - Skip for small edits (typo, grammar, few lines added, content refined) — git already stores every committed state.
+   - Keep for medium or large changes, restructures, or full rewrites.
+   - Backup files are gitignored; they can stay in your working tree but must never be committed.
 2. **Frontmatter decision:** every new `rules/**` file states its loading cost. Scoped (`paths:` globs) when it applies to a file type; unscoped only if it must apply to every session, and then say why in the PR/summary.
 3. **Verify loading behavior when scoping changed** with a headless probe, for example:
    - `claude -p 'No tools. Is a rule titled "<TITLE>" in your context? yes/no'`
