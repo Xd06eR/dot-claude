@@ -10,7 +10,6 @@ Private backup of global agent configuration: system instructions, agent definit
 | `TOOLKIT.md` | Skill, agent, and tool catalog |
 | `RTK.md` | Proxy configuration |
 | `settings.json` | Agent settings and environment |
-| `*.bak` | Backup artifacts |
 | `agents/` | Agent definitions |
 | `commands/` | Custom slash commands (e.g., `harness-audit`) |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
@@ -177,4 +176,4 @@ claude plugin install vercel@claude-plugins-official
 
 ## Security
 
-`settings.json` and `settings.json.bak` may contain sensitive tokens (e.g., `ANTHROPIC_AUTH_TOKEN`). Keep this repository **private**. Rotate the token immediately if the repository is ever exposed.
+`settings.json` may contain sensitive tokens (e.g., `ANTHROPIC_AUTH_TOKEN`). Keep this repository **private**. Rotate the token immediately if the repository is ever exposed.
