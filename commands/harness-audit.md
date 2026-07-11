@@ -35,9 +35,10 @@ Descriptions and frontmatter are load-bearing: a skill only fires if its descrip
 
 9. **Dead skill/agent installs.** A `SKILL.md` whose body references a bundled file, script, or sibling skill that is not on disk; a skill dir whose `SKILL.md` is a broken symlink (`find skills -xtype l`, want 0); an agent named in a phase-gate or chaining clause that has no `agents/*.md`. These read as "available" but fail at invocation.
 10. **Description drift (auto-invocation).** Descriptions keyed to trigger phrases ("use when the user says X") instead of intent/phase ("use at the [phase] when [situation]") — the former only fire on literal lexical matches and are the top cause of skills not auto-invoking. Also flag: a description whose chaining clause names a renamed, converted, or deleted skill.
-11. **Git-safety in skills.** Any skill body that executes `git commit`/`git push`/`gh pr create`/`glab mr create` or another remote mutation instead of emitting it as an output-for-the-user block. Mutations belong in a fenced block whose first line is an explicit do-not-execute marker; flag any that run directly (violates the never-run-git rule in `CLAUDE.md`).
-12. **Cross-platform commands.** Skill/hook commands assuming one OS: bare `python3` or bare `python` without a `command -v python3 || command -v python` detect chain; a file opener without an `open || xdg-open || start || echo` fallback; Linux-only tools (`lsof`, `xclip`, `xdg-*`) with no fallback. The harness runs on Linux, macOS, and Windows Git Bash.
-13. **Source-line readability.** Files (especially agent lens/data files) where a whole list or multi-sentence block is crammed onto one 400+ char source line. One list item per bullet line; long prose gets semantic line breaks. The atomic-unit rule forbids breaking inside a sentence, not putting each item on its own line.
+11. **Trigger-phrase probe.** For skills with clear trigger phrases, run `claude -p '<probe prompt>' --tools ""` and check that the response contains a line like `Using \`<skill>\`...`. This confirms the harness matched the prompt to that skill. It does not test phase-gated auto-invocation, does not prove the skill content was loaded into context, and does not prove its full workflow executed; full verification still needs an interactive session.
+12. **Git-safety in skills.** Any skill body that executes `git commit`/`git push`/`gh pr create`/`glab mr create` or another remote mutation instead of emitting it as an output-for-the-user block. Mutations belong in a fenced block whose first line is an explicit do-not-execute marker; flag any that run directly (violates the never-run-git rule in `CLAUDE.md`).
+13. **Cross-platform commands.** Skill/hook commands assuming one OS: bare `python3` or bare `python` without a `command -v python3 || command -v python` detect chain; a file opener without an `open || xdg-open || start || echo` fallback; Linux-only tools (`lsof`, `xclip`, `xdg-*`) with no fallback. The harness runs on Linux, macOS, and Windows Git Bash.
+14. **Source-line readability.** Files (especially agent lens/data files) where a whole list or multi-sentence block is crammed onto one 400+ char source line. One list item per bullet line; long prose gets semantic line breaks. The atomic-unit rule forbids breaking inside a sentence, not putting each item on its own line.
 
 ### Project-style target
 
@@ -59,7 +60,7 @@ For project targets, do NOT duplicate work covered by `/review`, `/qa`, `/code-r
 
 This audit fans out: 2 subagent dispatches (investigator + adversarial reviewer) plus a full read of the target working set. Heavy; proceed.
 
-**Phase 1 — Map.** Dispatch a fresh-context investigator subagent to inventory relevant files (rules, memory, CLAUDE.md, project docs; for a harness target also `skills/*/SKILL.md` frontmatter + `agents/*.md`). It returns `file:line + one-line role` per item, not file contents. For the skill/agent layer it also returns each skill's `name` + `description` (the fields checks 9-13 judge) and flags any broken symlink or missing bundled file it hits.
+**Phase 1 — Map.** Dispatch a fresh-context investigator subagent to inventory relevant files (rules, memory, CLAUDE.md, project docs; for a harness target also `skills/*/SKILL.md` frontmatter + `agents/*.md`). It returns `file:line + one-line role` per item, not file contents. For the skill/agent layer it also returns each skill's `name` + `description` (the fields checks 9-14 judge) and flags any broken symlink or missing bundled file it hits.
 
 **Phase 2 — Audit.** Main agent reads the working set directly (the files findings will touch), runs the applicable checks above, drafts findings.
 
@@ -96,7 +97,7 @@ Mark what this audit CANNOT catch:
 
 If uncertain: look it up. If unconfirmable: mark `UNVERIFIED`. Never fabricate.
 
-**Behavioral checks need the real runtime.** Whether a skill actually auto-invokes by phase cannot be judged by reading its description — it has to be observed in a normal **interactive** session. A headless `claude -p` probe suppresses phase-gated invocation (a single `-p` prompt reads as a one-off question), so a zero there is a false negative, not evidence the wiring is broken. If asked to confirm auto-invocation, say it needs an interactive check; do not assert pass/fail from a `-p` run.
+**Behavioral checks need the real runtime.** Full skill auto-invocation can only be confirmed in an interactive session. A headless `claude -p` probe may match a skill (see check 11), but a zero is a false negative; do not assert pass/fail from a `-p` run.
 
 ## Ruled out (do not do)
 

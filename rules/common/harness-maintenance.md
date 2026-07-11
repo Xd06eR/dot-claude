@@ -42,7 +42,7 @@ New content goes into the one file that owns its topic; other files may point to
    - Backup files are gitignored; they can stay in your working tree but must never be committed.
 2. **Frontmatter decision:** every new `rules/**` file states its loading cost. Scoped (`paths:` globs) when it applies to a file type; unscoped only if it must apply to every session, and then say why in the PR/summary.
 3. **Verify loading behavior when scoping changed** with a headless probe, for example:
-   - `claude -p 'No tools. Is a rule titled "<TITLE>" in your context? yes/no'`
+   - `claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""`
    - A second probe that reads a matching file first. Expected results: unscoped rules yes; scoped rules no before the read, yes after.
 4. **Show the diff:** `git diff <file>` goes to the user before the change counts as done. A fresh-context agent read-back (does the file say what was intended?) is the acceptance check, per `rules/orchestration/dispatch.md` section 5.
 
