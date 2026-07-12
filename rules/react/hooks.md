@@ -2,6 +2,8 @@
 paths:
   - "**/*.tsx"
   - "**/*.jsx"
+  - "**/*.ts"
+  - "**/*.js"
 ---
 
 # React Hooks

@@ -4,6 +4,10 @@ paths:
   - "**/*.html"
   - "**/*.tsx"
   - "**/*.jsx"
+  - "**/*.test.ts"
+  - "**/*.spec.ts"
+  - "**/*.test.js"
+  - "**/*.spec.js"
 ---
 
 # Web Testing Rules
