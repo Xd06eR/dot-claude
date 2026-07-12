@@ -210,4 +210,3 @@ Final: `Build Status: SUCCESS | Errors Fixed: N | Files Modified: <list>` or `Bu
 ## Related
 
 - Rules: `rules/react/coding-style.md`, `rules/react/patterns.md`, `rules/react/hooks.md`
-- Skills: `skills/react-patterns/`, `skills/react-testing/`

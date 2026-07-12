@@ -36,7 +36,3 @@ class Point(NamedTuple):
 - **ruff format** for code formatting
 - **ruff check --select I --fix** for import sorting
 - **ruff check** for linting
-
-## Reference
-
-See skill: `python-patterns` for comprehensive Python idioms and patterns.

@@ -188,4 +188,4 @@ Older codebases on React 18 still need `forwardRef`.
 
 ## Skill Reference
 
-See `react-patterns` skill for additional patterns and `frontend-a11y` skill for accessibility patterns.
+See `frontend-a11y` skill for accessibility patterns.

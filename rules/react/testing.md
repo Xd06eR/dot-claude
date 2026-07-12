@@ -199,7 +199,3 @@ For those, use Playwright Component Testing or end-to-end Playwright/Cypress run
 - Mocking React hooks (`jest.mock("react", ...)`) — refactor the component instead
 - Mocking child components by default — tests the integration, not the parent in isolation
 - Manual `act()` warnings ignored — they indicate real bugs
-
-## Skill Reference
-
-See `react-testing` skill for end-to-end test examples, MSW patterns, and accessibility test scaffolding.

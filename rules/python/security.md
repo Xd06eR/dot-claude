@@ -33,7 +33,3 @@ The `security-guidance` plugin provides automatic Python security scanning:
 - Agentic commit review on `git commit`
 
 See [common/security.md](../common/security.md#automated-security) for full details.
-
-## Reference
-
-See skill: `python-patterns` for secure Python idioms and `backend-patterns` for API security patterns.

@@ -13,7 +13,6 @@ paths:
 ## Framework
 
 Use **vitest** as the testing framework. Jest acceptable for legacy projects.
-See `vite-patterns` skill for Vitest configuration in Vite projects.
 
 ## Coverage
 
@@ -39,4 +38,4 @@ See `e2e-testing` skill for Playwright patterns, Page Object Model, and CI integ
 
 ## React Testing
 
-For React component testing with React Testing Library, MSW mocking, and accessibility assertions, see [react/testing.md](../react/testing.md) and `react-testing` skill.
+For React component testing with React Testing Library, MSW mocking, and accessibility assertions, see [react/testing.md](../react/testing.md).
