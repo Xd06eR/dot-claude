@@ -1,13 +1,8 @@
 ---
 name: spec
 description: "Design phase for a vague or underspecified request: interrogate round by round until the work is unambiguous, then write a precise, executable spec that an unfamiliar implementer or agent can run without a single follow-up question. Clarify why, lock scope, read the actual code, draft, then capture what, why, and success criteria in a <feature>-spec.md. After the spec, consider superpowers:writing-plans to turn it into an implementation plan, or grill-me to stress-test it before building."
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Grep
-  - Glob
+allowed-tools: Bash, Read, Write, Edit, Grep, Glob
+origin: gstack
 ---
 
 # Spec

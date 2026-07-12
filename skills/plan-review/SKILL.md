@@ -1,12 +1,8 @@
 ---
 name: plan-review
 description: "Plan phase, once a plan or spec exists and before build starts: gate it through four independent review lenses (CEO strategy and scope, design, developer experience, engineering) dispatched as parallel agents, plus a security pass when the plan touches a security surface. Collects the reports, dedupes and severity-ranks findings across lenses, auto-resolves lens conflicts with six decision principles, and surfaces only genuine taste calls for you to decide. Chain it after superpowers:writing-plans or spec; on approval, proceed to build."
-allowed-tools:
-  - Read
-  - Grep
-  - Glob
-  - Edit
-  - Agent
+allowed-tools: Read, Grep, Glob, Edit, Agent
+origin: gstack
 ---
 
 # Plan Review

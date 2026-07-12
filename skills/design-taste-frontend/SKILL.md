@@ -1,6 +1,7 @@
 ---
 name: design-taste-frontend
 description: Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships interfaces that do not look templated. Real design systems when applicable, audit-first on redesigns, strict pre-flight check.
+origin: taste-skill
 ---
 
 # tasteskill: Anti-Slop Frontend Skill
@@ -864,6 +865,7 @@ skills/taste-skill/blocks/
 ```yaml
 ---
 name: asymmetric-split-hero
+origin: taste-skill
 category: hero
 dial_compatibility:
   variance: [6, 10]

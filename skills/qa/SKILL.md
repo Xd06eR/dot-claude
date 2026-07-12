@@ -1,13 +1,8 @@
 ---
 name: qa
 description: "QA phase for a working web app: drive it in a real browser like a user, inventory pages and flows, exercise each and log every bug with severity and repro steps to an in-repo report, then fix the fixable ones as tight working-tree edits and re-verify until the app is clean. Hand hard-to-reproduce bugs to `diagnose` or `superpowers:systematic-debugging`; once QA passes, `ship` to take the branch out."
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+origin: gstack
 ---
 
 # QA: Test then Fix then Verify

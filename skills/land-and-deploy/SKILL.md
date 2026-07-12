@@ -1,10 +1,8 @@
 ---
 name: land-and-deploy
 description: "Ship phase for landing and deploying a finished, reviewed, green branch: merge it to the base branch, deploy to whatever the repo already configures (CI-on-merge, or a platform CLI or deploy script run after your plain-text go-ahead), then verify the release is healthy with HTTP and smoke checks before walking away. Gates the irreversible merge behind a readiness check and hands the merge, push, and any revert back as commands you run. After it lands, chain `deploy-watch` for the post-deploy monitoring window and `document-release` to record what shipped; on a failed verify, hand off to `diagnose`."
-allowed-tools:
-  - Bash
-  - Read
-  - Grep
+allowed-tools: Bash, Read, Grep
+origin: gstack
 ---
 
 # Land and Deploy

@@ -1,12 +1,8 @@
 ---
 name: document-release
 description: "Use at the ship phase, after a release lands (typically following `ship`, `land-and-deploy`, or `deploy-watch`): sweep the repo's docs (README, docs/, CHANGELOG cross-refs, API docs, examples) and update everything the shipped change made stale. Derives what changed from the merged diff and CHANGELOG entry, polishes voice, flags coverage gaps and diagram drift, and outputs the commit and PR-body update for the user to run. For net-new docs from scratch, use `document-generate` instead."
-allowed-tools:
-  - Bash
-  - Read
-  - Edit
-  - Grep
-  - Glob
+allowed-tools: Bash, Read, Edit, Grep, Glob
+origin: gstack
 ---
 
 # Document Release

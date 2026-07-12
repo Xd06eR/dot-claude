@@ -1,11 +1,8 @@
 ---
 name: diagram
 description: "Design phase: turn an English description or mermaid source into a diagram triplet: `.mmd` source, an editable `.excalidraw` file (flowcharts, via the bundled converter), and rendered SVG/PNG where mermaid-cli is installed. Chain into `document-generate` or `make-pdf` when a document needs the figure embedded."
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Grep
+allowed-tools: Bash, Read, Write, Grep
+origin: gstack
 ---
 
 # Diagram — English in, source out

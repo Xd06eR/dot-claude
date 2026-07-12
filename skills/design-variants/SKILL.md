@@ -1,17 +1,11 @@
 ---
 name: design-variants
 description: "Design-phase visual exploration: turn a screen or component brief into several deliberately-different design variants, rendered as self-contained HTML mockups on one side-by-side comparison page you open in a browser, then collect plain-text feedback and iterate on the favorite. Use when a UI's visual direction is unsettled and you want to see real, contrasting options before committing to one. Once a direction wins, hand off to design-html for production markup; if nothing lands and the direction is still unclear, step back to design-consultation."
-allowed-tools:
-  - Bash
-  - Read
-  - Write
-  - Edit
-  - Glob
-  - Grep
-  - Agent
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Agent
+origin: gstack
 ---
 
-# Design Shotgun
+# Design Variants
 
 Visual brainstorming, not a review. Generate several deliberately-different design directions as self-contained HTML mockups, put them side by side on one comparison page the user opens in a browser, collect structured feedback, and iterate on the favorite until a direction is locked.
 
