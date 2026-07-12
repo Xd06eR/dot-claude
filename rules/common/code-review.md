@@ -62,12 +62,12 @@ Before marking code complete:
 | Tool | Type | Use when |
 |------|------|----------|
 | `security-guidance` plugin | Auto-running | Pattern warnings + diff review + commit review — always active |
-| `/code-review` | Command | Multi-agent PR review via GitHub |
+| `/code-review` | Built-in skill | Multi-agent PR review via GitHub |
 | `/review` | Skill | General code review workflow |
 | `/diagnose` | Skill | Root cause analysis on bugs found |
 | `silent-failure-hunter` | Agent | Hunt swallowed errors, bad fallbacks, missing propagation |
 | `react-build-resolver` | Agent | React build failures found during review |
-| `code-simplifier` | Agent | Code clarity/consistency refinement |
+| `code-simplifier` | Plugin (agent) | Code clarity/consistency refinement |
 
 ## Review Workflow
 

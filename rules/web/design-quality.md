@@ -49,8 +49,8 @@ Every meaningful frontend surface should demonstrate at least four of these:
 5. Use design skills where relevant:
    - `design-consultation` for system design (palette, typography, spacing)
    - `frontend-design` for production-grade UI creation
-   - `impeccable` for polish, audit, and refinement
-   - `design-review` for visual QA and anti-pattern detection
+   - `impeccable` (disabled plugin — enable first) for polish, audit, and refinement
+   - `design-taste-frontend` for visual QA and anti-pattern detection
 
 ## Worthwhile Style Directions
 
