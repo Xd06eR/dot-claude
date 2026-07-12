@@ -1,0 +1,57 @@
+---
+description: Plan→Build command. Produce one comprehensive build brief per feature (a group of components named in $ARGUMENTS) from the project's Plan-phase artifacts. Run at the Plan→Build handoff.
+argument-hint: [feature: component1, component2, ...]
+---
+
+# Build Brief Generator (Plan → Build)
+
+Plan→Build handoff. Read the spec+plan for the components the user groups into a feature, produce ONE comprehensive build brief for that feature. The build session then dispatches subagents per independent component (per CLAUDE.md Build phase + `rules/orchestration/dispatch.md`). Review phase starts only after every feature is built.
+
+## What is a feature
+
+A feature is a buildable chunk of the project spanning MULTIPLE components — smaller than the whole project, bigger than a single component. The project has many features; each feature is one build-brief. Do NOT emit one brief per component — that multiplies files. Group related components into a feature and emit one comprehensive brief covering all of them.
+
+**Sizing:** A feature usually spans 2-6 components. Fewer than 2 and it is just a component (group it with related components) — EXCEPT a terminal integration component (e.g., the UI layer that depends on everything else), which is legitimately its own feature. More than ~7 is too big — split along dependency seams into two features.
+
+## Inputs — Plan-phase artifacts ONLY
+
+Arguments: "$ARGUMENTS" — **required**: the feature name + the components in it. Each named component must already have a spec and a plan (produced by `/plan-from-design`).
+
+Discover and read, wherever they live in the project:
+
+- the spec + plan for each named component (`<component>-spec.md`, `<component>-plan.md`)
+- `implementation-notes.md` — deviations logged so far, if it exists
+- `CONTEXT.md` and the project's `CLAUDE.md` — standing baseline context
+
+Everything else is upstream (design-phase, research, archives) — do not read it; if its content matters here, it is already distilled into the specs. If a named component has no spec or plan, stop and say so — Plan has not produced it; do not invent.
+
+## Synthesize ONE feature brief → `build-briefs/<feature>.md`
+
+Write a single comprehensive brief covering every component in the feature:
+
+1. **Feature goal** — what this feature delivers overall + its load-bearing design decisions (drawn from the component specs).
+2. **Component map** — the components in this feature, with dependency order between them (foundation → dependent). Cross-ref graph: referenced-by-many → early; references-many → late.
+3. **Per component** — a section for each:
+   - **Goal** — what this component delivers within the feature.
+   - **Scope** — files/modules/subsystems it creates or touches.
+   - **Depends on** — prior components (in this feature or earlier features) that must be built first.
+   - **Build steps** — the plan's checklist for this component, ordered. Each step: what to produce + its verify check (`[Step] → verify: [check]`).
+   - **Acceptance** — what "this component done" means (checkable).
+4. **Dispatch plan** — which components are INDEPENDENT (→ parallel subagents, one per component) vs sequential/dependent (→ main session, in order). Follow `rules/orchestration/dispatch.md`: dispatch a subagent for an independent component ONLY when its content is residue (you need the built result, not the building bytes). Each dispatched subagent: writes the failing test first, implements, runs lint + format + type-check + tests, verifies before returning. Sequential components are NOT dispatched — the main session builds them. State model/effort per dispatch where the environment exposes them (per dispatch.md section 2); otherwise inherit session defaults.
+5. **Feature acceptance** — the feature is done when every component's acceptance passes. State explicitly.
+
+## Integration
+
+After dispatched subagents return, the main session integrates: resolves any seams between components, runs the feature's full acceptance, and logs deviations to `implementation-notes.md`.
+
+## INDEX → `build-briefs/INDEX.md`
+
+One line per feature: name · components · status (☐/✅). Rule at top: build features in dependency order; review phase starts only when every feature is ✅.
+
+## Principles to encode
+
+Surgical (touch only what each step requires). TDD (failing test → implement → refactor). One concern per step, tight diffs. Evidence at every gate (test output, not "should work"). Deviations → `implementation-notes.md`.
+
+## Output
+
+Write `build-briefs/<feature>.md`, update `INDEX.md`, print the component map + dispatch plan for review. Do not start the build — user reviews the brief, then builds.
