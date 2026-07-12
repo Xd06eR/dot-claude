@@ -11,10 +11,10 @@ Private backup of global agent configuration: system instructions, agent definit
 | `RTK.md` | Proxy configuration |
 | `settings.json` | Agent settings and environment |
 | `agents/` | Agent definitions |
-| `commands/` | Custom slash commands (e.g., `harness-audit`) |
+| `commands/` | Custom slash commands: `harness-audit`, `plan-from-design` (Design→Plan), `build-brief` (Plan→Build) |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules — mattpocock, taste-skill, ECC, find-skills, custom, and 13 gstack-origin skills rewritten as owned (see Skill Sources) |
+| `skills/` | Skill modules — mattpocock, taste-skill, ECC, custom, and 13 gstack-origin skills rewritten as owned (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -25,10 +25,9 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 
 | Source | Count | Installed via |
 |--------|-------|---------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 14 | `npx skills@latest add mattpocock/skills` |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 10 | `npx skills@latest add mattpocock/skills` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | `npx skills add https://github.com/Leonxlnx/taste-skill` |
-| [ECC (Everything Claude Code)](https://github.com/affaan-m/ECC) | 17 | Manual install (14 `origin: ECC` + 3 `origin: community`) |
-| [vercel-labs/skills](https://github.com/vercel-labs/skills) | 1 | `npx skills add vercel-labs/skills` (only skill: `find-skills`; discover more at [skills.sh](https://www.skills.sh/)) |
+| [ECC (Everything Claude Code)](https://github.com/affaan-m/ECC) | 10 | Manual install from ECC repo |
 | Custom (`teach-back`) | 1 | User-edited from another skill |
 | Gstack-origin, now owned | 13 skills + 2 agents | Rewritten gstack-free from [gstack](https://github.com/garrytan/gstack) originals; tracked like any other skill. Skills: ship, spec, qa, diagram, make-pdf, deploy-watch, land-and-deploy, document-release, document-generate, design-html, design-consultation, design-variants, plan-review (+ its `lenses/`). Agents: plan-reviewer, security-auditor. |
 

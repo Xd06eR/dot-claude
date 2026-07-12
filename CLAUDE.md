@@ -4,6 +4,8 @@
 
 I work at the AI-engineer level: system design and trade-offs. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting.
 
+**Full-stack AI engineer:** my work spans frontend, backend, LLM/AI integration, and infra. Default to full-stack patterns; don't assume a narrow stack.
+
 - Pitch at AI-engineer level: lead with design choice, trade-off, what you ruled out.
 - **When I ask "why", or when a call is non-obvious, go deep.** Depth beats brevity.
 - Name ambiguity instead of guessing. List readings, state default, proceed. If uncertain, ask; if unclear, stop.
@@ -22,14 +24,16 @@ Follow 4-phase approach. Main agent orchestrates; subagents implement.
 
 1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity. Identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
    - **Surface blind spots:** Beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see. Resolve each before planning.
-2. **Plan:** Write spec docs (.md) and task breakdown. Numbered checklist, each step states what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
-   - **Standard artifacts:** spec docs (`<feature>-spec.md`) — what + why + success criteria; implementation plan (`<feature>-plan.md`) — technical approach plus task breakdown (decomposed steps as `[Step] → verify: [check]`, decisions likely to change first); implementation notes (`implementation-notes.md`) — deviations logged during build.
+2. **Plan:** Write spec docs (.md) and a numbered checklist (the task breakdown) — decomposed steps, each stating what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
+   - **Standard artifacts:** spec docs (`<feature>-spec.md`) — what + why + success criteria; implementation plan (`<feature>-plan.md`) — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first; implementation notes (`implementation-notes.md`) — deviations logged during build; build brief — produced by `/build-brief` from the spec + plan; per-component build directives, built in order, then review.
 3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents only when the content is residue (see **Dispatch discipline** below + `rules/orchestration/dispatch.md`). Each dispatched subagent implements one independent component, includes lint + format + type-check + tests, verifies before returning; you integrate.
    - **Log deviations:** When execution diverges from the plan, append to `implementation-notes.md` — what diverged, the conservative option taken, why. Review before accepting.
 4. **Review:** Check diff against checklist and Principles. Verify against criteria set in advance. Show evidence (test output, return value). Can't verify → don't ship.
    - **Quiz before ship:** For non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 Skip phases only for trivial changes: typo, rename, one-liner with zero ambiguity.
+
+**Phase transitions:** Design→Plan via `/plan-from-design` (decompose baseline design docs into per-component spec + plan); Plan→Build via `/build-brief` (one comprehensive build brief per feature, a group of components).
 
 ## Principles
 
@@ -101,7 +105,7 @@ Re-anchor with `andrej-karpathy-skills:karpathy-guidelines` before any non-trivi
 Skill Composition:
 - **Phase** — one skill per workflow phase the task has (design / plan / build / review / ship). Skip phases the task lacks.
 - **Concern** — within a phase, stack skills covering different concerns. Orthogonal only.
-- **Dedupe** — never stack two skills doing the same job. The review skills (`code-review`, `pr-review-toolkit:review-pr`) are substitutes; pick one.
+- **Dedupe** — never stack two skills doing the same job. The review skills (`code-review`, `pr-review-toolkit:review-pr`, `review`) are substitutes; pick one.
 - **Budget** — default 1–3 skills; justify more.
 
 Phase-gate table (invoke at phase start, before other work):
@@ -110,7 +114,7 @@ Phase-gate table (invoke at phase start, before other work):
 |---|---|
 | Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` |
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) |
-| Build | `superpowers:test-driven-development` · `superpowers:subagent-driven-development` |
+| Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` |
 | QA | `qa` |
 | Review | `code-review` (the built-in skill, not the `code-review:code-review` plugin) · `pr-review-toolkit:review-pr` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` |
