@@ -42,42 +42,42 @@
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
-      "autoUpdate": true,
+      "autoUpdate": false,
       "source": {
         "repo": "anthropics/skills",
         "source": "github"
       }
     },
     "caveman": {
-      "autoUpdate": true,
+      "autoUpdate": false,
       "source": {
         "repo": "JuliusBrussee/caveman",
         "source": "github"
       }
     },
     "impeccable": {
-      "autoUpdate": true,
+      "autoUpdate": false,
       "source": {
         "repo": "pbakaus/impeccable",
         "source": "github"
       }
     },
     "karpathy-skills": {
-      "autoUpdate": true,
+      "autoUpdate": false,
       "source": {
         "repo": "forrestchang/andrej-karpathy-skills",
         "source": "github"
       }
     },
     "openai-codex": {
-      "autoUpdate": true,
+      "autoUpdate": false,
       "source": {
         "repo": "openai/codex-plugin-cc",
         "source": "github"
       }
     },
     "ponytail": {
-      "autoUpdate": true,
+      "autoUpdate": false,
       "source": {
         "repo": "DietrichGebert/ponytail",
         "source": "github"
