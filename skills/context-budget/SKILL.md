@@ -30,7 +30,7 @@ Scan all component directories and estimate token consumption:
 **Skills** (`skills/*/SKILL.md`)
 - Count tokens per SKILL.md
 - Flag: files >400 lines
-- Check for duplicate copies in `.agents/skills/` — skip identical copies to avoid double-counting
+- Skip duplicate copies of the same skill elsewhere in the tree to avoid double-counting
 
 **Rules** (`rules/**/*.md`)
 - Count tokens per file
@@ -75,7 +75,7 @@ Context Budget Report
 ═══════════════════════════════════════
 
 Total estimated overhead: ~XX,XXX tokens
-Context model: Claude Sonnet (200K window)
+Context model: <session model> (<context window>)
 Effective available context: ~XXX,XXX tokens (XX%)
 
 Component Breakdown:

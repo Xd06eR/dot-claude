@@ -1,6 +1,6 @@
 ---
 name: design-html
-description: "Build phase for turning an approved design direction into production-quality, framework-appropriate HTML/CSS. Detects what the repo is built with (plain HTML/CSS, React, Next, Vue, Svelte, Solid, Astro), derives an implementation spec from a mockup image, a written plan, or a description, then generates semantic, responsive, accessible markup with design tokens, dark mode, and real content. Takes its direction from `design-consultation` upstream; after building, polish with `make-interfaces-feel-better` and verify behavior with `qa`."
+description: Build phase for turning an approved design direction into production-quality, framework-appropriate HTML/CSS. Detects what the repo is built with (plain HTML/CSS, React, Next, Vue, Svelte, Solid, Astro), derives an implementation spec from a mockup image, a written plan, or a description, then generates semantic, responsive, accessible markup with design tokens, dark mode, and real content. Takes its direction from `design-consultation` upstream; after building, polish with `make-interfaces-feel-better` and verify behavior with `qa`.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack
 ---

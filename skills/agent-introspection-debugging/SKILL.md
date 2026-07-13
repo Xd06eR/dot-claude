@@ -27,8 +27,8 @@ Activate this skill for:
 - producing a structured human-readable debug report
 
 Do not use this skill as the primary source for:
-- feature verification after code changes; use `verification-loop`
-- framework-specific debugging when a narrower ECC skill already exists
+- feature verification after code changes; use `superpowers:verification-before-completion`
+- framework-specific debugging when a narrower skill already exists
 - runtime promises the current harness cannot enforce automatically
 
 ## Four-Phase Loop
@@ -135,12 +135,12 @@ Good pattern:
 - run one direct check
 - change the plan only if the check supports it
 
-## Integration with ECC
+## Related skills
 
-- Use `verification-loop` after recovery if code was changed.
-- Use `continuous-learning-v2` when the failure pattern is worth turning into an instinct or later skill.
-- Use `council` when the issue is not technical failure but decision ambiguity.
-- Use `workspace-surface-audit` if the failure came from conflicting local state or repo drift.
+- Use `superpowers:verification-before-completion` after recovery if code was changed.
+- Write a recurring failure pattern to memory (per `rules/common/harness-maintenance.md`, Lesson write-back) so it becomes a durable lesson.
+- Use `plan-review` when the issue is not technical failure but decision ambiguity.
+- Use `harness-audit` if the failure came from conflicting local state or repo drift.
 
 ## Output Standard
 

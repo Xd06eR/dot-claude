@@ -235,7 +235,7 @@ Regression: 3/3 passed (pass^3: 100%)
 Status: SHIP IT
 ```
 
-## Product Evals (v1.8)
+## Product Evals
 
 Use product evals when behavior quality cannot be captured by unit tests alone.
 
