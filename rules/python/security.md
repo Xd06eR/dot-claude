@@ -1,6 +1,7 @@
 ---
 paths:
   - "**/*.py"
+  - "**/*.pyi"
 ---
 
 # Python Security

@@ -4,6 +4,9 @@ paths:
   - "**/*.html"
   - "**/*.tsx"
   - "**/*.jsx"
+  - "**/*.scss"
+  - "**/*.sass"
+  - "**/*.less"
 ---
 
 # Web Coding Style
