@@ -166,19 +166,19 @@ Status: READY FOR REVIEW
 
 ### Pre-Implementation
 ```
-/eval define feature-name
+/eval-harness define feature-name
 ```
 Creates eval definition file at `.claude/evals/feature-name.md`
 
 ### During Implementation
 ```
-/eval check feature-name
+/eval-harness check feature-name
 ```
 Runs current evals and reports status
 
 ### Post-Implementation
 ```
-/eval report feature-name
+/eval-harness report feature-name
 ```
 Generates full eval report
 
@@ -225,7 +225,7 @@ Regression Evals:
 [Write code]
 
 ### Phase 3: Evaluate
-Run: /eval check add-authentication
+Run: /eval-harness check add-authentication
 
 ### Phase 4: Report
 EVAL REPORT: add-authentication

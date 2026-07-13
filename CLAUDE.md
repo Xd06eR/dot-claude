@@ -45,6 +45,8 @@ Organized by phase.
 - **Goal:** Transform tasks into verifiable goals. 'Make it work' is not a goal; 'reproducing test passes' is.
 - **Gravity:** Every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
 - **Fidelity:** For documents, reports, and summaries, preserve all details. Prefer complete-but-segmented over terse-but-lossy.
+- **Consolidate:** A state doc (spec, README, handoff, catalog) describes what IS; a log (changelog, decision archive) records events. Update a state doc by rewriting its sections to current truth, every current fact kept; move history worth keeping into a log, git keeps the rest.
+- **Self-contained:** Write state docs for a reader who has only the doc: no fact stated relative to an earlier version or to the session that edited it. Reread as a stranger; rewrite any sentence that needs outside context.
 
 ### Build
 - **Simplify:** Minimum code; no speculative features, single-use abstractions, or trial residue. If 200 lines could be 50, rewrite.

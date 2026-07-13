@@ -54,6 +54,7 @@ Standing user conventions; violating them again costs trust:
 - No model names or tier assumptions. The environment may run any provider behind the harness, with every alias resolving to the same underlying model; phrase capabilities conditionally ("where the environment exposes it"). Functional `model:` frontmatter in `agents/*.md` is exempt.
 - Session reports (diagnoses, letters, audits) are one-time reads: never git-track them, never reference them from durable files.
 - Writing style: colon inside bold labels (`**Term:** definition`), em-dash minimized (headings may keep it), US English.
+- Convention-standard terms: name harness concepts with standard engineering vocabulary (baseline, spec, acceptance criteria, dependency order) so any agent parses them without extra context; flag invented terms.
 
 ## Lesson write-back
 
