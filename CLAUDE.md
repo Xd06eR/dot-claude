@@ -33,7 +33,7 @@ Follow 4-phase approach. Main agent orchestrates; subagents implement.
 
 Skip phases only for trivial changes: typo, rename, one-liner with zero ambiguity.
 
-**Phase transitions:** Design→Plan via `/plan-from-design` (decompose baseline design docs into per-component spec + plan); Plan→Build via `/build-brief` (one comprehensive build brief per feature, a group of components).
+**Phase transitions:** Design→Plan via `/plan-from-design` (decompose baseline design docs into per-component spec + plan), then iterate on the artifacts within Plan; Plan→Build via `/build-brief` (one comprehensive build brief per feature, a group of components).
 
 ## Principles
 
@@ -118,7 +118,7 @@ Phase-gate table (invoke at phase start, before other work):
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) |
 | Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` |
 | QA | `qa` |
-| Review | `code-review` (the built-in skill, not the `code-review:code-review` plugin) · `pr-review-toolkit:review-pr` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) |
+| Review | `code-review` (the built-in skill, not the `code-review:code-review` plugin) · `pr-review-toolkit:review-pr` · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` |
 | Debug | `superpowers:systematic-debugging` · `diagnose` |
 

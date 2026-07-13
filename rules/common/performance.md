@@ -15,19 +15,19 @@ Lower context sensitivity tasks:
 
 ## Extended Thinking + Plan Mode
 
-Extended thinking is enabled by default on Anthropic models, reserving up to 31,999 tokens for internal reasoning. Availability depends on your API provider.
+Where the environment exposes extended thinking (Claude Code: on by default, reserves a bounded reasoning-token budget; availability depends on the API provider), use it for deep-reasoning tasks.
 
-Control extended thinking via:
+Controls (Claude Code):
 - **Toggle**: Option+T (macOS) / Alt+T (Windows/Linux)
-- **Config**: Set `alwaysThinkingEnabled` in `~/.claude/settings.json`
+- **Config**: `alwaysThinkingEnabled` in `~/.claude/settings.json`
 - **Budget cap**: `export MAX_THINKING_TOKENS=10000`
 - **Verbose mode**: Ctrl+O to see thinking output
 
-For complex tasks requiring deep reasoning:
-1. Ensure extended thinking is enabled (on by default)
+For complex tasks:
+1. Ensure extended thinking is on (where available)
 2. Enable **Plan Mode** for structured approach
 3. Use multiple critique rounds for thorough analysis
-4. Use split role sub-agents for diverse perspectives
+4. Use split-role subagents for diverse perspectives
 
 ## Build Troubleshooting
 

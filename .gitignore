@@ -27,5 +27,5 @@
 # Backup files — never tracked
 **/*.bak
 
-# gstack plugin — managed separately, not our config
+# gstack clone guard — a clone appearing here must never be tracked
 skills/gstack/
