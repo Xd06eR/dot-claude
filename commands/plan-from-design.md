@@ -14,7 +14,7 @@ Design→Plan handoff. Read the project's BASELINE design docs, decompose into o
 Arguments: "$ARGUMENTS" — **required**: the design-doc source (a directory, a glob, or a list of files holding the baseline design). The command does NOT assume any folder name; you point it at wherever the baseline design lives. Optional: `--out <dir>` overrides the default `plan-docs/` output location. There is NO positional output dir — use `--out`.
 
 Also read:
-- `CONTEXT.md` and the project's `CLAUDE.md` — standing context
+- the project's `CLAUDE.md` — standing context
 
 Everything else (WIP notes, open-question files, staging dirs, research, archives) is NOT baseline — exclude it. If `$ARGUMENTS` is empty, stop and ask where the baseline design docs live; do not guess a folder. If a pointed-at doc still carries open/TBD markers, it is not baseline yet — flag it; do not invent.
 
@@ -50,7 +50,7 @@ Ordered BUILD-TARGET component list + one-line dependency graph + status tracker
 
 ## Gate
 
-After emitting, the user runs `plan-review` (the Plan-phase gate) on the output. Do not run `/build-brief` until `plan-review` passes.
+After emitting, iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Then the user runs `plan-review` (the Plan-phase gate). Do not run `/build-brief` until `plan-review` passes.
 
 ## Output
 

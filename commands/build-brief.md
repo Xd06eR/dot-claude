@@ -21,7 +21,7 @@ Discover and read, wherever they live in the project:
 
 - the spec + plan for each named component (`<component>-spec.md`, `<component>-plan.md`)
 - `implementation-notes.md` — deviations logged so far, if it exists
-- `CONTEXT.md` and the project's `CLAUDE.md` — standing baseline context
+- the project's `CLAUDE.md` — standing baseline context
 
 Everything else is upstream (design-phase, research, archives) — do not read it; if its content matters here, it is already distilled into the specs. If a named component has no spec or plan, stop and say so — Plan has not produced it; do not invent.
 
@@ -37,7 +37,10 @@ Write a single comprehensive brief covering every component in the feature:
    - **Depends on** — prior components (in this feature or earlier features) that must be built first.
    - **Build steps** — the plan's checklist for this component, ordered. Each step: what to produce + its verify check (`[Step] → verify: [check]`).
    - **Acceptance** — what "this component done" means (checkable).
-4. **Dispatch plan** — which components are INDEPENDENT (→ parallel subagents, one per component) vs sequential/dependent (→ main session, in order). Follow `rules/orchestration/dispatch.md`: dispatch a subagent for an independent component ONLY when its content is residue (you need the built result, not the building bytes). Each dispatched subagent: writes the failing test first, implements, runs lint + format + type-check + tests, verifies before returning. Sequential components are NOT dispatched — the main session builds them. State model/effort per dispatch where the environment exposes them (per dispatch.md section 2); otherwise inherit session defaults.
+4. **Dispatch plan** — split the feature's components:
+   - INDEPENDENT components: one subagent each, in parallel, per `rules/orchestration/dispatch.md` (residue test, escalation levers, report contract).
+   - Sequential/dependent components: built in the main session, in dependency order.
+   - Every dispatched subagent: failing test first, implement, then lint + format + type-check + tests; verify before returning.
 5. **Feature acceptance** — the feature is done when every component's acceptance passes. State explicitly.
 
 ## Integration
