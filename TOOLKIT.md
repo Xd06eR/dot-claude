@@ -12,8 +12,11 @@
 | Debug, performance, a11y audit | chrome-devtools-mcp | — |
 
 ## Phase transitions
-- `/plan-from-design` — Design→Plan: decompose baseline design docs into per-component spec + plan.
+- `/plan-from-design` — Design→Plan: decompose baseline design docs into per-component spec + plan, then iterate on the artifacts within Plan.
 - `/build-brief` — Plan→Build: one comprehensive build brief per feature (group of components).
+
+## Maintenance
+- `/harness-audit` — periodic drift audit of a harness or project dir (contradictions, stale refs, weak-model wording).
 
 ## Foundational
 - `andrej-karpathy-skills:karpathy-guidelines`
@@ -31,7 +34,7 @@
 - `/code-review` · `/security-review` · `pr-review-toolkit:review-pr` · `superpowers:requesting-code-review` · `superpowers:receiving-code-review` · `superpowers:systematic-debugging` · `diagnose` · `superpowers:verification-before-completion`
 
 ## LLM/agent diagnostics
-- `agent-architecture-audit` · `agent-introspection-debugging` · `eval-harness` · `context-budget`
+- `agent-architecture-audit` · `agent-introspection-debugging` · `eval-harness` · `context-budget` · `loop-design-check` (agent-loop goal + runaway review)
 
 ## Ship & Deploy
 - `ship` · `land-and-deploy` · `deploy-watch` · `document-release`
@@ -49,6 +52,7 @@ Dispatch as subagents, never slash.
 - `code-simplifier:code-simplifier` — post-implementation clarity/consistency pass.
 - `silent-failure-hunter` — swallowed errors, bad fallbacks, missing propagation.
 - `react-build-resolver` — React build failures.
+- `database-reviewer` — PostgreSQL query, schema, index, and RLS review.
 
 ## Tools
 - **LSP**: symbol navigation, type lookups, find-references.

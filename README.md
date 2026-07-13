@@ -14,22 +14,24 @@ Private backup of global agent configuration: system instructions, agent definit
 | `commands/` | Custom slash commands: `harness-audit`, `plan-from-design` (Design→Plan), `build-brief` (Plan→Build) |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules — mattpocock, taste-skill, ECC, custom, and 13 gstack-origin skills rewritten as owned (see Skill Sources) |
+| `skills/` | Skill modules (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
 
-Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownMarketplaces`) are serialized in `settings.json`. No separate plugin artifacts are tracked.
+Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownMarketplaces`) are serialized in `settings.json`. No separate plugin artifacts are tracked (`plugins/` is a rebuildable multi-GB cache).
 
 ## Skill Sources
 
-| Source | Count | Installed via |
-|--------|-------|---------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 10 | `npx skills@latest add mattpocock/skills` |
-| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | `npx skills add https://github.com/Leonxlnx/taste-skill` |
-| [ECC (Everything Claude Code)](https://github.com/affaan-m/ECC) | 10 | Manual install from ECC repo |
-| Custom (`teach-back`) | 1 | User-edited from another skill |
-| Gstack-origin, now owned | 13 skills + 2 agents | Rewritten gstack-free from [gstack](https://github.com/garrytan/gstack) originals; tracked like any other skill. Skills: ship, spec, qa, diagram, make-pdf, deploy-watch, land-and-deploy, document-release, document-generate, design-html, design-consultation, design-variants, plan-review (+ its `lenses/`). Agents: plan-reviewer, security-auditor. |
+Every skill in `skills/` is an owned, tracked file, edited here directly. The sources below record provenance; skills are not updated from upstream.
+
+| Source | Count | Skills |
+|--------|-------|--------|
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 10 | diagnose, git-guardrails-claude-code, grill-me, grill-with-docs, handoff, improve-codebase-architecture, prototype, tdd, teach, writing-great-skills |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
+| [ECC](https://github.com/affaan-m/ECC) | 12 skills + 1 agent | agent-architecture-audit, agent-introspection-debugging, context-budget, eval-harness, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agent `database-reviewer` |
+| Custom | 1 | teach-back (user-edited derivative) |
+| [gstack](https://github.com/garrytan/gstack) | 13 skills + 2 agents | ship, spec, qa, diagram, make-pdf, deploy-watch, land-and-deploy, document-release, document-generate, design-html, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` |
 
 ## Excluded Data
 
@@ -38,7 +40,7 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 1. **Runtime artifacts** — logs, caches, session transcripts, file history, environment snapshots, telemetry, etc.
 2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
 3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
-4. **Gstack clone guard** — `skills/gstack/` stays in `.gitignore` as a guard: the gstack clone was removed after the keeper skills were rewritten as owned, and the ignore line prevents a future clone from being tracked by accident. The rewritten skills themselves are tracked normally.
+4. **Gstack clone guard** — `skills/gstack/` is git-ignored so a gstack clone, if one ever appears there, is never tracked. The gstack-origin skills in `skills/` are owned files; do not clone gstack to update them.
 
 ## Hooks
 
@@ -47,9 +49,9 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 | Hook | Matcher | Purpose |
 |------|---------|---------|
 | `rtk hook claude` | `Bash` (PreToolUse) | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
-| `~/.claude/hooks/block-dangerous-git.sh` | `Bash` (PreToolUse) | Blocks `git push`, `git reset --hard`, `git clean -f`, `git branch -D`, `git checkout .`, `git restore .`. Patched to use `sed` instead of `jq` (not installed on this system). |
+| `~/.claude/hooks/block-dangerous-git.sh` | `Bash` (PreToolUse) | Blocks `git push`, `git reset --hard`, `git clean -f`, `git branch -D`, `git checkout .`, `git restore .`. Uses `sed` instead of `jq` so the hook runs on every host — Windows Git Bash ships without `jq`. |
 
-The git guardrails hook lives at `hooks/block-dangerous-git.sh` (active version, patched) and `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` (upstream reference, uses `jq`). On update, only the `hooks/` copy is active; the skills copy is the upstream source.
+The active git-guardrails hook lives at `hooks/block-dangerous-git.sh`; `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` is the upstream reference (uses `jq`).
 
 ## Quick Reference
 
@@ -70,33 +72,11 @@ git remote add origin https://github.com/Xd06eR/dot-claude.git
 git pull origin main
 ```
 
-Only configuration files are tracked — logs, caches, and session data remain untouched.
+Only configuration files are tracked — logs, caches, and session data remain untouched. Sync an existing machine with `git -C ~/.claude pull`.
 
-### Update the repo
+### RTK
 
-```bash
-cd ~/.claude && git pull
-```
-
-### Install RTK
-
-Required for the `PreToolUse` Bash hook. See `RTK.md` for install instructions.
-
-### Install skills
-
-Skills from mattpocock, taste-skill, and ECC are tracked in this repo and restored by `git pull`.
-
-To update mattpocock skills:
-
-```bash
-npx skills@latest add mattpocock/skills
-```
-
-Select the skills to update in the interactive picker. Overwrites existing skill files in `~/.claude/skills/`.
-
-### Gstack (historical)
-
-Gstack is no longer installed. The 18 skills worth keeping were rewritten gstack-free and are tracked in this repo (see Skill Sources); 6 of those were further converted into the plan-review architecture (`skills/plan-review/` + `agents/plan-reviewer.md` + `agents/security-auditor.md`). Do not re-clone gstack to update them — they are owned and edited here directly. `skills/gstack/` remains git-ignored as a guard.
+The `PreToolUse` Bash hook requires RTK on `PATH`. See `RTK.md` for install instructions.
 
 ### Restore plugins
 
@@ -163,7 +143,7 @@ claude plugin install supabase@claude-plugins-official
 claude plugin install vercel@claude-plugins-official
 ```
 
-### Fix the status line path
+### Status line path
 
 `settings.json` contains a host-specific `statusLine.command` that runs both plugin statusline scripts in a single PowerShell `-Command` invocation — caveman (`[CAVEMAN]` badge, orange) then ponytail (`[PONYTAIL]` badge, teal), separated by a space. The single `-Command` form keeps the `;` separator inside PowerShell so it is independent of the shell Claude Code spawns. After reinstalling either plugin, locate the new statusline script in its plugin cache and update `settings.json`:
 
