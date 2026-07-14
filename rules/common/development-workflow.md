@@ -18,7 +18,7 @@ Research before coding. Planning, TDD, review follow CLAUDE.md's 4-phase workflo
    - Create implementation plan before coding: PRD, architecture, task list
    - Identify dependencies and risks
    - Break down into phases
-   - See `/spec` skill for turning intent into executable specs, or `writing-plans` skill for structured plan documents.
+   - See the `spec` skill for turning intent into executable specs, or `writing-plans` skill for structured plan documents.
 
 2. **TDD Approach**
    - Write tests first (RED)

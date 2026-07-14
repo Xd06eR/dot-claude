@@ -26,7 +26,7 @@ Never do: overwrite or regenerate CHANGELOG entries (polish wording only), bump 
 
 ## Step 1: Detect platform and base branch
 
-Same detection as `/ship`. Detect the host from the remote:
+Same detection as `ship`. Detect the host from the remote:
 
 ```bash
 git remote get-url origin 2>/dev/null
@@ -86,7 +86,7 @@ Before touching any doc, map what shipped against what's documented. This is the
    - **Tutorial**: step-by-step for newcomers (getting-started guides).
    - **Explanation**: why it works this way (ARCHITECTURE decisions, design rationale).
 
-3. Items with zero coverage are **critical gaps**: flag them for Step 11 and the PR body. Reference-only items are **common gaps**. The map informs later steps; it never auto-generates docs. When significant gaps exist, suggest `/document-generate` as the follow-up.
+3. Items with zero coverage are **critical gaps**: flag them for Step 11 and the PR body. Reference-only items are **common gaps**. The map informs later steps; it never auto-generates docs. When significant gaps exist, suggest `document-generate` as the follow-up.
 
 4. **Diagram drift detection.** If ARCHITECTURE.md or any doc contains ASCII or Mermaid diagrams, extract entity names (modules, services, data flows). Cross-reference against the diff. Flag any diagram entity that was renamed, split, removed, or moved in the code. Diagram edits need human judgment: flag in the PR body, never auto-edit.
 
@@ -201,7 +201,7 @@ GitLab: swap the last command for `glab mr update -d "$(cat <<'MRBODY' ... MRBOD
 
 If no PR/MR exists yet, skip the body update with a note. If `gh pr edit` or `glab mr update` fails, warn and continue: the documentation changes are still in the commit.
 
-If a VERSION bump happened here after `/ship` already created the PR, and the PR title carries a `v<X.Y.Z>` prefix that is now stale, include a title-update line in the block (`gh pr edit --title "v<new>: <summary>"` or `glab mr update -t`). Apply the repo's existing title convention; do not impose one.
+If a VERSION bump happened here after `ship` already created the PR, and the PR title carries a `v<X.Y.Z>` prefix that is now stale, include a title-update line in the block (`gh pr edit --title "v<new>: <summary>"` or `glab mr update -t`). Apply the repo's existing title convention; do not impose one.
 
 ## Step 12: Documentation health summary
 
@@ -241,7 +241,7 @@ If coverage is complete and no diagrams drifted, output: "Coverage: all shipped 
 - **Never bump VERSION silently.** Always ask first.
 - **Read a file before editing it.**
 - **Be explicit about what changed.** Every edit gets a one-line summary naming the specific change.
-- **Coverage map informs, never generates.** Flag gaps in the PR body; do not auto-write missing doc pages. Suggest `/document-generate` as the follow-up when gaps are significant.
+- **Coverage map informs, never generates.** Flag gaps in the PR body; do not auto-write missing doc pages. Suggest `document-generate` as the follow-up when gaps are significant.
 - **Diagram drift is advisory.** Flag stale diagrams in the PR body; never auto-edit ASCII art or Mermaid blocks.
 - **Stay inside the working repo.** Write no state, metrics, or config files anywhere else.
 - **Voice: friendly, user-forward, not obscure.** Write like you're explaining to a smart person who hasn't seen the code.

@@ -55,7 +55,7 @@ Descriptions and frontmatter are load-bearing: a skill only fires if its descrip
 4. **Doc drift.** Comments, README, docstrings describing old behavior after code changed.
 5. **Dependency hygiene.** Unused dependencies declared, missing lockfile, inconsistent version pins.
 
-For project targets, do NOT duplicate work covered by `/review`, `/qa`, `/code-review`, `claude-md-improver`. Focus on drift and contradictions; defer pure code-quality findings to those skills.
+For project targets, do NOT duplicate work covered by `review`, `qa`, `code-review`, `claude-md-improver`. Focus on drift and contradictions; defer pure code-quality findings to those skills.
 
 ## Method (no self-verification, per `rules/orchestration/dispatch.md` §5)
 

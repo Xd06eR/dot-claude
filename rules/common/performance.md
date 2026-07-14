@@ -32,7 +32,7 @@ For complex tasks:
 ## Build Troubleshooting
 
 If build fails:
-1. Use `react-build-resolver` agent (React) or `/diagnose` skill (general)
+1. Use `react-build-resolver` agent (React) or the `diagnose` skill (general)
 2. Analyze error messages
 3. Fix incrementally
 4. Verify after each fix

@@ -30,7 +30,7 @@ When tests fail:
 1. Check test isolation — no shared mutable state between tests
 2. Verify mocks match current interfaces
 3. Fix implementation, not tests (unless the test is wrong)
-4. Use `/diagnose` skill for root cause analysis on hard-to-debug failures
+4. Use the `diagnose` skill for root cause analysis on hard-to-debug failures
 
 ## Test Structure (AAA Pattern)
 

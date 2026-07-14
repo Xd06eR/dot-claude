@@ -27,7 +27,7 @@ The **Skill invocation operative rule** + **phase-gate table** (must-fire skills
 - `superpowers:brainstorming` · `superpowers:writing-plans` · `grill-me` · `grill-with-docs` · `spec` · `design-consultation` · `design-html` · `design-variants` · `design-taste-frontend` · `search-first` · `prototype`
 
 ## Build
-- `superpowers:test-driven-development` · `superpowers:subagent-driven-development` · `/feature-dev` · `/frontend-design` · `/impeccable` (disabled in settings.json) · `tdd` · `database-migrations` · `frontend-a11y` · `make-interfaces-feel-better` · `motion-ui`
+- `superpowers:test-driven-development` · `superpowers:subagent-driven-development` · `feature-dev` · `frontend-design` · `impeccable` (disabled in settings.json) · `tdd` · `database-migrations` · `frontend-a11y` · `make-interfaces-feel-better` · `motion-ui`
 
 ## Refine
 - `improve-codebase-architecture`
@@ -36,7 +36,7 @@ The **Skill invocation operative rule** + **phase-gate table** (must-fire skills
 - `qa` · `e2e-testing`
 
 ## Review & Debug
-- `/code-review` · `/security-review` · `pr-review-toolkit:review-pr` · `superpowers:requesting-code-review` · `superpowers:receiving-code-review` · `superpowers:systematic-debugging` · `diagnose` · `superpowers:verification-before-completion` · `teach-back`
+- `code-review` · `security-review` · `pr-review-toolkit:review-pr` · `superpowers:requesting-code-review` · `superpowers:receiving-code-review` · `superpowers:systematic-debugging` · `diagnose` · `superpowers:verification-before-completion` · `teach-back`
 
 ## LLM/agent diagnostics
 - `agent-architecture-audit` · `agent-introspection-debugging` · `eval-harness` · `context-budget` · `loop-design-check`
