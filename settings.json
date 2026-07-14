@@ -35,9 +35,14 @@
     "vercel@claude-plugins-official": false
   },
   "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_TELEMETRY": "1",
     "CLAUDE_CODE_EFFORT_LEVEL": "max",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "DO_NOT_TRACK": "1",
     "ENABLE_TOOL_SEARCH": "true"
   },
   "extraKnownMarketplaces": {
@@ -96,6 +101,10 @@
           {
             "command": "~/.claude/hooks/block-dangerous-git.sh",
             "type": "command"
+          },
+          {
+            "command": "~/.claude/hooks/block-secret-paths.sh",
+            "type": "command"
           }
         ],
         "matcher": "Bash"
@@ -108,7 +117,12 @@
       "Bash(rtk proxy *)",
       "Bash(rtk ls *)",
       "Bash(rtk find *)",
-      "Bash(rtk git *)",
+      "Bash(rtk git status *)",
+      "Bash(rtk git log *)",
+      "Bash(rtk git diff *)",
+      "Bash(rtk git show *)",
+      "Bash(rtk git blame *)",
+      "Bash(rtk git ls-files *)",
       "Bash(rtk grep *)",
       "Bash(rtk diff *)",
       "Bash(rtk wc *)",
@@ -120,16 +134,26 @@
       "Bash(rtk stat *)",
       "Bash(rtk file *)",
       "Bash(rtk which *)",
-      "Bash(rtk rg *)"
+      "Bash(rtk rg *)",
+      "WebSearch",
+      "WebFetch"
     ],
     "ask": [
       "Bash(rm *)",
       "Bash(rtk rm *)",
-      "Bash(rtk proxy rm *)"
+      "Bash(rtk proxy rm *)",
+      "Bash(rtk proxy curl *)",
+      "Bash(rtk proxy wget *)"
     ],
     "defaultMode": "default",
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(**/.env)",
+      "Read(**/.env.*)"
+    ],
     "disableBypassPermissionsMode": "disable"
   },
+  "skipWebFetchPreflight": true,
   "statusLine": {
     "command": "powershell -ExecutionPolicy Bypass -Command \"& 'C:\\Users\\User\\.claude\\plugins\\cache\\caveman\\caveman\\25d22f864ad6\\src\\hooks\\caveman-statusline.ps1'; [Console]::Write(' '); & 'C:\\Users\\User\\.claude\\plugins\\cache\\ponytail\\ponytail\\4.7.0\\hooks\\ponytail-statusline.ps1'\"",
     "type": "command"

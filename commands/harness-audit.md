@@ -66,7 +66,7 @@ This audit fans out: 2 subagent dispatches (investigator + adversarial reviewer)
 
 **Phase 3 — Adversarial review.** Dispatch a fresh-context reviewer subagent. Brief the reviewer with `file:line` + finding only — not the auditor's reasoning — to avoid anchoring. Refute each finding; look specifically for rules fighting each other, stale path/tool names, and wording a weaker model would misread. Drop any finding that does not survive. Each surviving finding keeps `file:line + concrete failure scenario`. If the Agent tool is unavailable, fall back to a skeptical self re-read and tag each finding `Self-verified` so the user knows the no-fresh-context caveat.
 
-**Subagent gotcha:** if a `block-dangerous-git.sh`-style PreToolUse hook is active, a dispatched agent that runs `grep 'git commit'` in Bash gets killed — the hook pattern-matches the command string even inside a search. Tell dispatched agents to use the Grep tool (not Bash `grep`) for any search whose pattern contains a git-mutation literal.
+**Subagent gotcha:** if a pattern-matching PreToolUse hook is active (`block-dangerous-git.sh` matches `git commit`/`push`/`reset --hard`/etc.; `block-secret-paths.sh` matches `.env`/`.ssh`), a dispatched agent that runs `grep 'git commit'` or `grep '.env'` in Bash gets killed — these hooks pattern-match the command string even inside a search. Tell dispatched agents to use the Grep tool (not Bash `grep`) for any search whose pattern contains a git-mutation literal or a secret-path string.
 
 **Phase 4 — Apply per change tier** (per `rules/common/harness-maintenance.md`):
 - **Self-serve**: name-only dead-ref fixes (file/tool renamed, path moved — no behavior or routing change), `MEMORY.md` index line updates. Apply directly, show diff.

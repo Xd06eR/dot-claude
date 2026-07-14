@@ -10,6 +10,7 @@ Sets up a PreToolUse hook that intercepts and blocks dangerous git commands befo
 
 ## What Gets Blocked
 
+- `git commit` (policy: never auto-commit; user runs manually)
 - `git push` (all variants including `--force`)
 - `git reset --hard`
 - `git clean -f` / `git clean -fd`

@@ -44,12 +44,13 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 
 ## Hooks
 
-`settings.json` configures two hooks:
+`settings.json` configures three PreToolUse `Bash` hooks:
 
-| Hook | Matcher | Purpose |
-|------|---------|---------|
-| `rtk hook claude` | `Bash` (PreToolUse) | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
-| `~/.claude/hooks/block-dangerous-git.sh` | `Bash` (PreToolUse) | Blocks `git push`, `git reset --hard`, `git clean -f`, `git branch -D`, `git checkout .`, `git restore .`. Uses `sed` instead of `jq` so the hook runs on every host — Windows Git Bash ships without `jq`. |
+| Hook | Purpose |
+|------|---------|
+| `rtk hook claude` | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
+| `~/.claude/hooks/block-dangerous-git.sh` | Blocks `git push`, `git commit`, `git reset --hard`, `git clean -f`/`-fd`, `git branch -D`, `git checkout .`, `git restore .`, `push --force`. Uses `sed` (not `jq`) so it runs on Windows Git Bash. |
+| `~/.claude/hooks/block-secret-paths.sh` | Blocks any Bash command matching `\.env` or `\.ssh` (closes the bash bypass of the Read-deny; see Security below). Same `sed` shape. Extend `SECRET_PATTERNS` for new secret paths. |
 
 The active git-guardrails hook lives at `hooks/block-dangerous-git.sh`; `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` is the upstream reference (uses `jq`).
 
@@ -153,6 +154,15 @@ claude plugin install vercel@claude-plugins-official
 # ~/.claude/plugins/cache/ponytail/ponytail/<version>/hooks/ponytail-statusline.ps1
 ```
 
-## Security
+## Security & credentials
 
-`settings.json` may contain sensitive tokens (e.g., `ANTHROPIC_AUTH_TOKEN`). Keep this repository **private**. Rotate the token immediately if the repository is ever exposed.
+**Tokens never live in tracked files.** `settings.json` is tracked and pushed; keep API tokens in an OS env var (`setx ANTHROPIC_AUTH_TOKEN "<token>"`, or PowerShell `[Environment]::SetEnvironmentVariable("ANTHROPIC_AUTH_TOKEN","<token>","User")`), not in `settings.json`. `ANTHROPIC_BASE_URL` and model aliases are not secret and stay there. Keep the repo private; rotate on exposure.
+
+**Adding a new credential:**
+
+1. Store it outside tracked files (OS env var or a gitignored file), never in `settings.json`.
+2. If the agent must not read its file, block both paths: add a `Read(...)` rule to `permissions.deny`, and add a pattern to `SECRET_PATTERNS` in `hooks/block-secret-paths.sh` (that hook closes the bash bypass of the Read-deny for `.env` / `~/.ssh`).
+3. If it is a dangerous command (egress, install, remote access), add it to `permissions.ask`.
+4. Restart Claude Code so hook edits load.
+
+The full `allow` / `ask` / `deny` posture and the Anthropic-traffic disable flags live in `settings.json`; read it directly for the current set.

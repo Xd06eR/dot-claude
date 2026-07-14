@@ -4,6 +4,7 @@ INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command')
 
 DANGEROUS_PATTERNS=(
+  "git commit"
   "git push"
   "git reset --hard"
   "git clean -fd"
