@@ -1,6 +1,8 @@
 # TOOLKIT — Skill, Agent & Tool Catalog
 
-**Usage**: phase-grouped index for skill, agent, and tool selection. The **Skill invocation operative rule** + **phase-gate table** (must-fire skills per phase) live in CLAUDE.md; per-module descriptions live in each frontmatter (surfaced automatically), so not repeated here. Always scan all available skills + agents and pick the best fit; never limit yourself to what's listed.
+**Usage**: phase-grouped index for skill, agent, and tool selection.
+
+The **Skill invocation operative rule** + **phase-gate table** (must-fire skills per phase) live in CLAUDE.md; per-module descriptions live in each frontmatter (surfaced automatically), so not repeated here. Always scan all available skills + agents and pick the best fit; never limit yourself to what's listed.
 
 ## Browsing Strategy
 
@@ -22,19 +24,22 @@
 - `andrej-karpathy-skills:karpathy-guidelines`
 
 ## Design & Plan
-- `superpowers:brainstorming` · `superpowers:writing-plans` · `grill-me` · `grill-with-docs` · `spec` · `design-consultation` · `design-html` · `design-variants`
+- `superpowers:brainstorming` · `superpowers:writing-plans` · `grill-me` · `grill-with-docs` · `spec` · `design-consultation` · `design-html` · `design-variants` · `design-taste-frontend` · `search-first` · `prototype`
 
 ## Build
-- `superpowers:test-driven-development` · `superpowers:subagent-driven-development` · `/feature-dev` · `/frontend-design` · `/impeccable` (enable in settings.json first)
+- `superpowers:test-driven-development` · `superpowers:subagent-driven-development` · `/feature-dev` · `/frontend-design` · `/impeccable` (disabled in settings.json) · `tdd` · `database-migrations` · `frontend-a11y` · `make-interfaces-feel-better` · `motion-ui`
+
+## Refine
+- `improve-codebase-architecture`
 
 ## QA
-- `qa`
+- `qa` · `e2e-testing`
 
 ## Review & Debug
-- `/code-review` · `/security-review` · `pr-review-toolkit:review-pr` · `superpowers:requesting-code-review` · `superpowers:receiving-code-review` · `superpowers:systematic-debugging` · `diagnose` · `superpowers:verification-before-completion`
+- `/code-review` · `/security-review` · `pr-review-toolkit:review-pr` · `superpowers:requesting-code-review` · `superpowers:receiving-code-review` · `superpowers:systematic-debugging` · `diagnose` · `superpowers:verification-before-completion` · `teach-back`
 
 ## LLM/agent diagnostics
-- `agent-architecture-audit` · `agent-introspection-debugging` · `eval-harness` · `context-budget` · `loop-design-check` (agent-loop goal + runaway review)
+- `agent-architecture-audit` · `agent-introspection-debugging` · `eval-harness` · `context-budget` · `loop-design-check`
 
 ## Ship & Deploy
 - `ship` · `land-and-deploy` · `deploy-watch` · `document-release`
@@ -42,18 +47,15 @@
 ## Docs & Artifacts
 - `document-generate` · `diagram` · `make-pdf`
 
+## Not workflow-phased (scenario / utility / meta)
+- `inherit-legacy-style` · `redesign-existing-projects` · `handoff` · `teach` · `writing-great-skills` · `git-guardrails-claude-code`
+
 ## Plan Review
-- `plan-review` — orchestrator; dispatches the four lenses as parallel `plan-reviewer` agents (+ `security-auditor` when the plan touches a security surface), merges reports, auto-resolves via 6 decision principles, surfaces taste calls. Lens files (data, not skills): `skills/plan-review/lenses/{ceo,design,devex,eng}.md` — dispatch one `plan-reviewer` per lens for a single-lens review without the orchestrator.
+- `plan-review` (+ `skills/plan-review/lenses/{ceo,design,devex,eng}.md`; one `plan-reviewer` per lens)
 
 ## Agents
-Dispatch as subagents, never slash.
-- `plan-reviewer` — reviews a plan/spec through ONE named lens file; one instance per lens, parallel.
-- `security-auditor` — adversarial read-only audit (codebase, diff, or plan); STRIDE + severity-ranked findings + ship/block verdict.
-- `code-simplifier:code-simplifier` — post-implementation clarity/consistency pass.
-- `silent-failure-hunter` — swallowed errors, bad fallbacks, missing propagation.
-- `react-build-resolver` — React build failures.
-- `database-reviewer` — PostgreSQL query, schema, index, and RLS review.
+- `plan-reviewer` · `security-auditor` · `code-simplifier:code-simplifier` · `silent-failure-hunter` · `react-build-resolver` · `database-reviewer`
 
 ## Tools
 - **LSP**: symbol navigation, type lookups, find-references.
-- **MCP**: context7 (library docs), chrome-devtools-mcp (debug/perf/a11y), playwright (browser). Selection guide in the Browsing Strategy table above.
+- **MCP**: context7 · chrome-devtools-mcp · playwright (selection guide in Browsing Strategy above).

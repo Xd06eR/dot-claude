@@ -1,6 +1,7 @@
 ---
 description: Audit current dir or a target dir for drift, contradictions, stale refs, weak-model-misread wording. Periodic review, not rebuild.
 argument-hint: [optional target dir; defaults to cwd]
+origin: custom
 ---
 
 # Audit

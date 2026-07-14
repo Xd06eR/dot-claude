@@ -23,13 +23,13 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 
 ## Skill Sources
 
-Every skill in `skills/` is an owned, tracked file, edited here directly. The sources below record provenance; skills are not updated from upstream.
+Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream.
 
 | Source | Count | Skills |
 |--------|-------|--------|
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 10 | diagnose, git-guardrails-claude-code, grill-me, grill-with-docs, handoff, improve-codebase-architecture, prototype, tdd, teach, writing-great-skills |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
-| [ECC](https://github.com/affaan-m/ECC) | 12 skills + 1 agent | agent-architecture-audit, agent-introspection-debugging, context-budget, eval-harness, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agent `database-reviewer` |
+| [ECC](https://github.com/affaan-m/ECC) | 12 skills + 3 agents | agent-architecture-audit, agent-introspection-debugging, context-budget, eval-harness, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agents `database-reviewer`, `react-build-resolver`, `silent-failure-hunter` |
 | Custom | 1 | teach-back (user-edited derivative) |
 | [gstack](https://github.com/garrytan/gstack) | 13 skills + 2 agents | ship, spec, qa, diagram, make-pdf, deploy-watch, land-and-deploy, document-release, document-generate, design-html, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` |
 

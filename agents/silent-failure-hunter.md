@@ -2,6 +2,7 @@
 name: silent-failure-hunter
 description: Review code for silent failures, swallowed errors, bad fallbacks, and missing error propagation. Dispatch when reviewing a diff or module for error-handling correctness, especially after writing try/catch, fallback, or .catch() logic.
 tools: Read, Grep, Glob, Bash
+origin: ECC
 ---
 
 ## Prompt Defense Baseline
