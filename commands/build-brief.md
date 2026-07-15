@@ -21,7 +21,7 @@ Arguments: "$ARGUMENTS" — **required**: the feature name + the components in i
 Discover and read, wherever they live in the project:
 
 - the spec + plan for each named component (`<component>-spec.md`, `<component>-plan.md`)
-- `implementation-notes.md` — deviations logged so far, if it exists
+- `implementation-notes.md` — notes logged so far (decisions, deviations, tradeoffs, open questions), if it exists
 - the project's `CLAUDE.md` — standing baseline context
 
 Everything else is upstream (design-phase, research, archives) — do not read it; if its content matters here, it is already distilled into the specs. If a named component has no spec or plan, stop and say so — Plan has not produced it; do not invent.
@@ -46,7 +46,7 @@ Write a single comprehensive brief covering every component in the feature:
 
 ## Integration
 
-After dispatched subagents return, the main session integrates: resolves any seams between components, runs the feature's full acceptance, and logs deviations to `implementation-notes.md`.
+After dispatched subagents return, the main session integrates: resolves any seams between components, runs the feature's full acceptance, and logs notes to `implementation-notes.md`.
 
 ## INDEX → `build-briefs/INDEX.md`
 
@@ -54,7 +54,7 @@ One line per feature: name · components · status (☐/✅). Rule at top: build
 
 ## Principles to encode
 
-Surgical (touch only what each step requires). TDD (failing test → implement → refactor). One concern per step, tight diffs. Evidence at every gate (test output, not "should work"). Deviations → `implementation-notes.md`.
+Surgical (touch only what each step requires). TDD (failing test → implement → refactor). One concern per step, tight diffs. Evidence at every gate (test output, not "should work"). Notes → `implementation-notes.md`.
 
 ## Output
 
