@@ -128,16 +128,7 @@ Audit on every PR that touches env vars: would this string in the public bundle 
 
 ## Content Security Policy (CSP)
 
-Configure server-side. The minimum acceptable CSP for a React app:
-
-```
-default-src 'self';
-script-src 'self' 'nonce-{REQUEST_NONCE}';
-style-src 'self' 'unsafe-inline';
-img-src 'self' data: https:;
-connect-src 'self' https://api.example.com;
-frame-ancestors 'none';
-```
+Configure server-side — full nonce-based header block in [web/security.md](../web/security.md#content-security-policy). React/SSR specifics:
 
 - Avoid `unsafe-inline` and `unsafe-eval` in `script-src`
 - For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces — both Next.js and Remix support nonce injection

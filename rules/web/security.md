@@ -1,12 +1,8 @@
 ---
 paths:
-  - "**/*.css"
   - "**/*.html"
   - "**/*.tsx"
   - "**/*.jsx"
-  - "**/*.scss"
-  - "**/*.sass"
-  - "**/*.less"
 ---
 
 # Web Security Rules

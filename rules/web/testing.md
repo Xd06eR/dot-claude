@@ -1,13 +1,13 @@
 ---
 paths:
-  - "**/*.css"
-  - "**/*.html"
-  - "**/*.tsx"
-  - "**/*.jsx"
   - "**/*.test.ts"
-  - "**/*.spec.ts"
+  - "**/*.test.tsx"
   - "**/*.test.js"
+  - "**/*.test.jsx"
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
   - "**/*.spec.js"
+  - "**/*.spec.jsx"
 ---
 
 # Web Testing Rules
