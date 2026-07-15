@@ -6,7 +6,7 @@ paths:
 
 # React Patterns
 
-> This file extends [typescript/patterns.md](../typescript/patterns.md) and [common/patterns.md](../common/patterns.md) with React specific content. For hook-specific rules see [hooks.md](./hooks.md).
+> This file extends [common/patterns.md](../common/patterns.md) with React specific content. For hook-specific rules see [hooks.md](./hooks.md).
 
 ## Container / Presentational Split
 
@@ -171,20 +171,6 @@ export function Input({ ref, ...rest }: { ref?: React.Ref<HTMLInputElement> } & 
 ```
 
 Older codebases on React 18 still need `forwardRef`.
-
-## Out of Scope (Pointer Sections)
-
-### Next.js (App Router)
-
-- Server Actions, Route Handlers, Middleware, Parallel/Intercepted Routes, streaming Metadata
-- Treated as a separate framework concern — when adding deep Next-specific patterns, propose a dedicated `rules/nextjs/` track
-- For now follow Next.js official docs for App Router specifics
-
-### React Native
-
-- Platform-specific imports (`Platform.OS`, `.ios.tsx` / `.android.tsx`), `StyleSheet`, navigation libraries (React Navigation, Expo Router)
-- Treated as a separate track — `rules/react-native/` is not yet present
-- React core hooks/patterns from this file still apply
 
 ## Skill Reference
 

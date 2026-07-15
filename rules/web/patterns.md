@@ -1,49 +1,13 @@
 ---
 paths:
-  - "**/*.css"
   - "**/*.html"
   - "**/*.tsx"
   - "**/*.jsx"
-  - "**/*.scss"
-  - "**/*.sass"
-  - "**/*.less"
 ---
 
 # Web Patterns
 
-> This file extends [common/patterns.md](../common/patterns.md) with web-specific patterns.
-
-## Component Composition
-
-### Compound Components
-
-Use compound components when related UI shares state and interaction semantics:
-
-```tsx
-<Tabs defaultValue="overview">
-  <Tabs.List>
-    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
-    <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
-  </Tabs.List>
-  <Tabs.Content value="overview">...</Tabs.Content>
-  <Tabs.Content value="settings">...</Tabs.Content>
-</Tabs>
-```
-
-- Parent owns state
-- Children consume via context
-- Prefer this over prop drilling for complex widgets
-
-### Render Props / Slots
-
-- Use render props or slot patterns when behavior is shared but markup must vary
-- Keep keyboard handling, ARIA, and focus logic in the headless layer
-
-### Container / Presentational Split
-
-- Container components own data loading and side effects
-- Presentational components receive props and render UI
-- Presentational components should stay pure
+> This file extends [common/patterns.md](../common/patterns.md) with web-specific patterns. Component patterns (compound components, container/presentational, render props) live in [react/patterns.md](../react/patterns.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
 
 ## State Management
 
