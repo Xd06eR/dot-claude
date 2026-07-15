@@ -61,13 +61,19 @@ Before marking code complete:
 
 | Tool | Type | Use when |
 |------|------|----------|
-| `security-guidance` plugin | Auto-running | Pattern warnings + diff review + commit review — always active |
-| `code-review` | Built-in skill | Multi-agent PR review via GitHub |
+| `security-guidance` plugin | Auto-running (enabled) | Pattern warnings + diff review + commit review — always active |
+| `code-review` | Built-in skill | Review the current diff for correctness bugs + cleanups; effort-level; `--fix` to apply |
 | `review` | Skill | General code review workflow |
+| `/pr-review-toolkit:review-pr` | Command (plugin, enabled) | Comprehensive multi-agent PR review |
+| `/code-review:code-review` | Command (plugin, enabled) | Multi-agent PR review — overlaps `/pr-review-toolkit:review-pr`; CLAUDE.md deprioritizes |
+| `security-review` | Built-in skill | Security-focused diff review; for deeper audit use the `security-auditor` agent |
 | `diagnose` | Skill | Root cause analysis on bugs found |
 | `silent-failure-hunter` | Agent | Hunt swallowed errors, bad fallbacks, missing propagation |
+| `security-auditor` | Agent | Adversarial security audit of a diff or design (pre-ship gate) |
 | `react-build-resolver` | Agent | React build failures found during review |
-| `code-simplifier` | Plugin (agent) | Code clarity/consistency refinement |
+| `code-simplifier` | Agent | Code clarity/consistency refinement |
+
+Review tools (`code-review`, `review`, `/pr-review-toolkit:review-pr`) are substitutes — pick one. Authoritative phase-gate order in CLAUDE.md.
 
 ## Review Workflow
 

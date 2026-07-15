@@ -79,8 +79,8 @@ Organized by phase.
 
 Rules live in `~/.claude/rules/`. In Claude Code they auto-load: `common/` and `orchestration/` always, language dirs only when files matching their `paths:` frontmatter are read. **When starting work in a language, proactively read the relevant rules into context**; other agents do not auto-load them, and scoping can miss (e.g. React hook rules in a plain `.ts` file, or new files being written rather than read).
 
-- **Python:** python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md · python/patterns.md
-- **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md · typescript/patterns.md
+- **Python:** python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md
+- **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md
 - **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/patterns.md
 - **React:** react/coding-style.md · react/hooks.md · react/patterns.md · react/security.md · react/testing.md
 - **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
@@ -107,24 +107,47 @@ Re-anchor with `andrej-karpathy-skills:karpathy-guidelines` before any non-trivi
 Skill Composition:
 - **Phase** — one skill per workflow phase the task has (design / plan / build / review / ship). Skip phases the task lacks.
 - **Concern** — within a phase, stack skills covering different concerns. Orthogonal only.
-- **Dedupe** — never stack two skills doing the same job. The review skills (`code-review`, `pr-review-toolkit:review-pr`, `review`) are substitutes; pick one.
+- **Dedupe** — never stack two skills doing the same job. The review tools (`code-review`, `/pr-review-toolkit:review-pr`, `review`) are substitutes; pick one.
 - **Budget** — default 1–3 skills; justify more.
 
-Phase-gate table (invoke at phase start, before other work):
+Phase-gate table (invoke at phase start, before other work). Bare names are skills; slash names (`/name`) are commands. Both are Skill-tool-invocable:
 
-| Phase | Invoke one or more |
-|---|---|
-| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` |
-| Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) |
-| Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` |
-| QA | `qa` |
-| Review | `code-review` (the built-in skill, not the `code-review:code-review` plugin) · `pr-review-toolkit:review-pr` · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) |
-| Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` |
-| Debug | `superpowers:systematic-debugging` · `diagnose` |
+| Phase | Invoke (must-fire) | Situational (on-demand) |
+|---|---|---|
+| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` | `search-first` |
+| Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
+| Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `frontend-design` · `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
+| QA | `qa` | `e2e-testing` |
+| Review | `code-review` (the built-in skill, not the `/code-review:code-review` plugin) · `/pr-review-toolkit:review-pr` · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | `security-review` |
+| Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
+| Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
 Heavy or long-running skills (autonomous loops): ask first.
 
-Fuller reference catalog (skills, agents, tools): `TOOLKIT.md`.
+The phase-gate names the must-fire subset; always scan all available skills, agents, and commands via injection, pick the best fit, and never limit yourself to what's listed.
+
+## Commands (auto-invoked)
+
+A few commands are part of the workflow: invoke them on your own judgment when the work calls for it, like skills:
+
+- `/feature-dev:feature-dev` — guided feature development.
+- `/pr-review-toolkit:review-pr` — comprehensive PR review (preferred over the overlapping `/code-review:code-review`).
+- `/claude-md-management:revise-claude-md` — fold session learnings into CLAUDE.md.
+
+Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief` (phase transitions), `/harness-audit` (audit), `/caveman:*` (mode).
+
+## Browsing
+
+| Task | Primary | Fallback |
+|---|---|---|
+| Library docs (React, Django, Prisma, etc.) | context7 MCP | — |
+| General web browsing (articles, research) | playwright MCP | — |
+| Page scraping / data extraction | playwright MCP | chrome-devtools-mcp evaluate |
+| Debug, performance, a11y audit | chrome-devtools-mcp | — |
+
+## Agents
+
+Top-level dispatchable agents: `plan-reviewer`, `security-auditor`, `database-reviewer`, `react-build-resolver`, `silent-failure-hunter`, `code-simplifier`. Sub-agents inside feature-dev and pr-review-toolkit are internal to those commands; find them via injection.
 
 ## Git
 
@@ -140,4 +163,3 @@ Fuller reference catalog (skills, agents, tools): `TOOLKIT.md`.
 - Never access sensitive directories (`~/.ssh`, `~/Library/Keychains`).
 
 @RTK.md
-@TOOLKIT.md

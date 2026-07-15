@@ -9,7 +9,6 @@
 # Claude Code instructions and config
 !CLAUDE.md
 !RTK.md
-!TOOLKIT.md
 !settings.json
 
 # Claude Code extensions (agents, hooks, rules, skills)

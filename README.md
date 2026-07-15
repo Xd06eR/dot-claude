@@ -7,7 +7,6 @@ Private backup of global agent configuration: system instructions, agent definit
 | Path | Description |
 |---|---|
 | `CLAUDE.md` | Global system instructions |
-| `TOOLKIT.md` | Skill, agent, and tool catalog |
 | `RTK.md` | Proxy configuration |
 | `settings.json` | Agent settings and environment |
 | `agents/` | Agent definitions |
