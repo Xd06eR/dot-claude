@@ -1,7 +1,7 @@
 ---
 name: handoff
 description: Compact the current conversation into a handoff document for another agent to pick up. Use at the end of a session when the work continues in a fresh session or another agent.
-argument-hint: "What will the next session be used for?"
+argument-hint: What will the next session be used for?
 origin: mattpocock
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: Design→Plan command. Decompose BASELINE design docs into per-component spec + implementation plan (with embedded numbered checklist). Run at the Design→Plan handoff; gates via plan-review before /build-brief.
-argument-hint: [required: design-doc dir, glob, or file list] [--out <output-dir>]
+argument-hint: "[required: design-doc dir, glob, or file list] [--out <output-dir>]"
 origin: custom
 ---
 
