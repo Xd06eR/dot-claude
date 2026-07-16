@@ -4,7 +4,7 @@ description: Anti-slop frontend skill for landing pages, portfolios, and redesig
 origin: taste-skill
 ---
 
-# tasteskill: Anti-Slop Frontend Skill
+# design-taste-frontend: Anti-Slop Frontend Skill
 
 > Landing pages, portfolios, and redesigns. Not dashboards, not data tables, not multi-step product UI.
 > Every rule below is **contextual**. None of it fires automatically. First read the brief, then pull only what fits.
@@ -841,7 +841,7 @@ The Reference Vocabulary (Section 10) names patterns. The Block Library implemen
 
 ### 12.A File Location
 ```
-skills/taste-skill/blocks/
+skills/design-taste-frontend/blocks/
   hero/
     asymmetric-split.md
     editorial-manifesto.md
