@@ -56,6 +56,14 @@ ALWAYS validate at system boundaries:
 - Fail fast with clear error messages
 - Never trust external data (API responses, user input, file content)
 
+## API Response Format
+
+Use a consistent envelope for all API responses:
+- Include a success/status indicator
+- Include the data payload (nullable on error)
+- Include an error message field (nullable on success)
+- Include metadata for paginated responses (total, page, limit)
+
 ## Naming Conventions
 
 > Language-specific rules in `rules/<language>/coding-style.md` override these defaults.
@@ -80,11 +88,4 @@ Split large functions into focused pieces with clear responsibilities.
 
 ## Code Quality Checklist
 
-Before marking work complete:
-- [ ] Code is readable and well-named
-- [ ] Functions are small (<50 lines)
-- [ ] Files are focused (<800 lines)
-- [ ] No deep nesting (>4 levels)
-- [ ] Proper error handling
-- [ ] No hardcoded values (use constants or config)
-- [ ] No mutation (immutable patterns used)
+See [code-review.md](code-review.md#review-checklist) for the pre-complete checklist.

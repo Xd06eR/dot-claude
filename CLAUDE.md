@@ -24,7 +24,7 @@ Follow 4-phase approach. Main agent orchestrates; subagents implement.
 
 1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity. Identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
    - **Surface blind spots:** Beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see. Resolve each before planning.
-2. **Plan:** Write spec docs (.md) and a numbered checklist (the task breakdown) — decomposed steps, each stating what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name risks and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
+2. **Plan:** Write spec docs (.md) and a numbered checklist (the task breakdown) — decomposed steps, each stating what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name dependencies, risks, and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
    - **Standard artifacts:** spec docs (`<feature>-spec.md`) — what + why + success criteria; implementation plan (`<feature>-plan.md`) — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first; implementation notes (`implementation-notes.md`) — running log appended during build; build brief — produced by `/build-brief` from the spec + plan; per-component build directives, built in order, then review.
 3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents only when the content is residue (see **Dispatch discipline** below + `rules/orchestration/dispatch.md`). Each dispatched subagent implements one independent component, includes lint + format + type-check + tests, verifies before returning; you integrate.
    - **Log implementation notes:** Append to `implementation-notes.md` as you build — design decisions where the spec was ambiguous, deviations from the plan (conservative option taken) and why, tradeoffs picked (alternatives considered), open questions to confirm. Review before accepting.
@@ -81,9 +81,9 @@ Rules live in `~/.claude/rules/`. In Claude Code they auto-load: `common/` and `
 
 - **Python:** python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md
 - **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md
-- **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/patterns.md
-- **React:** react/coding-style.md · react/hooks.md · react/patterns.md · react/security.md · react/testing.md
-- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/hooks.md · common/patterns.md · common/performance.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
+- **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/architecture.md
+- **React:** react/coding-style.md · react/hooks.md · react/architecture.md · react/security.md · react/testing.md
+- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
 - **Orchestration:** orchestration/dispatch.md · orchestration/dispatch-templates.md
 
 ## Dispatch discipline

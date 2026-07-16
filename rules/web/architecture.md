@@ -5,9 +5,9 @@ paths:
   - "**/*.jsx"
 ---
 
-# Web Patterns
+# Web Architecture
 
-> This file extends [common/patterns.md](../common/patterns.md) with web-specific patterns. Component patterns (compound components, container/presentational, render props) live in [react/patterns.md](../react/patterns.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
+> Web-specific architecture. Component patterns (compound components, container/presentational, render props) live in [react/architecture.md](../react/architecture.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
 
 ## State Management
 

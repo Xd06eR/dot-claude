@@ -1,9 +1,5 @@
 # Code Review Standards
 
-## Purpose
-
-Code review ensures quality, security, and maintainability before code is merged. This rule defines when and how to conduct code reviews.
-
 ## When to Review
 
 **MANDATORY review triggers:**
@@ -14,13 +10,11 @@ Code review ensures quality, security, and maintainability before code is merged
 - When architectural changes are made
 - Before merging pull requests
 
-**Pre-Review Requirements:**
+**Before declaring work ready for review:**
 
-Before requesting review, ensure:
-
-- All automated checks (CI/CD) are passing
-- Merge conflicts are resolved
-- Branch is up to date with target branch
+- Automated checks pass (tests, lint, type-check)
+- Merge conflicts resolved
+- Branch up to date with target
 
 ## Review Checklist
 
@@ -32,6 +26,7 @@ Before marking code complete:
 - [ ] No deep nesting (>4 levels)
 - [ ] Errors are handled explicitly
 - [ ] No hardcoded secrets or credentials
+- [ ] No hardcoded values (use constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality
 - [ ] Test coverage meets 80% minimum
@@ -118,11 +113,3 @@ Review tools (`code-review`, `review`, `/pr-review-toolkit:review-pr`) are subst
 - **Approve**: No CRITICAL or HIGH issues
 - **Warning**: Only HIGH issues (merge with caution)
 - **Block**: CRITICAL issues found
-
-## Integration with Other Rules
-
-This rule works with:
-
-- [testing.md](testing.md) - Test coverage requirements
-- [security.md](security.md) - Security checklist
-- [git-workflow.md](git-workflow.md) - Commit standards

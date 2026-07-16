@@ -28,9 +28,4 @@ api_key = os.environ["OPENAI_API_KEY"]  # Raises KeyError if missing
 
 ## Automated Security
 
-The `security-guidance` plugin provides automatic Python security scanning:
-- Pattern warnings on dangerous patterns during Edit/Write
-- LLM diff review after each turn
-- Agentic commit review on `git commit`
-
-See [common/security.md](../common/security.md#automated-security) for full details.
+Automated scanning via the `security-guidance` plugin — see [common/security.md](../common/security.md#automated-security).

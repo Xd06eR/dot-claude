@@ -11,7 +11,7 @@ paths:
 
 # Web Design Quality Standards
 
-> This file extends [common/patterns.md](../common/patterns.md) with web-specific design-quality guidance.
+> Web-specific design-quality guidance.
 
 ## Anti-Template Policy
 

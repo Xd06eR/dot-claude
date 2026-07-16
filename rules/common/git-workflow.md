@@ -1,18 +1,8 @@
 # Git Workflow
 
 ## Commit Message Format
-```
-<type>: <description>
 
-<optional body>
-```
-
-Subject line only — no body unless explicitly asked. Make the subject descriptive:
-name what the change does, don't over-trim for brevity.
-
-Types: feat, fix, refactor, docs, test, chore, perf, ci
-
-Note: Attribution disabled globally via ~/.claude/settings.json.
+Follow CLAUDE.md (Git section): subject line only, descriptive, conventional commits (`feat`/`fix`/`refactor`/`docs`/`test`/`chore`/`perf`/`ci`), no attribution. Body only if asked.
 
 ## Pull Request Workflow
 
