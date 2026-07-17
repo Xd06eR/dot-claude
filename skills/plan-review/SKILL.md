@@ -69,9 +69,7 @@ If a reviewer fails to return, note it as an uncovered lens rather than guessing
 These resolve conflicts between lenses and settle borderline calls during the merge:
 
 1. **Choose completeness:** ship the whole thing. Pick the approach that covers more edge cases.
-2.
-**Boil lakes:** fix everything in the blast radius (files the plan modifies plus their direct importers).
-Auto-approve expansions that are in blast radius AND under 1 day of agent effort (under 5 files, no new infra).
+2. **Boil lakes:** fix everything in the blast radius (files the plan modifies plus their direct importers). Auto-approve expansions that are in blast radius AND under 1 day of agent effort (under 5 files, no new infra).
 3. **Pragmatic:** if two options fix the same thing, pick the cleaner one. 5 seconds choosing, not 5 minutes.
 4. **DRY:** duplicates existing functionality? Reject. Reuse what exists.
 5. **Explicit over clever:** a 10-line obvious fix beats a 200-line abstraction. Pick what a new contributor reads in 30 seconds.
@@ -117,16 +115,8 @@ This is what feeds P4, reuse over rebuild.
 
 1. **Dedupe:** the same underlying issue raised by more than one lens is ONE finding. Credit every lens that raised it, and note that cross-lens agreement is a high-confidence signal.
 2. **Rank:** order all findings by severity, worst first, across every lens. Security findings keep their own severity.
-3.
-**Resolve conflicts:** when two lenses point opposite directions on one decision, apply the principles with the lens-keyed tiebreakers.
-A principle that settles it makes a decided item (name the principle).
-A call reasonable people would still dispute, with no principle to settle it, becomes an owner decision.
-4.
-**Verdict:** the overall verdict is the worst per-lens verdict.
-Any `BLOCK` (security included) makes the plan `BLOCK`.
-Else any open user challenge or unsettled taste call makes it `NEEDS-OWNER-DECISION`.
-Else any `SHIP-WITH-CHANGES` holds.
-Else `SHIP`.
+3. **Resolve conflicts:** when two lenses point opposite directions on one decision, apply the principles with the lens-keyed tiebreakers. A principle that settles it makes a decided item (name the principle). A call reasonable people would still dispute, with no principle to settle it, becomes an owner decision.
+4. **Verdict:** the overall verdict is the worst per-lens verdict. Any `BLOCK` (security included) makes the plan `BLOCK`. Else any open user challenge or unsettled taste call makes it `NEEDS-OWNER-DECISION`. Else any `SHIP-WITH-CHANGES` holds. Else `SHIP`.
 
 ## Step 5: The merged report
 

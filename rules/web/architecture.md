@@ -7,7 +7,7 @@ paths:
 
 # Web Architecture
 
-> Web-specific architecture. Component patterns (compound components, container/presentational, render props) live in [react/architecture.md](../react/architecture.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
+> Web-specific architecture. Component patterns (compound components, container/presentational) live in [react/architecture.md](../react/architecture.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
 
 ## State Management
 

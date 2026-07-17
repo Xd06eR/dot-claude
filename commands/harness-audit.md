@@ -1,5 +1,5 @@
 ---
-description: Audit current dir or a target dir for drift, contradictions, stale refs, weak-model-misread wording. Periodic review, not rebuild.
+description: Audit current dir or a target dir for drift, contradictions, stale refs, weak-model-misread wording. Run at the start of a harness-improvement session or when drift is suspected. Periodic review, not rebuild.
 argument-hint: "[optional target dir; defaults to cwd]"
 origin: custom
 ---

@@ -9,8 +9,6 @@ origin: ECC
 Use this skill for the small design-engineering details that compound into a
 more polished interface.
 
-Source: salvaged from stale community PR #1659 by `linus707`.
-
 ## When to Use
 
 - The user says the UI feels off, flat, generic, cramped, jumpy, or unfinished.

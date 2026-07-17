@@ -140,7 +140,7 @@ Good pattern:
 - Use `superpowers:verification-before-completion` after recovery if code was changed.
 - Write a recurring failure pattern to memory (per `rules/common/harness-maintenance.md`, Lesson write-back) so it becomes a durable lesson.
 - Use `plan-review` when the issue is not technical failure but decision ambiguity.
-- Use `harness-audit` if the failure came from conflicting local state or repo drift.
+- Use `/harness-audit` if the failure came from conflicting local state or repo drift.
 
 ## Output Standard
 
