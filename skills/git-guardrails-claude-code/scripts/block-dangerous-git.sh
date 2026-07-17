@@ -1,26 +1,28 @@
 #!/bin/bash
-
+# PreToolUse(Bash) guardrail: block dangerous git mutations by accident.
+# The user runs all git mutations manually (CLAUDE.md Git section).
+# Greps the raw hook JSON directly: no jq dependency, no sed extraction
+# (an embedded quote would truncate a sed capture and hide a dangerous tail).
+# Patterns are word-anchored so "git committee" and prose don't false-positive.
+# Accident guardrail, not a security boundary.
+#
+# Install source: the git-guardrails-claude-code skill copies this into
+# ~/.claude/hooks/block-dangerous-git.sh. Kept identical to the live hook.
 INPUT=$(cat)
-COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command')
-
 DANGEROUS_PATTERNS=(
-  "git commit"
-  "git push"
-  "git reset --hard"
-  "git clean -fd"
-  "git clean -f"
-  "git branch -D"
-  "git checkout \."
-  "git restore \."
-  "push --force"
-  "reset --hard"
+  '\bgit[[:space:]]+commit\b'
+  '\bgit[[:space:]]+push\b'
+  '\bgit[[:space:]]+reset[[:space:]]+--hard\b'
+  '\bgit[[:space:]]+clean[[:space:]]+-f'
+  '\bgit[[:space:]]+branch[[:space:]]+-D\b'
+  '\bgit[[:space:]]+checkout[[:space:]]+\.'
+  '\bgit[[:space:]]+restore[[:space:]]+\.'
+  '\bpush[[:space:]]+--force\b'
 )
-
-for pattern in "${DANGEROUS_PATTERNS[@]}"; do
-  if echo "$COMMAND" | grep -qE "$pattern"; then
-    echo "BLOCKED: '$COMMAND' matches dangerous pattern '$pattern'. The user has prevented you from doing this." >&2
+for p in "${DANGEROUS_PATTERNS[@]}"; do
+  if echo "$INPUT" | grep -qE "$p"; then
+    echo "BLOCKED: command matches '$p'. The user runs git mutations manually." >&2
     exit 2
   fi
 done
-
 exit 0

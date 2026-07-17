@@ -1,18 +1,22 @@
 #!/bin/bash
-
+# PreToolUse(Bash) guardrail: backstop the Read-deny for secret paths.
+# Bash cat/head/grep could otherwise bypass the Read-deny rules in settings.json.
+#
+# Keep COVERAGE in sync with permissions.deny:
+#   Read(~/.ssh/**)   Read(**/.env)   Read(**/.env.*)   Read(**/.envrc)
+# The '.env' pattern is anchored to a path separator so the JS global
+# 'process.env' doesn't false-positive. One '.env' pattern covers .env,
+# .env.*, and .envrc — they share the '.env' prefix (unlike Read globs,
+# which need one entry per filename). When deny adds a secret path that
+# does NOT start with '.env' (e.g. a key file), add a new pattern here too.
+#
+# Greps raw JSON: no jq dependency, no sed extraction (robust to embedded quotes).
 INPUT=$(cat)
-# Extract command field without jq — match "command":"..." from JSON input
-COMMAND=$(echo "$INPUT" | sed -n 's/.*"command"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
-
-# Closes the Read-deny residual: bash cat/head/tail/read could bypass
-# Read(~/.ssh/**) and Read(**/.env) via the auto-allowed rtk read commands.
-# Block any bash command that touches .env files or the ~/.ssh directory.
-SECRET_PATTERNS=( '\.env' '\.ssh' )
-for pattern in "${SECRET_PATTERNS[@]}"; do
-  if echo "$COMMAND" | grep -qE "$pattern"; then
-    echo "BLOCKED: '$COMMAND' matches secret-path pattern '$pattern'. The user has prevented reading .env / ~/.ssh via bash." >&2
+SECRET_PATTERNS=( '[ =/"]\.env' '\.ssh' )
+for p in "${SECRET_PATTERNS[@]}"; do
+  if echo "$INPUT" | grep -qE "$p"; then
+    echo "BLOCKED: command matches secret-path '$p'. Reading .env / ~/.ssh is denied." >&2
     exit 2
   fi
 done
-
 exit 0
