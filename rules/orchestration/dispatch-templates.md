@@ -12,7 +12,7 @@ ACCEPTANCE:
 - Every match listed as file:line, none omitted
 - Patterns/queries actually tried are named
 - Zero hits is reported as zero hits plus what was tried, never as absence of report
-REPORT (max 150 words + list):
+REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
 - file:line + one-line role, per match
 - NOT COVERED: [dirs skipped, patterns not tried]
 ```
@@ -29,7 +29,7 @@ ACCEPTANCE:
 - [named test command] exits 0, output included
 - lint + format + type-check clean for touched files, output included
 - Diff confined to the listed files
-REPORT (max 200 words):
+REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
 - Files changed with file:line anchors; design decisions made and why
 - Tail of test/linter output as evidence
 - NOT COVERED: [cases untested, edges deferred]
@@ -46,7 +46,7 @@ ACCEPTANCE:
 - Full relevant test suite green BEFORE the change (evidence) and AFTER (evidence)
 - No exported/public signature altered
 - Old names/paths fully removed or aliased, none half-migrated
-REPORT (max 200 words):
+REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
 - Old -> new mapping per moved/renamed unit
 - Before/after test evidence
 - NOT COVERED: [call sites or configs not migrated, if any]
@@ -61,9 +61,9 @@ ACCEPTANCE:
 - Every load-bearing claim carries a source URL and retrieval date
 - Conflicting sources surfaced, not averaged away
 - Anything unconfirmable is marked UNVERIFIED, never guessed
-REPORT (max 200 words + sources):
+REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
 - Conclusion first, then key facts, then source list
-- Detail beyond the cap goes to [disk path]; return the path
+- Detail that runs long goes to [disk path]; return the path
 - NOT COVERED: [angles not searched]
 ```
 
@@ -79,7 +79,7 @@ ACCEPTANCE:
 - Every finding: file:line + severity + a concrete failure scenario (input -> wrong outcome)
 - Style nits excluded unless they change behavior or meaning
 - Explicit verdict: ship, or block with the blocking findings named
-REPORT (max 250 words):
+REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
 - Findings ranked by severity, then the verdict
 - NOT COVERED: [files/aspects not reviewed]
 ```

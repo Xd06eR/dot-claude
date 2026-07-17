@@ -15,7 +15,7 @@ The main conversation plans, decides, and integrates. The dividing line for dele
 - Batch edits applying one known recipe across many files
 - Generating a long artifact whose full text the main conversation does not need to reason over
 - Independent chunks that can run in parallel
-- Review and acceptance (see section 5); this one no context-window size makes optional
+- Review and acceptance (see section 5): no context-window size makes this one optional
 
 The test: "will I reason from these exact contents later, or do I only need the answer?" Contents → read it yourself. Answer → dispatch. And do not dispatch a 30-second read; dispatch overhead must be smaller than the work.
 
@@ -39,13 +39,13 @@ Every dispatch prompt contains three parts (fill-in templates: `rules/orchestrat
 
 1. **Goal and motivation:** what to produce and why the parent needs it, so the subagent resolves small ambiguities in the right direction.
 2. **Acceptance criteria:** checkable statements. "Works" is not checkable; "`pytest tests/test_auth.py` exits 0" is.
-3. **Report format:** what comes back, with a size cap.
+3. **Report format:** what comes back, and in what form.
 
 Report contract, binding on every subagent:
 
-- Return conclusions, decisions, and `file:line` references. Not file contents, not command transcripts.
-- Hard cap ~200 words plus references, unless the dispatch explicitly raises it.
-- Any artifact longer than ~30 lines goes to disk (scratchpad for temporaries, repo path for deliverables); return the path plus a 3-line summary.
+- Return conclusions, decisions, findings, and `file:line` evidence in full: everything the parent needs to act on and to judge the work, including the reasoning behind non-obvious calls. The report is the parent's only window into the work, so its length follows the substance; no size limit ever forces dropping substance.
+- Exclude only residue: raw file contents, full command transcripts, re-derivable bulk. That is what dilutes the parent's context, not the substance.
+- When substance runs long (past what reads cleanly inline, ~30+ lines: a long deliverable, many findings), write it to disk in full (scratchpad for temporaries, repo path for deliverables) and return a faithful structured summary plus the path: complete-but-segmented, never terse-but-lossy. Concision helps simple dispatches but is subordinate to fidelity.
 - Always state what was NOT covered (files skipped, cases untested). Silent truncation reads as full coverage and causes false confidence.
 
 ## 4. Attempts, escalation, and stopping
@@ -61,7 +61,7 @@ Report contract, binding on every subagent:
 The context that produced work never accepts it. Acceptance goes to a fresh-context agent:
 
 - **Files written:** a fresh agent reads the file back and checks each acceptance criterion, reporting pass or fail per criterion.
-- **Code:** run the tests, linters, or the actual command; paste real output into the report. If no runnable check exists, write one first (see the TDD rule in CLAUDE.md).
+- **Code:** run the tests, linters, or the actual command; paste the decisive output (the passing or failing lines, not the full transcript) into the report. If no runnable check exists, write one first (see the TDD rule in CLAUDE.md).
 - **High-risk judgment:** irreversible ops, architecture, security, and public interfaces get a second opinion from a fresh agent (on a different model where one exists, otherwise briefed from a different angle), or 2–3 independent candidates with a judge agent picking one in writing.
 
 The main conversation integrates results and stays responsible for the final call. "No self-verification" means the evidence comes from outside the producing context, not that the commander stops thinking.
