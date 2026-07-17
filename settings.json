@@ -36,11 +36,11 @@
   },
   "env": {
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_TELEMETRY": "1",
     "CLAUDE_CODE_EFFORT_LEVEL": "max",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_FEEDBACK_COMMAND": "1",
+    "DISABLE_TELEMETRY": "1",
     "DO_NOT_TRACK": "1",
     "ENABLE_TOOL_SEARCH": "true"
   },
@@ -148,7 +148,8 @@
     "deny": [
       "Read(~/.ssh/**)",
       "Read(**/.env)",
-      "Read(**/.env.*)"
+      "Read(**/.env.*)",
+      "Read(**/.envrc)"
     ],
     "disableBypassPermissionsMode": "disable"
   },
