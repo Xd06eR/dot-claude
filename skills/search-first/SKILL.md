@@ -124,26 +124,6 @@ tool name exposed by the active harness.
 - Markdown processing → `remark`, `unified`, `markdown-it`
 - Image optimization → `sharp`, `imagemin`
 
-## Integration Points
-
-### With planner agent
-The planner should invoke researcher before Phase 1 (Architecture Review):
-- Researcher identifies available tools
-- Planner incorporates them into the implementation plan
-- Avoids "reinventing the wheel" in the plan
-
-### With architect agent
-The architect should consult researcher for:
-- Technology stack decisions
-- Integration pattern discovery
-- Existing reference architectures
-
-### With iterative-retrieval skill
-Combine for progressive discovery:
-- Cycle 1: Broad search (npm, PyPI, MCP)
-- Cycle 2: Evaluate top candidates in detail
-- Cycle 3: Test compatibility with project constraints
-
 ## Examples
 
 ### Example 1: "Add dead link checking"
