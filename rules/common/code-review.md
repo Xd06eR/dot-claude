@@ -25,6 +25,7 @@ Before marking code complete:
 - [ ] Files are cohesive (<800 lines)
 - [ ] No deep nesting (>4 levels)
 - [ ] Errors are handled explicitly
+- [ ] No mutation (immutable patterns used)
 - [ ] No hardcoded secrets or credentials
 - [ ] No hardcoded values (use constants or config)
 - [ ] No console.log or debug statements

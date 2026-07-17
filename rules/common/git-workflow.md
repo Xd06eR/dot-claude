@@ -14,4 +14,4 @@ When creating PRs:
 5. Push with `-u` flag if new branch
 
 > For the full development process (planning, TDD, code review) before git operations,
-> see [development-workflow.md](./development-workflow.md).
+> see CLAUDE.md (Workflow + Principles sections). Research-before-coding lives in [development-workflow.md](./development-workflow.md).

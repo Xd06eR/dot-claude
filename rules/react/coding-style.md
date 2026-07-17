@@ -2,6 +2,9 @@
 paths:
   - "**/*.tsx"
   - "**/*.jsx"
+  - "**/components/**/*.ts"
+  - "**/app/**/*.ts"
+  - "**/pages/**/*.ts"
 ---
 
 # React Coding Style

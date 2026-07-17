@@ -118,7 +118,7 @@ Phase-gate table (invoke at phase start, before other work). Bare names are skil
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
 | Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `frontend-design` · `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
-| Review | `code-review` (the built-in skill, not the `/code-review:code-review` plugin) · `/pr-review-toolkit:review-pr` · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | `security-review` |
+| Review | `code-review` OR `/pr-review-toolkit:review-pr` (substitutes — pick one; the built-in `code-review`, not the `/code-review:code-review` plugin) · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | `security-review` |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
