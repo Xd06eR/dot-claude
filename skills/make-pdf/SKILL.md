@@ -78,11 +78,10 @@ pandoc SOURCE.md -o OUTPUT.docx                                 # Word, content 
 When pandoc is absent. Convert Markdown to a styled HTML file, then print it.
 
 1. Markdown to HTML: use any converter present (`markdown-it`, `marked`, or Python's markdown module via `$(command -v python3 || command -v python) -m markdown` since Windows Git Bash ships `python`, not `python3`). Wrap the output in the Step 6 stylesheet. Write it to a temp path (under the system temp dir), not into the repo.
-2. Print with a local headless browser:
+2. Print with a local headless browser (the binary may be `google-chrome` or `chromium-browser`; add `--no-sandbox` in containers; drop `--no-pdf-header-footer` when you want Chrome's own header and footer):
    ```bash
    chromium --headless --no-pdf-header-footer --print-to-pdf=OUTPUT.pdf file://ABS/PATH/page.html
    ```
-   The binary may be `google-chrome` or `chromium-browser`. Add `--no-sandbox` in containers. Drop `--no-pdf-header-footer` when you want Chrome's own header and footer.
 3. If your runtime exposes a browser-automation tool instead of a CLI binary, open the HTML in it and use its print-to-PDF action with the same margins and page size.
 4. Delete the temp HTML afterward.
 

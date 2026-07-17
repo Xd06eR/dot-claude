@@ -135,17 +135,8 @@ Gaps become findings or open questions.
 
 A report with 3 real findings beats one with 3 real plus 12 theoretical: users stop reading noisy reports. Before emitting each finding:
 
-1.
-Quote the exact `file:line` that motivates it.
-If you cannot quote the line (the field, the sink, the sink-reaching input), the finding is unverified: drop it or force it low-confidence.
-This kills the "field doesn't exist" and "might be None" false-positive classes.
-2.
-Trace to verify where safe.
-Secrets: is the pattern a real key format (never test against a live API).
-Webhooks/SSRF: trace the code path, no live requests.
-CI/CD: parse the YAML to confirm PR-code checkout.
-Dependency: is the vulnerable function actually imported and called?
-If yes VERIFIED; if not UNVERIFIED with a note it may still be reachable via framework internals.
+1. Quote the exact `file:line` that motivates it. If you cannot quote the line (the field, the sink, the sink-reaching input), the finding is unverified: drop it or force it low-confidence. This kills the "field doesn't exist" and "might be None" false-positive classes.
+2. Trace to verify where safe. Secrets: is the pattern a real key format (never test against a live API). Webhooks/SSRF: trace the code path, no live requests. CI/CD: parse the YAML to confirm PR-code checkout. Dependency: is the vulnerable function actually imported and called? If yes VERIFIED; if not UNVERIFIED with a note it may still be reachable via framework internals.
 3. Mark each finding VERIFIED (confirmed by tracing), UNVERIFIED (pattern match only), or TENTATIVE (comprehensive-sweep item below the normal bar).
 4. Variant hunt: when a finding is VERIFIED, grep the whole codebase for the same pattern. One confirmed SSRF often means five.
 
@@ -182,9 +173,7 @@ Return one Security Posture Report, findings ranked by severity then confidence.
    - Impact: what the attacker gains.
    - Fix: the specific change to make (for a leaked secret, the revoke/rotate/scrub/audit playbook). This is a recommendation; you do not apply it.
 3. Verdict: SHIP (no CRITICAL or HIGH open) or BLOCK, naming each blocking finding by number. State it explicitly.
-4.
-Open questions for the owner: every decision you could not make from the code (is this route actually public, is this key rotated, is this webhook behind a gateway that verifies signatures upstream).
-Report items, not reasons to stall.
+4. Open questions for the owner: every decision you could not make from the code (is this route actually public, is this key rotated, is this webhook behind a gateway that verifies signatures upstream). Report items, not reasons to stall.
 5. Not covered: phases skipped, files or directories not read, scanners unavailable and why. Silent truncation reads as full coverage, so say what you did not check.
 
 Close with one line: this is an AI-assisted first-pass scan, not a substitute for a professional penetration test; it can miss subtle vulnerabilities and misread complex auth flows.

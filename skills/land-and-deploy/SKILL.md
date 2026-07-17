@@ -158,11 +158,10 @@ Single-pass check that the release is actually up. (`deploy-watch` owns the exte
 
 You need a URL: use the argument, the `CLAUDE.md` production URL, or ask. No URL and not a web service: note "deployed, not verified" and go to Step 8.
 
-- **HTTP health (always available, cross-platform):**
+- **HTTP health (always available, cross-platform):** expect a 2xx or 3xx; repeat once or twice a few seconds apart to ride out cold starts; fetch the body once too and confirm it is not empty and not an error page.
   ```bash
   curl -sS -o /dev/null -w '%{http_code}' <url>
   ```
-  Expect a 2xx or 3xx. Repeat once or twice a few seconds apart to ride out cold starts. Fetch the body once too and confirm it is not empty and not an error page.
 - **Browser checks (where a browser automation tool is available, for example a chrome-devtools or playwright MCP):** load the URL, check the console for errors (`Uncaught`, `TypeError`, `Failed to load`), and confirm real content rendered. Skip cleanly if no such tool is present.
 
 Healthy: tell the user what you observed (status, load, no console errors), then go to Step 8.

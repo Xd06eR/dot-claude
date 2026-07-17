@@ -94,11 +94,10 @@ Find the version source and bump it. Bump relative to the **base branch** versio
    ```bash
    git show origin/<base>:VERSION 2>/dev/null   # or read the base package.json version
    ```
-3. Decide the level from the diff:
+3. Decide the level from the diff, then auto-apply it: PATCH silently; for MINOR or MAJOR, write it but flag it plainly ("Bumped MINOR (new X); reply if you'd prefer PATCH or MAJOR and I'll rewrite") — the edit is reversible and the user reviews it before committing, so this does not block. Levels:
    - **PATCH:** bug fixes, small tweaks, config, refactors with no new surface.
    - **MINOR:** a new feature, route, module, or migration.
    - **MAJOR:** a breaking change or a deliberate milestone.
-   Auto-apply PATCH. For MINOR or MAJOR, write it but flag it plainly: "Bumped MINOR (new X); reply if you'd prefer PATCH or MAJOR and I'll rewrite." The edit is reversible and the user reviews it before committing, so this does not block.
 4. Preserve the existing format: segment count and any `v` prefix. Write the new version to the file(s) with Edit.
 5. Sanity-check the number is free in the repo's own tag style: `git tag -l "<new>" "v<new>"` should return nothing.
 

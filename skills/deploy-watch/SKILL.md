@@ -38,15 +38,14 @@ If invoked after the deploy with no baseline, note that you are running absolute
 
 Use every probe the environment supports; skip the rest. The first two are universal.
 
-1. **Health and latency (curl, always available).** One probe per path:
+1. **Health and latency (curl, always available).** One probe per path, expecting a 2xx or an intended redirect and a latency near the baseline:
    ```bash
    curl -sS -o /dev/null -w "status=%{http_code} time=%{time_total}s size=%{size_download}\n" --max-time 15 "$URL"
    ```
-   Expect a 2xx or an intended redirect and a latency near the baseline.
 
 2. **Critical-path smoke tests.** Re-run the repo's fast critical-path checks if it has them: a `smoke` script (`npm run smoke`), a tagged e2e subset (`npm run test:e2e -- --grep @smoke`, `pytest -m smoke`), or a `smoke/` script. If none exist, curl each critical route and assert a 2xx plus a sentinel string in the body (a known element, an API field). Do not run the full test suite; the deploy-watch wants a fast signal.
 
-3. **Deploy logs (platform CLI, where available).** Read recent logs with a **bounded, one-shot** command and scan for an error spike. Never the streaming or follow forms (`-f`, `--tail`, plain `fly logs`): those are unbounded daemons.
+3. **Deploy logs (platform CLI, where available).** Read recent logs with a **bounded, one-shot** command and scan for an error spike: grep the output for `error`, `exception`, `panic`, `traceback`, ` 5[0-9][0-9] `, count matches, and compare the rate to the baseline (or to zero if none). Never the streaming or follow forms (`-f`, `--tail`, plain `fly logs`): those are unbounded daemons.
    ```bash
    vercel logs "$URL" --since 2m            # Vercel
    fly logs --no-tail | tail -n 200         # Fly
@@ -54,7 +53,6 @@ Use every probe the environment supports; skip the rest. The first two are unive
    docker logs --since 2m <container>       # Docker
    kubectl logs --since=2m --tail=200 deploy/<name>   # Kubernetes
    ```
-   Grep the output for `error`, `exception`, `panic`, `traceback`, ` 5[0-9][0-9] ` and count matches. Compare the rate to the baseline (or to zero if none).
 
 4. **Browser checks (where a browser automation capability is available).** If the environment exposes a browser MCP (Playwright or Chrome DevTools, for example), load each path and collect console errors, failed network requests, and a screenshot as evidence. Treat this as optional enrichment; the curl and log probes carry the verdict when no browser is available.
 

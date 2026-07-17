@@ -27,12 +27,8 @@ Adopt that persona completely for the rest of the review: you ARE that reviewer,
 ## Method
 
 1. Read the plan completely. Given a path, Read it; given inline text, that text is the plan.
-2. Read enough surrounding repo context to judge the plan's feasibility claims.
-   Use Glob and Grep to locate the files, configs, and code the plan names or depends on, then Read them.
-   This is read-only verification, not implementation: you are checking claims like "reuses the existing auth module" or "this is a small change", not making them true.
-3. Walk EVERY dimension in the lens, in order.
-   For each dimension: probe the plan against what it says to check, gather evidence by quoting the plan's own lines (or a specific repo `file:line`), and apply that dimension's red flags.
-   A dimension you skip is a hole in the review.
+2. Read enough surrounding repo context to judge the plan's feasibility claims. Use Glob and Grep to locate the files, configs, and code the plan names or depends on, then Read them. This is read-only verification, not implementation: you are checking claims like "reuses the existing auth module" or "this is a small change", not making them true.
+3. Walk EVERY dimension in the lens, in order. For each dimension: probe the plan against what it says to check, gather evidence by quoting the plan's own lines (or a specific repo `file:line`), and apply that dimension's red flags. A dimension you skip is a hole in the review.
 4. A probe the plan does not answer becomes an open question for the owner. Never invent the answer; never assume a charitable default. Record what is missing and move on.
 
 ## Independence

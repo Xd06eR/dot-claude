@@ -12,8 +12,7 @@ more polished interface.
 ## When to Use
 
 - The user says the UI feels off, flat, generic, cramped, jumpy, or unfinished.
-- You are building controls, cards, lists, dashboards, navigation, forms, or
-  toolbars.
+- You are building controls, cards, lists, dashboards, navigation, forms, or toolbars.
 - A component needs hover, active, focus, enter, exit, loading, or empty states.
 - A frontend review needs specific before/after recommendations.
 
@@ -45,11 +44,9 @@ subtle enough to work across backgrounds.
 ### Text Wrapping
 
 - Use `text-wrap: balance` on headings and short titles.
-- Use `text-wrap: pretty` on short-to-medium body text, captions, descriptions,
-  and list items.
+- Use `text-wrap: pretty` on short-to-medium body text, captions, descriptions, and list items.
 - Avoid both on long prose, code, and preformatted content.
-- Use `font-variant-numeric: tabular-nums` for counters, timers, prices, tables,
-  and other updating numbers.
+- Use `font-variant-numeric: tabular-nums` for counters, timers, prices, tables, and other updating numbers.
 
 ### Font Smoothing
 
@@ -94,10 +91,8 @@ Good motion defaults:
 
 - Enter: combine opacity, small `translateY`, and optionally blur.
 - Exit: shorter and quieter than enter, usually 150ms.
-- Press: `scale(0.96)` for tactile buttons, with a way to disable it when the
-  movement distracts.
-- Icon swaps: cross-fade with opacity, scale, and blur instead of instant
-  visibility toggles.
+- Press: `scale(0.96)` for tactile buttons, with a way to disable it when the movement distracts.
+- Icon swaps: cross-fade with opacity, scale, and blur instead of instant visibility toggles.
 
 ### Transition Scope
 
@@ -142,8 +137,7 @@ Omit principles that you checked but did not change.
 - Headings and short text avoid awkward wrapping.
 - Dynamic numbers use tabular numerals.
 - Images have neutral outlines where needed.
-- Enter and exit animations are split, subtle, and interruptible where
-  appropriate.
+- Enter and exit animations are split, subtle, and interruptible where appropriate.
 - Buttons have tactile active states without exaggerated motion.
 - `transition: all` and `will-change: all` are absent.
 - Small controls still have usable hit areas.

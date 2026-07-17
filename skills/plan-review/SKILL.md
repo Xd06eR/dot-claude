@@ -86,9 +86,7 @@ Conflict tiebreakers, keyed to the lens that raised the conflict:
 Classify every conflict or borderline call:
 
 - **Mechanical:** one clearly right answer. Auto-resolve silently, then log it as a decided item.
-- **Taste:** reasonable people could disagree.
-  Auto-resolve with a recommendation, but surface it to the owner.
-  Three sources: close approaches (top two both viable), borderline scope (in blast radius but 3-5 files, or an ambiguous radius), and a lens that disagrees with a valid point.
+- **Taste:** reasonable people could disagree. Auto-resolve with a recommendation, but surface it to the owner. Three sources: close approaches (top two both viable), borderline scope (in blast radius but 3-5 files, or an ambiguous radius), and a lens that disagrees with a valid point.
 - **User challenge:** two or more lenses independently agree the owner's stated direction should change (merge, split, add, or remove a feature or workflow the owner specified). NEVER auto-resolved.
 
 Auto-resolve replaces the owner's judgment with the principles; it does not replace the analysis.
