@@ -49,10 +49,10 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 | Hook | Purpose |
 |------|---------|
 | `rtk hook claude` | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
-| `~/.claude/hooks/block-dangerous-git.sh` | Blocks `git push`, `git commit`, `git reset --hard`, `git clean -f`/`-fd`, `git branch -D`, `git checkout .`, `git restore .`, `push --force`. Greps the raw hook JSON (no `jq`, no `sed` extraction) so it runs on Windows Git Bash; patterns are word-anchored to avoid prose false-positives. |
+| `~/.claude/hooks/block-dangerous-git.sh` | Blocks `git push`, `git commit`, `git reset --hard`, `git clean -f`/`-fd`, `git branch -D`, `git checkout .`, `git restore .`, `push --force`. Greps the raw hook JSON (no `jq`, no `sed` extraction) so it runs on Windows Git Bash; patterns are word-anchored and whitespace-required, so near-miss substrings like `gitcommittee` or `git-commit` are not blocked; only the literal command is (prose containing the phrase still blocks — safe-side). |
 | `~/.claude/hooks/block-secret-paths.sh` | Blocks any Bash command matching `\.env` or `\.ssh` (closes the bash bypass of the Read-deny; see Security below). Same raw-grep shape; `.env` is anchored so `process.env` doesn't false-positive. Extend `SECRET_PATTERNS` for new secret paths. |
 
-The active git-guardrails hook lives at `hooks/block-dangerous-git.sh`; `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` is the install source the skill copies from (identical to the live hook).
+The active git-guardrails hook lives at `hooks/block-dangerous-git.sh`; `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` is the install source the skill copies from (same patterns and logic as the live hook).
 
 ## Quick Reference
 

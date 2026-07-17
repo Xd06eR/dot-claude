@@ -3,11 +3,12 @@
 # The user runs all git mutations manually (CLAUDE.md Git section).
 # Greps the raw hook JSON directly: no jq dependency, no sed extraction
 # (an embedded quote would truncate a sed capture and hide a dangerous tail).
-# Patterns are word-anchored so "git committee" and prose don't false-positive.
+# Patterns are word-anchored and whitespace-required: near-miss substrings
+# ("gitcommittee", "git-commit") are not blocked, only the literal command is.
 # Accident guardrail, not a security boundary.
 #
 # Install source: the git-guardrails-claude-code skill copies this into
-# ~/.claude/hooks/block-dangerous-git.sh. Kept identical to the live hook.
+# ~/.claude/hooks/block-dangerous-git.sh. Kept in sync (same patterns and logic).
 INPUT=$(cat)
 DANGEROUS_PATTERNS=(
   '\bgit[[:space:]]+commit\b'

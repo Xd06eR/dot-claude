@@ -3,7 +3,8 @@
 # The user runs all git mutations manually (CLAUDE.md Git section).
 # Greps the raw hook JSON directly: no jq dependency, no sed extraction
 # (an embedded quote would truncate a sed capture and hide a dangerous tail).
-# Patterns are word-anchored so "git committee" and prose don't false-positive.
+# Patterns are word-anchored and whitespace-required: near-miss substrings
+# ("gitcommittee", "git-commit") are not blocked, only the literal command is.
 # Accident guardrail, not a security boundary.
 INPUT=$(cat)
 DANGEROUS_PATTERNS=(
