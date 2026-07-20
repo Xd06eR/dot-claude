@@ -68,12 +68,21 @@ Organized by phase.
 - **US English everywhere:** identifiers, comments, docs, commit messages, e.g. `normalize`, `color`, `behavior` (‑ze / ‑or).
 - **Naming:** follow language convention (see `rules/`); booleans prefixed (`is_`/`has_`/`should_`/`can_`), constants `SCREAMING_SNAKE_CASE`; abbreviate in small scope, spell out cross-module; don't mix conventions within a module.
 - **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
-- **Name the design choice.** On a non-obvious choice, leave one-line comment on *why*, not mechanics. No silent magic.
-- Plain over clever unless cleverness is load-bearing.
+- **Name the design choice:** on a non-obvious choice, leave one-line comment on *why*, not mechanics. No silent magic.
+- **Simplicity:** plain over clever unless cleverness is load-bearing.
+- **Formatting:** code syntax follows the formatter, not this file's prose rules. Ruff/prettier wrap long statements at operators; keep that. Atomicity still applies to comments, docstrings, and string literals; never split a token mid-word.
+
+## Doc structure
+
+How to write and review a markdown doc, for any reader. Structure exists to preserve meaning, not to look organized.
+
+- **A sub-item is a bullet with a marker, never an indented line:** pure indent reads as continuation in source but drops to a joined paragraph in render, silently losing the subordination. To show something is subordinate to the line above, indent it under a `- ` marker so markdown keeps the nesting.
 - **Em-dash discipline:** AI prose overuses them as a default connector; prefer colon, period, comma, or parentheses. Reserve for a break or aside those would muddle; never two in one sentence.
-- **Never break an atomic unit across lines.** A word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps for display. Break only *between* units, never *inside* one; if a unit would exceed a length limit, rewrite it shorter.
-- **Finish what you start: ship whole units, not fragments.** Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
-- **Code syntax follows the formatter, not this rule.** Ruff/prettier wrap long statements at operators. Keep that. Atomicity still applies to comments, docstrings, and string literals; never split a token mid-word.
+- **Never break an atomic unit across lines:** a word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps for display. Break only *between* units, never *inside* one; if a unit would exceed a length limit, rewrite it shorter.
+- **One claim per block, blank line between blocks:** never join prose with a bare newline. Fold sentences that illustrate one claim; blank-separate a framing statement from its action; bullet obligations; give a hard requirement its own block.
+- **Attachment is meaning:** what a line touches decides its owner. A `:` lead-in attaches to its list, a `.`-ended line takes a blank line; a list item attaches to its sub-items (a blank line there turns the list loose); two lists separated only by a blank line merge. Never indent a sub-item with plain spaces.
+- **Finish what you start:** ship whole units, not fragments. Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
+- **Verify structure by rendering, not by reading source:** a structural claim about a doc must survive rendering. Render it and diff the output; reading the source hides every attachment defect above.
 
 ## Language-Specific Rules
 
