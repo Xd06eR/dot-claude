@@ -1,6 +1,6 @@
 ---
 name: search-first
-description: Use when about to write custom code for a problem that may have existing solutions. Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code. Invokes the researcher agent.
+description: Use when about to write custom code for a problem that may have existing solutions. Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code.
 origin: ECC
 ---
 
@@ -11,6 +11,7 @@ Systematizes the "search for existing solutions before implementing" workflow.
 ## Trigger
 
 Use this skill when:
+
 - Starting a new feature that likely has existing solutions
 - Adding a dependency or integration
 - The user asks "add X functionality" and you're about to write code
@@ -63,8 +64,7 @@ Use this skill when:
 
 ### Step 0: Tool Availability Preflight
 
-This is agent guidance, not an executable setup script. Check only the channels
-that are relevant to the task and project in front of you.
+This is agent guidance, not an executable setup script. Check only the channels that are relevant to the task and project in front of you.
 
 | Channel | Check | If missing |
 |---------|-------|------------|
@@ -99,34 +99,38 @@ Agent(subagent_type="general-purpose", prompt="
 ")
 ```
 
-Older Claude Code docs may call this `Task(...)`; use the current agent/subagent
-tool name exposed by the active harness.
+Older Claude Code docs may call this `Task(...)`; use the current agent/subagent tool name exposed by the active harness.
 
 ## Search Shortcuts by Category
 
 ### Development Tooling
+
 - Linting → `eslint`, `ruff`, `textlint`, `markdownlint`
 - Formatting → `prettier`, `black`, `gofmt`
 - Testing → `jest`, `pytest`, `go test`
 - Pre-commit → `husky`, `lint-staged`, `pre-commit`
 
 ### AI/LLM Integration
+
 - Claude SDK → Context7 for latest docs
 - Prompt management → Check MCP servers
 - Document processing → `unstructured`, `pdfplumber`, `mammoth`
 
 ### Data & APIs
+
 - HTTP clients → `httpx` (Python), `ky`/`undici` (Node)
 - Validation → `zod` (TS), `pydantic` (Python)
 - Database → Check for MCP servers first
 
 ### Content & Publishing
+
 - Markdown processing → `remark`, `unified`, `markdown-it`
 - Image optimization → `sharp`, `imagemin`
 
 ## Examples
 
 ### Example 1: "Add dead link checking"
+
 ```
 Need: Check markdown files for broken links
 Search: npm "markdown dead link checker"
@@ -136,6 +140,7 @@ Result: Zero custom code, battle-tested solution
 ```
 
 ### Example 2: "Add HTTP client wrapper"
+
 ```
 Need: Resilient HTTP client with retries and timeout handling
 Search: npm "http client retry", PyPI "httpx retry"
@@ -145,6 +150,7 @@ Result: Zero custom code, production-proven libraries
 ```
 
 ### Example 3: "Add config file linter"
+
 ```
 Need: Validate project config files against a schema
 Search: npm "config linter schema", "json schema validator cli"

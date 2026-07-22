@@ -20,7 +20,15 @@ Most updates are obvious and direct. Stop and ask in plain text only for:
 - Cross-doc contradictions that are narrative, not factual.
 - Capturing newly-deferred work in TODOS.
 
-Never stop for: factual corrections sourced from the diff, adding items to tables or lists, updating paths/counts/version numbers, fixing stale cross-references, minor CHANGELOG wording, marking completed TODOs, or fixing cross-doc factual mismatches.
+Never stop for:
+
+- factual corrections sourced from the diff
+- adding items to tables or lists
+- updating paths/counts/version numbers
+- fixing stale cross-references
+- minor CHANGELOG wording
+- marking completed TODOs
+- fixing cross-doc factual mismatches
 
 Never do: overwrite or regenerate CHANGELOG entries (polish wording only), bump VERSION without asking, or use a Write tool on CHANGELOG.md (Edit with exact matches only).
 
@@ -46,12 +54,14 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
 ## Step 2: Pre-flight and diff analysis
 
 1. `git branch --show-current`. If it equals `<base>` or the default, **abort**: "You're on the base branch. Run from a feature branch."
+
 2. Understand the changeset:
    ```bash
    git diff <base>...HEAD --stat
    git log <base>..HEAD --oneline
    git diff <base>...HEAD --name-only
    ```
+
 3. Discover all doc files in the repo (POSIX find; widen or add extensions if the repo uses `.rst`, `.adoc`, or a deeper `docs/` tree):
    ```bash
    find . -maxdepth 2 -name "*.md" \
@@ -60,7 +70,9 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
      -not -path "./vendor/*" \
      | sort
    ```
+
 4. Classify the changes into: **new features**, **changed behavior**, **removed functionality**, **infrastructure**. This drives the audit in Step 4.
+
 5. Print a one-line summary: "Analyzing N files changed across M commits. Found K doc files to review."
 
 If the release scope is unclear (no CHANGELOG entry, ambiguous diff, multiple merged branches), ask in plain text: "I can't tell what shipped in this release. Point me at the CHANGELOG entry, the merge commit, or the tag, and I'll work from that." Do not guess.
@@ -125,7 +137,7 @@ For each item classified "Ask user" in Step 4, ask in plain text. State the file
    - **1 point**: answers "What changed?" (names the feature or fix).
    - **1 point**: answers "Why should I care?" (user impact, pain removed).
    - **1 point**: answers "How do I use it?" (command, flag, link to docs).
-   - Entries scoring below 2 need a rewrite; entries scoring 3 are gold.
+   - **Entries scoring below 2 need a rewrite. Entries scoring 3 are gold.**
 4. Rewrite low-scoring entries to lead with what the user can now **do**, not implementation details. "You can now..." rather than "Refactored the...". Move internal or contributor-only changes to a `### For contributors` subsection.
 5. Use Edit with exact `old_string` matches. Never use Write on CHANGELOG.md.
 6. Auto-fix minor wording adjustments. If a rewrite would alter meaning, ask in plain text first.
@@ -153,18 +165,23 @@ Skip if no TODOS.md (or equivalent backlog file) exists.
 **Never bump VERSION without asking.**
 
 1. No VERSION file (or equivalent version source like `package.json` `.version`, `pyproject.toml`, `Cargo.toml`): skip silently.
+
 2. Check whether VERSION was already bumped on this branch:
    ```bash
    git diff <base>...HEAD -- VERSION
    ```
+
 3. **Not bumped:** ask in plain text whether to bump PATCH (docs ship alongside code), MINOR (significant standalone release), or skip (docs-only changes rarely warrant a bump). Default recommendation: skip. Apply the chosen bump only after the user confirms.
+
 4. **Already bumped:** read the CHANGELOG entry for the current VERSION. Check whether the bump covers the full scope of this branch (are there significant changes not mentioned in the CHANGELOG entry?). If coverage is complete, say so. If significant changes are uncovered, ask in plain text whether to bump again or fold the new changes into the existing entry.
 
 Preserve the repo's existing VERSION format (segment count, `v` prefix). Sanity-check the new number is free in the repo's tag style: `git tag -l "<new>" "v<new>"` should return nothing.
 
 ## Step 11: Output the commit, push, and PR-body update
 
-You have audited, edited, polished, and (if approved) bumped. Now assemble the commands. **Do NOT execute the commit/push/PR block below — output it for the user to run.** The `git status` precheck is read-only and fine to run yourself.
+You have audited, edited, polished, and (if approved) bumped. Now assemble the commands.
+
+**Do NOT execute the commit/push/PR block below — output it for the user to run.** The `git status` precheck is read-only and fine to run yourself.
 
 First check whether any doc files were modified:
 
@@ -174,7 +191,11 @@ git status
 
 If no documentation files were modified by any previous step, print "All documentation is up to date." and stop.
 
-Otherwise, output the block below. Stage files by name, never `git add -A` or `git add .`. Group into a single docs commit unless the change is large enough to split logically. Conventional commits, subject only, descriptive. No attribution trailers of any kind (no co-author line, no generated-by line).
+Otherwise, output the block below. Stage files by name, never `git add -A` or `git add .`.
+
+- Group into a single docs commit unless the change is large enough to split logically.
+- Conventional commits, subject only, descriptive.
+- No attribution trailers of any kind (no co-author line, no generated-by line).
 
 GitHub:
 
@@ -245,4 +266,5 @@ If coverage is complete and no diagrams drifted, output: "Coverage: all shipped 
 - **Diagram drift is advisory.** Flag stale diagrams in the PR body; never auto-edit ASCII art or Mermaid blocks.
 - **Stay inside the working repo.** Write no state, metrics, or config files anywhere else.
 - **Voice: friendly, user-forward, not obscure.** Write like you're explaining to a smart person who hasn't seen the code.
-- After this skill runs, the user has updated doc files, a polished CHANGELOG, a coverage map of any remaining gaps, and a ready-to-paste commit and PR-body block.
+
+After this skill runs, the user has updated doc files, a polished CHANGELOG, a coverage map of any remaining gaps, and a ready-to-paste commit and PR-body block.

@@ -7,9 +7,9 @@ origin: gstack
 
 # Design Variants
 
-Visual brainstorming, not a review. Generate several deliberately-different design directions as self-contained HTML mockups, put them side by side on one comparison page the user opens in a browser, collect structured feedback, and iterate on the favorite until a direction is locked.
+Visual brainstorming, not a review. Generate several deliberately-different design directions as self-contained HTML mockups. Put them side by side on one comparison page the user opens in a browser, collect structured feedback, and iterate on the favorite until a direction is locked.
 
-**Core contract:** variants must be genuinely different from each other (a real choice, not three shades of one idea); the user sees them rendered in their own browser; all feedback is plain text; every file this skill writes lands inside the working repo and nowhere else.
+**Core contract:** variants must be genuinely different from each other (a real choice, not three shades of one idea). The user sees them rendered in their own browser. All feedback is plain text. Every file this skill writes lands inside the working repo and nowhere else.
 
 Run the flow straight through. Stop only to gather missing brief context (Step 1) and to collect feedback on the board (Step 5). Everything else proceeds without asking.
 
@@ -34,7 +34,7 @@ The brief covers five dimensions. Fill what you can infer; ask for the rest:
 4. **User flow:** how users arrive here and where they go next.
 5. **Edge cases:** long names, zero results, error states, mobile, first-time versus power user.
 
-For the "I don't like how THIS looks" case, capture the current design as a reference: where a browser-automation capability is available (for example a Playwright or Chrome DevTools MCP tool), screenshot the running page; otherwise ask the user to paste a screenshot or describe what is wrong. Feed that in as the thing to improve on.
+For the "I don't like how THIS looks" case, capture the current design as a reference. Where a browser-automation capability is available (for example a Playwright or Chrome DevTools MCP tool), screenshot the running page. Otherwise ask the user to paste a screenshot or describe what is wrong. Feed that in as the thing to improve on.
 
 Ask the gaps as one plain-text question, and include: how many variants (default 3, up to about 6 for an important screen). Two rounds of context-gathering at most, then proceed with stated assumptions.
 
@@ -52,7 +52,9 @@ C) "Name" — one-line visual description
 
 Draw on `DESIGN.md`, the brief, and anything the user approved earlier this session.
 
-**Anti-convergence rule (hard requirement):** each variant uses a different font family, a different color palette, and a different layout approach. If two read as siblings (same typographic feel, overlapping color temperature, comparable layout rhythm), one failed: replace it with a deliberately different direction. The test: if you could swap the headline text between two variants without noticing, they are too similar. They should feel like three different design teams, not one team on three coffee levels.
+**Anti-convergence rule (hard requirement):** each variant uses a different font family, a different color palette, and a different layout approach. If two read as siblings (same typographic feel, overlapping color temperature, comparable layout rhythm), one failed: replace it with a deliberately different direction.
+
+The test: if you could swap the headline text between two variants without noticing, they are too similar. They should feel like three different design teams, not one team on three coffee levels.
 
 Present the concepts, then proceed to generate immediately. Flag for redirection in the same message and do not block: "Generating these now; reply if you want different directions or a different count and I'll adjust before showing the board."
 
@@ -73,7 +75,7 @@ These are throwaway exploration artifacts. Tell the user they can delete `design
 
 Write each variant to `$OUT/variant-a.html`, `variant-b.html`, and so on.
 
-**Generation, parallel where available:** where your runtime supports parallel subagents, dispatch one subagent per variant in a single batch so they generate concurrently; otherwise write the files yourself one at a time. Give each subagent the same three-part brief:
+**Generation, parallel where available:** where your runtime supports parallel subagents, dispatch one subagent per variant in a single batch so they generate concurrently. Otherwise, write the files yourself one at a time. Give each subagent the same three-part brief:
 
 - **Goal:** write one self-contained HTML mockup for direction `<letter>` of `<screen>` to `$OUT/variant-<letter>.html`, matching this direction: `<the concept line plus the relevant brief context>`.
 - **Acceptance:** file exists and is non-empty; opens standalone with no external requests; distinct font, palette, and layout from the other directions; meets the quality bar below.
@@ -87,11 +89,13 @@ Write each variant to `$OUT/variant-a.html`, `variant-b.html`, and so on.
 - Kill noise: cut filler words, avoid clutter, group related things.
 - Mobile-safe: touch targets at least 44px, layout holds at narrow widths.
 
-After generation, report which variants succeeded and which failed, with the reason for any failure. Never silently drop a failed variant. If every variant failed, fall back to writing them yourself sequentially and say so.
+After generation, report which variants succeeded and which failed, with the reason for any failure. Never silently drop a failed variant.
+
+If every variant failed, fall back to writing them yourself sequentially and say so.
 
 ## Step 4: Build the comparison board
 
-Write one board page next to the variants that embeds them side by side. Discover the variant files rather than hardcoding a list (re-derive the path first; a fresh shell will not have Step 3's variables):
+Write one board page next to the variants that embeds them side by side. Discover the variant files rather than hardcoding a list. Re-derive the path first — a fresh shell will not have Step 3's variables:
 
 ```bash
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
@@ -151,7 +155,9 @@ CHANGE: <points>
 DIRECTION: <one-line synthesis>
 ```
 
-**Iterate:** regenerate the preferred variant (and any others the user wants reworked) applying the feedback, rebuild the board with the new files, and reopen it. Each round is cheap and reversible, so keep looping until the user approves a direction. If the feedback says "none of these," treat it as a new concept round: go back to Step 2 with what you learned.
+**Iterate:** regenerate the preferred variant (and any others the user wants reworked) applying the feedback, rebuild the board with the new files, and reopen it. Each round is cheap and reversible, so keep looping until the user approves a direction.
+
+If the feedback says "none of these," treat it as a new concept round: go back to Step 2 with what you learned.
 
 ## Step 6: Lock the direction and hand off
 

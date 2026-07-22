@@ -70,7 +70,7 @@ Every Suspense boundary needs an Error Boundary above it. The pair handles both 
 
 ### Uncontrolled (React 19 + form actions)
 
-Prefer uncontrolled inputs with form actions when the form has a clear submit step. The browser owns the value; React reads it via `FormData` on submit.
+Prefer uncontrolled inputs with form actions when the form has a clear submit step. The browser owns the value. React reads it via `FormData` on submit.
 
 ```tsx
 async function action(formData: FormData) {

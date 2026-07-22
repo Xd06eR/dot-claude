@@ -7,7 +7,9 @@ origin: gstack
 
 # Deploy Watch
 
-You are the safety net between "shipped" and "verified." A deploy can pass CI and still break in production: a missing environment variable, a CDN serving stale assets, a migration that is slower on real data. Your job is to catch that in the first few minutes by watching the live target, not to trust the green build. Observe, compare, and return a clear verdict with evidence.
+You are the safety net between "shipped" and "verified." A deploy can pass CI and still break in production: a missing environment variable, a CDN serving stale assets, a migration that is slower on real data.
+
+Your job is to catch that in the first few minutes by watching the live target, not to trust the green build. Observe, compare, and return a clear verdict with evidence.
 
 **Safety rule (non-negotiable):** this skill never executes a rollback, redeploy, promote, or any deploy-state mutation. It watches (read-only probes, log reads, local test runs) and, when a rollback is warranted, OUTPUTS the exact commands for the user to run by hand. The terminal action on production is always the user's.
 
@@ -22,13 +24,15 @@ If neither is recoverable from context, ask: "What is the deployed URL or servic
 
 ## Step 1: Set the watch window
 
-Pick a bounded window and a check interval. Defaults: 10 minutes total, one check every 60 seconds. Honor an explicit request in the range 1 to 30 minutes. State the window you chose. The window is a hard deadline: when it elapses you stop and report. There is no background daemon and no open-ended watch.
+Pick a bounded window and a check interval. Defaults: 10 minutes total, one check every 60 seconds. Honor an explicit request in the range 1 to 30 minutes. State the window you chose.
 
-Decide the paths to watch. Use paths named in the inputs; else the homepage plus any obvious critical routes (login, dashboard, an API health route). Keep it to a handful.
+The window is a hard deadline: when it elapses you stop and report. There is no background daemon and no open-ended watch.
+
+Decide the paths to watch. Use paths named in the inputs, else the homepage plus any obvious critical routes (login, dashboard, an API health route). Keep it to a handful.
 
 ## Step 2: Baseline (optional, strongest before the deploy)
 
-A deploy-watch compares against a reference. The best reference is a baseline captured on the old version before deploying; without one, the deploy-watch falls back to absolute checks (expect 2xx, expect smoke tests green).
+A deploy-watch compares against a reference. The best reference is a baseline captured on the old version before deploying. Without one, the deploy-watch falls back to absolute checks (expect 2xx, expect smoke tests green).
 
 If invoked before the deploy to capture a baseline, run the Step 3 probes once against the current live version and keep the results (status, latency, error-log rate, smoke outcome) as the reference. Then tell the user: "Baseline captured. Deploy, then run deploy-watch against the same target to watch."
 
@@ -36,14 +40,14 @@ If invoked after the deploy with no baseline, note that you are running absolute
 
 ## Step 3: Define the checks
 
-Use every probe the environment supports; skip the rest. The first two are universal.
+Use every probe the environment supports. Skip the rest. The first two are universal.
 
 1. **Health and latency (curl, always available).** One probe per path, expecting a 2xx or an intended redirect and a latency near the baseline:
    ```bash
    curl -sS -o /dev/null -w "status=%{http_code} time=%{time_total}s size=%{size_download}\n" --max-time 15 "$URL"
    ```
 
-2. **Critical-path smoke tests.** Re-run the repo's fast critical-path checks if it has them: a `smoke` script (`npm run smoke`), a tagged e2e subset (`npm run test:e2e -- --grep @smoke`, `pytest -m smoke`), or a `smoke/` script. If none exist, curl each critical route and assert a 2xx plus a sentinel string in the body (a known element, an API field). Do not run the full test suite; the deploy-watch wants a fast signal.
+2. **Critical-path smoke tests.** Re-run the repo's fast critical-path checks if it has them: a `smoke` script (`npm run smoke`), a tagged e2e subset (`npm run test:e2e -- --grep @smoke`, `pytest -m smoke`), or a `smoke/` script. If none exist, curl each critical route and assert a 2xx plus a sentinel string in the body (a known element, an API field). Do not run the full test suite. The deploy-watch wants a fast signal.
 
 3. **Deploy logs (platform CLI, where available).** Read recent logs with a **bounded, one-shot** command and scan for an error spike: grep the output for `error`, `exception`, `panic`, `traceback`, ` 5[0-9][0-9] `, count matches, and compare the rate to the baseline (or to zero if none). Never the streaming or follow forms (`-f`, `--tail`, plain `fly logs`): those are unbounded daemons.
    ```bash
@@ -54,7 +58,7 @@ Use every probe the environment supports; skip the rest. The first two are unive
    kubectl logs --since=2m --tail=200 deploy/<name>   # Kubernetes
    ```
 
-4. **Browser checks (where a browser automation capability is available).** If the environment exposes a browser MCP (Playwright or Chrome DevTools, for example), load each path and collect console errors, failed network requests, and a screenshot as evidence. Treat this as optional enrichment; the curl and log probes carry the verdict when no browser is available.
+4. **Browser checks (where a browser automation capability is available).** If the environment exposes a browser MCP (Playwright or Chrome DevTools, for example), load each path and collect console errors, failed network requests, and a screenshot as evidence. Treat this as optional enrichment. The curl and log probes carry the verdict when no browser is available.
 
 ## Step 4: Watch loop (bounded)
 
@@ -80,9 +84,13 @@ Run the heavier probes (smoke tests, log scan, browser) at the first and last ch
 
 **Alerting rules:**
 
-- Alert on **change, not absolutes.** A path that had 3 console errors in the baseline is fine at 3; one new error is an alert. Judge against the baseline (or against 2xx/green when there is none).
+- Alert on **change, not absolutes.** A path that had 3 console errors in the baseline is fine at 3. One new error is an alert. Judge against the baseline (or against 2xx/green when there is none).
 - **Do not cry wolf.** Only raise an alert on a problem that persists across 2 or more consecutive checks. A single transient blip (one timeout, one 502 that clears) is noted, not alerted.
-- Severity: page unreachable or 5xx that persists is **critical**; new persistent console or log errors, or a broken critical route, is **high**; latency past ~2x baseline is **medium**; a new 404 on a non-critical link is **low**.
+- Severity by tier:
+  - **critical:** page unreachable or 5xx that persists.
+  - **high:** new persistent console or log errors, or a broken critical route.
+  - **medium:** latency past ~2x baseline.
+  - **low:** a new 404 on a non-critical link.
 
 When an alert fires, state it in prose and keep watching (watching is reversible, so do not stop the window for a single finding):
 
@@ -102,7 +110,7 @@ The one exception: a persistent **critical** finding (target down or 5xx across 
 When the window closes (or a critical finding cuts it short), print the report and a verdict. Verdict values:
 
 - **HEALTHY:** no persistent alert; health, smoke, and logs at or better than baseline.
-- **DEGRADED:** persistent medium or high findings, but the target is up and serving. Worth a look; not an automatic rollback.
+- **DEGRADED:** persistent medium or high findings, but the target is up and serving. Worth a look. Not an automatic rollback.
 - **ROLLBACK RECOMMENDED:** a persistent critical finding, or high findings severe enough that users are broadly affected.
 
 ```
@@ -118,7 +126,7 @@ Alerts:   <count> (<critical>/<high>/<medium>/<low>)
 Evidence: <log excerpts, screenshot paths, smoke output tails>
 ```
 
-The report is the deliverable; print it. If the user wants a durable record, save it to a repo-local path they choose (for example `deploy-watch-report.md`); write nothing outside the working repo.
+The report is the deliverable. Print it. If the user wants a durable record, save it to a repo-local path they choose (for example `deploy-watch-report.md`). Write nothing outside the working repo.
 
 ## Step 6: Rollback recommendation (only on ROLLBACK RECOMMENDED)
 
@@ -140,13 +148,13 @@ kubectl rollout undo deployment/<name>
 git revert --no-edit <deploy-commit-sha>
 ```
 
-Keep only the lines for the actual platform; drop the rest. Then hand off to `diagnose` to find why the deploy broke.
+Keep only the lines for the actual platform. Drop the rest. Then hand off to `diagnose` to find why the deploy broke.
 
 ## Important rules
 
-- **Read-only on production.** Probe, read logs, run local smoke tests. Never mutate deploy state; rollback is a recommendation plus an output block, never an action.
+- **Read-only on production.** Probe, read logs, run local smoke tests. Never mutate deploy state. Rollback is a recommendation plus an output block, never an action.
 - **Bounded, no daemon.** Every watch has a hard deadline and a fixed interval. Never leave a streaming log follower or background loop running.
-- **Alert on change, tolerate transients.** Compare to the baseline; require a problem to persist across 2+ checks before alerting.
+- **Alert on change, tolerate transients.** Compare to the baseline. Require a problem to persist across 2+ checks before alerting.
 - **Evidence with every alert.** A log excerpt, a curl result, or a screenshot path. No bare assertions.
-- **A baseline captured before the deploy makes the deploy-watch far sharper.** Encourage it; without one, fall back to absolute health checks and say so.
-- **Stay inside the working repo.** Write no state, metrics, or files anywhere outside it; an optional report goes to a repo-local path the user picks.
+- **A baseline captured before the deploy makes the deploy-watch far sharper.** Encourage it. Without one, fall back to absolute health checks and say so.
+- **Stay inside the working repo.** Write no state, metrics, or files anywhere outside it. An optional report goes to a repo-local path the user picks.

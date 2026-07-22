@@ -26,6 +26,7 @@ Treat these separately:
 ## URL As State
 
 Persist shareable state in the URL:
+
 - filters
 - sort order
 - pagination

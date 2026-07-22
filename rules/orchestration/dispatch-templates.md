@@ -1,6 +1,10 @@
 # Dispatch Templates
 
-Copy the template for the task type, fill every `[bracket]`, and send as the subagent prompt. Do not delete the ACCEPTANCE or REPORT blocks; a dispatch without checkable acceptance criteria is not allowed (see `rules/orchestration/dispatch.md`). If the environment exposes effort or model choices, state them in the dispatch per the escalation levers there; otherwise omit and inherit session defaults.
+Copy the template for the task type, fill every `[bracket]`, and send as the subagent prompt.
+
+Do not delete the ACCEPTANCE or REPORT blocks. A dispatch without checkable acceptance criteria is not allowed (see `rules/orchestration/dispatch.md`).
+
+If the environment exposes effort or model choices, state them in the dispatch per the escalation levers there. Otherwise, omit and inherit session defaults.
 
 ## Search (locate, map, inventory)
 

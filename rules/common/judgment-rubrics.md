@@ -13,6 +13,7 @@ Escalating means changing a lever: a fresh context carrying the full failure tra
 - The subtask is to review or veto work produced by the current context
 
 **Fires:** two patches for a race condition each failed CI differently. Re-dispatch into a fresh context at higher effort with both failure traces attached.
+
 **Does not fire:** a rename script failed because the given path was wrong. That is an input error, not a capability ceiling; fix the path and rerun the same setup.
 
 ## 2. When something is truly done
@@ -25,6 +26,7 @@ Done means ALL of:
 - No known regression: the pre-existing checks that were green before are green after
 
 **Fires (legitimately done):** endpoint shipped with pytest output pasted, a real request shown returning 200 with expected JSON, and a note "no load test performed".
+
 **Does not fire (not done):** refactor declared complete because it compiles. Type-check was never the acceptance criterion; behavior tests were not run. Saying "should work" anywhere in the completion claim means not done.
 
 ## 3. When to stop and ask the user
@@ -40,6 +42,7 @@ Ask first when ANY of:
 Do not ask when the action is reversible and inside the stated scope (do it, report after), when the answer is retrievable (look it up), or when a conventional default exists (pick it and state the choice). File-specific change tiers override this rubric: if a protocol such as `rules/common/harness-maintenance.md` marks an action ask-first, reversibility does not waive it.
 
 **Fires:** migration requires dropping a populated column. Stop; present the plan and a rollback path; wait.
+
 **Does not fire:** whether to use snake_case in Python. Convention answers it; asking wastes a round-trip.
 
 ## 4. Wrong direction or wrong execution
@@ -55,6 +58,7 @@ Signals the direction is wrong (switch paths; retrying harder makes it worse):
 On any two of these: stop; write down the current hypothesis and what has been ruled out; pick a different approach or escalate per rubric 1. A retry is legitimate only when the failure cause is identified and the retry changes that specific cause.
 
 **Fires:** a third null-guard added in a third caller. Stop; move one guard into the shared function all callers route through.
+
 **Does not fire:** a test failed once on a network timeout with no code path implicated. One rerun to check for flake is a legitimate retry, not a direction change.
 
 ## 5. Quality floor
@@ -68,4 +72,5 @@ Minimum bar before any work ships, from any model tier:
 - [ ] Comments and docs that described the old behavior were updated
 
 **Fires (floor met):** bug fix ships with a regression test shown failing on the old code and passing on the new, a reviewer agent has read the diff, and one unhandled edge case is documented.
+
 **Does not fire (floor not met):** a large diff approved because it "looks reasonable" after skimming file names. Nobody read the lines; no check ran. Do not ship.

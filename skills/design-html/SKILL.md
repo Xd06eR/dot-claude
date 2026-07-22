@@ -7,9 +7,13 @@ origin: gstack
 
 # Design HTML
 
-Turn an approved design direction into production-quality front-end code. Read the direction (an approved mockup image, a written plan, or a description in the conversation), detect what the repo is built with, and generate semantic, responsive, accessible markup with real content. Then preview it and refine against the direction.
+Turn an approved design direction into production-quality front-end code. Read the direction (an approved mockup image, a written plan, or a description in the conversation), detect what the repo is built with, and generate semantic, responsive, accessible markup with real content.
 
-**Framework fit (core rule):** the output matches the repo, not a fixed stack. A static site gets self-contained HTML plus CSS; a React, Next, Vue, Svelte, Solid, or Astro project gets a component in that framework's idiom. Detect it (Step 2); if genuinely ambiguous, ask in plain text. Never impose a framework, and never add a runtime dependency the repo does not already use without asking first.
+Then preview it and refine against the direction.
+
+**Framework fit (core rule):** the output matches the repo, not a fixed stack. A static site gets self-contained HTML plus CSS. A React, Next, Vue, Svelte, Solid, or Astro project gets a component in that framework's idiom.
+
+Detect it (Step 2). If genuinely ambiguous, ask in plain text. Never impose a framework, and never add a runtime dependency the repo does not already use without asking first.
 
 Run straight through. Stop only for a real fork in output format you cannot infer, or a design decision the direction does not settle.
 
@@ -37,7 +41,9 @@ else
 fi
 ```
 
-Map the detected framework to its component idiom: JSX/TSX for React, Next, Preact, or Solid; a single-file component for Vue; a `.svelte` file; a `.astro` file; a component plus template for Angular. None detected then a self-contained `.html` file with a `<style>` block.
+Map the detected framework to its component idiom: JSX/TSX for React, Next, Preact, or Solid; a single-file component for Vue; a `.svelte` file; a `.astro` file; a component plus template for Angular.
+
+None detected: a self-contained `.html` file with a `<style>` block.
 
 - For a component target, match the repo's existing conventions: TypeScript vs JavaScript (check the extensions in use), styling approach (CSS modules, Tailwind, styled-components, plain CSS), and file layout. Read one or two neighboring components first.
 - If the repo mixes frameworks or the target is unclear, ask in one plain-text question which to emit. Otherwise state the detected format and continue.
@@ -67,9 +73,14 @@ Write the file to the Step 1 path. Build to this quality bar:
 - **Real content** from the reference or plan. Never lorem ipsum, never "Your text here".
 - Optional: `contenteditable` on headline and copy blocks so the user can tweak wording live in the preview (native reflow, no JS required).
 
-**Layout without a JS engine.** Modern CSS covers what a text-layout library used to. Text reflows on its own; `text-wrap: balance` tightens headings and `pretty` improves body copy; `fit-content` shrinkwraps chat-style bubbles; `shape-outside` flows text around obstacles; container queries handle self-sizing components. Reach for a JS measurement library only if a specific effect genuinely needs it, and never add one silently.
+**Layout without a JS engine.** Modern CSS covers what a text-layout library used to. Text reflows on its own.
+
+`text-wrap: balance` tightens headings and `pretty` improves body copy; `fit-content` shrinkwraps chat-style bubbles; `shape-outside` flows text around obstacles; container queries handle self-sizing components.
+
+Reach for a JS measurement library only if a specific effect genuinely needs it, and never add one silently.
 
 **AI-slop blacklist (do not emit unless the direction explicitly shows it):**
+
 - Purple or blue gradients as a default
 - Generic three-column feature grids
 - Center-everything layouts with no hierarchy
@@ -88,7 +99,9 @@ Give the user a way to see it:
 - **Self-contained HTML:** open the file with a portable opener chain: `open "$FILE" || xdg-open "$FILE" || start "$FILE" || echo "Open in your browser: $FILE"`. If it uses ES modules or fetches, serve the directory instead with `PY=$(command -v python3 || command -v python); "$PY" -m http.server 8000 --bind 127.0.0.1` (Windows Git Bash has `python`, not `python3`) and share `http://localhost:8000/<file>` (change the port if 8000 is taken).
 - **Framework component:** render it in the repo's own dev server (`npm run dev` or the project's script) on a throwaway route.
 
-Where a browser automation capability is available (a Playwright or Chrome DevTools MCP, for example), screenshot the page at 375, 768, and 1440px and read the images back to check for text overflow, layout collapse, and broken responsiveness. Fix issues before handing it over. Where no such capability exists, say so and rely on the user's browser.
+Where a browser automation capability is available (a Playwright or Chrome DevTools MCP, for example), screenshot the page at 375, 768, and 1440px and read the images back to check for text overflow, layout collapse, and broken responsiveness. Fix issues before handing it over.
+
+Where no such capability exists, say so and rely on the user's browser.
 
 ## Step 6: Refinement loop
 
@@ -101,7 +114,9 @@ After about ten rounds without "done", ask once, in plain text, whether to keep 
 
 ## Step 7: Extract design tokens (optional)
 
-If no `DESIGN.md` exists, offer once, in plain text, to write one from the tokens you just used (colors, fonts, spacing, radii, shadows). If the user agrees, write `DESIGN.md` to the repo root so later design work stays consistent. Skip silently if one already exists or the user declines.
+If no `DESIGN.md` exists, offer once, in plain text, to write one from the tokens you just used (colors, fonts, spacing, radii, shadows). If the user agrees, write `DESIGN.md` to the repo root so later design work stays consistent.
+
+Skip silently if one already exists or the user declines.
 
 ## Usability guardrails
 

@@ -1,6 +1,8 @@
 # Dispatch Protocol
 
-How the main conversation delegates work to subagents: what to dispatch, how results come back, and what to change when attempts fail. Model-agnostic by design: it assumes nothing about which or how many models the environment runs; verify what is actually available before naming anything. Mechanics are Claude Code specific; on other agents apply the same principles with that platform's delegation primitives.
+How the main conversation delegates work to subagents: what to dispatch, how results come back, and what to change when attempts fail.
+
+Model-agnostic by design: it assumes nothing about which or how many models the environment runs; verify what is actually available before naming anything. Mechanics are Claude Code specific; on other agents apply the same principles with that platform's delegation primitives.
 
 ## 1. Working set in, residue out
 
@@ -21,7 +23,9 @@ The test: "will I reason from these exact contents later, or do I only need the 
 
 What degrades a session is not a large relevant working set; it is residue. Attention dilutes as noise accumulates regardless of advertised window size, so keep the main context to working set plus conclusions.
 
-**Negative example:** main context runs `grep -r`, reads 14 files to locate one pattern, pastes them, then decides. The 13 misses are now permanent residue. **Positive example:** dispatch "map every caller of X, return file:line plus a one-line role for each"; main context receives 20 lines, then directly reads the 2 files it will actually edit.
+**Negative example:** main context runs `grep -r`, reads 14 files to locate one pattern, pastes them, then decides. The 13 misses are now permanent residue.
+
+**Positive example:** dispatch "map every caller of X, return file:line plus a one-line role for each"; main context receives 20 lines, then directly reads the 2 files it will actually edit.
 
 ## 2. Escalation levers
 

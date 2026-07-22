@@ -19,9 +19,9 @@ Turn a description or mermaid source into a diagram artifact set. All outputs go
 
 ## Step 1: Author the mermaid source
 
-Write mermaid for the user's request. Prefer flowcharts (`graph LR`/`graph TD`) — they convert cleanly to editable Excalidraw elements when pasted at excalidraw.com. Sequence, state, and ER diagrams render fine as SVG/PNG; at excalidraw.com they paste as a single image, not editable elements.
+Write mermaid for the user's request. Prefer flowcharts (`graph LR`/`graph TD`) — they convert cleanly to editable Excalidraw elements when pasted at excalidraw.com. Sequence, state, and ER diagrams render fine as SVG/PNG. At excalidraw.com they paste as a single image, not editable elements.
 
-Keep node labels short; put detail in edge labels. 5-15 nodes is the readable range. More than that, split into multiple diagrams and say why.
+Keep node labels short. Put detail in edge labels. 5-15 nodes is the readable range. More than that, split into multiple diagrams and say why.
 
 Write the source file to `<outdir>/<slug>.mmd` using the Write tool.
 
@@ -34,11 +34,11 @@ PY=$(command -v python3 || command -v python)
 "$PY" <path-to-this-skill>/gen_excalidraw.py <outdir>/<slug>.mmd > <outdir>/<slug>.excalidraw
 ```
 
-The converter writes the JSON to stdout (redirect it); on a non-flowchart input it exits 2 with a note and writes nothing, so an empty output file means skip and fall back to the paste path.
+The converter writes the JSON to stdout (redirect it). On a non-flowchart input it exits 2 with a note and writes nothing, so an empty output file means skip and fall back to the paste path.
 
-The converter parses the flowchart subset (nodes, edges, labels, shapes); it skips subgraphs and styling directives and prints a note when it does. Layout is a simple layered grid — the file is a drag-to-refine starting point, not a finished layout; the SVG/PNG from Step 3 stays the ground-truth render.
+The converter parses the flowchart subset (nodes, edges, labels, shapes). It skips subgraphs and styling directives and prints a note when it does. Layout is a simple layered grid — the file is a drag-to-refine starting point, not a finished layout. The SVG/PNG from Step 3 stays the ground-truth render.
 
-For non-flowchart types (sequence, state, ER), skip the converter and give the user the paste path instead: open https://excalidraw.com and paste the `.mmd` source (flowcharts become editable elements there; other types paste as an image). If the converter errors on a valid flowchart, fall back to the same paste note and say so.
+For non-flowchart types (sequence, state, ER), skip the converter and give the user the paste path instead: open https://excalidraw.com and paste the `.mmd` source. Flowcharts become editable elements there. Other types paste as an image. If the converter errors on a valid flowchart, fall back to the same paste note and say so.
 
 ## Step 3: Render to SVG and PNG (where mermaid-cli is installed)
 
@@ -82,5 +82,5 @@ For PNG, `-s 3` gives ~300dpi output. If mermaid-cli is missing, deliver `.mmd` 
 ## Completion status
 
 - **DONE**: `.mmd` source, `.excalidraw` (flowcharts), and rendered SVG/PNG delivered and shown.
-- **DONE_WITH_NOTE**: source delivered; rendering or conversion skipped (missing mermaid-cli, non-flowchart type, or converter fallback) with guidance.
+- **DONE_WITH_NOTE**: source delivered. Rendering or conversion skipped (missing mermaid-cli, non-flowchart type, or converter fallback) with guidance.
 - **BLOCKED**: unable to write outputs (permissions, disk full).

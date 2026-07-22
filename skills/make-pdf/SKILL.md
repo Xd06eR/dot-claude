@@ -48,7 +48,7 @@ Pick the first engine present, in this order, and set `--pdf-engine` to it:
 1. **weasyprint** or **wkhtmltopdf:** HTML and CSS engines, closest to the essay look. They take a `--css` file, so headers, footers, page numbers, and watermark all come from one stylesheet (Step 6).
 2. **typst** or **tectonic:** fast, modern, good defaults, no system LaTeX needed.
 3. **xelatex** or **lualatex:** best typography, can use system fonts via `-V mainfont`.
-4. **pdflatex:** universal fallback; omit `mainfont` (it cannot load system fonts).
+4. **pdflatex:** universal fallback. Omit `mainfont` (it cannot load system fonts).
 
 Base command (fill in engine, title, author):
 
@@ -63,8 +63,8 @@ pandoc SOURCE.md -o OUTPUT.pdf \
 Engine-specific additions:
 
 - **weasyprint or wkhtmltopdf:** add `--css=STYLE.css` (Step 6). wkhtmltopdf also takes `--footer-center "[page]"` for page numbers if you skip the CSS.
-- **LaTeX engines:** add `-V geometry:margin=1in`; page numbers are automatic; add `-V mainfont="Helvetica Neue"` on xelatex or lualatex only. A custom running header needs `-V header-includes` with `fancyhdr`.
-- Drop `--toc` when the document has no headings; some engines error on an empty table of contents.
+- **LaTeX engines:** add `-V geometry:margin=1in`. Page numbers are automatic. Add `-V mainfont="Helvetica Neue"` on xelatex or lualatex only. A custom running header needs `-V header-includes` with `fancyhdr`.
+- Drop `--toc` when the document has no headings. Some engines error on an empty table of contents.
 
 Other output formats are native, no PDF engine needed:
 
@@ -78,14 +78,14 @@ pandoc SOURCE.md -o OUTPUT.docx                                 # Word, content 
 When pandoc is absent. Convert Markdown to a styled HTML file, then print it.
 
 1. Markdown to HTML: use any converter present (`markdown-it`, `marked`, or Python's markdown module via `$(command -v python3 || command -v python) -m markdown` since Windows Git Bash ships `python`, not `python3`). Wrap the output in the Step 6 stylesheet. Write it to a temp path (under the system temp dir), not into the repo.
-2. Print with a local headless browser (the binary may be `google-chrome` or `chromium-browser`; add `--no-sandbox` in containers; drop `--no-pdf-header-footer` when you want Chrome's own header and footer):
+2. Print with a local headless browser (the binary may be `google-chrome` or `chromium-browser`, add `--no-sandbox` in containers, drop `--no-pdf-header-footer` when you want Chrome's own header and footer):
    ```bash
    chromium --headless --no-pdf-header-footer --print-to-pdf=OUTPUT.pdf file://ABS/PATH/page.html
    ```
 3. If your runtime exposes a browser-automation tool instead of a CLI binary, open the HTML in it and use its print-to-PDF action with the same margins and page size.
 4. Delete the temp HTML afterward.
 
-**Chromium gotcha:** headless Chrome ignores CSS `@page` margin boxes (`@top-center`, `@bottom-center`). For a running header and page numbers on this route, pass Chrome's header and footer template (or the automation tool's header and footer print options), not CSS. WeasyPrint honors the CSS boxes; Chrome does not.
+**Chromium gotcha:** headless Chrome ignores CSS `@page` margin boxes (`@top-center`, `@bottom-center`). For a running header and page numbers on this route, pass Chrome's header and footer template (or the automation tool's header and footer print options), not CSS. WeasyPrint honors the CSS boxes. Chrome does not.
 
 ## Step 5, Route C: HTML for the user to print (last resort)
 
@@ -114,7 +114,7 @@ img { max-width: 100%; }
              font-size: 100pt; color: rgba(0,0,0,.08); transform: rotate(-30deg); z-index: -1; }
 ```
 
-On Linux, correct sans-serif needs `fonts-liberation` (the metric-compatible Helvetica and Arial substitute). Note it if the machine lacks it. For a watermark, add `<div class="watermark">DRAFT</div>` to the HTML; on a LaTeX engine use the `draftwatermark` package via `-V header-includes`.
+On Linux, correct sans-serif needs `fonts-liberation` (the metric-compatible Helvetica and Arial substitute). Note it if the machine lacks it. For a watermark, add `<div class="watermark">DRAFT</div>` to the HTML. On a LaTeX engine use the `draftwatermark` package via `-V header-includes`.
 
 ## Feature knobs (map the user's request onto the route)
 
@@ -133,7 +133,8 @@ On Linux, correct sans-serif needs `fonts-liberation` (the metric-compatible Hel
 
 - **Local images** inline automatically (relative paths resolve against the source). They cap at the content width via the stylesheet, so nothing is truncated.
 - **Remote images:** pandoc and browsers fetch them at render time. To keep an offline posture, download them first or strip them, and say so if you do.
-- **Mermaid fences** render as pictures only if a mermaid renderer is present (`mmdc`, or a pandoc mermaid filter). Without one, the fence stays a code block. Excalidraw fences are not supported by this toolchain; embed a pre-rendered SVG or PNG instead. Authoring a diagram from English is the `diagram` skill's job; embed its output here.
+- **Mermaid fences** render as pictures only if a mermaid renderer is present (`mmdc`, or a pandoc mermaid filter). Without one, the fence stays a code block.
+- **Excalidraw fences** are not supported by this toolchain. Embed a pre-rendered SVG or PNG instead. Authoring a diagram from English is the `diagram` skill's job. Embed its output here.
 
 ## Step 7: Verify and report
 
@@ -144,6 +145,6 @@ On Linux, correct sans-serif needs `fonts-liberation` (the metric-compatible Hel
 ## Important rules
 
 - **Output beside the source** unless the user names a path. Never write PDFs, HTML, or temp files outside the working repo, except a browser temp file you then delete.
-- **Never install anything.** Detect what is present; if nothing fits, print the install command for the user to run.
-- **No network image fetches** without telling the user; prefer an offline posture by default.
+- **Never install anything.** Detect what is present. If nothing fits, print the install command for the user to run.
+- **No network image fetches** without telling the user. Prefer an offline posture by default.
 - **Write no state, metrics, or config anywhere.** The only outputs are the PDF (or the HTML) the user asked for.

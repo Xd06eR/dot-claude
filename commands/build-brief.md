@@ -6,17 +6,33 @@ origin: custom
 
 # Build Brief Generator (Plan → Build)
 
-Plan→Build handoff. Read the spec+plan for the components the user groups into a feature, produce ONE comprehensive build brief for that feature. The build session then dispatches subagents per independent component (per CLAUDE.md Build phase + `rules/orchestration/dispatch.md`). Review phase starts only after every feature is built.
+Plan→Build handoff.
+
+Read the spec+plan for the components the user groups into a feature, produce ONE comprehensive build brief for that feature.
+
+The build session then dispatches subagents per independent component (per CLAUDE.md Build phase + `rules/orchestration/dispatch.md`).
+
+Review phase starts only after every feature is built.
 
 ## What is a feature
 
-A feature is a buildable chunk of the project spanning MULTIPLE components — smaller than the whole project, bigger than a single component. The project has many features; each feature is one build-brief. Do NOT emit one brief per component — that multiplies files. Group related components into a feature and emit one comprehensive brief covering all of them.
+A feature is a buildable chunk of the project spanning MULTIPLE components — smaller than the whole project, bigger than a single component.
 
-**Sizing:** A feature usually spans 2-6 components. Fewer than 2 and it is just a component (group it with related components) — EXCEPT a terminal integration component (e.g., the UI layer that depends on everything else), which is legitimately its own feature. More than ~7 is too big — split along dependency seams into two features.
+The project has many features. Each feature is one build-brief.
+
+Do NOT emit one brief per component — that multiplies files. Group related components into a feature and emit one comprehensive brief covering all of them.
+
+**Sizing:** A feature usually spans 2-6 components.
+
+Fewer than 2 and it is just a component (group it with related components) — EXCEPT a terminal integration component (e.g., the UI layer that depends on everything else), which is legitimately its own feature.
+
+More than ~7 is too big — split along dependency seams into two features.
 
 ## Inputs — Plan-phase artifacts ONLY
 
-Arguments: "$ARGUMENTS" — **required**: the feature name + the components in it. Each named component must already have a spec and a plan (produced by `/plan-from-design`).
+Arguments: "$ARGUMENTS" — **required**: the feature name + the components in it.
+
+Each named component must already have a spec and a plan (produced by `/plan-from-design`).
 
 Discover and read, wherever they live in the project:
 
@@ -24,14 +40,16 @@ Discover and read, wherever they live in the project:
 - `implementation-notes.md` — notes logged so far (decisions, deviations, tradeoffs, open questions), if it exists
 - the project's `CLAUDE.md` — standing baseline context
 
-Everything else is upstream (design-phase, research, archives) — do not read it; if its content matters here, it is already distilled into the specs. If a named component has no spec or plan, stop and say so — Plan has not produced it; do not invent.
+Everything else is upstream (design-phase, research, archives) — do not read it. If its content matters here, it is already distilled into the specs.
+
+If a named component has no spec or plan, stop and say so — Plan has not produced it. Do not invent.
 
 ## Synthesize ONE feature brief → `build-briefs/<feature>.md`
 
 Write a single comprehensive brief covering every component in the feature:
 
 1. **Feature goal** — what this feature delivers overall + its load-bearing design decisions (drawn from the component specs).
-2. **Component map** — the components in this feature, with dependency order between them (foundation → dependent). Cross-ref graph: referenced-by-many → early; references-many → late.
+2. **Component map** — the components in this feature, with dependency order between them (foundation → dependent). Cross-ref graph: referenced-by-many → early. References-many → late.
 3. **Per component** — a section for each:
    - **Goal** — what this component delivers within the feature.
    - **Scope** — files/modules/subsystems it creates or touches.
@@ -41,7 +59,7 @@ Write a single comprehensive brief covering every component in the feature:
 4. **Dispatch plan** — split the feature's components:
    - INDEPENDENT components: one subagent each, in parallel, per `rules/orchestration/dispatch.md` (residue test, escalation levers, report contract).
    - Sequential/dependent components: built in the main session, in dependency order.
-   - Every dispatched subagent: failing test first, implement, then lint + format + type-check + tests; verify before returning.
+   - Every dispatched subagent: failing test first, implement, then lint + format + type-check + tests. Verify before returning.
 5. **Feature acceptance** — the feature is done when every component's acceptance passes. State explicitly.
 
 ## Integration
@@ -50,7 +68,7 @@ After dispatched subagents return, the main session integrates: resolves any sea
 
 ## INDEX → `build-briefs/INDEX.md`
 
-One line per feature: name · components · status (☐/✅). Rule at top: build features in dependency order; review phase starts only when every feature is ✅.
+One line per feature: name · components · status (☐/✅). Rule at top: build features in dependency order. Review phase starts only when every feature is ✅.
 
 ## Principles to encode
 
@@ -58,4 +76,6 @@ Surgical (touch only what each step requires). TDD (failing test → implement �
 
 ## Output
 
-Write `build-briefs/<feature>.md`, update `INDEX.md`, print the component map + dispatch plan for review. Do not start the build — user reviews the brief, then builds.
+Write `build-briefs/<feature>.md`, update `INDEX.md`, print the component map + dispatch plan for review.
+
+Do not start the build — user reviews the brief, then builds.

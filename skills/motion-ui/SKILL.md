@@ -78,7 +78,7 @@ npm install motion
 * `motion/react` - default for current Motion for React projects (package: `motion`)
 * `framer-motion` - legacy import path for projects that still depend on Framer Motion
 
-**Do not mix.** Mixing causes conflicting internal schedulers and broken `AnimatePresence` contexts — components from one package will not coordinate exit animations with components from the other.
+**Do not mix.** Mixing causes conflicting internal schedulers and broken `AnimatePresence` contexts. Components from one package will not coordinate exit animations with components from the other.
 
 To check which version your project uses:
 
@@ -310,7 +310,9 @@ export function useSafeMotion(fullY: number = 16) {
 | Large layout shifts or full-page reflows | Avoid `layout`; use CSS transitions or page-level routing instead |
 | Complex, imperative sequences | `useAnimate` |
 
-> **Why avoid `layout` on large containers?** Framer's layout animation uses `transform` to reconcile positions, but on elements that span the full viewport or trigger deep reflow, the measurement cost causes visible jank and CLS. Prefer CSS Grid/Flexbox transitions or coordinate with `layoutId` on specific child elements only.
+> **Why avoid `layout` on large containers?** Framer's layout animation uses `transform` to reconcile positions, but on elements that span the full viewport or trigger deep reflow, the measurement cost causes visible jank and CLS.
+>
+> Prefer CSS Grid/Flexbox transitions or coordinate with `layoutId` on specific child elements only.
 
 #### Layout & Transitions
 

@@ -6,7 +6,9 @@ Research before coding. Planning, TDD, review follow CLAUDE.md's 4-phase workflo
 
 ## TodoWrite
 
-Use TodoWrite to track multi-step work, verify you understood the task, and enable real-time steering. The list itself is a check: out-of-order, missing, extra, or wrong-granularity steps mean the plan was misread — fix the understanding, not just the list.
+Use TodoWrite to track multi-step work, verify you understood the task, and enable real-time steering.
+
+The list itself is a check: out-of-order, missing, extra, or wrong-granularity steps mean the plan was misread — fix the understanding, not just the list.
 
 ## Research & Reuse
 

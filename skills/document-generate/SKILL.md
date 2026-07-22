@@ -14,6 +14,7 @@ Produce accurate, structured documentation for a feature, module, or whole proje
 **Doc-safety rule (non-negotiable):** writing and editing doc files in the working tree is local and reversible, so do it directly. This skill never runs the commit, push, or PR/MR commands and never mutates a remote. The final commit is prepared and OUTPUT as a block for the user to run by hand.
 
 You organize output by the **Diataxis** quadrants, each serving a different reader:
+
 - **Reference:** information-oriented. Complete, accurate technical description. The foundation.
 - **Explanation:** understanding-oriented. Why it works this way, and the trade-offs.
 - **How-to:** task-oriented. Steps to accomplish a specific goal, assuming basic familiarity.
@@ -40,7 +41,7 @@ find . -type f -not -path "./.git/*" -not -path "./node_modules/*" -not -path ".
 ```
 
 2. Read the entry points: `README.md`, `ARCHITECTURE.md`, `CONTRIBUTING.md`, `CLAUDE.md` / `AGENTS.md`; the manifest (`package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`) to learn the project type; the main entry files; config files and examples.
-3. Read the source for each target entity, end to end, not just signatures. Read the tests too: they reveal intended behavior, edge cases, and real usage. Read the modules the target depends on and is depended on by. Read inline comments, especially `NOTE`, `DESIGN`, `WHY`.
+3. Read the source for each target entity, end to end, not just signatures. Read the tests too: they reveal intended behavior, edge cases, and real usage. Read the modules the target depends on and the modules that depend on it. Read inline comments, especially `NOTE`, `DESIGN`, `WHY`.
 4. Build a concept map before writing:
 
 ```
@@ -99,7 +100,7 @@ types, defaults, and constraints. Pull directly from code; do not paraphrase loo
 [Links to the how-to, tutorial, or explanation for this entity.]
 ```
 
-Rules: accuracy over elegance, every claim traceable to code. Give types, defaults, and constraints ("a string matching `^[a-z-]+$`, max 256 chars", not "a string"). Do not explain *why* here; that is the explanation doc's job.
+Rules: accuracy over elegance, every claim traceable to code. Give types, defaults, and constraints ("a string matching `^[a-z-]+$`, max 256 chars", not "a string"). Do not explain *why* here. That is the explanation doc's job.
 
 ## Step 5: Explanation docs
 
@@ -128,7 +129,7 @@ code would understand.]
 [From code comments, ADRs, or git history: what was tried or rejected, and why.]
 ```
 
-Rules: lead with the problem, not the solution. Name trade-offs explicitly ("we chose X over Y because Z"). Do not repeat reference material; link to it. ASCII diagrams are grep-able and render everywhere; for a richer figure, hand the description to the `diagram` skill.
+Rules: lead with the problem, not the solution. Name trade-offs explicitly ("we chose X over Y because Z"). Do not repeat reference material. Link to it instead. ASCII diagrams are grep-able and render everywhere. For a richer figure, hand the description to the `diagram` skill.
 
 ## Step 6: How-to guides
 
@@ -195,7 +196,7 @@ a working X that does Y", not "This tutorial covers X".]
 [Recap what the reader now has, link to reference docs, suggest next steps.]
 ```
 
-Rules: **time to first result under 3 steps.** Every step produces a visible change; no "now configure X" without showing what changes. Use the exact commands the reader types. Show common errors and their fix inline. Close with "What you built" tying back to the real use case.
+Rules: **time to first result under 3 steps.** Every step produces a visible change. No "now configure X" without showing what changes. Use the exact commands the reader types. Show common errors and their fix inline. Close with "What you built" tying back to the real use case.
 
 ## Step 8: Cross-link and verify discoverability
 
@@ -206,21 +207,24 @@ Rules: **time to first result under 3 steps.** Every step produces a visible cha
 
 ## Step 9: Quality self-review
 
-Review each document against these gates. Fix every failure before handing off; this is the accuracy contract.
+Review each document against these gates. Fix every failure before handing off. This is the accuracy contract.
 
 **Accuracy:**
+
 - [ ] Every code example runs / compiles / passes if pasted.
 - [ ] Every API description matches the actual signature in the source.
 - [ ] Every command shown produces the output described.
 - [ ] No stale references to renamed or removed entities.
 
 **Completeness:**
+
 - [ ] Reference docs cover 100% of the public surface found in Step 2.
 - [ ] How-tos cover the top tasks a user would attempt.
 - [ ] Tutorials reach a working result in 3 steps or fewer.
 - [ ] Explanation docs name trade-offs, not just choices.
 
 **Voice:**
+
 - [ ] Written for a smart reader who has not seen the code.
 - [ ] Jargon glossed briefly on first use.
 - [ ] Active voice, concrete nouns, short sentences. "You can now..." over "The system provides...".
@@ -229,7 +233,7 @@ Review each document against these gates. Fix every failure before handing off; 
 
 Docs are written and self-reviewed. Now scan for leaked secrets, then output the commit block. Do NOT execute any git command yourself.
 
-Docs derived from source sometimes echo a real credential. Scan the files you created or edited; if a live-format secret shows up (and is not an obvious `EXAMPLE` placeholder), remove it before handing off:
+Docs derived from source sometimes echo a real credential. Scan the files you created or edited. If a live-format secret shows up (and is not an obvious `EXAMPLE` placeholder), remove it before handing off:
 
 ```bash
 # Replace <new-doc-paths> with the files you wrote. Flag, do not commit past a hit.
@@ -238,7 +242,7 @@ grep -rEn '(AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[0-9A-
 
 Detect the host for the PR/MR line: `git remote get-url origin` containing `github.com` then GitHub, containing `gitlab` then GitLab, else git-native (omit the PR line). Then prepare the block. Prefix it plainly for the user:
 
-> Run these to commit the docs. Review the staged files and message first; nothing here has been executed.
+> Run these to commit the docs. Review the staged files and message first. Nothing here has been executed.
 
 Do NOT execute any of it yourself:
 
@@ -249,7 +253,7 @@ git commit -m "docs: document <scope> (reference, how-to, tutorial, explanation 
 git push
 ```
 
-If a PR/MR exists for this branch, also output the body-update command in the same OUTPUT ONLY form (GitHub `gh pr edit --body`, GitLab `glab mr update --description`) with a docs section listing each new file, its quadrant, and a one-line description. Never run it yourself; do not open a second PR/MR.
+If a PR/MR exists for this branch, also output the body-update command in the same OUTPUT ONLY form (GitHub `gh pr edit --body`, GitLab `glab mr update --description`) with a docs section listing each new file, its quadrant, and a one-line description. Never run it yourself. Do not open a second PR/MR.
 
 Then report:
 
@@ -267,9 +271,9 @@ Documentation generated:
 ## Important rules
 
 - **Research before writing.** Step 2 is not optional. Insufficient research produces surface-level docs.
-- **Accuracy is non-negotiable.** Every example works; every API description matches the code. Unsure about a detail then read the source again, never guess.
+- **Accuracy is non-negotiable.** Every example works. Every API description matches the code. If unsure about a detail, read the source again. Never guess.
 - **Keep the quadrants distinct.** Do not mix tutorial content into reference, or reference into how-tos. Each serves a different reader in a different mode.
 - **Cross-link everything.** Isolated docs are undiscoverable docs.
 - **Match the repo's existing doc style and layout.** Do not impose a new one.
-- **Never run the commit, push, or PR/MR commands.** Prepare and output them; the user runs them. Stay inside the working repo: write no state, metrics, or config files anywhere else.
-- **Completeness over minimalism.** AI makes thorough docs cheap; write the complete set, not a minimal stub.
+- **Never run the commit, push, or PR/MR commands.** Prepare and output them. The user runs them. Stay inside the working repo: write no state, metrics, or config files anywhere else.
+- **Completeness over minimalism.** AI makes thorough docs cheap. Write the complete set, not a minimal stub.

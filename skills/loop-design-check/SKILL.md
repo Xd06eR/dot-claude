@@ -11,10 +11,12 @@ origin: ECC
 ## When to use / not
 
 **Use it when:**
+
 - You want to hand a repeating task to an agent that runs over and over (write→test, test→fix, fix→verify…).
 - You already have a loop and worry it spins, cheats, or runs a wrong answer to completion.
 
 **Don't use it for:**
+
 - A one-off task → just do it; don't wrap a loop around it.
 - A plain timer / poll → use the built-in `/loop`; no design needed.
 - *How to wire the loop architecture* (pipelines → DAGs, long-run recovery) → that's the mechanism layer; see the built-in `/loop` and `/schedule` plus `rules/orchestration/dispatch.md`. **This skill only covers "is the goal right, and will it run away" — it does not re-explain mechanism.**
@@ -27,6 +29,7 @@ origin: ECC
 | **Judgment** (high) | **human** | Decides "is this goal itself right, should it change, should it stop." The machine can't step outside its own loop to question the goal. |
 
 > A thermostat can feed back "how far from 26°C," but when you have a fever and want 28°C it can't judge whether 26 is the *right* target — it just grinds toward 26. **"What to set today" is always the human's call.**
+
 > Handing judgment / sign-off / the last switch to the machine = removing the high-level feedback = it sprints, fast and hard, toward a goal no one questioned → wrong output.
 
 ---
@@ -35,9 +38,13 @@ origin: ECC
 
 ### Step 0 · Subtract first: should you even build it? (4-condition gate, any miss = veto)
 
-① the task repeats weekly or more　② verification can be automated　③ the token budget can take it　④ the agent has tools that actually *run and see the result*
+- The task repeats weekly or more.
+- Verification can be automated.
+- The token budget can take it.
+- The agent has tools that actually *run and see the result*.
 
-Miss any one → **don't build a loop**; do it by hand or another way.
+Miss any one → **don't build a loop**. Do it by hand or another way.
+
 > What stops most people isn't "can I write a loop," it's "does my repo deserve one." A repo that deserves a loop has a reconciliation baseline (golden sample / upstream total) + tests + a lint guard. **A repo that doesn't deserve a loop will only have its errors amplified by one.**
 
 ### Step 1 · Define a *machine-decidable* goal (the hard part — the loop lives or dies here)
@@ -48,11 +55,12 @@ The whole loop rides on the comparator's "is it done yet?" **The comparator can 
 - Good: Decidable ("all 96 unit tests green AND a change-list is produced," "module-02 fields filled, pytest passes, business logic untouched") → one check settles it; the loop converges cleanly.
 
 **Five-point goal framework:**
+
 1. **Done-criterion is machine-verifiable.**
 2. **Boundary conditions defined alongside the done-criterion** ("what it must NOT do") — anti-Goodhart; missing boundaries = a license to cheat.
 3. **Has a failure fallback** — retry cap N + escalate to a human when exceeded.
 4. **Goal is layered.**
-5. **Prefer reconciliation over assertion for the done-criterion** — anchor to external fact (golden sample / upstream total / financial tie-out / platform back-office numbers) before your own assertions. "All tests pass" can be gamed (loosen asserts, fake mocks, swallow exceptions); "diff vs the reference < 0.01" can't.
+5. **Prefer reconciliation over assertion for the done-criterion** — anchor to external fact (golden sample / upstream total / financial tie-out / platform back-office numbers) before your own assertions. "All tests pass" can be gamed (loosen asserts, fake mocks, swallow exceptions). "diff vs the reference < 0.01" can't.
 
 > **Self-check:** read the goal to someone who doesn't know the domain — can they run one command and tell whether it's done? If not, it isn't decidable enough. Go back.
 
@@ -70,8 +78,16 @@ The whole loop rides on the comparator's "is it done yet?" **The comparator can 
 ### Step 3 · Pick a skeleton
 
 **Maintenance type (tend something that exists) → document-driven dispatch.**
+
 The loop isn't "run a fixed check on a timer," it's **"read a doc on a timer, and dispatch only when the doc changed."** The doc is the task queue + state machine + human interface.
-Three disciplines: ① the problem column is human-write-only, the result column is loop-write-only, **state advances one-way and never rolls back**; ② **the exit code is final** (if the script says exit 1, the script wins); ③ state advances only as far as "awaiting verification" — **the "done" cell is flipped by a human only.** The loop is the worker, not the acceptance officer.
+
+Three disciplines:
+
+- The problem column is human-write-only, the result column is loop-write-only, **state advances one-way and never rolls back**.
+- **The exit code is final** (if the script says exit 1, the script wins).
+- State advances only as far as "awaiting verification" — **the "done" cell is flipped by a human only.**
+
+The loop is the worker, not the acceptance officer.
 
 **Greenfield type (build from scratch) → plan / build / judge, three roles.**
 
@@ -81,7 +97,13 @@ Three disciplines: ① the problem column is human-write-only, the result column
 | **Build** | write to the spec | **must not change the acceptance conditions** |
 | **Judge** | run acceptance **independently**; pass → stop, fail → return with the failure reason to Build | **independent + deterministic** |
 
-Three iron rules (all bet on the judge): ① **the judge must be independent** — not the same agent as Build (grading your own homework always inflates); ② **deterministic rules** — pytest / reconciliation diff / type check / diff, never "looks right"; ③ **Build may not edit the acceptance conditions to pass**. Three failed retries → escalate to a human.
+Three iron rules (all bet on the judge):
+
+- **The judge must be independent** — not the same agent as Build (grading your own homework always inflates).
+- **Deterministic rules** — pytest / reconciliation diff / type check / diff, never "looks right".
+- **Build may not edit the acceptance conditions to pass**.
+
+Three failed retries → escalate to a human.
 
 ### Step 4 · Add damping (against oscillation / runaway)
 
@@ -89,7 +111,9 @@ Retry cap, hard stop, human flips the last switch = damping. **Negative feedback
 
 ### Step 5 · Land in three stages (don't go fully automatic on day one)
 
-① **Run it once by hand** (forces you to state exactly "how the judge decides") → ② harden into a skill / subagent dispatch (a main session loops, dispatching plan/build/judge) → ③ hang it on cron for full automation.
+- **Run it once by hand** (forces you to state exactly "how the judge decides").
+- **Harden into a skill / subagent dispatch** (a main session loops, dispatching plan/build/judge).
+- **Hang it on cron** for full automation.
 
 ---
 
@@ -106,6 +130,7 @@ Retry cap, hard stop, human flips the last switch = damping. **Negative feedback
 | 5 | Bloated CLAUDE.md + stale memory → **the faster it loops, the more it errs** | Are the docs/memory it depends on fresh? Who maintains them? | Layered memory + periodic lint |
 
 **Plus three red lines (violate any = not allowed to go automatic):**
+
 - **Keep judgment with the human.** Acceptance / the "done" cell is flipped by a human; the loop is not the acceptance officer.
 - **Responsibility doesn't transfer.** Anything whose failure you can't afford (merge the wrong PR / publish the wrong thing / misallocate money) → **don't hand over the authority automatically.**
 - **Counter-intuitive warning.** The more "self-improving / rewrites-its-own-rules" a loop is, the **stricter the human review it needs** (to see what it rewrote the rules into) — not looser. The machine is too fast to intercept after the fact, so the human's judgment must sit **before the action** (a hard gate), not as a post-hoc patch.
@@ -122,6 +147,7 @@ You want a loop that runs every night and fixes whatever tests are failing.
 - **Skeleton:** plan/build/judge — the **judge is CI run independently**, never the fixing agent (Step 3).
 
 Now run the **review checklist**, and it catches what the naive version would have missed:
+
 - **#3 hit** → the naive "all tests pass" lets the agent delete a failing test to "win." Fixed by the boundary "no test file deleted/weakened."
 - **#2 hit** → if the fixing agent also judged its own fix, it would pass itself. Fixed by "judge = independent CI, deterministic."
 - **#4 hit** → if a fix is ambiguous, the agent won't stop to ask at 2 a.m.; it'll commit a guess. Fixed by front-loading: ambiguous fixes are left for the human, not guessed.
@@ -134,6 +160,7 @@ The naive loop and the reviewed loop differ by four lines of constraint — and 
 ## One-line close
 
 > The hard part of writing a loop isn't "can I write a loop," it's **defining a goal a machine can reconcile** — decidable, bounded, reconciliation-based. The controller must be deterministic and external; keep judgment and the standard with the human; the system tends toward entropy, so maintain it.
+
 > **A loop only rewards someone who has already thought it through. Count on it to think for you, and it will happily think wrong, with you, at scale.**
 
 ---

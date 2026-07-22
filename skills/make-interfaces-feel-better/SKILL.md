@@ -6,8 +6,7 @@ origin: ECC
 
 # Make Interfaces Feel Better
 
-Use this skill for the small design-engineering details that compound into a
-more polished interface.
+Use this skill for the small design-engineering details that compound into a more polished interface.
 
 ## When to Use
 
@@ -26,20 +25,15 @@ For nearby nested rounded surfaces:
 outer radius = inner radius + padding
 ```
 
-If padding is large, treat layers as separate surfaces instead of forcing the
-math. The point is optical coherence, not formula worship.
+If padding is large, treat layers as separate surfaces instead of forcing the math. The point is optical coherence, not formula worship.
 
 ### Optical Alignment
 
-Geometric centering is not always visual centering. Icon buttons, play
-triangles, arrows, stars, and asymmetric icons often need a small offset. Fix the
-SVG when possible; otherwise adjust with a pixel-level margin or padding change.
+Geometric centering is not always visual centering. Icon buttons, play triangles, arrows, stars, and asymmetric icons often need a small offset. Fix the SVG when possible; otherwise adjust with a pixel-level margin or padding change.
 
 ### Shadows And Borders
 
-Use borders for separation and focus rings. Use layered shadows when a card,
-button, dropdown, or popover needs depth. Shadows should be transparent and
-subtle enough to work across backgrounds.
+Use borders for separation and focus rings. Use layered shadows when a card, button, dropdown, or popover needs depth. Shadows should be transparent and subtle enough to work across backgrounds.
 
 ### Text Wrapping
 
@@ -50,8 +44,7 @@ subtle enough to work across backgrounds.
 
 ### Font Smoothing
 
-On macOS, apply antialiased font smoothing at the root layout when the project
-does not already do so:
+On macOS, apply antialiased font smoothing at the root layout when the project does not already do so:
 
 ```css
 html {
@@ -62,8 +55,7 @@ html {
 
 ### Image Outlines
 
-Images often need a subtle inset outline so their edges do not blur into the
-surface.
+Images often need a subtle inset outline so their edges do not blur into the surface.
 
 ```css
 img {
@@ -78,14 +70,11 @@ img {
 }
 ```
 
-Use neutral black or white alpha outlines. Do not tint image outlines with the
-brand palette.
+Use neutral black or white alpha outlines. Do not tint image outlines with the brand palette.
 
 ### Motion
 
-Use CSS transitions for interactive state changes because they can retarget
-when the user changes intent mid-motion. Reserve keyframes for staged
-one-shot entrances or loading sequences.
+Use CSS transitions for interactive state changes because they can retarget when the user changes intent mid-motion. Reserve keyframes for staged one-shot entrances or loading sequences.
 
 Good motion defaults:
 
@@ -106,15 +95,11 @@ Never use `transition: all`. Specify the changed properties:
 }
 ```
 
-Use `will-change` only for first-frame stutter on compositor-friendly
-properties such as `transform`, `opacity`, and `filter`. Never use
-`will-change: all`.
+Use `will-change` only for first-frame stutter on compositor-friendly properties such as `transform`, `opacity`, and `filter`. Never use `will-change: all`.
 
 ### Hit Areas
 
-Interactive controls should have at least a 40x40px hit area, ideally 44x44px
-where the layout allows it. Expand with a pseudo-element when the visible icon
-is smaller, but do not let expanded hit areas overlap.
+Interactive controls should have at least a 40x40px hit area, ideally 44x44px where the layout allows it. Expand with a pseudo-element when the visible icon is smaller, but do not let expanded hit areas overlap.
 
 ## Review Output
 
@@ -126,8 +111,7 @@ When reviewing a UI polish pass, report concrete changes in before/after rows:
 | Tabular numbers | Counter shifts as digits change | Counter uses `tabular-nums` |
 | Transition scope | `transition: all` | Explicit transition properties |
 
-Include file paths and properties when they are not obvious from the snippets.
-Omit principles that you checked but did not change.
+Include file paths and properties when they are not obvious from the snippets. Omit principles that you checked but did not change.
 
 ## Checklist
 

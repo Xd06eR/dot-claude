@@ -21,16 +21,19 @@ New content goes into the one file that owns its topic; others point to it, neve
 ## Change tiers
 
 **Self-serve (do it, report after):**
+
 - Add or update a memory entry + its `MEMORY.md` index line
 - Fix an objectively dead reference (name/path no longer resolves) when the fix is name-only and changes no behavior or routing; backup first, show the diff. A stale routing or policy rule is a semantic change: ask first
 
 **Ask the user first:**
+
 - Any semantic change to `CLAUDE.md`, `rules/**`, `settings.json`, or `hooks/`
 - Adding, removing, or re-scoping `paths:` frontmatter globs
 - Enabling/disabling plugins, skills, or MCP connectors
 - Deleting any file, including stale-looking backups
 
 **Never:**
+
 - Wholesale rewrite of a working file; edit surgically
 - `git commit` / `git push` (output commands for the user)
 - Touching credentials or tokens in settings files

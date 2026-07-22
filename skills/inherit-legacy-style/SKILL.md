@@ -7,7 +7,7 @@ origin: ECC
 
 # Inherit Legacy Style
 
-Prevents AI code style drift in legacy projects by scanning the codebase for implicit conventions across 4 meta-architecture dimensions, resolving conflicts with the user one at a time, and crystallizing the consensus into an enforceable `.ai-style-rules.md`. Fully language- and framework-agnostic.
+Prevents AI code style drift in legacy projects by scanning the codebase for implicit conventions across 4 meta-architecture dimensions. Resolves conflicts with the user one at a time, and crystallizes the consensus into an enforceable `.ai-style-rules.md`. Fully language- and framework-agnostic.
 
 ## When to Activate
 
@@ -74,6 +74,7 @@ For each strong-signal conflict, present exactly ONE question with 4 options:
 Suspend until the user answers, then proceed to the next conflict. Never stack questions.
 
 **5. Generate `.ai-style-rules.md`** with three mandatory sections:
+
 - **[Golden Files]** — real exemplar paths annotated with what they demonstrate
 - **[Naming & State-Control Rules]** — concrete, checkable conventions
 - **[DONTs]** — anti-patterns that must not propagate
@@ -90,7 +91,7 @@ Ask the user for enforcement strength (use `AskUserQuestion`):
 
 ### Branch B — Incremental Sniff
 
-1. Read existing `.ai-style-rules.md`; if it has a commit fingerprint, `git diff <last_hash> HEAD --stat` to pinpoint delta
+1. Read existing `.ai-style-rules.md`. If it has a commit fingerprint, `git diff <last_hash> HEAD --stat` to pinpoint delta
 2. Read recent Git changes (`git log -3 --stat` → inspect suspect files on demand)
 3. For oversized diffs (>hundreds of files): `--stat` summary only + sample the largest changes
 4. Compare new code against recorded rules → conflicts go through Grilling Protocol
@@ -108,7 +109,7 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 
 ## Anti-Patterns
 
-- FAIL: Do NOT skip the scale measurement step — sampling a 30-file project "starves" it; full-scanning a 5,000-file repo blows up
+- FAIL: Do NOT skip the scale measurement step — sampling a 30-file project "starves" it. Full-scanning a 5,000-file repo blows up.
 - FAIL: Do NOT stack multiple conflict questions at once — grilling is strictly one-at-a-time
 - FAIL: Do NOT overwrite old rules in incremental mode — always append evolution logs
 - FAIL: Do NOT default to "hard hook" without asking — enforcement strength is the user's call
@@ -121,7 +122,7 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 - For large projects, read `--stat` summaries first, then targeted `Read` on suspect files
 - Let the signal threshold handle noise — a 843-vs-8 naming split should auto-resolve without user interruption
 - When in doubt about signal strength, lean toward asking
-- The CLAUDE.md soft hook (`@.ai-style-rules.md`) is usually sufficient; hard hook only if the user wants mechanical enforcement
+- The CLAUDE.md soft hook (`@.ai-style-rules.md`) is usually sufficient. Use a hard hook only if the user wants mechanical enforcement.
 
 ## Related Skills
 

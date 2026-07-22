@@ -35,7 +35,7 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
 ## Step 2: Pre-flight
 
 1. `git branch --show-current`. If it equals `<base>` or the default branch, **abort**: "You're on the base branch. Ship from a feature branch."
-2. `git status` (never `-uall`). Uncommitted changes are included; no need to ask.
+2. `git status` (never `-uall`). Uncommitted changes are included. No need to ask.
 3. Understand the changeset:
    ```bash
    git diff <base>...HEAD --stat
@@ -52,8 +52,8 @@ git fetch origin <base> && git merge origin/<base> --no-edit
 ```
 
 - No remote configured (`git remote` returns nothing) then skip this step and note it.
-- Simple conflicts (VERSION, CHANGELOG ordering) then resolve them. Lockfile conflicts: take either side whole, then regenerate with the package manager (`npm install` or the repo's equivalent); never hand-merge a lockfile.
-- Complex or ambiguous conflicts then **STOP** and show them; let the user resolve.
+- Simple conflicts (VERSION, CHANGELOG ordering) then resolve them. Lockfile conflicts: take either side whole, then regenerate with the package manager (`npm install` or the repo's equivalent). Never hand-merge a lockfile.
+- Complex or ambiguous conflicts then **STOP** and show them. Let the user resolve.
 - Already up to date then continue silently.
 
 ## Step 4: Run tests
@@ -62,7 +62,9 @@ Detect the test command from the repo and run it. First match wins:
 
 - `package.json` with a `test` script then `npm test` (use `pnpm`/`yarn`/`bun` if that lockfile is present).
 - `pytest.ini` / `pyproject.toml` / a `tests/` dir then `pytest`.
-- `Cargo.toml` then `cargo test`. `go.mod` then `go test ./...`. `Makefile` with a `test` target then `make test`.
+- `Cargo.toml` then `cargo test`.
+- `go.mod` then `go test ./...`.
+- `Makefile` with a `test` target then `make test`.
 - None found then tell the user and ask, in plain text, which command to run. Do not invent one.
 
 Paste the real tail of the test output as evidence.
@@ -79,7 +81,7 @@ Read the full diff and sanity-check it yourself:
 git diff <base>...HEAD
 ```
 
-Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible); flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `code-review`.
+Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `code-review`.
 
 ## Step 6: Bump VERSION
 
@@ -90,11 +92,11 @@ Find the version source and bump it. Bump relative to the **base branch** versio
    - `package.json` field `.version`.
    - Other manifests (`pyproject.toml`, `Cargo.toml`): bump by hand if that is the repo's source of truth, and note it.
    - No version source at all: skip this step and say so. Do not add versioning to a repo that does not use it.
-2. Read the base version to avoid collisions, then bump from whichever of local and base is higher, comparing segment by segment numerically (10.0 beats 9.9; never compare version strings lexically):
+2. Read the base version to avoid collisions, then bump from whichever of local and base is higher, comparing segment by segment numerically (10.0 beats 9.9. Never compare version strings lexically):
    ```bash
    git show origin/<base>:VERSION 2>/dev/null   # or read the base package.json version
    ```
-3. Decide the level from the diff, then auto-apply it: PATCH silently; for MINOR or MAJOR, write it but flag it plainly ("Bumped MINOR (new X); reply if you'd prefer PATCH or MAJOR and I'll rewrite") — the edit is reversible and the user reviews it before committing, so this does not block. Levels:
+3. Decide the level from the diff, then auto-apply it. PATCH silently. For MINOR or MAJOR, write it but flag it plainly ("Bumped MINOR (new X). Reply if you'd prefer PATCH or MAJOR and I'll rewrite"). The edit is reversible and the user reviews it before committing, so this does not block. Levels:
    - **PATCH:** bug fixes, small tweaks, config, refactors with no new surface.
    - **MINOR:** a new feature, route, module, or migration.
    - **MAJOR:** a breaking change or a deliberate milestone.
@@ -103,7 +105,7 @@ Find the version source and bump it. Bump relative to the **base branch** versio
 
 ## Step 7: Update CHANGELOG
 
-If `CHANGELOG.md` exists (or the repo clearly keeps one under another name), add an entry following the file's existing style. If the repo has none, skip this step and note it; do not impose one. When the file is empty or brand-new, use Keep a Changelog:
+If `CHANGELOG.md` exists (or the repo clearly keeps one under another name), add an entry following the file's existing style. If the repo has none, skip this step and note it. Do not impose one. When the file is empty or brand-new, use Keep a Changelog:
 
 ```markdown
 ## [<new-version>] - <YYYY-MM-DD>
@@ -112,7 +114,7 @@ If `CHANGELOG.md` exists (or the repo clearly keeps one under another name), add
 - <one line per notable change, derived from the commits and diff>
 ```
 
-Group lines under Added, Changed, or Fixed as they apply. Keep entries concise and user-facing. Match the file's date convention; do not fabricate a new one.
+Group lines under Added, Changed, or Fixed as they apply. Keep entries concise and user-facing. Match the file's date convention. Do not fabricate a new one.
 
 ## Step 8: Prepare the commit, push, and PR commands
 
@@ -126,7 +128,7 @@ You have merged, tested, reviewed, and bumped. Now assemble the commands. Do NOT
 
 Output the block below (filled in) for the user. Do NOT execute any of it yourself. Prefix it clearly:
 
-> Run these to ship. Review the staged files and messages first; nothing here has been executed.
+> Run these to ship. Review the staged files and messages first. Nothing here has been executed.
 
 GitHub:
 
@@ -157,7 +159,7 @@ If a PR/MR already exists for this branch, output the update form instead (`gh p
 
 ## Important rules
 
-- **Never run the commit, push, or PR-create commands yourself.** Prepare and output them; the user runs them. This is the skill's core contract.
+- **Never run the commit, push, or PR-create commands yourself.** Prepare and output them. The user runs them. This is the skill's core contract.
 - **No attribution** in commit messages: no co-author trailer, no generated-by line.
 - **Never force-push.** Output a plain push only.
 - **Never skip tests.** If tests introduced by this branch fail, stop.
