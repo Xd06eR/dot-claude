@@ -54,11 +54,15 @@ Could be a feeling ("serious software for serious work"), a visual ("the blue th
 
 Every later design decision serves this one thing. Design that tries to be memorable for everything is memorable for nothing.
 
+The user names the memorable thing. Your move is to embody it in one signature element the product gets remembered by. Keep the surroundings quiet and disciplined so the signature carries, and cut any decoration that does not serve it.
+
 ## Step 3: Research the landscape (only if the user said yes)
 
 **Find what is out there.** Use `WebSearch` (where available) for 5-10 products in the space: "[category] website design", "best [industry] web apps", and similar.
 
 **Capture visual evidence** where a browser automation capability exists (a browser MCP such as playwright or chrome-devtools, or any headless-browser tool your runtime exposes): visit the top 3-5 sites, screenshot them, and read the structure. For each, note fonts actually used, palette, layout, spacing density, aesthetic direction. If a site blocks the browser or needs login, skip it and say why.
+
+**Mine the subject's own world.** Category peers show what is expected. Distinctive moves come from the product's own domain: its materials, instruments, artifacts, and vernacular. Look there for choices no category peer would arrive at.
 
 **Synthesize in three layers:**
 
@@ -98,6 +102,8 @@ RISKS (where the product gets its own face):
 
 Which risks appeal? Want wilder options, or to adjust anything?
 ```
+
+**The hero states a thesis, not introduces a topic.** Decide what the hero actually says: the most characteristic thing in the product's world, in whatever form fits (headline, image, animation, live demo, interactive moment). A big number with a small label, supporting stats, and a gradient accent is the template answer. Use it only if it is genuinely the best option here.
 
 The SAFE/RISK split is the point. Every product in a category can be coherent and still look identical; coherence is table stakes.
 
