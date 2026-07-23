@@ -1,6 +1,6 @@
 # Development Workflow
 
-> This file extends CLAUDE.md's Design phase with pre-implementation research.
+> Workflow support that extends CLAUDE.md: pre-implementation research, task tracking, and PR guidance.
 
 Research before coding. Planning, TDD, review follow CLAUDE.md's 4-phase workflow.
 
@@ -21,3 +21,19 @@ Mandatory before any new implementation:
 - **Evaluate skeleton/starter candidates in parallel:** when adopting one, dispatch parallel agents to score options on security, extensibility, relevance, and fit before cloning.
 - Prefer adopting or porting a proven approach over writing net-new code when it meets the requirement.
 - See `search-first` skill for structured research-before-coding workflow.
+
+## Commit Message Format
+
+Follow CLAUDE.md (Git section): conventional commits, subject line only, no attribution. Body only if asked.
+
+## Pull Request Workflow
+
+When creating PRs:
+
+1. Analyze full commit history (not just latest commit).
+2. Use `git diff [base-branch]...HEAD` to see all changes.
+3. Draft comprehensive PR summary.
+4. Include test plan with TODOs.
+5. Push with `-u` flag if new branch.
+
+> For the full development process (planning, TDD, code review) before git operations, see CLAUDE.md (Workflow + Principles sections).

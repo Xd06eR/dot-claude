@@ -26,7 +26,7 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 
 | Source | Count | Skills |
 |--------|-------|--------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 10 | diagnose, git-guardrails-claude-code, grill-me, grill-with-docs, handoff, improve-codebase-architecture, prototype, tdd, teach, writing-great-skills |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 9 | diagnose, grill-me, grill-with-docs, handoff, improve-codebase-architecture, prototype, tdd, teach, writing-great-skills |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
 | [ECC](https://github.com/affaan-m/ECC) | 12 skills + 3 agents | agent-architecture-audit, agent-introspection-debugging, context-budget, eval-harness, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agents `database-reviewer`, `react-build-resolver`, `silent-failure-hunter` |
 | Custom | 1 | teach-back (user-edited derivative) |
@@ -52,7 +52,7 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 | `~/.claude/hooks/block-dangerous-git.sh` | Blocks `git push`, `git commit`, `git reset --hard`, `git clean -f`/`-fd`, `git branch -D`, `git checkout .`, `git restore .`, `push --force`. Greps the raw hook JSON (no `jq`, no `sed` extraction) so it runs on Windows Git Bash; patterns are word-anchored and whitespace-required, so near-miss substrings like `gitcommittee` or `git-commit` are not blocked; only the literal command is (prose containing the phrase still blocks — safe-side). |
 | `~/.claude/hooks/block-secret-paths.sh` | Blocks any Bash command matching `\.env` or `\.ssh` (closes the bash bypass of the Read-deny; see Security below). Same raw-grep shape; `.env` is anchored so `process.env` doesn't false-positive. Extend `SECRET_PATTERNS` for new secret paths. |
 
-The active git-guardrails hook lives at `hooks/block-dangerous-git.sh`; `skills/git-guardrails-claude-code/scripts/block-dangerous-git.sh` is the install source the skill copies from (same patterns and logic as the live hook).
+The active git-guardrails hook lives at `hooks/block-dangerous-git.sh` — tracked directly, so re-clone restores it. (The install-source skill was removed; the hook is the source of truth.)
 
 ## Quick Reference
 

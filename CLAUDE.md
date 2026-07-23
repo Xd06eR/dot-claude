@@ -92,7 +92,7 @@ Rules live in `~/.claude/rules/`. In Claude Code they auto-load: `common/` and `
 - **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md
 - **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/architecture.md
 - **React:** react/coding-style.md · react/hooks.md · react/architecture.md · react/security.md · react/testing.md
-- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/git-workflow.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
+- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
 - **Orchestration:** orchestration/dispatch.md · orchestration/dispatch-templates.md
 
 ## Dispatch discipline

@@ -16,7 +16,7 @@ How to update `~/.claude` itself (CLAUDE.md, rules/, settings, hooks, skills) wi
 New content goes into the one file that owns its topic; others point to it, never restate. The overlap between `CLAUDE.md` and `rules/` is asymmetric, and the two directions are handled oppositely:
 
 - **CLAUDE.md restating `rules/`:** keep it. CLAUDE.md is copied alone to other agents (Codex, Copilot, OpenCode, etc.) that never see `rules/`, so it must stand self-contained. Never trim CLAUDE.md to dedupe it against `rules/`; that proposal has been made and rejected.
-- **`rules/` restating CLAUDE.md:** trim it to a pointer. A `rules/` file loads only inside Claude Code, where CLAUDE.md is always present, so restating CLAUDE.md there is pure redundancy; point to CLAUDE.md's section instead of repeating it (as `git-workflow.md` and `code-review.md` already do). Deleting a `rules/` file whose whole content CLAUDE.md already carries is correct, not a portability loss.
+- **`rules/` restating CLAUDE.md:** trim it to a pointer. A `rules/` file loads only inside Claude Code, where CLAUDE.md is always present, so restating CLAUDE.md there is pure redundancy; point to CLAUDE.md's section instead of repeating it (as `code-review.md` already does). Deleting a `rules/` file whose whole content CLAUDE.md already carries is correct, not a portability loss.
 
 ## Change tiers
 
