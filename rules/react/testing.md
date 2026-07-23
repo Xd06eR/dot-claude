@@ -30,7 +30,7 @@ Test what the user sees and does, not implementation details.
 
 - Query by accessible role first, then label, then text — fall back to `data-testid` only when nothing else fits
 - Never assert on internal state, props passed to children, or which hooks were called
-- Refactor without breaking tests = the test was testing behavior; that is the goal
+- Refactor without breaking tests = the test was testing behavior — that is the goal
 
 ## Query Priority
 
