@@ -10,7 +10,6 @@
     "caveman@caveman": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
     "codex@openai-codex": false,
     "context7@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
@@ -20,7 +19,6 @@
     "impeccable@impeccable": false,
     "playwright@claude-plugins-official": true,
     "ponytail@ponytail": true,
-    "pr-review-toolkit@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
@@ -146,6 +144,17 @@
       "Read(**/.envrc)"
     ],
     "disableBypassPermissionsMode": "disable"
+  },
+  "skillOverrides": {
+    "batch": "off",
+    "claude-api": "off",
+    "code-review": "off",
+    "debug": "off",
+    "design-sync": "off",
+    "fewer-permission-prompts": "off",
+    "loop": "off",
+    "simplify": "off",
+    "verify": "off"
   },
   "skipWebFetchPreflight": true,
   "statusLine": {
