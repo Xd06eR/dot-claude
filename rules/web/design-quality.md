@@ -51,7 +51,7 @@ Every meaningful frontend surface should demonstrate at least four of these:
 4. Gather at least a small set of real references.
 5. Use design skills where relevant:
    - `design-consultation` for system design (palette, typography, spacing)
-   - `frontend-design` for production-grade UI creation
+   - `design-html` for production-grade UI creation
    - `impeccable` (disabled plugin — enable first) for polish, audit, and refinement
    - `design-taste-frontend` for visual QA and anti-pattern detection
 

@@ -10,7 +10,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `RTK.md` | Proxy configuration |
 | `settings.json` | Agent settings and environment |
 | `agents/` | Agent definitions |
-| `commands/` | Custom slash commands: `harness-audit`, `plan-from-design` (Design→Plan), `build-brief` (Plan→Build) |
+| `commands/` | Custom slash commands: `harness-audit`, `plan-from-design` (Design→Plan), `build-brief` (Plan→Build), `review-pr` + `lens-review` (Review) |
 | `hooks/` | Lifecycle hooks (git guardrails, etc.) |
 | `rules/` | Instruction rule modules |
 | `skills/` | Skill modules (see Skill Sources) |
@@ -103,17 +103,12 @@ claude plugin marketplace add DietrichGebert/ponytail
 claude plugin install andrej-karpathy-skills@karpathy-skills
 claude plugin install caveman@caveman
 claude plugin install chrome-devtools-mcp@claude-plugins-official
-claude plugin install claude-code-setup@claude-plugins-official
 claude plugin install claude-md-management@claude-plugins-official
-claude plugin install code-review@claude-plugins-official
-claude plugin install code-simplifier@claude-plugins-official
 claude plugin install context7@claude-plugins-official
 claude plugin install document-skills@anthropic-agent-skills
 claude plugin install feature-dev@claude-plugins-official
-claude plugin install frontend-design@claude-plugins-official
 claude plugin install playwright@claude-plugins-official
 claude plugin install ponytail@ponytail
-claude plugin install pr-review-toolkit@claude-plugins-official
 claude plugin install pyright-lsp@claude-plugins-official
 claude plugin install security-guidance@claude-plugins-official
 claude plugin install skill-creator@claude-plugins-official
@@ -125,9 +120,6 @@ claude plugin install typescript-lsp@claude-plugins-official
 
 ```bash
 claude plugin install codex@openai-codex
-# commit-commands: disabled — its skills run `git commit`/`git push` directly,
-# against the never-run-git rule in CLAUDE.md.
-claude plugin install commit-commands@claude-plugins-official
 claude plugin install github@claude-plugins-official
 # hookify: disabled — hooks call bare `python3`, which does not exist on Windows
 # Git Bash (only `python` / `py`). Errors on every PreToolUse / PostToolUse /
@@ -136,10 +128,6 @@ claude plugin install github@claude-plugins-official
 # custom hookify rules are ever wanted.
 claude plugin install hookify@claude-plugins-official
 claude plugin install impeccable@impeccable
-# ralph-loop: disabled — zero loops ever run, but its SessionStart hook injected
-# context every session (pure overhead). Re-enable only for a deliberate
-# autonomous-loop workflow, and ask first per CLAUDE.md.
-claude plugin install ralph-loop@claude-plugins-official
 claude plugin install supabase@claude-plugins-official
 claude plugin install vercel@claude-plugins-official
 ```

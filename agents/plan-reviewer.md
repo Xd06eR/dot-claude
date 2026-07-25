@@ -5,8 +5,6 @@ tools: Read, Grep, Glob
 origin: gstack
 ---
 
-# Plan Reviewer
-
 You are a fresh-context plan verifier.
 
 Your dispatch prompt names the plan under review (a file path or inline text) and exactly ONE lens file under `skills/plan-review/lenses/` (ceo, design, devex, or eng); it may also restate the report contract below.

@@ -116,7 +116,7 @@ Re-anchor with `andrej-karpathy-skills:karpathy-guidelines` before any non-trivi
 Skill Composition:
 - **Phase** — one skill per workflow phase the task has (design / plan / build / review / ship). Skip phases the task lacks.
 - **Concern** — within a phase, stack skills covering different concerns. Orthogonal only.
-- **Dedupe** — never stack two skills doing the same job. The review tools (`code-review`, `/pr-review-toolkit:review-pr`, `review`) are substitutes; pick one.
+- **Dedupe** — never stack two skills doing the same job. The review tools (`/review-pr`, `/lens-review`) are substitutes; pick one.
 - **Budget** — default 1–3 skills; justify more.
 
 Phase-gate table (invoke at phase start, before other work). Bare names are skills; slash names (`/name`) are commands. Both are Skill-tool-invocable:
@@ -125,9 +125,9 @@ Phase-gate table (invoke at phase start, before other work). Bare names are skil
 |---|---|---|
 | Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` | `search-first` |
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
-| Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `frontend-design` · `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
+| Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
-| Review | `code-review` OR `/pr-review-toolkit:review-pr` (substitutes — pick one; the built-in `code-review`, not the `/code-review:code-review` plugin) · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | `security-review` |
+| Review | `/review-pr` OR `/lens-review` (substitutes — pick one) · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
@@ -140,10 +140,18 @@ The phase-gate names the must-fire subset; always scan all available skills, age
 A few commands are part of the workflow: invoke them on your own judgment when the work calls for it, like skills:
 
 - `/feature-dev:feature-dev` — guided feature development.
-- `/pr-review-toolkit:review-pr` — comprehensive PR review (preferred over the overlapping `/code-review:code-review`).
+- `/review-pr` — multi-agent PR review (aggregated, severity-normalized).
 - `/claude-md-management:revise-claude-md` — fold session learnings into CLAUDE.md.
 
-Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief` (phase transitions), `/harness-audit` (audit), `/caveman:*` (mode).
+Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief` (phase transitions), `/harness-audit` (audit), `/caveman:*`, `/ponytail:*` (modes).
+
+## Built-in skills (useful)
+
+Bundled with Claude Code (not owned). Enabled; use when the task fits.
+
+- `dataviz` — chart/dashboard design guidance (color formula, palette, mark specs).
+- `run` — launch + drive the app to confirm a change works (non-web gap; `qa` covers web).
+- `deep-research` — multi-source cited research (confirm it works on your provider before relying on it).
 
 ## Browsing
 
@@ -156,7 +164,7 @@ Other commands are entry points the user chooses. Propose them, do not invoke yo
 
 ## Agents
 
-Top-level dispatchable agents: `plan-reviewer`, `security-auditor`, `database-reviewer`, `react-build-resolver`, `silent-failure-hunter`, `code-simplifier`. Sub-agents inside feature-dev and pr-review-toolkit are internal to those commands; find them via injection.
+Top-level dispatchable agents: `plan-reviewer`, `security-auditor`, `database-reviewer`, `react-build-resolver`, `silent-failure-hunter`, `code-simplifier`, `code-reviewer`, `comment-analyzer`, `pr-test-analyzer`, `type-design-analyzer`. Sub-agents inside feature-dev are internal to that command; find them via injection.
 
 ## Git
 
