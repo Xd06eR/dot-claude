@@ -141,6 +141,7 @@ A few commands are part of the workflow: invoke them on your own judgment when t
 
 - `/feature-dev:feature-dev` — guided feature development.
 - `/review-pr` — multi-agent PR review (aggregated, severity-normalized).
+- `/lens-review` — 5-lens confidence-scored PR review.
 - `/claude-md-management:revise-claude-md` — fold session learnings into CLAUDE.md.
 
 Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief` (phase transitions), `/harness-audit` (audit), `/caveman:*`, `/ponytail:*` (modes).
