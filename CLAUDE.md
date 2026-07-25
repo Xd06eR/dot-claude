@@ -167,6 +167,15 @@ Bundled with Claude Code (not owned). Enabled; use when the task fits.
 
 Top-level dispatchable agents: `plan-reviewer`, `security-auditor`, `database-reviewer`, `react-build-resolver`, `silent-failure-hunter`, `code-simplifier`, `code-reviewer`, `comment-analyzer`, `pr-test-analyzer`, `type-design-analyzer`. Sub-agents inside feature-dev are internal to that command; find them via injection.
 
+## Memory
+
+Two tiers, routed by scope:
+
+- **Cross-project fact** (identity, durable preference, rejected proposal that recurs): write to `~/.claude/MEMORY.md` — create the file on first use, keep it ≤15 lines, and add `@MEMORY.md` to this file's includes when created.
+- **This-project-only fact** (session learnings, corrections, repo-specific decisions): write to the per-project `projects/<path>/memory/` folder, one fact per file, with a `MEMORY.md` index line.
+
+When uncertain, write per-project; promote to global after the fact recurs across 3+ sessions.
+
 ## Git
 
 - **Never run `git commit`, `git push`, or destructive ops.** Output exact command(s) as text for user to run manually.
