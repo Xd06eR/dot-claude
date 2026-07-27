@@ -9,7 +9,12 @@ origin: gstack
 
 Visual brainstorming, not a review. Generate several deliberately-different design directions as self-contained HTML mockups. Put them side by side on one comparison page the user opens in a browser, collect structured feedback, and iterate on the favorite until a direction is locked.
 
-**Core contract:** variants must be genuinely different from each other (a real choice, not three shades of one idea). The user sees them rendered in their own browser. All feedback is plain text. Every file this skill writes lands inside the working repo and nowhere else.
+**Core contract:**
+
+- Variants must be genuinely different from each other (a real choice, not three shades of one idea).
+- The user sees them rendered in their own browser.
+- All feedback is plain text.
+- Every file this skill writes lands inside the working repo and nowhere else.
 
 Run the flow straight through. Stop only to gather missing brief context (Step 1) and to collect feedback on the board (Step 5). Everything else proceeds without asking.
 

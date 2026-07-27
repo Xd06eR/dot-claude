@@ -1,6 +1,10 @@
 # Judgment Rubrics
 
-Decision thresholds any model tier can execute mechanically. Each rubric lists signals, then one example where it fires and one where it must not. Scope limit: these rubrics compensate for execution quality, not for taste. If the question is "is this design good" or "what should we build" with no checkable criterion, no rubric settles it; escalate the model, get a second opinion, or tell the user plainly that it cannot be settled mechanically.
+Decision thresholds any model tier can execute mechanically.
+
+Each rubric lists signals, then one example where it fires and one where it must not.
+
+Scope limit: these rubrics compensate for execution quality, not for taste. If the question is "is this design good" or "what should we build" with no checkable criterion, no rubric settles it; escalate the model, get a second opinion, or tell the user plainly that it cannot be settled mechanically.
 
 ## 1. When to escalate
 

@@ -58,7 +58,9 @@ Parse the request for these parameters. Apply the default when unstated.
 git status --porcelain
 ```
 
-If the tree is already dirty, note it and continue. Fixes are applied as new edits; nothing is committed by this skill. Create the output dir when you first write to it: `mkdir -p qa-reports/screenshots`.
+If the tree is already dirty, note it and continue. Fixes are applied as new edits; nothing is committed by this skill.
+
+Create the output dir when you first write to it: `mkdir -p qa-reports/screenshots`.
 
 ## Modes
 
@@ -202,7 +204,10 @@ git commit -m "fix(qa): <short description> (ISSUE-001)"
 # ...one add + commit per verified fix, in severity order...
 ```
 
-One logical fix per commit. Never bundle. Conventional-commit subject, descriptive, no body unless it carries real signal. No attribution trailers of any kind. If regression tests were added, give them their own commit: `test(qa): regression test for ISSUE-NNN`.
+- One logical fix per commit. Never bundle.
+- Conventional-commit subject, descriptive, no body unless it carries real signal.
+- No attribution trailers of any kind.
+- If regression tests were added, give them their own commit: `test(qa): regression test for ISSUE-NNN`.
 
 ## Rules
 

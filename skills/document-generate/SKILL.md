@@ -100,7 +100,11 @@ types, defaults, and constraints. Pull directly from code; do not paraphrase loo
 [Links to the how-to, tutorial, or explanation for this entity.]
 ```
 
-Rules: accuracy over elegance, every claim traceable to code. Give types, defaults, and constraints ("a string matching `^[a-z-]+$`, max 256 chars", not "a string"). Do not explain *why* here. That is the explanation doc's job.
+Rules:
+
+- Accuracy over elegance, every claim traceable to code.
+- Give types, defaults, and constraints ("a string matching `^[a-z-]+$`, max 256 chars", not "a string").
+- Do not explain *why* here. That is the explanation doc's job.
 
 ## Step 5: Explanation docs
 
@@ -129,7 +133,12 @@ code would understand.]
 [From code comments, ADRs, or git history: what was tried or rejected, and why.]
 ```
 
-Rules: lead with the problem, not the solution. Name trade-offs explicitly ("we chose X over Y because Z"). Do not repeat reference material. Link to it instead. ASCII diagrams are grep-able and render everywhere. For a richer figure, hand the description to the `diagram` skill.
+Rules:
+
+- Lead with the problem, not the solution.
+- Name trade-offs explicitly ("we chose X over Y because Z").
+- Do not repeat reference material. Link to it instead.
+- ASCII diagrams are grep-able and render everywhere. For a richer figure, hand the description to the `diagram` skill.
 
 ## Step 6: How-to guides
 
@@ -165,7 +174,12 @@ Task-oriented. The reader knows the basics and wants to accomplish one specific 
 [Common failure modes and fixes, pulled from the error-handling code and tests.]
 ```
 
-Rules: the title starts with "How to". Every step is actionable ("Run X", "Add Y to Z"), never "consider whether". Include verification so the reader never wonders if it worked. Troubleshooting is mandatory when the task can fail.
+Rules:
+
+- The title starts with "How to".
+- Every step is actionable ("Run X", "Add Y to Z"), never "consider whether".
+- Include verification so the reader never wonders if it worked.
+- Troubleshooting is mandatory when the task can fail.
 
 ## Step 7: Tutorials
 
@@ -196,7 +210,14 @@ a working X that does Y", not "This tutorial covers X".]
 [Recap what the reader now has, link to reference docs, suggest next steps.]
 ```
 
-Rules: **time to first result under 3 steps.** Every step produces a visible change. No "now configure X" without showing what changes. Use the exact commands the reader types. Show common errors and their fix inline. Close with "What you built" tying back to the real use case.
+Rules:
+
+- **Time to first result under 3 steps.**
+- Every step produces a visible change.
+- No "now configure X" without showing what changes.
+- Use the exact commands the reader types.
+- Show common errors and their fix inline.
+- Close with "What you built" tying back to the real use case.
 
 ## Step 8: Cross-link and verify discoverability
 

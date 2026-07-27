@@ -68,11 +68,19 @@ After dispatched subagents return, the main session integrates: resolves any sea
 
 ## INDEX → `build-briefs/INDEX.md`
 
-One line per feature: name · components · status (☐/✅). Rule at top: build features in dependency order. Review phase starts only when every feature is ✅.
+One line per feature: name · components · status (☐/✅).
+
+Rule at top: build features in dependency order.
+
+Review phase starts only when every feature is ✅.
 
 ## Principles to encode
 
-Surgical (touch only what each step requires). TDD (failing test → implement → refactor). One concern per step, tight diffs. Evidence at every gate (test output, not "should work"). Notes → `implementation-notes.md`.
+- Surgical (touch only what each step requires).
+- TDD (failing test → implement → refactor).
+- One concern per step, tight diffs.
+- Evidence at every gate (test output, not "should work").
+- Notes → `implementation-notes.md`.
 
 ## Output
 

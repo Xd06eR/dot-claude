@@ -103,7 +103,9 @@ If the user wants this on a tracker, do NOT create the issue yourself (filing to
 - GitHub: `gh issue list --search "<2-4 keywords>" --state open --limit 10`
 - GitLab: `glab issue list --search "<keywords>"`
 
-Surface any matches to the user before filing. Then, before handing over the create command, scan the spec body for content that becomes world-readable the moment it is filed: secrets or credentials, personal data (emails, phone numbers, keys), customer or vendor names tied to negative events, and unannounced internal strategy. Flag anything found and offer to redact it to a role or placeholder.
+Surface any matches to the user before filing.
+
+Then, before handing over the create command, scan the spec body for content that becomes world-readable the moment it is filed: secrets or credentials, personal data (emails, phone numbers, keys), customer or vendor names tied to negative events, and unannounced internal strategy. Flag anything found and offer to redact it to a role or placeholder.
 
 Output the create command as a block for the user to run. Do NOT execute any of it yourself.
 

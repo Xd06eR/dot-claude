@@ -161,7 +161,11 @@ Severity:
 
 ### LLM / AI surface
 
-User input flowing into system prompts or tool schemas (prompt injection); LLM output rendered unsanitized (`dangerouslySetInnerHTML`, `v-html`, `innerHTML`) or eval/exec'd; tool/function calls executed without validation; AI API keys hardcoded; user-triggerable uncapped LLM calls (financial risk, not DoS).
+- User input flowing into system prompts or tool schemas (prompt injection)
+- LLM output rendered unsanitized (`dangerouslySetInnerHTML`, `v-html`, `innerHTML`) or eval/exec'd
+- tool/function calls executed without validation
+- AI API keys hardcoded
+- user-triggerable uncapped LLM calls (financial risk, not DoS)
 
 Severity:
 

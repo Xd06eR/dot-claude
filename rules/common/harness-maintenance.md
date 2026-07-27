@@ -57,7 +57,10 @@ New content goes into the one file that owns its topic; others point to it, neve
 
 ## Lesson write-back
 
-After any pitfall (wrong assumption, correction, rejected proposal): write it to memory in the same session — one fact per file, matching the existing memory frontmatter (`name`, `description`, `metadata.type`; body with **Why:** + **How to apply:**). Rejected proposals matter most; they stop re-proposing. Update the `MEMORY.md` index. Lessons start as memories, not as edits to CLAUDE.md or rules/; promote into the owning rules file only when stable (next section).
+- After any pitfall (wrong assumption, correction, rejected proposal): write it to memory in the same session — one fact per file, matching the existing memory frontmatter (`name`, `description`, `metadata.type`; body with **Why:** + **How to apply:**).
+- Rejected proposals matter most; they stop re-proposing.
+- Update the `MEMORY.md` index.
+- Lessons start as memories, not as edits to CLAUDE.md or rules/; promote into the owning rules file only when stable (next section).
 
 ## Promotion and condensation
 

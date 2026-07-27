@@ -122,7 +122,11 @@ You have merged, tested, reviewed, and bumped. Now assemble the commands. Do NOT
 
 **Commit grouping:** for a small change (under roughly 50 lines, few files), one commit. For a larger changeset, group into logical, independently-valid commits ordered so dependencies come first (infra and migrations, then models and services, then controllers and UI), with VERSION plus CHANGELOG in the final commit. Each commit is one coherent change, good for `git bisect`.
 
-**Message style:** conventional commits, subject line only, descriptive (name what the change does): `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `test:`, `perf:`, `ci:`. Add a body only when it carries real signal. No attribution trailers of any kind (no co-author line, no generated-by line).
+**Message style:**
+
+- Conventional commits, subject line only, descriptive (name what the change does): `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `test:`, `perf:`, `ci:`.
+- Add a body only when it carries real signal.
+- No attribution trailers of any kind (no co-author line, no generated-by line).
 
 **PR/MR content:** title is `<type>: <summary>`. Body states what changed and why, plus a short test plan.
 
