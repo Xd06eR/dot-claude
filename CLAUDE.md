@@ -25,15 +25,21 @@ Follow 4-phase approach. Main agent orchestrates; subagents implement.
 1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity. Identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
    - **Surface blind spots:** Beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see. Resolve each before planning.
 2. **Plan:** Write spec docs (.md) and a numbered checklist (the task breakdown) — decomposed steps, each stating what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name dependencies, risks, and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
-   - **Standard artifacts:** spec docs (`<feature>-spec.md`) — what + why + success criteria; implementation plan (`<feature>-plan.md`) — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first; implementation notes (`implementation-notes.md`) — running log appended during build; build brief — produced by `/build-brief` from the spec + plan; per-component build directives, built in order, then review.
+   - **Standard artifacts:**
+     - spec docs (`<feature>-spec.md`) — what + why + success criteria
+     - implementation plan (`<feature>-plan.md`) — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first
+     - implementation notes (`implementation-notes.md`) — running log appended during build
+     - build brief — produced by `/build-brief` from the spec + plan
+     - per-component build directives, built in order, then review.
 3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents only when the content is residue (see **Dispatch discipline** below + `rules/orchestration/dispatch.md`). Each dispatched subagent implements one independent component, includes lint + format + type-check + tests, verifies before returning; you integrate.
-   - **Log implementation notes:** Append to `implementation-notes.md` as you build — design decisions where the spec was ambiguous, deviations from the plan (conservative option taken) and why, tradeoffs picked (alternatives considered), open questions to confirm. Review before accepting.
+   - **Log implementation notes:** Append to `implementation-notes.md` as you build — design decisions where the spec was ambiguous, deviations from the plan (conservative option taken) and why, tradeoffs picked (alternatives considered), open questions to confirm.
+     - Review before accepting.
 4. **Review:** Check diff against checklist and Principles. Verify against criteria set in advance. Show evidence (test output, return value). Can't verify → don't ship.
    - **Quiz before ship:** For non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 Skip phases only for trivial changes: typo, rename, one-liner with zero ambiguity.
 
-**Phase transitions:** Design→Plan via `/plan-from-design` (decompose baseline design docs into per-component spec + plan), then iterate on the artifacts within Plan; Plan→Build via `/build-brief` (one comprehensive build brief per feature, a group of components).
+**Phase transitions:** Design→Plan via `/plan-from-design`, then iterate on the artifacts within Plan; Plan→Build via `/build-brief`.
 
 ## Principles
 
@@ -84,17 +90,6 @@ How to write and review a markdown doc, for any reader. Structure exists to pres
 - **Finish what you start:** ship whole units, not fragments. Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
 - **Verify structure by rendering, not by reading source:** a structural claim about a doc must survive rendering. Render it and diff the output; reading the source hides every attachment defect above.
 
-## Language-Specific Rules
-
-Rules live in `~/.claude/rules/`. In Claude Code they auto-load: `common/` and `orchestration/` always, language dirs only when files matching their `paths:` frontmatter are read. **When starting work in a language, proactively read the relevant rules into context**; other agents do not auto-load them, and scoping can miss (e.g. React hook rules in a plain `.ts` file, or new files being written rather than read).
-
-- **Python:** python/coding-style.md · python/testing.md · python/security.md · python/fastapi.md
-- **TypeScript:** typescript/coding-style.md · typescript/testing.md · typescript/security.md
-- **Web:** web/coding-style.md · web/design-quality.md · web/performance.md · web/security.md · web/testing.md · web/architecture.md
-- **React:** react/coding-style.md · react/hooks.md · react/architecture.md · react/security.md · react/testing.md
-- **Common:** common/code-review.md · common/coding-style.md · common/development-workflow.md · common/security.md · common/testing.md · common/judgment-rubrics.md · common/harness-maintenance.md
-- **Orchestration:** orchestration/dispatch.md · orchestration/dispatch-templates.md
-
 ## Dispatch discipline
 
 **Default: read the working set yourself** — files you will edit or reason from directly, in the main context, however many; no file-count cap. Dispatch a subagent only when the raw content is residue (you need the conclusion, not the bytes): repo-wide mapping, bulk skims, web/docs research, independent parallel chunks, or fresh-context review/acceptance (security, types, adversarial diff).
@@ -127,7 +122,7 @@ Phase-gate table (invoke at phase start, before other work). Bare names are skil
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
 | Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
-| Review | `/review-pr` OR `/lens-review` (substitutes — pick one) · `superpowers:verification-before-completion` (evidence before any completion claim) · `teach-back` (the pre-ship quiz) · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
+| Review | `/review-pr` OR `/lens-review` (substitutes — pick one) · `superpowers:verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
@@ -139,12 +134,12 @@ The phase-gate names the must-fire subset; always scan all available skills, age
 
 A few commands are part of the workflow: invoke them on your own judgment when the work calls for it, like skills:
 
-- `/feature-dev:feature-dev` — guided feature development.
-- `/review-pr` — multi-agent PR review (aggregated, severity-normalized).
-- `/lens-review` — 5-lens confidence-scored PR review.
-- `/claude-md-management:revise-claude-md` — fold session learnings into CLAUDE.md.
+- `/feature-dev:feature-dev`
+- `/review-pr`
+- `/lens-review`
+- `/claude-md-management:revise-claude-md`
 
-Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief` (phase transitions), `/harness-audit` (audit), `/caveman:*`, `/ponytail:*` (modes).
+Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief`, `/harness-audit`, `/caveman:*`, `/ponytail:*`.
 
 ## Built-in skills (useful)
 
