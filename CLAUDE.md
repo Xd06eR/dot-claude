@@ -12,6 +12,7 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 - Push back *before* building when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
 - For long sessions, summarize changes for big-picture context before I read the diff. Focus on why and what to check.
 - Surface design choices in output.
+- **You are the first reviewer; I am the last.** Read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My manual review is a backstop, not coverage.
 
 ## Autonomy — Act vs Ask
 
@@ -20,22 +21,23 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 
 ## Workflow — Vibe Coding
 
-Follow 4-phase approach. Main agent orchestrates; subagents implement.
+4-phase approach. You drive every phase and produce all artifacts; the user steers with ideas and questions. Main agent orchestrates; subagents implement.
 
-1. **Design:** Clarify requirements. State what to build, why, success criteria. Decompose into independent, low-coupling components. Interrogate ambiguity. Identify unclear spec parts, list open questions, propose multiple interpretations before proceeding. *The conversation is the design artifact; the code is the deliverable.*
-   - **Surface blind spots:** Beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see. Resolve each before planning.
-2. **Plan:** Write spec docs (.md) and a numbered checklist (the task breakdown) — decomposed steps, each stating what it produces *and* how it's verified, as `[Step] → verify: [check]`. Name dependencies, risks, and files/components you'll touch. Use Plan Mode for non-trivial work; exit only when every step has a check.
-   - **Standard artifacts:**
-     - spec docs (`<feature>-spec.md`) — what + why + success criteria
-     - implementation plan (`<feature>-plan.md`) — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first
-     - implementation notes (`implementation-notes.md`) — running log appended during build
-     - build brief — produced by `/build-brief` from the spec + plan
-     - per-component build directives, built in order, then review.
-3. **Build:** Code against checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller. Fan-out → dispatch subagents only when the content is residue (see **Dispatch discipline** below + `rules/orchestration/dispatch.md`). Each dispatched subagent implements one independent component, includes lint + format + type-check + tests, verifies before returning; you integrate.
-   - **Log implementation notes:** Append to `implementation-notes.md` as you build — design decisions where the spec was ambiguous, deviations from the plan (conservative option taken) and why, tradeoffs picked (alternatives considered), open questions to confirm.
-     - Review before accepting.
-4. **Review:** Check diff against checklist and Principles. Verify against criteria set in advance. Show evidence (test output, return value). Can't verify → don't ship.
-   - **Quiz before ship:** For non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
+1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
+   - **Decompose:** break into independent, low-coupling components.
+   - **Interrogate ambiguity:** identify unclear spec parts, list open questions, and propose multiple interpretations before proceeding.
+   - **Surface blind spots:** beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see; resolve each before planning.
+2. **Plan:** turn the design into the Plan-phase artifacts below. Use Plan Mode for non-trivial work; exit only when every step has a check.
+   - spec docs (`<feature>-spec.md`): what + why + success criteria
+   - implementation plan (`<feature>-plan.md`): technical approach + numbered checklist of decomposed steps as `[Step] → verify: [check]`, decisions likely to change listed first; name dependencies, risks, files/components
+   - implementation notes (`implementation-notes.md`): running log appended during build
+   - build brief: produced by `/build-brief` from the spec + plan
+   - per-component build directives, built in order, then review
+3. **Build:** code against the checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller.
+   - **Fan-out:** dispatch subagents only when the content is residue (see **Dispatch discipline** + `rules/orchestration/dispatch.md`); each implements one independent component with lint + format + type-check + tests, verifies before returning; you integrate.
+   - **Log implementation notes:** append to `implementation-notes.md` as you build: ambiguous-spec decisions, deviations (conservative option) and why, tradeoffs (alternatives considered), open questions to confirm.
+4. **Review:** check the diff against the checklist and Principles; verify against criteria set in advance; show evidence (test output, return value). Can't verify → don't ship.
+   - **Quiz before ship:** for non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 Skip phases only for trivial changes: typo, rename, one-liner with zero ambiguity.
 
@@ -83,11 +85,12 @@ Organized by phase.
 How to write and review a markdown doc, for any reader. Structure exists to preserve meaning, not to look organized.
 
 - **A sub-item is a bullet with a marker, never an indented line:** pure indent reads as continuation in source but drops to a joined paragraph in render, silently losing the subordination. To show something is subordinate to the line above, indent it under a `- ` marker so markdown keeps the nesting.
-- **Em-dash discipline:** AI prose overuses them as a default connector; prefer colon, period, comma, or parentheses. Reserve for a break or aside those would muddle; never two in one sentence.
+- **Em-dash discipline:** off by default, never a connector. Draft with a colon, period, comma, or parentheses first; they carry the same meaning in almost every case. Reserve for a genuine break or aside those would muddle; never two in one sentence. Before finishing prose, re-scan and replace every em-dash that fails this test.
 - **Never break an atomic unit across lines:** a word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps for display. Break only *between* units, never *inside* one; if a unit would exceed a length limit, rewrite it shorter.
 - **One claim per block, blank line between blocks:** never join prose with a bare newline. Fold sentences that illustrate one claim; blank-separate a framing statement from its action; bullet obligations; give a hard requirement its own block.
 - **Attachment is meaning:** what a line touches decides its owner. A `:` lead-in attaches to its list, a `.`-ended line takes a blank line; a list item attaches to its sub-items (a blank line there turns the list loose); two lists separated only by a blank line merge. Never indent a sub-item with plain spaces.
 - **Finish what you start:** ship whole units, not fragments. Close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete on its own.
+- **Match the style of what you edit:** the tighter the scope, the stricter the match. Within a section, follow its existing convention exactly (bullet form, label style, punctuation, tense); within a doc, keep one voice; across docs, small variation is fine. Before adding a block, read its siblings and copy their pattern.
 - **Verify structure by rendering, not by reading source:** a structural claim about a doc must survive rendering. Render it and diff the output; reading the source hides every attachment defect above.
 
 ## Dispatch discipline
@@ -102,7 +105,11 @@ Full dispatch protocol (what to delegate, report contract, escalation levers): `
 
 ## Skill invocation (operative rule)
 
-**Skill check happens at phase entry, before any other action.** "Available" ≠ "invoked" — the Skill-tool listing skills in context is not invocation; you must call the Skill tool. The Skill-tool's slash framing ("when the user types /name") is a default; the phase table below overrides it: at each phase, invoke the matching skill before answering, drafting, or editing.
+**Skill check happens at phase entry, before any other action.**
+
+"Available" ≠ "invoked": the Skill-tool listing skills in context is not invocation; you must call the Skill tool.
+
+The Skill-tool's slash framing ("when the user types /name") is a default; the phase table below overrides it: at each phase, invoke the matching skill before answering, drafting, or editing.
 
 Re-anchor with `andrej-karpathy-skills:karpathy-guidelines` before any non-trivial change.
 
@@ -118,7 +125,7 @@ Phase-gate table (invoke at phase start, before other work). Bare names are skil
 
 | Phase | Invoke (must-fire) | Situational (on-demand) |
 |---|---|---|
-| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` | `search-first` |
+| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` | `search-first` · `design-consultation` |
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
 | Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
