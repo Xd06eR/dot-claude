@@ -61,6 +61,7 @@ Organized by phase.
 - **Tiebreaker:** On axes that matter (correctness, performance, fitness, scalability) pick the best option, then make it as simple as that option allows; never simpler-but-worse.
 - **KISS:** Simpler words, same meaning. If it needs a dictionary, rewrite. "Would a senior engineer say this is overcomplicated?"
 - **Surgical:** Touch only what's required. Don't refactor adjacent code; every change traces to the request. Match style. Remove imports/variables/functions your changes made unused. Mention pre-existing dead code, don't delete it.
+- **Scratch:** One-time scripts go to the temp folder or inline in the bash command, never into the repo or working directory.
 - **Test:** TDD / Red-Green. Write verification first, then make it pass.
 - **YAGNI:** No "flexibility" not asked for. No error handling for impossible scenarios.
 
@@ -145,6 +146,7 @@ A few commands are part of the workflow: invoke them on your own judgment when t
 - `/review-pr`
 - `/lens-review`
 - `/claude-md-management:revise-claude-md`
+- `/compact-prep`
 
 Other commands are entry points the user chooses. Propose them, do not invoke yourself: `/plan-from-design`, `/build-brief`, `/harness-audit`, `/caveman:*`, `/ponytail:*`.
 
