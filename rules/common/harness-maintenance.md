@@ -52,6 +52,7 @@ New content goes into the one file that owns its topic; others point to it, neve
 - No date-specific content in CLAUDE.md or `rules/**` (no "verified <date>", no version pins); dates belong only in disposable session reports.
 - No model names or tier assumptions. The environment may run any provider behind the harness; phrase capabilities conditionally ("where the environment exposes it"). Functional `model:` frontmatter in `agents/*.md` is exempt.
 - Session reports (diagnoses, audits) are one-time reads: never git-track them, never reference them from durable files.
+- Durable files are self-contained: never reference sources the reader cannot be expected to have (untracked, session-scoped, or ephemeral material). The reference dangles when the source dies. State the fact itself; provenance lives outside durable files.
 - Writing style: follow CLAUDE.md (US English, em-dash discipline); additionally, colon inside bold labels.
 - Convention-standard terms: name harness concepts with standard engineering vocabulary (baseline, spec, acceptance criteria, dependency order) so any agent parses without extra context; flag invented terms.
 
