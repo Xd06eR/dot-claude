@@ -3,8 +3,11 @@ paths:
   - "**/*.tsx"
   - "**/*.jsx"
   - "**/components/**/*.ts"
+  - "**/components/**/*.js"
   - "**/app/**/*.ts"
   - "**/pages/**/*.ts"
+  - "**/hooks/**/*.ts"
+  - "**/hooks/**/*.js"
 ---
 
 # React Coding Style

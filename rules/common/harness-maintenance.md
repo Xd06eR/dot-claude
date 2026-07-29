@@ -41,7 +41,7 @@ New content goes into the one file that owns its topic; others point to it, neve
 ## Edit protocol (when a change is authorized)
 
 1. **Backup:** copy the file next to itself before editing — append `.bak` after the full name (e.g. `foo.md.bak`), never `.bak.md` (a `.md` backup inside auto-loaded dirs is treated as a live module). Skip for small edits; keep for medium/large/restructure. Bulk changes: copy the tree to `rules.backup-<date>/`. Backup files are gitignored, never committed.
-2. **Frontmatter:** every new `rules/**` file states its loading cost. Scoped (`paths:`) when it applies to a file type; unscoped only if it must apply to every session, with a reason.
+2. **Frontmatter:** every new `rules/**` file declares its loading scope. Scoped (`paths:`) when it applies to a file type; unscoped only if it must apply to every session, with a reason. Unscoped files carry no loading-cost frontmatter: their cost is governed by the size budget below. Scope by concern, not only by language: testing rules use test-file globs (`**/*.test.*`, `**/test_*.py`), source rules use source extensions, convention-bearing rules use path-restricted globs (custom hooks: `**/hooks/**/*.ts`, `**/use-*.ts`).
 3. **Verify loading when scoping changes** with headless probes:
    - Context check (no tools): `claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""` — forces a pure loaded-context answer, no file reads that skew the result. Unscoped rules answer yes.
    - Load check (needs Read): a second probe WITH Read allowed that reads a matching file first, then asks. Scoped rules answer no before the read, yes after.

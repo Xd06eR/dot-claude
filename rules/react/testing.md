@@ -8,6 +8,8 @@ paths:
   - "**/*.spec.tsx"
   - "**/*.spec.js"
   - "**/*.spec.jsx"
+  - "**/__tests__/**/*.ts"
+  - "**/__tests__/**/*.tsx"
 ---
 
 # React Testing

@@ -1,6 +1,8 @@
 ---
 paths:
-  - "**/*.py"
+  - "**/app/**/*.py"
+  - "**/fastapi/**/*.py"
+  - "**/*_api.py"
 ---
 
 # FastAPI Rules
