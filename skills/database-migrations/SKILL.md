@@ -36,6 +36,8 @@ Before applying any migration:
 - [ ] Tested against a copy of production data
 - [ ] Rollback plan documented
 
+Before applying, have the migration reviewed by the `database-reviewer` agent — it covers query plans, schema design, RLS, and concurrency hazards.
+
 ## PostgreSQL Patterns
 
 ### Adding a Column Safely
