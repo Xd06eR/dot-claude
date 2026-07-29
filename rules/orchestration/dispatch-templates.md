@@ -62,11 +62,13 @@ REPORT (substance in full, residue excluded; long output -> [disk path] + faithf
 GOAL: Answer [question] well enough to [decision it feeds].
 MOTIVATION: [what will be built on the answer].
 ACCEPTANCE:
+- Primary sources preferred (official docs, source code, first-party APIs) over secondary write-ups; follow every load-bearing claim back to the source that owns it
 - Every load-bearing claim carries a source URL and retrieval date
 - Conflicting sources surfaced, not averaged away
 - Anything unconfirmable is marked UNVERIFIED, never guessed
 REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
 - Conclusion first, then key facts, then source list
+- When the findings should persist beyond the session, write them to a file where the repo keeps such notes (match the existing convention) and return the path
 - Detail that runs long goes to [disk path]; return the path
 - NOT COVERED: [angles not searched]
 ```

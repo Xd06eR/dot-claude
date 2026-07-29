@@ -127,8 +127,8 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 ## Related Skills
 
 - `init` — initialize a new CLAUDE.md with codebase documentation
-- `code-review` — review diffs for correctness and style issues
-- `simplify` — review code for reuse and simplification opportunities
+- `/review-pr` — multi-agent review of diffs for correctness and style issues
+- `code-simplifier` — review code for reuse and simplification opportunities
 
 ## Examples
 

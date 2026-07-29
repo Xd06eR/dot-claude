@@ -11,6 +11,7 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 - Name ambiguity instead of guessing. List readings, state default, proceed. If uncertain, ask; if unclear, stop.
 - Push back *before* building when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
 - For long sessions, summarize changes for big-picture context before I read the diff. Focus on why and what to check.
+- **Consolidated batch report:** after a batch of related changes, close it with one report covering what changed and any caveats, before the session ends.
 - Surface design choices in output.
 - **You are the first reviewer; I am the last.** Read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My manual review is a backstop, not coverage.
 
@@ -120,13 +121,14 @@ Skill Composition:
 - **Phase** — one skill per workflow phase the task has (design / plan / build / review / ship). Skip phases the task lacks.
 - **Concern** — within a phase, stack skills covering different concerns. Orthogonal only.
 - **Dedupe** — never stack two skills doing the same job. The review tools (`/review-pr`, `/lens-review`) are substitutes; pick one.
+- **Superpowers** — the default discipline: where one of its skills covers the job, it is the standard; name it first, reach for it before any owned equivalent. An owned skill earns its place two ways: covering a job superpowers has no skill for, or carrying house-specific additions on top (e.g., `tdd` adds seams + the tautological-test anti-pattern). The 4-phase workflow stays the operating frame; superpowers skills slot into its phases, they do not replace them.
 - **Budget** — default 1–3 skills; justify more.
 
 Phase-gate table (invoke at phase start, before other work). Bare names are skills; slash names (`/name`) are commands. Both are Skill-tool-invocable:
 
 | Phase | Invoke (must-fire) | Situational (on-demand) |
 |---|---|---|
-| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` · `spec` | `search-first` · `design-consultation` |
+| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` | `search-first` · `design-consultation` |
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
 | Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
@@ -169,7 +171,7 @@ Bundled with Claude Code (not owned). Enabled; use when the task fits.
 
 ## Agents
 
-Top-level dispatchable agents: `plan-reviewer`, `security-auditor`, `database-reviewer`, `react-build-resolver`, `silent-failure-hunter`, `code-simplifier`, `code-reviewer`, `comment-analyzer`, `pr-test-analyzer`, `type-design-analyzer`. Sub-agents inside feature-dev are internal to that command; find them via injection.
+Top-level dispatchable agents: `plan-reviewer`, `security-auditor`, `database-reviewer`, `react-build-resolver`, `silent-failure-hunter`, `code-simplifier`, `code-reviewer`, `comment-analyzer`, `pr-test-analyzer`, `type-design-analyzer`, `spec-reviewer`. Sub-agents inside feature-dev are internal to that command; find them via injection.
 
 ## Memory
 

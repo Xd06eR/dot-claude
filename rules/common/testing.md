@@ -14,7 +14,7 @@ Workflow:
 5. Refactor (IMPROVE)
 6. Verify coverage meets target
 
-See `tdd` skill and `test-driven-development` skill for full red-green-refactor workflow.
+See the `superpowers:test-driven-development` skill for the full red-green-refactor workflow (the standard); the owned `tdd` skill carries the house extras (seams, tautological-test anti-pattern).
 
 ## Test Types
 

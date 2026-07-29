@@ -15,6 +15,7 @@ Run a comprehensive pull request review using multiple specialized agents, each 
 1. **Determine Review Scope**
    - Check git status to identify changed files
    - Parse arguments to see if user requested specific review aspects
+   - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent — fail here, not inside the agents
    - Default: Run all applicable reviews
 
 2. **Available Review Aspects:**
@@ -24,6 +25,7 @@ Run a comprehensive pull request review using multiple specialized agents, each 
    - **errors** - Check error handling for silent failures
    - **types** - Analyze type design and invariants (if new types added)
    - **code** - General code review for project guidelines
+   - **spec** - Review fidelity to the originating spec/PRD (if one exists)
    - **simplify** - Simplify code for clarity and maintainability
    - **all** - Run all applicable reviews (default)
 
@@ -40,6 +42,7 @@ Run a comprehensive pull request review using multiple specialized agents, each 
    - **If comments/docs added**: comment-analyzer
    - **If error handling changed**: silent-failure-hunter
    - **If types added/modified**: type-design-analyzer
+   - **If an originating spec/issue/PRD exists**: spec-reviewer. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
    - **After passing review**: code-simplifier (polish and refine)
 
 5. **Launch Review Agents**
@@ -114,7 +117,7 @@ The one substantive addition. Each finding-producing agent returns findings inde
 
 ## Ruled out (do not do)
 
-- Dispatch agents other than the six in step 4: `code-reviewer`, `pr-test-analyzer`, `comment-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `code-simplifier`.
+- Dispatch agents other than the seven in step 4: `code-reviewer`, `pr-test-analyzer`, `comment-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `spec-reviewer`, `code-simplifier`.
 - Run `git commit`, `git push`, or any destructive op. Output commands for the user.
 - Emit usage examples, agent descriptions, tips, workflow integration, or troubleshooting notes; CLAUDE.md phase-gates route usage.
 - Skip aggregation. The dedup and severity normalization are the point of this command.
