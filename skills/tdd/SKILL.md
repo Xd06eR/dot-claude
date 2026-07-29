@@ -16,6 +16,14 @@ origin: mattpocock
 
 See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
 
+## Seams
+
+A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+
+**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam.
+
+Ask: "What is the public interface, and which seams should we test?"
+
 ## Anti-Pattern: Horizontal Slices
 
 **DO NOT write all tests first, then all implementation.** This is "horizontal slicing" - treating RED as "write all tests" and GREEN as "write all code."
@@ -41,6 +49,21 @@ RIGHT (vertical):
   ...
 ```
 
+## Anti-Pattern: Tautological Tests
+
+**DO NOT write assertions that restate the implementation.** If the expected value is recomputed the way the code computes it (a reduce mirroring the function's own reduce, a snapshot derived by hand the same way, a constant asserted equal to itself), the test passes by construction and can never disagree with the code.
+
+```
+WRONG:
+  const expected = items.reduce((sum, i) => sum + i.price, 0);
+  expect(calculateTotal(items)).toBe(expected);
+
+RIGHT:
+  expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
+```
+
+Expected values must come from an independent source of truth: a known-good literal, a worked example, the spec.
+
 ## Workflow
 
 ### 1. Planning
@@ -50,6 +73,7 @@ When exploring the codebase, use the project's domain glossary so that test name
 Before writing any code:
 
 - [ ] Confirm with user what interface changes are needed
+- [ ] Confirm with user which seams to test at
 - [ ] Confirm with user which behaviors to test (prioritize)
 - [ ] Identify opportunities for [deep modules](deep-modules.md) (small interface, deep implementation)
 - [ ] Design interfaces for [testability](interface-design.md)
@@ -86,18 +110,7 @@ Rules:
 - Only enough code to pass current test
 - Don't anticipate future tests
 - Keep tests focused on observable behavior
-
-### 4. Refactor
-
-After all tests pass, look for [refactor candidates](refactoring.md):
-
-- [ ] Extract duplication
-- [ ] Deepen modules (move complexity behind simple interfaces)
-- [ ] Apply SOLID principles where natural
-- [ ] Consider what new code reveals about existing code
-- [ ] Run tests after each refactor step
-
-**Never refactor while RED.** Get to GREEN first.
+- No refactoring inside the loop (see Refactoring below)
 
 ## Checklist Per Cycle
 
@@ -108,3 +121,15 @@ After all tests pass, look for [refactor candidates](refactoring.md):
 [ ] Code is minimal for this test
 [ ] No speculative features added
 ```
+
+## Refactoring
+
+Refactoring is not part of the red-green loop. It belongs to the review stage, after all tests pass. Look for [refactor candidates](refactoring.md):
+
+- [ ] Extract duplication
+- [ ] Deepen modules (move complexity behind simple interfaces)
+- [ ] Apply SOLID principles where natural
+- [ ] Consider what new code reveals about existing code
+- [ ] Run tests after each refactor step
+
+**Never refactor while RED.** Get the full loop to GREEN first, then refactor during review.
