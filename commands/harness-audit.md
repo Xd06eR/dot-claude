@@ -23,7 +23,7 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 
 ### A. Drift and contradictions
 
-1. **Cross-file contradictions.** Rules in different files that conflict when both apply. Example: one file says "two retries max", another says "three".
+1. **Cross-file contradictions (clash).** Rules in different files that conflict when both apply. This is the self-authored failure class: contradictory guidance an agent must silently arbitrate, invisible because output still looks fine. Example: one file says "two retries max", another says "three".
 2. **Stale references.** File paths, tool names, MCP connectors, skill names, frontmatter `paths:` globs that no longer resolve.
 3. **Rejected-proposal resurfacing.** Current state or recent changes re-propose something memory'd as a rejected proposal.
 
