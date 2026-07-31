@@ -1,7 +1,7 @@
 ---
 description: Design→Plan command. Turn baseline design docs, a settled conversation, or a vague request into per-component spec + implementation plan (with embedded numbered checklist). Run at the Design→Plan handoff; gates via plan-review before /build-brief.
 argument-hint: "[design-doc dir, glob, or file list — omit for conversation-synthesis or vague-request mode] [--out <output-dir>]"
-origin: custom
+origin: custom + mattpocock
 ---
 
 # Plan Generator (Design → Plan)

@@ -1,7 +1,7 @@
 ---
 description: Plan→Build command. Produce one comprehensive build brief per feature (a group of components named in $ARGUMENTS) from the project's Plan-phase artifacts. Run at the Plan→Build handoff.
 argument-hint: "[feature: component1, component2, ...]"
-origin: custom
+origin: custom + mattpocock
 ---
 
 # Build Brief Generator (Plan → Build)

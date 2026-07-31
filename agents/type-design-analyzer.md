@@ -2,7 +2,7 @@
 name: type-design-analyzer
 description: Analyzes type design for encapsulation quality and invariant strength. Dispatch when introducing a new type, reviewing types added in a PR, or refactoring existing types. Returns per-type ratings on four axes (1-10) plus severity-ranked concerns (file:line, issue, fix).
 tools: Read, Grep, Glob, Bash
-origin: custom
+origin: pr-review-toolkit
 part-of: review-pr
 ---
 

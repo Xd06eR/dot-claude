@@ -1,7 +1,7 @@
 ---
 description: Comprehensive PR review using specialized agents, with cross-agent dedup and severity normalization. Run at the Review phase before merging a PR.
 argument-hint: "[review-aspects]"
-origin: custom
+origin: pr-review-toolkit + mattpocock
 ---
 
 # Comprehensive PR Review

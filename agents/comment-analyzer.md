@@ -2,7 +2,7 @@
 name: comment-analyzer
 description: Analyzes code comments for accuracy, completeness, and long-term maintainability. Dispatch after generating large documentation comments or docstrings, before finalizing a PR that adds or modifies comments, or when hunting comment rot. Returns severity-ranked findings (file:line, issue, fix).
 tools: Read, Grep, Glob, Bash
-origin: custom
+origin: pr-review-toolkit
 part-of: review-pr
 ---
 

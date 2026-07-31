@@ -2,7 +2,7 @@
 name: silent-failure-hunter
 description: Reviews code for silent failures, swallowed errors, bad fallbacks, and missing error propagation. Dispatch when reviewing a diff or module for error-handling correctness, especially after writing try/catch, fallback, or .catch() logic. Returns severity-ranked findings (file:line, hidden errors, fix).
 tools: Read, Grep, Glob, Bash
-origin: custom
+origin: ECC + pr-review-toolkit
 part-of: review-pr
 ---
 
