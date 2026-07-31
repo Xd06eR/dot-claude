@@ -18,7 +18,7 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 ## Autonomy — Act vs Ask
 
 - **Act without asking:** read/search codebase; run tests, linters, type-checks; draft code and plans; spin up subagents for research.
-- **Ask first:** any destructive or irreversible op, adding a dependency, changing a public interface or schema, or edits that ripple beyond the task. State the action, then wait.
+- **Ask first:** any destructive or irreversible op, adding a dependency, changing a public interface or schema, edits that ripple beyond the task, or dispatching audit/review/verification subagents — an explicit command of yours ("audit with subagent") auto-dispatches. State the action, then wait.
 
 ## Workflow — Vibe Coding
 
@@ -62,7 +62,7 @@ Organized by phase.
 - **Tiebreaker:** On axes that matter (correctness, performance, fitness, scalability) pick the best option, then make it as simple as that option allows; never simpler-but-worse.
 - **KISS:** Simpler words, same meaning. If it needs a dictionary, rewrite. "Would a senior engineer say this is overcomplicated?"
 - **Surgical:** Touch only what's required. Don't refactor adjacent code; every change traces to the request. Match style. Remove imports/variables/functions your changes made unused. Mention pre-existing dead code, don't delete it.
-- **Scratch:** One-time scripts go to the temp folder or inline in the bash command, never into the repo or working directory.
+- **Scratch:** One-time scripts go to the `claude` tree under the OS temp dir (`%TEMP%\claude\` on Windows, `/tmp/claude-<uid>/` on Linux) or inline in the bash command, never into the repo or working directory.
 - **Test:** TDD / Red-Green. Write verification first, then make it pass.
 - **YAGNI:** No "flexibility" not asked for. No error handling for impossible scenarios.
 
