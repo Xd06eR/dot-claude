@@ -3,6 +3,9 @@ paths:
   - "**/app/**/*.py"
   - "**/fastapi/**/*.py"
   - "**/*_api.py"
+  - "**/app/**/*.pyi"
+  - "**/fastapi/**/*.pyi"
+  - "**/*_api.pyi"
 ---
 
 # FastAPI Rules

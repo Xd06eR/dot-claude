@@ -16,6 +16,8 @@
 - Merge conflicts resolved
 - Branch up to date with target
 
+**Review scale tracks automation scale:** N automated or looped changes need N reviewed diffs — a skim of the summary is not review. Spot-check the gate itself periodically by sampling its verdicts; gates drift.
+
 ## Review Checklist
 
 Before marking code complete:

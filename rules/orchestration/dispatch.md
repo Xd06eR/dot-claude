@@ -27,6 +27,8 @@ What degrades a session is not a large relevant working set; it is residue. Atte
 
 **Positive example:** dispatch "map every caller of X, return file:line plus a one-line role for each"; main context receives 20 lines, then directly reads the 2 files it will actually edit.
 
+**Long merge and bulk work:** route it to fresh subagents with detailed prompts — a saturated main context degrades merge quality. High-sensitivity verification stays in main context.
+
 ## 2. Escalation levers
 
 A dispatch varies along three levers. Use the cheapest one that addresses the actual failure:
@@ -51,6 +53,7 @@ Report contract, binding on every subagent:
 - Exclude only residue: raw file contents, full command transcripts, re-derivable bulk. That is what dilutes the parent's context, not the substance.
 - When substance runs long (past what reads cleanly inline, ~30+ lines: a long deliverable, many findings), write it to disk in full (scratchpad for temporaries, repo path for deliverables) and return a faithful structured summary plus the path: complete-but-segmented, never terse-but-lossy. Concision helps simple dispatches but is subordinate to fidelity.
 - Always state what was NOT covered (files skipped, cases untested). Silent truncation reads as full coverage and causes false confidence.
+- Research dispatches include the Read tool: a research subagent without Read cannot recover its own persisted or truncated outputs.
 
 ## 4. Attempts, escalation, and stopping
 
@@ -67,6 +70,8 @@ The context that produced work never accepts it. Acceptance goes to a fresh-cont
 - **Files written:** a fresh agent reads the file back and checks each acceptance criterion, reporting pass or fail per criterion.
 - **Code:** run the tests, linters, or the actual command; paste the decisive output (the passing or failing lines, not the full transcript) into the report. If no runnable check exists, write one first (see the TDD rule in CLAUDE.md).
 - **High-risk judgment:** irreversible ops, architecture, security, and public interfaces get a second opinion from a fresh agent (on a different model where one exists, otherwise briefed from a different angle), or 2–3 independent candidates with a judge agent picking one in writing.
+- **Batch final-audit:** for bulk edit batches, run the acceptance audit twice in parallel — main context plus a fresh subagent — and reconcile the findings before reporting.
+- **Subagent work acceptance includes scope compliance.** These are defects even when the content is good: content injection (the subagent's own thoughts or examples written into docs), format or stick-together regression, corrupted code blocks or tables (byte-diff every code block and table cell against the pre-edit state), and brief overstep (an out-of-brief edit).
 
 The main conversation integrates results and stays responsible for the final call. "No self-verification" means the evidence comes from outside the producing context, not that the commander stops thinking.
 

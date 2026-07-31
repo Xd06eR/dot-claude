@@ -56,6 +56,27 @@ REPORT (substance in full, residue excluded; long output -> [disk path] + faithf
 - NOT COVERED: [call sites or configs not migrated, if any]
 ```
 
+## Merge (fuse two sources into one component)
+
+```
+PRECHECK (run first, as its own agent): inventory the concepts in both sources
+and return the concept count N with each concept named. The merged file must carry all N.
+GOAL: Merge [content source] into [merge target], producing one file at [target path].
+MOTIVATION: [why the merge; what the unified component replaces].
+ESTIMATE: [~lines of diff]; report back if actuals exceed ~3x this.
+CONSTRAINTS: extraction, not rewrite — preserve both sources' advantages; match the
+target's format standard; no content dropped silently.
+ACCEPTANCE:
+- All N precheck concepts present in the merged file, each named
+- Byte-diff: every code block and table cell from both sources survives verbatim,
+  or is listed as deliberately changed with a reason
+- No format regression (stick-together, broken lists, heading drift)
+REPORT (substance in full, residue excluded; long output -> [disk path] + faithful summary):
+- Per-source section -> merged-location map
+- Dropped lines, one reason per line
+- NOT COVERED: [aspects not merged]
+```
+
 ## Research (web, docs, external facts)
 
 ```

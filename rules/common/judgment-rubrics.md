@@ -33,6 +33,8 @@ Done means ALL of:
 
 **Does not fire (not done):** refactor declared complete because it compiles. Type-check was never the acceptance criterion; behavior tests were not run. Saying "should work" anywhere in the completion claim means not done.
 
+**Loop gate:** an unattended loop's "done" is only as good as its gate. The gate must fail the work mechanically — tests, type-checks, builds, schema validation — and the loop needs a hard stop (budget, iteration, or time cap). A verifier with an opinion ("does it look right") is not a gate; a loop gated on judgment is not ready to run alone.
+
 ## 3. When to stop and ask the user
 
 Ask first when ANY of:
