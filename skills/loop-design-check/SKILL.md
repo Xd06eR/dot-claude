@@ -1,6 +1,6 @@
 ---
 name: loop-design-check
-description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (gate whether to build it, define a machine-decidable goal, pick the loop type and skeleton) or when reviewing a loop before it goes automatic. Covers the judgment layer only; the mechanism layer is the built-in /loop and /schedule plus rules/orchestration/dispatch.md.
+description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (gate whether to build it, define a machine-decidable goal, pick the loop type and skeleton) or when reviewing a loop before it goes automatic. Covers the judgment layer only; the mechanism layer is the built-in /loop and /schedule plus rules/common/dispatch-protocol.md.
 origin: ECC
 ---
 
@@ -19,7 +19,7 @@ origin: ECC
 
 - A one-off task → just do it; don't wrap a loop around it.
 - A plain timer / poll → use the built-in `/loop`; no design needed.
-- *How to wire the loop architecture* (pipelines → DAGs, long-run recovery) → that's the mechanism layer; see the built-in `/loop` and `/schedule` plus `rules/orchestration/dispatch.md`. **This skill only covers "is the goal right, and will it run away" — it does not re-explain mechanism.**
+- *How to wire the loop architecture* (pipelines → DAGs, long-run recovery) → that's the mechanism layer; see the built-in `/loop` and `/schedule` plus `rules/common/dispatch-protocol.md`. **This skill only covers "is the goal right, and will it run away" — it does not re-explain mechanism.**
 
 ## Red-line premise: two levels of feedback
 

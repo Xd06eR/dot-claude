@@ -31,7 +31,7 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 
 4. **Source-line readability.** Two defects, opposite directions.
    - **Cramming:** a whole list or multi-sentence block crammed onto one 400+ char source line; fix by putting each list item on its own bullet line. One item per line does not break inside a sentence, so the atomic-unit rule (never split a sentence, token, or string literal across source lines) still holds.
-   - **Sticking:** a multi-claim block whose claims are joined by bare newlines with no blank line between; markdown joins them into one paragraph in render, silently merging claims. A single atomic sentence stays exempt even when long. Fix by function: fold sentences that illustrate one claim into one block; blank-separate a framing statement from its action; bullet obligations; give a hard requirement its own block.
+   - **Sticking:** a multi-claim block whose claims are joined by bare newlines with no blank line between; markdown joins them into one paragraph in render, silently merging claims. A single atomic sentence stays exempt even when long; bold-lead-in principle bullets are a false-positive class — never split them. Fix by function: fold sentences that illustrate one claim into one block; blank-separate a framing statement from its action; bullet obligations; give a hard requirement its own block.
 5. **Markdown attachment defects.** Four kinds, all invisible in source; reading source hides them, so render the file and diff against source to catch them, and after a fix render-and-diff again to confirm it changed what was intended and nothing else. Rule of thumb: attachment is meaning. What a line touches decides its owner; never indent a sub-item with plain spaces.
    - **Sub-item by plain indent:** a subordinate line indented with spaces instead of nested under a `- ` marker reads as continuation in source but drops to a joined paragraph in render, silently losing the subordination.
    - **Detached lead-in:** a `:`-ended line separated from the list it introduces, or a `.`-ended line missing its blank line before what follows.
@@ -62,7 +62,7 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 
 ### F. Coverage and lifecycle
 
-13. **Coverage gaps.** Task types appearing in real use but missing from `rules/orchestration/dispatch-templates.md` (search/implement/refactor/research/review).
+13. **Coverage gaps.** Task types appearing in real use but missing from the per-task-type acceptance checklist in `rules/common/dispatch-protocol.md` section 3 (named rows: merge/research/review; other types are covered by the generic report contract).
 14. **Promotion candidates.** Lessons in memory that have held across 3+ sessions and read as stable rules, but are not yet in `rules/**`.
 15. **Orphaned memory.** Memory entries nothing links to (`[[name]]` pointing nowhere), or memory links pointing at deleted entries.
 
@@ -70,7 +70,7 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 
 Context is a standing cost: every always-loaded byte is paid every session. Estimate token consumption per layer (`words × 1.3` for prose, `chars / 4` for code-heavy files), then flag:
 
-16. **Size budgets.** Any single `rules/**` file beyond ~8 KB. Unscoped set (`rules/common/*.md` + `rules/orchestration/*.md`) beyond ~40 KB total. `MEMORY.md` beyond ~30 lines. Measure with `wc -c`.
+16. **Size budgets.** Any single `rules/**` file beyond ~8 KB. Unscoped set (`rules/common/*.md`) beyond ~40 KB total. `MEMORY.md` beyond ~30 lines. Measure with `wc -c`.
 17. **Per-layer bloat.**
     - `agents/*.md`: file >200 lines (heavy on every spawn); `description` frontmatter >~30 words (loads into every agent-listing context).
     - `skills/*/SKILL.md`: file >400 lines; skip duplicate copies of the same skill elsewhere in the tree.

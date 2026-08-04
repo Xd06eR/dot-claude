@@ -40,7 +40,7 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
 3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
 4. **Gstack clone guard** — `skills/gstack/` is git-ignored so a gstack clone, if one ever appears there, is never tracked. The gstack-origin skills in `skills/` are owned files; do not clone gstack to update them.
-5. **Backup files** — `**/*.bak` is git-ignored so in-place backups made during harness edits (per `rules/common/harness-maintenance.md`) are never tracked.
+5. **Backup files** — `**/*.bak` is git-ignored so in-place backups made during harness edits (per `.claude/rules/harness-maintenance.md`) are never tracked.
 
 ## Hooks
 

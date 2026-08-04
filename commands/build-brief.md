@@ -12,7 +12,7 @@ Terms: a **feature** is a buildable chunk of 2-6 components; an **INDEX** is the
 
 Read the spec+plan for the components the user groups into a feature, produce ONE comprehensive build brief for that feature.
 
-The build session then dispatches subagents per independent component (per CLAUDE.md Build phase + `rules/orchestration/dispatch.md`).
+The build session then dispatches subagents per independent component (per CLAUDE.md Build phase + `rules/common/dispatch-protocol.md`).
 
 Review phase starts only after every feature is built.
 
@@ -63,7 +63,7 @@ Write a single comprehensive brief covering every component in the feature:
    - **Build steps** — the plan's checklist for this component, ordered. Each step: what to produce + its verify check (`[Step] → verify: [check]`).
    - **Acceptance** — what "this component done" means (checkable).
 4. **Dispatch plan** — split the feature's components:
-   - INDEPENDENT components: one subagent each, in parallel, per `rules/orchestration/dispatch.md` (residue test, escalation levers, report contract).
+   - INDEPENDENT components: one subagent each, in parallel, per `rules/common/dispatch-protocol.md` (residue test, escalation levers, report contract).
    - Sequential/dependent components: built in the main session, in dependency order.
    - Every build prompt (main session or dispatched) runs the TDD loop per `superpowers:test-driven-development` (or `tdd`) at the seams agreed in the specs, with `/implement`'s cadence: failing test first, implement, then lint + format + type-check + tests; typecheck and single test files regularly, the full suite once at the end. Verify before returning.
 5. **Feature acceptance** — the feature is done when every component's acceptance passes. State explicitly.

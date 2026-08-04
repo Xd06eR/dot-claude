@@ -23,6 +23,10 @@
 !skills/
 !skills/**
 
+# Harness project rules (nested project-rules dir — auto-loads only when working in this repo)
+!.claude/
+!.claude/**
+
 # Backup files — never tracked
 **/*.bak
 
