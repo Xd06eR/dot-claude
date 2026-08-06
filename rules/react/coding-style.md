@@ -49,7 +49,7 @@ export function UserCard({ user, onSelect }: Props) {
 - Prefer `type Props = {}` for closed component prop shapes
 - Use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point
 - Always destructure props in the parameter list — no `props.user` access inside the body
-- Type the return implicitly through JSX (`function Foo(): JSX.Element` only when the function returns conditionally and the union confuses inference)
+- Type the return implicitly through JSX (`function Foo(): React.JSX.Element` only when the function returns conditionally and the union confuses inference)
 
 ## JSX
 
@@ -90,9 +90,7 @@ See [hooks.md](./hooks.md) for the full ruleset. Style highlights:
 
 ## State
 
-- Local first (`useState`), lift only when shared
-- Context for cross-cutting state read by many components (theme, auth, i18n) — not for high-frequency updates
-- External store (Zustand, Jotai, Redux Toolkit) when state must persist across route changes, sync across tabs, or be debugged via devtools
+- State location (local → lift → Context → external store): see [react/architecture.md](../react/architecture.md#state-location-decision-tree)
 - Never duplicate state that can be derived — compute during render
 
 ## Class Components
@@ -109,4 +107,4 @@ components/UserCard/
   index.ts              # re-export only
 ```
 
-Inline single-file components are fine for trivial presentational pieces.
+Inline single-file components are fine for trivial presentational pieces. The wider src/ feature-tree convention lives in [web/coding-style.md](../web/coding-style.md#file-organization).

@@ -18,7 +18,7 @@ paths:
 
 ### 1. Visual Regression
 
-- Screenshot key breakpoints: 320, 768, 1024, 1440
+- Screenshot key breakpoints from the responsive set below
 - Test hero sections, scrollytelling sections, and meaningful states
 - Use Playwright screenshots for visual-heavy work
 - If both themes exist, test both
@@ -34,6 +34,7 @@ paths:
 
 - Run Lighthouse or equivalent against meaningful pages
 - Keep CWV targets from [architecture.md](architecture.md#core-web-vitals-targets)
+- INP is field-only — verify via CrUX/RUM; TBT is the lab proxy
 
 ### 4. Cross-Browser
 

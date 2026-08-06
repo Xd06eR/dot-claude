@@ -2,7 +2,7 @@
 
 ## Coverage Target
 
-≥80% baseline for new code. Language-specific testing rules may set higher targets per layer.
+≥80% baseline for new code — coverage is a floor, not evidence. Language-specific testing rules may refine targets per layer.
 
 ## Test-Driven Development
 
@@ -31,6 +31,8 @@ When tests fail:
 2. Verify mocks match current interfaces
 3. Fix implementation, not tests (unless the test is wrong)
 4. Use the `diagnose` skill for root cause analysis on hard-to-debug failures
+
+A flaky test is a defect: fix the test, never mute it with retries.
 
 ## Test Structure (AAA Pattern)
 

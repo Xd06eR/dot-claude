@@ -11,9 +11,9 @@ paths:
 
 > React-specific architecture. For hook-specific rules see [hooks.md](./hooks.md).
 
-## Container / Presentational Split
+## Logic Extraction
 
-Container components own data fetching, state, and side effects. Presentational components receive props and render — no service calls, no hooks beyond local UI state.
+Extract shared logic into custom hooks first — they reuse behavior without imposing a file split. Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
 
 ## State Location Decision Tree
 
@@ -21,7 +21,7 @@ Container components own data fetching, state, and side effects. Presentational 
 2. Used by parent + a few children → lift to nearest common ancestor, pass via props
 3. Used across distant branches → React Context **for low-frequency reads only** (theme, auth, locale)
 4. High-frequency updates shared across the tree → external store (Zustand, Jotai, Redux Toolkit)
-5. Server-derived data → server-state library (TanStack Query, SWR, RSC fetch) — not application state
+5. Server-derived data → server-state library (TanStack Query, SWR, or a Server Component fetch) — not application state
 
 Context misused for frequently changing values causes every consumer to re-render on every update.
 
@@ -127,7 +127,7 @@ export function Input({ ref, ...rest }: { ref?: React.Ref<HTMLInputElement> } & 
 }
 ```
 
-Older codebases on React 18 still need `forwardRef`.
+Older codebases on React 18 still need `forwardRef` (slated for deprecation — prefer ref-as-prop when upgrading).
 
 ## Skill Reference
 

@@ -24,6 +24,7 @@ Content-Security-Policy:
   font-src 'self' https://fonts.gstatic.com;
   connect-src 'self' https://*.example.com;
   frame-src 'none';
+  frame-ancestors 'none';
   object-src 'none';
   base-uri 'self';
 ```
@@ -41,7 +42,7 @@ Adjust origins to the project. Do not cargo-cult this block unchanged.
 
 - Load asynchronously
 - Use SRI when serving from a CDN
-- Audit quarterly
+- Re-audit when adding or upgrading a third-party script
 - Prefer self-hosting for critical dependencies when practical
 
 ## HTTPS and Headers

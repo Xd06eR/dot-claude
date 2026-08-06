@@ -16,13 +16,11 @@ Use **vitest** as the testing framework. Jest acceptable for legacy projects.
 
 ## Coverage
 
-```bash
-vitest run --coverage
-```
+Measure coverage with `vitest run --coverage`.
 
 ## Test Organization
 
-Use `describe` / `it` blocks for grouping. Tag slow tests with `.todo` or `.skip`:
+Use `describe` / `it` blocks for grouping; `.todo` stubs an unimplemented test:
 
 ```typescript
 describe('auth flow', () => {

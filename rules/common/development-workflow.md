@@ -24,7 +24,7 @@ Mandatory before any new implementation:
 
 ## Commit Message Format
 
-Follow CLAUDE.md (Git section): conventional commits, subject line only, no attribution. Body only if asked.
+Follow CLAUDE.md (Git section): conventional commits, subject line only, no attribution. Body only if asked. Breaking changes keep the `!` marker in the subject.
 
 ## Pull Request Workflow
 
@@ -34,6 +34,5 @@ When creating PRs:
 2. Use `git diff [base-branch]...HEAD` to see all changes.
 3. Draft comprehensive PR summary.
 4. Include test plan with TODOs.
-5. Push with `-u` flag if new branch.
 
 > For the full development process (planning, TDD, code review) before git operations, see CLAUDE.md (Workflow + Principles sections).

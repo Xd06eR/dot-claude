@@ -15,6 +15,7 @@
 - Automated checks pass (tests, lint, type-check)
 - Merge conflicts resolved
 - Branch up to date with target
+- Diff is small and single-concern (~100 lines reasonable, ~1000 too large); refactor separated from behavior change
 
 **Review scale tracks automation scale:** N automated or looped changes need N reviewed diffs — a skim of the summary is not review. Spot-check the gate itself periodically by sampling its verdicts; gates drift.
 
@@ -27,12 +28,12 @@ Before marking code complete:
 - [ ] Files are cohesive (<800 lines)
 - [ ] No deep nesting (>4 levels)
 - [ ] Errors are handled explicitly
-- [ ] No mutation (immutable patterns used)
+- [ ] No shared-state mutation (immutable patterns preferred)
 - [ ] No hardcoded secrets or credentials
 - [ ] No hardcoded values (use constants or config)
 - [ ] No console.log or debug statements
-- [ ] Tests exist for new functionality
-- [ ] Test coverage meets 80% minimum
+- [ ] Tests exist for new functionality and assert behavior (not tautologies)
+- [ ] Test coverage meets the 80% new-code baseline
 
 ## Security Review Triggers
 
@@ -60,7 +61,7 @@ Before marking code complete:
 | Tool | Type | Use when |
 |------|------|----------|
 | `security-guidance` plugin | Auto-running (enabled) | Pattern warnings + diff review + commit review — always active |
-| `/review-pr` | Command | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup across the 6 review agents) |
+| `/review-pr` | Command | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup) |
 | `/lens-review` | Command | 5-lens confidence-scored review of a diff or PR (compliance, bug scan, git history, prior comments, in-code comments) |
 | `diagnose` | Skill | Root cause analysis on bugs found |
 | `code-reviewer` | Agent | CLAUDE.md compliance + bug review of a diff |
@@ -81,7 +82,7 @@ Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/revi
 2. Check security checklist first
 3. Review code quality checklist
 4. Run relevant tests
-5. Verify coverage >= 80%
+5. Verify the new-code coverage baseline (80%)
 6. Use relevant tool from Review Tools table for domain-specific review
 ```
 
@@ -95,15 +96,6 @@ Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/revi
 - Path traversal (unsanitized file paths)
 - CSRF protection missing
 - Authentication bypasses
-
-### Code Quality
-
-- Large functions (>50 lines) - split into smaller
-- Large files (>800 lines) - extract modules
-- Deep nesting (>4 levels) - use early returns
-- Missing error handling - handle explicitly
-- Mutation patterns - prefer immutable operations
-- Missing tests - add test coverage
 
 ### Performance
 

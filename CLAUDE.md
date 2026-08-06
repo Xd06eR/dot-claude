@@ -77,10 +77,7 @@ Organized by phase.
 
 ## Code Style
 
-- **Python:** `ruff check` → `ruff format` → `mypy` → `pytest`.
-- **TypeScript / JavaScript:** `eslint` → `prettier` → `tsc --noEmit` → `npm test` (vitest / jest).
 - **US English everywhere:** identifiers, comments, docs, commit messages, e.g. `normalize`, `color`, `behavior` (‑ze / ‑or).
-- **Naming:** follow language convention (see `rules/`); booleans prefixed (`is_`/`has_`/`should_`/`can_`), constants `SCREAMING_SNAKE_CASE`; abbreviate in small scope, spell out cross-module; don't mix conventions within a module.
 - **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
 - **Name the design choice:** on a non-obvious choice, leave one-line comment on *why*, not mechanics. No silent magic.
 - **Simplicity:** plain over clever unless cleverness is load-bearing.

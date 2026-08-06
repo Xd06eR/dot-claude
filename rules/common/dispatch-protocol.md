@@ -14,7 +14,7 @@ The agent that writes code must itself have read the code it changes; editing fr
 
 When a subtask fails, three levers, cheapest first:
 
-1. **Fresh retry context.** Always available: retry in a new context carrying the full failure trace, never in the polluted session that failed.
+1. **Fresh retry context.** Always available: retry in a new context carrying the full failure trace, never in the context that failed.
 2. **Reasoning effort.** Low for mechanical sweeps, high for debugging and final review.
 3. **A different model tier.** Lower tiers for mechanical work, higher tiers for hard reasoning and judgment.
 
@@ -36,7 +36,7 @@ Report contract, binding on every subagent:
 
 - Return conclusions, decisions, findings, and `file:line` evidence in full: everything the main agent needs to act on and to judge the work, including the reasoning behind non-obvious calls. No size limit ever forces dropping substance.
 - Exclude only residue: raw file contents, full command transcripts, re-derivable bulk.
-- When substance runs long (~30+ lines), write it to disk in full and return a faithful structured summary plus the path.
+- When substance runs long (30+ lines), write it to disk in full and return a faithful structured summary plus the path.
 - Always state what was NOT covered.
 
 ## 4. Attempts, escalation, and stopping
@@ -50,4 +50,5 @@ The principle lives in CLAUDE.md's Review phase (no self-acceptance). Acceptance
 
 - **Code:** run the tests, linters, or the actual command; paste the decisive output (the passing or failing lines, not the full transcript) into the report. If no runnable check exists, write one first (see the TDD rule in CLAUDE.md).
 - **Batch final-audit:** for bulk edit batches, run the acceptance audit twice in parallel (main context plus a fresh subagent) and reconcile the findings before reporting.
-- **Scope compliance:** an out-of-brief edit is a defect even when the content is good — unrequested content per CLAUDE.md's Build principles, format per its Doc structure, corrupted code blocks or tables per the Merge checklist's byte-diff.
+- **Research/review:** spot-check the load-bearing items — re-fetch one cited URL, re-read one cited line; a report whose evidence does not check out is rejected in full.
+- **Scope compliance:** an out-of-brief edit is a defect even when the content is good — unrequested content per CLAUDE.md's Build principles, format per its Doc structure, corrupted code blocks or tables (byte-diff every block).

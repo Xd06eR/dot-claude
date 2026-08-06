@@ -24,16 +24,8 @@ from dataclasses import dataclass
 class User:
     name: str
     email: str
-
-from typing import NamedTuple
-
-class Point(NamedTuple):
-    x: float
-    y: float
 ```
 
-## Formatting
+## Verification
 
-- **ruff format** for code formatting
-- **ruff check --select I --fix** for import sorting
-- **ruff check** for linting
+`ruff check` → `ruff format` → `mypy` → `pytest`

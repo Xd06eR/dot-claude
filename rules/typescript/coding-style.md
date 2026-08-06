@@ -75,14 +75,13 @@ Use Zod for schema-based validation and infer types from the schema:
 
 ```typescript
 const userSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   age: z.number().int().min(0).max(150),
 })
 type UserInput = z.infer<typeof userSchema>
 const validated: UserInput = userSchema.parse(input)
 ```
 
-## Console.log
+## Verification
 
-- No `console.log` statements in production code
-- Use proper logging libraries instead
+`eslint` → `prettier` → `tsc --noEmit` → `npm test` (vitest / jest)

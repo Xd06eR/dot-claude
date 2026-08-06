@@ -20,7 +20,7 @@ paths:
 
 - **React Testing Library (RTL)** — the standard for component testing. Tests behavior through the rendered DOM.
 - **Vitest** — preferred runner for new Vite-based projects. Faster than Jest, native ESM, same API.
-- **Jest** — still the default for Next.js / CRA projects. RTL works identically.
+- **Jest** — still documented for Next.js projects. RTL works identically.
 - **Playwright Component Testing** — when component tests need a real browser engine (animation, layout, complex events)
 - **Cypress Component Testing** — alternative real-browser component runner
 
@@ -33,26 +33,7 @@ Test what the user sees and does, not implementation details.
 - Query by accessible role first, then label, then text — fall back to `data-testid` only when nothing else fits
 - Never assert on internal state, props passed to children, or which hooks were called
 - Refactor without breaking tests = the test was testing behavior — that is the goal
-
-## Query Priority
-
-RTL exposes queries in three families. Use this priority order top-down:
-
-1. **Accessible to everyone**
-   - `getByRole(role, { name })` — primary choice
-   - `getByLabelText` — for form inputs
-   - `getByPlaceholderText` — when no label is available (and add a label)
-   - `getByText` — for non-interactive text
-   - `getByDisplayValue` — for form fields with a current value
-
-2. **Semantic queries**
-   - `getByAltText` — for images
-   - `getByTitle` — last resort, low accessibility value
-
-3. **Test IDs**
-   - `getByTestId("some-id")` — escape hatch only, when none of the above work
-
-`getBy*` throws when no match. `queryBy*` returns null (use for asserting absence). `findBy*` returns a promise (use for async).
+- `getBy*` throws when no match, `queryBy*` returns null (assert absence), `findBy*` returns a promise (async)
 
 ## User Interaction
 
@@ -77,17 +58,6 @@ test("submits the form", async () => {
 
 ## Async Assertions
 
-```tsx
-// WRONG: synchronous query for async-rendered content
-expect(screen.getByText("Loaded")).toBeInTheDocument();   // throws — not in DOM yet
-
-// CORRECT: findBy* (returns a promise, retries)
-expect(await screen.findByText("Loaded")).toBeInTheDocument();
-
-// CORRECT: waitFor for non-element assertions
-await waitFor(() => expect(saveSpy).toHaveBeenCalled());
-```
-
 - `findBy*` for async element appearance
 - `waitFor` for async expectations on side effects or other matchers
 - Never `setTimeout` + assertion — flaky
@@ -107,20 +77,12 @@ const server = setupServer(
   ),
 );
 
-beforeAll(() => server.listen());
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 ```
 
-Per-test override:
-
-```tsx
-test("renders error on 500", async () => {
-  server.use(http.get("/api/users/:id", () => new HttpResponse(null, { status: 500 })));
-  render(<UserPage id="1" />);
-  expect(await screen.findByText(/something went wrong/i)).toBeInTheDocument();
-});
-```
+`onUnhandledRequest: "error"` fails loudly on unmocked requests — silent passes are worse than red.
 
 ## Avoid Snapshot Tests for Components
 
@@ -137,8 +99,9 @@ Wrap providers once:
 
 ```tsx
 function renderWithProviders(ui: React.ReactElement) {
+  const queryClient = new QueryClient();
   return render(
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={lightTheme}>
         <Router>{ui}</Router>
       </ThemeProvider>
@@ -147,7 +110,7 @@ function renderWithProviders(ui: React.ReactElement) {
 }
 ```
 
-Export from `test-utils.tsx` and use everywhere.
+One QueryClient per test, created in the helper body — never module scope (cache bleeds across tests), never inside the wrapper component (resets on re-render). Export from `test-utils.tsx` and use everywhere.
 
 ## Custom Hook Testing
 

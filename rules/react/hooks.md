@@ -21,22 +21,6 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 3. Always called in the same order on every render
 4. Only inside React function components or custom hooks (functions starting with `use`)
 
-```tsx
-// WRONG: conditional hook
-function Foo({ enabled }: { enabled: boolean }) {
-  if (enabled) {
-    const [x, setX] = useState(0); // rule violation
-  }
-}
-
-// CORRECT: hook unconditional, condition inside
-function Foo({ enabled }: { enabled: boolean }) {
-  const [x, setX] = useState(0);
-  if (!enabled) return null;
-  return <span>{x}</span>;
-}
-```
-
 ## `useEffect` — When NOT to Use
 
 `useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries). It is **not** the right tool for:
@@ -64,6 +48,7 @@ const fullName = `${first} ${last}`;
 - Enable `react-hooks/exhaustive-deps` lint rule — never silence it without a comment explaining why
 - If the dep array grows unwieldy, the effect is doing too much — split it
 - Stable identity for functions passed in deps: wrap in `useCallback` only when the function is itself a dependency of another hook or passed to a memoized child
+- Non-reactive "event" logic inside an effect (analytics, logging) belongs in `useEffectEvent` — it reads latest values without joining the dep array
 
 ## Cleanup
 
@@ -96,6 +81,8 @@ Default position: **do not memoize**. Add `useMemo` / `useCallback` only when:
 
 Premature memoization adds noise, hides bugs, and can be slower than the recompute it replaces.
 
+If the project enables the React Compiler, rely on it for memoization; keep `useMemo`/`useCallback` as manual escape hatches only.
+
 ## Custom Hooks
 
 Extract a custom hook when:
@@ -122,9 +109,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 
 ## `useState` Patterns
 
-- Initial state from prop only at mount: pass a function `useState(() => computeInitial(prop))` when computation is expensive
-- Functional updater when the new state depends on the old: `setCount(c => c + 1)` — never `setCount(count + 1)` inside async or batched contexts
-- Group related state into one object only when they always change together. Otherwise split into multiple `useState` calls.
+- Functional updater when the new state depends on the old: `setCount(c => c + 1)` — required inside async or batched contexts
 - Use `useReducer` once state transitions are conditional on the previous state or there are 3+ related values
 
 ## `useRef` Patterns
@@ -138,49 +123,15 @@ export function useDebounce<T>(value: T, delay: number): T {
 
 Use this hook to subscribe to any external store (browser API, third-party state lib, custom event emitter). It is the supported way to make external state safe with concurrent rendering.
 
-```tsx
-const isOnline = useSyncExternalStore(
-  (cb) => {
-    window.addEventListener("online", cb);
-    window.addEventListener("offline", cb);
-    return () => {
-      window.removeEventListener("online", cb);
-      window.removeEventListener("offline", cb);
-    };
-  },
-  () => navigator.onLine,
-  () => true,
-);
-```
-
 ## React 19 Additions
 
 - `use()` — unwrap promises and contexts inline. Usable conditionally (only hook with that property).
-- `useFormStatus()` / `useFormState()` (or `useActionState`) — form submission state without prop drilling
+- `useFormStatus()` / `useActionState()` — form submission state without prop drilling
 - `useOptimistic()` — optimistic UI updates while a server action is pending
 - `useTransition()` (added in React 18, still preferred in 19+) — mark non-urgent state updates so urgent ones stay responsive
 
 When the project targets React 19+, prefer these over hand-rolled equivalents.
 
-## Stale Closure Trap
-
-Async handlers and intervals capture the values from the render where they were created. Fix by:
-
-1. Using the functional updater form of `setState`
-2. Putting the changing value in the dep array of `useEffect` and rebuilding the handler
-3. Reading from a ref that is kept in sync
-
 ## Lint Configuration
 
-Required rules:
-
-```json
-{
-  "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }
-}
-```
-
-Treat `exhaustive-deps` warnings as errors in CI for new code.
+Use `eslint-plugin-react-hooks` v6+ flat config: `reactHooks.configs.flat.recommended` — it enables `rules-of-hooks` and `exhaustive-deps` plus the compiler-powered rules. Treat `exhaustive-deps` warnings as errors in CI for new code.

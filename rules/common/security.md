@@ -7,10 +7,13 @@ Before ANY commit:
 - [ ] All user inputs validated
 - [ ] SQL injection prevention (parameterized queries)
 - [ ] XSS prevention (sanitized HTML)
-- [ ] CSRF protection enabled
+- [ ] CSRF tokens on cookie-authenticated web apps (N/A for header-token APIs)
 - [ ] Authentication/authorization verified
-- [ ] Rate limiting on all endpoints
+- [ ] Auth/access checks fail closed on error; security-relevant events (auth failures, denials) logged
+- [ ] Rate limiting / anti-automation on auth and resource-intensive endpoints
 - [ ] Error messages don't leak sensitive data
+- [ ] Dependencies vetted: audit run on add (`npm audit` / `pip-audit`), versions pinned, new packages checked for maintenance and provenance
+- [ ] SSRF guards on outbound fetches; path-traversal guards on file paths
 
 ## Secret Management
 
@@ -30,7 +33,7 @@ The `security-guidance` plugin runs automatically and provides:
 
 If security issue found:
 1. STOP immediately
-2. Run the `review` skill for structured audit, or audit against the checklist above
+2. Dispatch the `security-auditor` agent for a structured audit, or audit against the checklist above
 3. Fix CRITICAL issues before continuing
 4. Rotate any exposed secrets
 5. Review entire codebase for similar issues

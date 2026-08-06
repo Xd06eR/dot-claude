@@ -1,8 +1,8 @@
 # Coding Style
 
-## Immutability (CRITICAL)
+## Immutability
 
-ALWAYS create new objects, NEVER mutate existing ones:
+Prefer immutable patterns by default — create new objects rather than mutating shared state or inputs; local accumulators and hot paths may mutate.
 
 ```
 // Pseudocode
@@ -11,26 +11,6 @@ CORRECT: update(original, field, value) → returns new copy with change
 ```
 
 Rationale: Immutable data prevents hidden side effects, makes debugging easier, and enables safe concurrency.
-
-## Core Principles
-
-### KISS (Keep It Simple)
-
-- Prefer the simplest solution that actually works
-- Avoid premature optimization
-- Optimize for clarity over cleverness
-
-### DRY (Don't Repeat Yourself)
-
-- Extract repeated logic into shared functions or utilities
-- Avoid copy-paste implementation drift
-- Introduce abstractions when repetition is real, not speculative
-
-### YAGNI (You Aren't Gonna Need It)
-
-- Do not build features or abstractions before they are needed
-- Avoid speculative generality
-- Start simple, then refactor when the pressure is real
 
 ## File Organization
 
@@ -43,7 +23,7 @@ MANY SMALL FILES > FEW LARGE FILES:
 ## Error Handling
 
 ALWAYS handle errors comprehensively:
-- Handle errors explicitly at every level
+- Handle errors at the level that can act; propagate otherwise — don't catch what you can't recover from
 - Provide user-friendly error messages in UI-facing code
 - Log detailed error context on the server side
 - Never silently swallow errors
@@ -58,11 +38,7 @@ ALWAYS validate at system boundaries:
 
 ## API Response Format
 
-Use a consistent envelope for all API responses:
-- Include a success/status indicator
-- Include the data payload (nullable on error)
-- Include an error message field (nullable on success)
-- Include metadata for paginated responses (total, page, limit)
+Match the project's existing response shape. When it has none, return errors as RFC 9457 problem details; whatever the shape, keep it consistent across endpoints.
 
 ## Naming Conventions
 
@@ -71,6 +47,7 @@ Use a consistent envelope for all API responses:
 - Descriptive names; booleans prefer `is`, `has`, `should`, or `can` prefixes
 - Interfaces, types, and components: `PascalCase`
 - Constants: `UPPER_SNAKE_CASE`
+- Abbreviate in small scope, spell out cross-module
 
 ## Code Smells to Avoid
 

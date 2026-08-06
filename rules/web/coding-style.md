@@ -44,6 +44,8 @@ src/
     └── global.css
 ```
 
+Per-component packaging (a folder per component) lives in [react/coding-style.md](../react/coding-style.md#file-layout-per-component).
+
 ## CSS Custom Properties
 
 Define design tokens as variables. Do not hardcode palette, typography, or spacing repeatedly:

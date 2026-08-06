@@ -14,9 +14,7 @@ Use **pytest** as the testing framework.
 
 ## Coverage
 
-```bash
-pytest --cov=src --cov-report=term-missing
-```
+Measure coverage with `pytest --cov=src` (pytest-cov).
 
 ## Test Organization
 
@@ -28,8 +26,6 @@ import pytest
 @pytest.mark.unit
 def test_calculate_total():
     ...
-
-@pytest.mark.integration
-def test_database_connection():
-    ...
 ```
+
+Register custom marks in `pyproject.toml` under `[tool.pytest.ini_options]` `markers = [...]` — unregistered marks warn on every run and fail under `--strict-markers`.

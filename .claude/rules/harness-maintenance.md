@@ -4,14 +4,14 @@ How to update the harness (`~/.claude`) without breaking it.
 
 ## Change tiers
 
-**Self-serve (do it, report after):** objectively dead references (name/path no longer resolves), fixed name-only.
+**Self-serve (do it, report after):** objectively dead references (name/path no longer resolves), fixed by updating the reference only.
 
 **Ask first:** any semantic change to a harness file or component; `paths:` glob changes; deleting any file, including stale-looking backups; a wholesale rewrite of a working file.
 
 ## Edit protocol (when a change is authorized)
 
-1. **Backup:** copy the file next to itself before editing — `foo.md.bak`, never `foo.bak.md` (a `.md` backup in an auto-loaded dir loads as a live module). Skip for small edits.
-2. **Verify loading when scoping changes** with headless probes: a context check (`claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""` — unscoped answers yes) and a load check (rerun with tools enabled, reading a matching file first — scoped answers no before the read, yes after).
+1. **Backup:** copy the file next to itself before editing — `foo.md.bak`, never `foo.bak.md` (a `.md` backup in an auto-loaded dir loads as a live module). Skip only for typo/one-line edits; when in doubt, back up.
+2. **Verify loading when scoping changes** with headless probes: a context check (`claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""` — unscoped answers yes) and a load check (rerun with tools enabled, reading a matching file first — scoped answers no before the read, yes after). A failed probe stops the batch; report before proceeding.
 3. **Prune only with coverage:** before pruning any doc, audit that every load-bearing item lives elsewhere (or move it first); `.bak`-park the pruned file. Batch-remove `.bak` files only when the rework that produced them is complete (ask-first).
 
 Print the diff of changed files in your reply when the batch closes.
@@ -32,7 +32,7 @@ Print the diff of changed files in your reply when the batch closes.
 - **Findings format:** every finding from any audit or review of the inventory follows `- **[SEVERITY]** [file:line]: [issue] — [fix]` (severity scale per `rules/common/code-review.md`).
 - **Verify built-ins via the live list:** filesystem recon cannot verify built-in skills; check the session's available-skills list before claiming stale or missing.
 - **Format:** edited durable files pass CLAUDE.md's Doc structure rules before the batch closes.
-- **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; code blocks and table cells byte-diff per the Merge checklist.
+- **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff every code block and table cell.
 
 ## Size budget
 

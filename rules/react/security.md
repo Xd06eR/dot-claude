@@ -58,7 +58,7 @@ function safeUrl(url: string): string | undefined {
 <a href={safeUrl(user.website)}>Visit</a>
 ```
 
-React warns about `javascript:` URLs in `href` in development mode, but does not block them at runtime. `data:` URLs and other schemes also slip through. Always validate.
+React 19+ throws on `javascript:` URLs in `href`/`src`; validate schemes anyway — `data:` and other schemes, and non-React sinks, are not covered.
 
 ## `target="_blank"` Without `rel`
 
@@ -83,7 +83,7 @@ Server Actions (`"use server"`) run with the same trust level as a public API en
 import { z } from "zod";
 
 const Input = z.object({
-  email: z.string().email(),
+  email: z.email(),
   age: z.number().int().min(0).max(120),
 });
 
@@ -100,6 +100,8 @@ export async function updateUser(_state: unknown, formData: FormData) {
 - Authenticate inside the action — do not trust the client-side route gate
 - Authorize: confirm the current user has permission for the specific record they are mutating
 - Rate limit sensitive actions
+- Middleware is not authorization — re-check auth inside every Server Action and data-owning layout
+- Anything passed across the RSC boundary to a Client Component ships to the browser — pass IDs, not records with internal fields
 
 ## Secret Exposure via Env Vars
 
@@ -109,7 +111,6 @@ Prefixed env vars are bundled into the client. Treat them as public.
 |---|---|---|
 | Next.js | `NEXT_PUBLIC_*` | All others |
 | Vite | `VITE_*` | `.env` server-side only |
-| Create React App | `REACT_APP_*`, plus `NODE_ENV` and `PUBLIC_URL` | All others (anything without the `REACT_APP_` prefix is server-side only) |
 | Remix | `process.env` access in `loader`/`action` only | Same |
 
 ```ts
@@ -142,7 +143,7 @@ const update = await req.json();
 setState({ ...state, ...update });    // attacker controls __proto__
 
 // CORRECT: parse with a schema, or guard keys
-const Allowed = z.object({ name: z.string(), email: z.string().email() });
+const Allowed = z.object({ name: z.string(), email: z.email() });
 const parsed = Allowed.parse(await req.json());
 setState({ ...state, ...parsed });
 ```
@@ -157,7 +158,7 @@ When using `renderToString` or `renderToPipeableStream`:
 
 ## Third-Party Components
 
-- Audit `npm audit` before adding any UI library
+- Run `npm audit` before adding any UI library
 - Check that the library does not internally use `dangerouslySetInnerHTML` on its input (e.g., rich text editors)
 - Pin versions, review changelogs before major upgrades
 - Be wary of components that accept HTML strings as props

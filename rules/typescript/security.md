@@ -31,8 +31,8 @@ Automated scanning via the `security-guidance` plugin — see [common/security.m
 ## Supply Chain Security
 
 - Run `npm audit` (or `pnpm audit`) before adding dependencies and in CI
-- Pin exact versions in production: no `^` or `~` ranges in `package.json`
-- Use `npm ls <package>` to check dependency tree for known vulnerabilities
+- Pin exact versions in `package.json` (no `^`/`~`) and commit the lockfile — the lockfile makes installs reproducible
+- Use `npm ls <package>` to trace why a flagged package is in the tree (detection is `npm audit`)
 - Prefer packages with maintainers, recent updates, and clear license
 
 ## Input Validation
