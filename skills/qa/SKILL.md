@@ -206,7 +206,6 @@ git commit -m "fix(qa): <short description> (ISSUE-001)"
 
 - One logical fix per commit. Never bundle.
 - Conventional-commit subject, descriptive, no body unless it carries real signal.
-- No attribution trailers of any kind.
 - If regression tests were added, give them their own commit: `test(qa): regression test for ISSUE-NNN`.
 
 ## Rules

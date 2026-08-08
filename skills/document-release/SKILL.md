@@ -195,7 +195,6 @@ Otherwise, output the block below. Stage files by name, never `git add -A` or `g
 
 - Group into a single docs commit unless the change is large enough to split logically.
 - Conventional commits, subject only, descriptive.
-- No attribution trailers of any kind (no co-author line, no generated-by line).
 
 GitHub:
 
@@ -257,7 +256,6 @@ If coverage is complete and no diagrams drifted, output: "Coverage: all shipped 
 ## Important rules
 
 - **Never run the commit, push, or PR-edit commands yourself.** Prepare and output them; the user runs them.
-- **No attribution** in commit messages: no co-author trailer, no generated-by line.
 - **Never clobber CHANGELOG entries.** Polish wording only, via Edit with exact matches.
 - **Never bump VERSION silently.** Always ask first.
 - **Read a file before editing it.**

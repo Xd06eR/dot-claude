@@ -126,7 +126,6 @@ You have merged, tested, reviewed, and bumped. Now assemble the commands. Do NOT
 
 - Conventional commits, subject line only, descriptive (name what the change does): `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `test:`, `perf:`, `ci:`.
 - Add a body only when it carries real signal.
-- No attribution trailers of any kind (no co-author line, no generated-by line).
 
 **PR/MR content:** title is `<type>: <summary>`. Body states what changed and why, plus a short test plan.
 
@@ -164,7 +163,6 @@ If a PR/MR already exists for this branch, output the update form instead (`gh p
 ## Important rules
 
 - **Never run the commit, push, or PR-create commands yourself.** Prepare and output them. The user runs them. This is the skill's core contract.
-- **No attribution** in commit messages: no co-author trailer, no generated-by line.
 - **Never force-push.** Output a plain push only.
 - **Never skip tests.** If tests introduced by this branch fail, stop.
 - **Preserve the repo's VERSION format and CHANGELOG conventions.** Do not impose new ones.
