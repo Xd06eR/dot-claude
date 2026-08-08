@@ -6,7 +6,6 @@
   "autoCompactEnabled": false,
   "autoUpdatesChannel": "latest",
   "enabledPlugins": {
-    "andrej-karpathy-skills@karpathy-skills": true,
     "caveman@caveman": true,
     "chrome-devtools-mcp@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
@@ -55,13 +54,6 @@
       "autoUpdate": false,
       "source": {
         "repo": "pbakaus/impeccable",
-        "source": "github"
-      }
-    },
-    "karpathy-skills": {
-      "autoUpdate": false,
-      "source": {
-        "repo": "forrestchang/andrej-karpathy-skills",
         "source": "github"
       }
     },
