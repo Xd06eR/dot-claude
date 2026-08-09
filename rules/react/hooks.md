@@ -10,7 +10,7 @@ paths:
 
 # React Hooks
 
-> This file covers **React hooks** (`useState`, `useEffect`, `useMemo`, `useCallback`, custom hooks) — NOT the Claude Code `hooks/` runtime system. Naming matches the per-language convention `rules/<lang>/hooks.md` used across this repo.
+> This file covers **React hooks** (`useState`, `useEffect`, `useMemo`, `useCallback`, custom hooks) — NOT the Claude Code `hooks/` runtime system.
 
 ## Rules of Hooks
 
@@ -29,7 +29,7 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 - Transforming data for rendering — compute it during render
 - Resetting state when a prop changes — use a `key` on the parent or derive from props
 - Notifying parents of state changes — call the callback in the event handler
-- Initializing app-level singletons — call the function module-side or in `main.tsx`
+- Initializing app-level singletons — call the function at module scope or in `main.tsx`
 
 ```tsx
 // WRONG: effect for derived state
@@ -79,8 +79,6 @@ Default position: **do not memoize**. Add `useMemo` / `useCallback` only when:
 2. The value is a dependency of another `useEffect` / `useMemo` / `useCallback`
 3. The computation is measurably expensive (profile before assuming)
 
-Premature memoization adds noise, hides bugs, and can be slower than the recompute it replaces.
-
 If the project enables the React Compiler, rely on it for memoization; keep `useMemo`/`useCallback` as manual escape hatches only.
 
 ## Custom Hooks
@@ -121,7 +119,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 
 ## `useSyncExternalStore`
 
-Use this hook to subscribe to any external store (browser API, third-party state lib, custom event emitter). It is the supported way to make external state safe with concurrent rendering.
+Use this hook to subscribe to any external store (browser API, third-party state lib, custom event emitter).
 
 ## React 19 Additions
 

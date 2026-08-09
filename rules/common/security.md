@@ -1,3 +1,49 @@
+---
+paths:
+  - "**/*.py"
+  - "**/*.pyi"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+  - "**/*.cjs"
+  - "**/*.mts"
+  - "**/*.cts"
+  - "**/*.html"
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.sass"
+  - "**/*.less"
+  - "**/*.vue"
+  - "**/*.svelte"
+  - "**/*.astro"
+  - "**/*.sh"
+  - "**/*.bash"
+  - "**/*.zsh"
+  - "**/*.ps1"
+  - "**/*.bat"
+  - "**/*.sql"
+  - "**/*.graphql"
+  - "**/*.gql"
+  - "**/*.proto"
+  - "**/*.go"
+  - "**/*.rs"
+  - "**/*.java"
+  - "**/*.kt"
+  - "**/*.rb"
+  - "**/*.php"
+  - "**/*.c"
+  - "**/*.h"
+  - "**/*.cpp"
+  - "**/*.hpp"
+  - "**/*.cs"
+  - "**/*.swift"
+  - "**/Dockerfile*"
+  - "**/Makefile"
+  - "**/*.mk"
+---
+
 # Security Guidelines
 
 ## Mandatory Security Checks
@@ -24,16 +70,13 @@ Before ANY commit:
 
 ## Automated Security
 
-The `security-guidance` plugin runs automatically and provides:
-- **Pattern warnings** — instant regex-based alerts on dangerous patterns during Edit/Write
-- **LLM diff review** — automatic security review of each turn's changes
-- **Commit review** — agentic review traces data flow across files on `git commit`
+The `security-guidance` plugin auto-runs pattern warnings on edit and security review on diff and commit.
 
 ## Security Response Protocol
 
 If security issue found:
 1. STOP immediately
-2. Dispatch the `security-auditor` agent for a structured audit, or audit against the checklist above
+2. Dispatch the `security-auditor` agent for a structured audit (pre-authorized; no confirmation round), or audit against the checklist above
 3. Fix CRITICAL issues before continuing
 4. Rotate any exposed secrets
 5. Review entire codebase for similar issues

@@ -23,8 +23,6 @@ Extract shared logic into custom hooks first — they reuse behavior without imp
 4. High-frequency updates shared across the tree → external store (Zustand, Jotai, Redux Toolkit)
 5. Server-derived data → server-state library (TanStack Query, SWR, or a Server Component fetch) — not application state
 
-Context misused for frequently changing values causes every consumer to re-render on every update.
-
 ## Server / Client Component Boundary (RSC, Next.js App Router)
 
 - Server Components are the default — they run on the server, do not ship to the client, and can `await` directly
@@ -52,7 +50,7 @@ export function UserClient({ user }: { user: User }) {
 
 ## Suspense + Error Boundaries
 
-Every Suspense boundary needs an Error Boundary above it. The pair handles both states.
+Every Suspense boundary needs an Error Boundary above it. The pair covers pending and error states.
 
 ```tsx
 <ErrorBoundary fallback={<ErrorView />}>

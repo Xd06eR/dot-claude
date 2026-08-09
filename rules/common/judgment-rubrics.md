@@ -26,12 +26,12 @@ Saying "should work", or only shallow evidence for a behavioral claim ("it compi
 
 ## 3. Wrong direction or wrong execution
 
-Estimate a non-trivial edit's rough size before starting. On any two of these, switch paths instead of retrying harder:
+Estimate a non-trivial edit's rough size before starting. On any two of these, switch strategy instead of retrying harder:
 
 - Each fix creates a new failure elsewhere, twice in a row
 - The diff passes ~3x the estimate (or clearly outgrows expectations) and still grows
-- The same guard appears at multiple call sites instead of one shared cause
-- The test passes only after disabling or mocking the thing under test
+- The same guard appears at multiple call sites instead of one fix at the shared cause
+- The test passes only after disabling or mocking the system under test
 - The explanation for the next attempt keeps getting longer
 
 ## 4. Quality floor

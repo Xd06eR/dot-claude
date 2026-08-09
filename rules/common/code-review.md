@@ -1,3 +1,49 @@
+---
+paths:
+  - "**/*.py"
+  - "**/*.pyi"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+  - "**/*.cjs"
+  - "**/*.mts"
+  - "**/*.cts"
+  - "**/*.html"
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.sass"
+  - "**/*.less"
+  - "**/*.vue"
+  - "**/*.svelte"
+  - "**/*.astro"
+  - "**/*.sh"
+  - "**/*.bash"
+  - "**/*.zsh"
+  - "**/*.ps1"
+  - "**/*.bat"
+  - "**/*.sql"
+  - "**/*.graphql"
+  - "**/*.gql"
+  - "**/*.proto"
+  - "**/*.go"
+  - "**/*.rs"
+  - "**/*.java"
+  - "**/*.kt"
+  - "**/*.rb"
+  - "**/*.php"
+  - "**/*.c"
+  - "**/*.h"
+  - "**/*.cpp"
+  - "**/*.hpp"
+  - "**/*.cs"
+  - "**/*.swift"
+  - "**/Dockerfile*"
+  - "**/Makefile"
+  - "**/*.mk"
+---
+
 # Code Review Standards
 
 ## When to Review
@@ -33,7 +79,7 @@ Before marking code complete:
 - [ ] No hardcoded values (use constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
-- [ ] Test coverage meets the 80% new-code baseline
+- [ ] Test coverage meets the new-code baseline (per testing.md)
 
 ## Security Review Triggers
 
@@ -70,10 +116,10 @@ Before marking code complete:
 | `silent-failure-hunter` | Agent | Hunt swallowed errors, bad fallbacks, missing propagation |
 | `type-design-analyzer` | Agent | Type encapsulation + invariant review |
 | `security-auditor` | Agent | Adversarial security audit of a diff or design (pre-ship gate) |
-| `react-build-resolver` | Agent | React build failures found during review |
-| `code-simplifier` | Agent | Code clarity/consistency refinement |
 
 Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/review-pr` aggregates the concern-agents; `/lens-review` runs 5 review lenses with confidence scoring. Authoritative phase-gate order in CLAUDE.md.
+
+Post-review remediation (fix agents, not review lenses): `react-build-resolver` (React build failures), `code-simplifier` (clarity/consistency refinement).
 
 ## Review Workflow
 
@@ -82,7 +128,7 @@ Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/revi
 2. Check security checklist first
 3. Review code quality checklist
 4. Run relevant tests
-5. Verify the new-code coverage baseline (80%)
+5. Verify the new-code coverage baseline (per testing.md)
 6. Use relevant tool from Review Tools table for domain-specific review
 ```
 
@@ -90,12 +136,7 @@ Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/revi
 
 ### Security
 
-- Hardcoded credentials (API keys, passwords, tokens)
-- SQL injection (string concatenation in queries)
-- XSS vulnerabilities (unescaped user input)
-- Path traversal (unsanitized file paths)
-- CSRF protection missing
-- Authentication bypasses
+The `security.md` mandatory checks own this list (same scope, always co-loaded).
 
 ### Performance
 
@@ -103,9 +144,3 @@ Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/revi
 - Missing pagination - add LIMIT to queries
 - Unbounded queries - add constraints
 - Missing caching - cache expensive operations
-
-## Approval Criteria
-
-- **Approve**: No CRITICAL or HIGH issues
-- **Warning**: Only HIGH issues (merge with caution)
-- **Block**: CRITICAL issues found

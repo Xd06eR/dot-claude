@@ -140,7 +140,7 @@ const { ScrollTrigger } = await import('gsap/ScrollTrigger');
 - Use `will-change` narrowly and remove it when done
 - Prefer CSS for simple transitions
 - Use `requestAnimationFrame` or established animation libraries for JS motion
-- Avoid scroll handler churn; use IntersectionObserver or well-behaved libraries
+- Avoid scroll handler churn; use IntersectionObserver or libraries that throttle via passive listeners/rAF
 
 ### Performance Checklist
 

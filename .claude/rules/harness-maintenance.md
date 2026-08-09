@@ -18,41 +18,41 @@ Print the diff of changed files in your reply when the batch closes.
 
 ## House style for durable files
 
-- Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is free at any level if the path resolves from any cwd.
+- Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is allowed at any level if the path resolves from any cwd.
 - Standardize on **main agent** for the orchestrating agent in all harness files; its dispatched workers are subagents; use no other name for it.
 - No model names or tier assumptions; the injection tells the agent what its harness offers — write no environment conditionals. Functional `model:` frontmatter in `agents/*.md` is exempt.
 
 ## Lesson write-back
 
-- Harness lessons follow CLAUDE.md's lesson write-back, then land in the owning harness file when stable (3+ sessions, ask-first — or same-session for a standing convention or rejected tool call); the memory is `.bak`-parked on landing.
-- Keep the project `MEMORY.md` index current; condense near 30 lines; merge same-theme memories.
+- Harness lessons follow CLAUDE.md's lesson write-back, then land in the owning harness file once stable across sessions (ask-first, or same-session for a standing convention or rejected tool call); the memory is `.bak`-parked on landing.
+- Keep the project `MEMORY.md` index current; condense when the index exceeds ~30 lines; merge same-theme memories.
 
 ## Audit execution
 
-- **Findings format:** every finding from any audit or review of the inventory follows `- **[SEVERITY]** [file:line]: [issue] — [fix]` (severity scale per `rules/common/code-review.md`).
-- **Verify built-ins via the live list:** filesystem recon cannot verify built-in skills; check the session's available-skills list before claiming stale or missing.
+- **Findings format:** every finding from any audit or review of the inventory follows `- **[SEVERITY]** [file:line]: [issue] — [fix]` (severity scale: read `~/.claude/rules/common/code-review.md` when scoring findings).
+- **Verify built-ins via the live list:** filesystem search cannot verify built-in skills; check the session's available-skills list before claiming stale or missing.
 - **Format:** edited durable files pass CLAUDE.md's Doc structure rules before the batch closes.
 - **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff every code block and table cell.
 
 ## Size budget
 
-Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~40 KB total, triggers a trim-or-scope proposal with measured sizes. The total measures unscoped files only (`wc -c rules/common/*.md`). Every unscoped KB is paid every session forever.
+Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~40 KB total, triggers a trim-or-scope proposal with measured sizes. The total measures unscoped files only: rules files with no `paths:` frontmatter, wherever they live. Every unscoped KB is paid every session forever.
 
 ## CLAUDE.md and instruction docs
 
-- CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are side-tracks that extend CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
+- CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
 - The CLAUDE.md catalog is routing-only: phase-fired + auto-invoked names, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Slash prefix = command, bare name = skill. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
 
 ## Rules
 
 - **Loading scope:** unscoped only when true for every prompt, with the reason stated in its proposal; everything else takes `paths:`.
-- **Trim line (when cutting content):** cut only human-facing content the agent cannot act on (keybindings, env setup, permission advice, harness self-description). Keep agent-attention checklists (scan lists, severity tables, routing inventories) even when they restate known concepts — internalization ≠ reliable execution.
+- **Trim criterion (when cutting content):** cut only human-facing content the agent cannot act on (keybindings, env setup, permission advice, harness self-description). Keep agent-attention checklists (scan lists, severity tables, routing inventories) even when they restate known concepts — internalization ≠ reliable execution.
 
 ## Skills, commands, and agents
 
-- **Persona and headings:** agents get a terse persona (1–3 sentences: role, specialty, responsibility) before the dispatch block, and no H1 — the frontmatter name already provides it. Commands and skills get no persona; an H1 only when a genuine title beyond the bare name.
+- **Persona and headings:** agents get a terse persona (1–3 sentences: role, specialty, responsibility) after the frontmatter, at the top of the body, and no H1 — the frontmatter name already provides it. Commands and skills get no persona; an H1 only when a genuine title beyond the bare name.
 - **Frontmatter:** name, description-with-trigger, tools, origin (origin last); add `part-of` for multi-agent families. Quote the description with `""` only when it contains a colon.
-- **Description = the routing surface:** posture + trigger + what it returns. A `## When to invoke` body section is an anti-pattern — relocate its content into the description, never drop it.
+- **Description = the routing surface:** stance + trigger + what it returns. A `## When to invoke` body section is an anti-pattern — relocate its content into the description, never drop it.
 - **Pre-existing components:** change only when an effectiveness case justifies it. Description re-tailoring is justified (it is routing); cosmetic trims are not.
 - **Multi-exemplar:** read sibling components before writing; base format and structure on the best practice across them, never on one target.
 - **Adoption mechanics:** strip `disable-model-invocation: true` on adopted skills meant to stay auto-invokable; strip self-run git mutations from adopted components (CLAUDE.md's never-commit rule binds component bodies); tag `origin:` as `custom` (hand-built here), the source name (ported-from: plugins by plugin name, repos by repo name), or `A + B` (two-source merge).

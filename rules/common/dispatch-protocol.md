@@ -6,6 +6,8 @@ How the main agent delegates work to subagents: what to dispatch, how results co
 
 The main agent plans, decides, and integrates; subagents carry work whose full contents the main agent does not need. The test: "will I reason from these exact contents later, or do I only need the answer?" Contents → read it yourself, however many files; answer → dispatch. What degrades a session is residue, not a large relevant working set.
 
+Parallel fan-out gates on independence: no shared state, no sequential dependency between chunks.
+
 The agent that writes code must itself have read the code it changes; editing from a subagent's summary produces confident wrong patches. Do not dispatch a one-call read; dispatch overhead must be smaller than the work.
 
 **Long merge and bulk work:** route it to fresh subagents with detailed prompts — a saturated main context degrades merge quality. High-sensitivity verification runs first in main context, with fresh-context confirmation per section 5.

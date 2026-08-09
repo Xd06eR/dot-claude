@@ -105,7 +105,7 @@ The one substantive addition. Each finding-producing agent returns findings inde
 
 1. **Collect.** Gather every finding from every dispatched finding-producing agent. Each finding carries the contract: location (`file:line` or range) + severity (`CRITICAL` / `HIGH` / `MEDIUM` / `LOW`) + issue + fix.
 2. **Dedup.** Merge findings that target the same `file:line` (or overlapping line ranges) and the same issue. Each merged entry cites every contributing agent, e.g. `[code-reviewer, type-design-analyzer]`. Do not drop a finding only one agent produced; do not double-count identical findings from two agents.
-3. **Normalize.** All findings already carry `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` (per `rules/common/code-review.md`). Group by severity bucket.
+3. **Normalize.** All findings already carry `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` (severity scale: read `~/.claude/rules/common/code-review.md` if a definition is needed). Group by severity bucket.
 4. **Rank and output.** CRITICAL first, then HIGH, MEDIUM, LOW. Each entry: severity, location, issue, contributing agent(s), fix.
 5. **Per-agent tally.** Append a one-line count per dispatched finding-producing agent (pre-dedup count), so no agent's contribution is hidden by dedup.
 6. **Ship/block recommendation.** Block if any CRITICAL; otherwise ship. HIGH findings are ship-with-caution, not block.

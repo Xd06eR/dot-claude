@@ -56,7 +56,7 @@ export function UserCard({ user, onSelect }: Props) {
 - Self-close tags with no children: `<img />`, `<UserCard user={u} />`
 - Use fragments `<>...</>` over wrapper `<div>` when no DOM element is needed
 - Conditional rendering: `{condition && <Foo />}` for booleans, ternary for either/or, early return for guard clauses
-- Never put logic inline in JSX when it reads as multi-line — extract to a const above the return or a function
+- Never put logic inline in JSX when it spans multiple lines — extract to a const above the return or a function
 
 ```tsx
 // Prefer
@@ -95,7 +95,7 @@ See [hooks.md](./hooks.md) for the full ruleset. Style highlights:
 
 ## Class Components
 
-Forbidden in new code. Convert legacy class components to function components when touching them for non-trivial changes.
+Forbidden in new code (one exception: error boundaries, per [react/architecture.md](../react/architecture.md#suspense--error-boundaries)). Convert legacy class components to function components when touching them for non-trivial changes.
 
 ## File Layout per Component
 

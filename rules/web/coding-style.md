@@ -15,7 +15,7 @@ paths:
 
 ## File Organization
 
-Organize by feature or surface area, not by file type:
+Organize by feature or page/route area, not by file type:
 
 ```text
 src/
@@ -103,7 +103,5 @@ Do not reach for generic wrapper `div` stacks when a semantic element exists.
 
 ## Naming
 
-- Components: PascalCase (`ScrollySection`, `SurfaceCard`)
-- Hooks: `use` prefix (`useReducedMotion`)
 - CSS classes: kebab-case or utility classes
 - Animation timelines: camelCase with intent (`heroRevealTl`)

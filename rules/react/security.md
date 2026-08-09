@@ -13,7 +13,7 @@ paths:
 
 ## XSS via `dangerouslySetInnerHTML`
 
-CRITICAL. The prop name is deliberately scary — treat every usage as a code review halt.
+CRITICAL: treat every usage as a code review halt.
 
 ```tsx
 // CRITICAL: unsanitized user input

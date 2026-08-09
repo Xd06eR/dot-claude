@@ -1,3 +1,49 @@
+---
+paths:
+  - "**/*.py"
+  - "**/*.pyi"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+  - "**/*.cjs"
+  - "**/*.mts"
+  - "**/*.cts"
+  - "**/*.html"
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.sass"
+  - "**/*.less"
+  - "**/*.vue"
+  - "**/*.svelte"
+  - "**/*.astro"
+  - "**/*.sh"
+  - "**/*.bash"
+  - "**/*.zsh"
+  - "**/*.ps1"
+  - "**/*.bat"
+  - "**/*.sql"
+  - "**/*.graphql"
+  - "**/*.gql"
+  - "**/*.proto"
+  - "**/*.go"
+  - "**/*.rs"
+  - "**/*.java"
+  - "**/*.kt"
+  - "**/*.rb"
+  - "**/*.php"
+  - "**/*.c"
+  - "**/*.h"
+  - "**/*.cpp"
+  - "**/*.hpp"
+  - "**/*.cs"
+  - "**/*.swift"
+  - "**/Dockerfile*"
+  - "**/Makefile"
+  - "**/*.mk"
+---
+
 # Testing Requirements
 
 ## Coverage Target
@@ -6,13 +52,7 @@
 
 ## Test-Driven Development
 
-Workflow:
-1. Write test first (RED)
-2. Run test - it should FAIL
-3. Write minimal implementation (GREEN)
-4. Run test - it should PASS
-5. Refactor (IMPROVE)
-6. Verify coverage meets target
+Workflow: failing test (RED) → minimal implementation (GREEN) → refactor → verify coverage meets target.
 
 See the `superpowers:test-driven-development` skill for the full red-green-refactor workflow (the standard); the owned `tdd` skill carries the house extras (seams, tautological-test anti-pattern).
 
@@ -54,10 +94,4 @@ test('calculates similarity correctly', () => {
 
 ### Test Naming
 
-Use descriptive names that explain the behavior under test:
-
-```typescript
-test('returns empty array when no markets match query', () => {})
-test('throws error when API key is missing', () => {})
-test('falls back to substring search when Redis is unavailable', () => {})
-```
+Name the behavior under test: `test('returns empty array when no markets match query', ...)`.

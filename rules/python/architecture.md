@@ -31,7 +31,7 @@ pyproject.toml                # single project config root
 
 - When the project uses `__init__.py` re-exports: import a package only through its `__init__.py`, never deep-import a sibling package's internal module — package internals stay replaceable.
 - Import direction flows one way: `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
-- Circular imports are banned. When two modules need each other, extract the shared concept into a third module; a lazy in-function import is a smell that names a boundary problem.
+- Circular imports are banned. When two modules need each other, extract the shared concept into a third module; a lazy in-function import signals a boundary problem.
 - Keep `__init__.py` to re-exports only, or keep it empty — pick one convention per project, never mix.
 
 ## Tests

@@ -7,6 +7,8 @@ paths:
 
 # Web Security Rules
 
+> This file extends [common/security.md](../common/security.md) with web-specific security content.
+
 ## Content Security Policy
 
 Always configure a production CSP.
@@ -29,14 +31,14 @@ Content-Security-Policy:
   base-uri 'self';
 ```
 
-Adjust origins to the project. Do not cargo-cult this block unchanged.
+Adjust origins to the project; do not cargo-cult this block unchanged.
 
 ## XSS Prevention
 
 - Never inject unsanitized HTML
 - Avoid `innerHTML` / `dangerouslySetInnerHTML` unless sanitized first
 - Escape dynamic template values
-- Sanitize user HTML with a vetted local sanitizer when absolutely necessary
+- Sanitize user HTML with a vetted sanitizer library when absolutely necessary
 
 ## Third-Party Scripts
 

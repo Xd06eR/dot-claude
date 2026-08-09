@@ -1,16 +1,61 @@
+---
+paths:
+  - "**/*.py"
+  - "**/*.pyi"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+  - "**/*.mjs"
+  - "**/*.cjs"
+  - "**/*.mts"
+  - "**/*.cts"
+  - "**/*.html"
+  - "**/*.css"
+  - "**/*.scss"
+  - "**/*.sass"
+  - "**/*.less"
+  - "**/*.vue"
+  - "**/*.svelte"
+  - "**/*.astro"
+  - "**/*.sh"
+  - "**/*.bash"
+  - "**/*.zsh"
+  - "**/*.ps1"
+  - "**/*.bat"
+  - "**/*.sql"
+  - "**/*.graphql"
+  - "**/*.gql"
+  - "**/*.proto"
+  - "**/*.go"
+  - "**/*.rs"
+  - "**/*.java"
+  - "**/*.kt"
+  - "**/*.rb"
+  - "**/*.php"
+  - "**/*.c"
+  - "**/*.h"
+  - "**/*.cpp"
+  - "**/*.hpp"
+  - "**/*.cs"
+  - "**/*.swift"
+  - "**/Dockerfile*"
+  - "**/Makefile"
+  - "**/*.mk"
+---
+
 # Coding Style
+
+## Language and prose
+
+- **US English everywhere:** identifiers, comments, docs, commit messages, e.g. `normalize`, `color`, `behavior` (-ize / -or).
+- **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas; on a non-obvious design choice, one line on *why* it was made. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
+- **Simplicity:** plain over clever unless cleverness is load-bearing.
+- **Formatting:** the formatter owns code syntax. Atomicity still applies to comments, docstrings, and string literals; keep every token whole.
 
 ## Immutability
 
 Prefer immutable patterns by default — create new objects rather than mutating shared state or inputs; local accumulators and hot paths may mutate.
-
-```
-// Pseudocode
-WRONG:  modify(original, field, value) → changes original in-place
-CORRECT: update(original, field, value) → returns new copy with change
-```
-
-Rationale: Immutable data prevents hidden side effects, makes debugging easier, and enables safe concurrency.
 
 ## File Organization
 
@@ -53,7 +98,7 @@ Match the project's existing response shape. When it has none, return errors as 
 
 ### Deep Nesting
 
-Prefer early returns over nested conditionals once the logic starts stacking.
+Prefer early returns over deeply nested conditionals.
 
 ### Magic Numbers
 

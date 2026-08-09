@@ -19,7 +19,7 @@ paths:
 ### 1. Visual Regression
 
 - Screenshot key breakpoints from the responsive set below
-- Test hero sections, scrollytelling sections, and meaningful states
+- Test hero sections, scrollytelling sections, and key user flows, error and empty states
 - Use Playwright screenshots for visual-heavy work
 - If both themes exist, test both
 
@@ -32,8 +32,8 @@ paths:
 
 ### 3. Performance
 
-- Run Lighthouse or equivalent against meaningful pages
-- Keep CWV targets from [architecture.md](architecture.md#core-web-vitals-targets)
+- Run Lighthouse or equivalent against key routes
+- CWV targets live in [architecture.md](architecture.md#core-web-vitals-targets) — read before perf checks (not auto-loaded on test files)
 - INP is field-only — verify via CrUX/RUM; TBT is the lab proxy
 
 ### 4. Cross-Browser
