@@ -5,6 +5,12 @@
   },
   "autoCompactEnabled": false,
   "autoUpdatesChannel": "latest",
+  "disableArtifact": true,
+  "disableBundledSkills": true,
+  "disableClaudeAiConnectors": true,
+  "disableRemoteControl": true,
+  "disableSkillShellExecution": true,
+  "disableWorkflows": true,
   "enabledPlugins": {
     "caveman@caveman": true,
     "chrome-devtools-mcp@claude-plugins-official": false,
@@ -136,17 +142,6 @@
       "Read(**/.envrc)"
     ],
     "disableBypassPermissionsMode": "disable"
-  },
-  "skillOverrides": {
-    "batch": "off",
-    "claude-api": "off",
-    "code-review": "off",
-    "debug": "off",
-    "design-sync": "off",
-    "fewer-permission-prompts": "off",
-    "loop": "off",
-    "simplify": "off",
-    "verify": "off"
   },
   "skipWebFetchPreflight": true,
   "statusLine": {
