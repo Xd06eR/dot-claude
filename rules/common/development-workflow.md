@@ -62,6 +62,7 @@ The list itself is a check: out-of-order, missing, extra, or wrong-granularity s
 
 Mandatory before any new implementation:
 
+- **Exhaust installed dependencies:** never assume a library lacks a capability without checking its documentation and types; prefer what the project already has over new code or new packages.
 - **GitHub code search first:** Run `gh search repos` and `gh search code` to find existing implementations, templates, and patterns before writing anything new.
 - **Library docs second:** Use Context7 or vendor docs before implementing.
 - **Check package registries:** Search npm, PyPI, crates.io, and other registries before writing utility code. Prefer battle-tested libraries over hand-rolled solutions.
