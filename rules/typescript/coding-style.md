@@ -52,7 +52,6 @@ function getErrorMessage(error: unknown): string {
 - Type callback props explicitly
 - Do not use `React.FC` unless there is a specific reason to do so
 
-Component shape and prop destructuring conventions live in [react/coding-style.md](../react/coding-style.md).
 
 ### JavaScript Files
 

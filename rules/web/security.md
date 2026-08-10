@@ -20,7 +20,7 @@ Use a per-request nonce for scripts instead of `'unsafe-inline'`.
 ```text
 Content-Security-Policy:
   default-src 'self';
-  script-src 'self' 'nonce-{RANDOM}' https://cdn.jsdelivr.net;
+  script-src 'self' 'nonce-{RANDOM}' 'strict-dynamic';
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: https:;
   font-src 'self' https://fonts.gstatic.com;

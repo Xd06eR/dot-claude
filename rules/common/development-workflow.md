@@ -60,11 +60,11 @@ The list itself is a check: out-of-order, missing, extra, or wrong-granularity s
 
 ## Research & Reuse
 
-Mandatory before any new implementation:
+Mandatory before adding a capability or a dependency:
 
 - **Exhaust installed dependencies:** never assume a library lacks a capability without checking its documentation and types; prefer what the project already has over new code or new packages.
-- **GitHub code search first:** Run `gh search repos` and `gh search code` to find existing implementations, templates, and patterns before writing anything new.
-- **Library docs second:** Use Context7 or vendor docs before implementing.
+- **GitHub code search:** Run `gh search repos` and `gh search code` to find existing implementations, templates, and patterns before writing anything new.
+- **Library docs:** Use Context7 or vendor docs before implementing.
 - **Check package registries:** Search npm, PyPI, crates.io, and other registries before writing utility code. Prefer battle-tested libraries over hand-rolled solutions.
 - **Search for adaptable implementations:** Look for open-source projects that solve 80%+ of the problem and can be forked, ported, or wrapped.
 - **Evaluate skeleton/starter candidates in parallel:** when adopting one, dispatch parallel agents to score options on security, extensibility, and fitness for the target use case before cloning.

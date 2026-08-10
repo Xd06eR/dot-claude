@@ -10,7 +10,6 @@ paths:
 
 ## Standards
 
-- Follow **PEP 8** conventions
 - Use **type annotations** on all function signatures
 
 ## Immutability

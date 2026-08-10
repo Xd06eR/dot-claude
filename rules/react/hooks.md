@@ -123,7 +123,7 @@ Use this hook to subscribe to any external store (browser API, third-party state
 
 ## React 19 Additions
 
-- `use()` — unwrap promises and contexts inline. Usable conditionally (only hook with that property).
+- `use()` — unwrap promises and contexts inline. Callable conditionally, because React classifies it as an API rather than a hook.
 - `useFormStatus()` / `useActionState()` — form submission state without prop drilling
 - `useOptimistic()` — optimistic UI updates while a server action is pending
 - `useTransition()` (added in React 18, still preferred in 19+) — mark non-urgent state updates so urgent ones stay responsive

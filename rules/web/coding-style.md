@@ -24,17 +24,17 @@ src/
 │   │   ├── Hero.tsx
 │   │   ├── HeroVisual.tsx
 │   │   └── hero.css
-│   ├── scrolly-section/
-│   │   ├── ScrollySection.tsx
-│   │   ├── StickyVisual.tsx
-│   │   └── scrolly.css
+│   ├── data-table/
+│   │   ├── DataTable.tsx
+│   │   ├── DataTableRow.tsx
+│   │   └── data-table.css
 │   └── ui/
 │       ├── Button.tsx
 │       ├── SurfaceCard.tsx
 │       └── AnimatedText.tsx
 ├── hooks/
 │   ├── useReducedMotion.ts
-│   └── useScrollProgress.ts
+│   └── useMediaQuery.ts
 ├── lib/
 │   ├── animation.ts
 │   └── color.ts
@@ -104,4 +104,4 @@ Do not reach for generic wrapper `div` stacks when a semantic element exists.
 ## Naming
 
 - CSS classes: kebab-case or utility classes
-- Animation timelines: camelCase with intent (`heroRevealTl`)
+- Animation timelines: camelCase with intent (`heroRevealTimeline`)

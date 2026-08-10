@@ -14,13 +14,13 @@ Use the `src/` layout; each package hides its internals behind a public entry po
 
 ```text
 src/
-├── myapp/
-│   ├── __init__.py           # public API — the only import surface
-│   ├── domain/               # business logic, no I/O imports
-│   ├── services/             # use-case orchestration
-│   ├── infrastructure/       # db, http clients, filesystem
-│   └── entrypoints/          # CLI, API app construction, workers
-└── py.typed                  # marks the package as typed
+└── myapp/
+    ├── __init__.py           # public API — the only import surface
+    ├── py.typed              # marks the package as typed
+    ├── domain/               # business logic, no I/O imports
+    ├── services/             # use-case orchestration
+    ├── infrastructure/       # db, http clients, filesystem
+    └── entrypoints/          # CLI, API app construction, workers
 tests/                        # mirrors src/ structure
 ├── test_domain/
 └── test_services/

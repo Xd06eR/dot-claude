@@ -24,7 +24,7 @@ paths:
 ## Naming
 
 - Components: `PascalCase` for both the symbol and the file (`UserCard.tsx`, default export `UserCard`)
-- Custom hooks: `useCamelCase` for the symbol, kebab-case for the file when the project convention is kebab-case (`use-debounce.ts` exports `useDebounce`)
+- Custom hooks: `useCamelCase` for the symbol; the file follows the project's non-component convention (`use-debounce.ts` or `useDebounce.ts`), applied consistently
 - Context: `<Domain>Context` symbol, `<Domain>Provider` provider component, `use<Domain>` consumer hook
 - Event handlers: `handleClick`, `handleSubmit` inside the component; the prop that receives it is `onClick`, `onSubmit`
 - Boolean props: `isLoading`, `hasError`, `canSubmit` — never `loading` or `error` alone for booleans
@@ -107,4 +107,4 @@ components/UserCard/
   index.ts              # re-export only
 ```
 
-Inline single-file components are fine for trivial presentational pieces. The wider src/ feature-tree convention lives in [web/coding-style.md](../web/coding-style.md#file-organization).
+Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, read `~/.claude/rules/web/coding-style.md` (File organization) — it loads only on web files, so it stays out of plain `.ts` sessions.

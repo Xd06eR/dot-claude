@@ -111,7 +111,7 @@ Prefixed env vars are bundled into the client. Treat them as public.
 |---|---|---|
 | Next.js | `NEXT_PUBLIC_*` | All others |
 | Vite | `VITE_*` | `.env` server-side only |
-| Remix | `process.env` access in `loader`/`action` only | Same |
+| React Router (framework) / Remix | none | All; `process.env` reachable only in `loader`/`action` |
 
 ```ts
 // CRITICAL: secret leaked to client bundle
@@ -124,7 +124,7 @@ Audit on every PR that touches env vars: would this string in the public bundle 
 
 - Never store sessions in `localStorage` — accessible to any XSS. Use httpOnly secure cookies.
 - Never trust client-set state to gate sensitive UI. Render-gating in JSX prevents display, not access — the API must enforce.
-- CSRF: cookie-based auth requires CSRF tokens or `SameSite=Strict`/`Lax` cookies
+- CSRF: cookie-based auth requires CSRF tokens; `SameSite=Strict`/`Lax` is defense in depth, not a substitute
 - Use double-submit cookies or origin verification for form actions when not using framework defaults
 
 ## Content Security Policy (CSP)

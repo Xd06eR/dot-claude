@@ -19,10 +19,10 @@ Treat these separately:
 
 | Concern | Tooling |
 |---------|---------|
-| Server state | TanStack Query, SWR, tRPC |
-| Client state | Zustand, Jotai, signals |
+| Server state | server-cache library |
+| Client state | app store or signals |
 | URL state | search params, route segments |
-| Form state | React Hook Form or equivalent |
+| Form state | dedicated form state |
 
 - Do not duplicate server state into client stores
 - Derive values instead of storing redundant computed state

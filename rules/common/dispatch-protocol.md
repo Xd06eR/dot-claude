@@ -51,6 +51,6 @@ Report contract, binding on every subagent:
 The principle lives in CLAUDE.md's Review phase (no self-acceptance). Acceptance mechanics:
 
 - **Code:** run the tests, linters, or the actual command; paste the decisive output (the passing or failing lines, not the full transcript) into the report. If no runnable check exists, write one first (see the TDD rule in CLAUDE.md).
-- **Batch final-audit:** for bulk edit batches, run the acceptance audit twice in parallel (main context plus a fresh subagent) and reconcile the findings before reporting.
+- **Batch final-audit:** for bulk edit batches, run the acceptance audit in main context and propose a parallel fresh-subagent pass; reconcile both sets of findings before reporting.
 - **Research/review:** spot-check the load-bearing items — re-fetch one cited URL, re-read one cited line; a report whose evidence does not check out is rejected in full.
 - **Scope compliance:** an out-of-brief edit is a defect even when the content is good — unrequested content per CLAUDE.md's Build principles, format per its Doc content and structure, corrupted code blocks or tables (byte-diff every block).

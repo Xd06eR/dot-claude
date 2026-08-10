@@ -24,7 +24,7 @@ paths:
 - **Playwright Component Testing** — when component tests need a real browser engine (animation, layout, complex events)
 - **Cypress Component Testing** — alternative real-browser component runner
 
-Pick one component test runner per project — do not mix RTL + Playwright CT in the same repo.
+Pick one component-testing approach per project — do not mix RTL and Playwright CT in the same repo.
 
 ## Core Principle
 
@@ -139,7 +139,7 @@ test("UserCard has no a11y violations", async () => {
 });
 ```
 
-Run axe assertions in component tests — catches missing labels, ARIA misuse, color contrast (limited).
+Run axe assertions in component tests — catches missing labels and ARIA misuse. Color contrast is not checked at all in JSDOM (no layout engine, so axe disables the rule); it needs a browser pass.
 
 ## When to Reach for Playwright / Cypress
 

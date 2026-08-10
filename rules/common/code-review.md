@@ -76,7 +76,7 @@ Before marking code complete:
 - [ ] Errors are handled explicitly
 - [ ] No shared-state mutation (immutable patterns preferred)
 - [ ] No hardcoded secrets or credentials
-- [ ] No hardcoded values (use constants or config)
+- [ ] No hardcoded thresholds, delays, or limits (use named constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
 - [ ] Test coverage meets the new-code baseline (per testing.md)
@@ -106,7 +106,7 @@ Before marking code complete:
 
 | Tool | Type | Use when |
 |------|------|----------|
-| `security-guidance` plugin | Auto-running (enabled) | Pattern warnings + diff review + commit review — always active |
+| `security-guidance` plugin | Auto-running | Pattern warnings + diff review + commit review — always active |
 | `/review-pr` | Command | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup) |
 | `/lens-review` | Command | 5-lens confidence-scored review of a diff or PR (compliance, bug scan, git history, prior comments, in-code comments) |
 | `diagnose` | Skill | Root cause analysis on bugs found |

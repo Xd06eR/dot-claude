@@ -38,7 +38,3 @@ Automated scanning via the `security-guidance` plugin — see [common/security.m
 ## Input Validation
 
 Use Zod for schema-based validation at API boundaries — see [typescript/coding-style.md](./coding-style.md#input-validation) for patterns.
-
-## React-Specific Security
-
-For React security concerns (XSS via dangerouslySetInnerHTML, Server Action validation, CSP, prototype pollution), see [react/security.md](../react/security.md).
