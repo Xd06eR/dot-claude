@@ -42,24 +42,22 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
    - **Goal:** transform tasks into verifiable goals with specifically stated completion standards. 'Make it work' is not a goal; 'a reproduction test passes' is.
    - Phase artifacts: CONTEXT.md (cross-session design map + domain glossary) + OPEN-QUESTIONS.md (durable ambiguity log).
 2. **Plan:** turn the design into the artifacts below. Use Plan Mode for non-trivial work; exit only when every step has a check.
-   - spec docs (`<feature>-spec.md`): what + why + success criteria
-   - implementation plan (`<feature>-plan.md`): technical approach + numbered checklist of decomposed steps as `[Step] → verify: [check]`, decisions likely to change listed first; name dependencies, risks, files/components
-   - implementation notes (`implementation-notes.md`): running log appended during build
-   - build brief: produced by `/build-brief` from the spec + plan
-   - per-component sections of the build brief, built in dependency order, then review
+   - spec docs (`<component>-spec.md`): what + why + success criteria
+   - implementation plan (`<component>-plan.md`): technical approach + numbered checklist of decomposed steps as `[Step] → verify: [check]`, decisions likely to change listed first; name dependencies, risks, files/components
+   - build brief: produced by `/build-brief` from a feature's specs + plans; its components are built in dependency order, and Review starts once every feature is built
 3. **Build:** code against the checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller.
    - **Simplify (YAGNI):** minimum code that meets the request. Build only what is asked (no speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios).
    - **Surgical:** touch only what the task requires; every change traces to the request; no adjacent refactors. Match style. Remove imports/variables/functions your changes made unused. Surface pre-existing dead code; removal is separate work.
    - **Scratch:** one-time scripts and temp artifacts go in the working directory, not the OS temp tree (avoids permission prompts). Remove them when done.
-   - **Test:** TDD / Red-Green; ship a working version before polishing.
+   - **Test:** TDD red-green-refactor, refactoring only while green; ship a working version before polishing.
    - **Tiebreaker:** on axes that matter (correctness, performance, fitness, scalability), pick the best option, then make it as simple as that option allows; never simpler-but-worse.
-   - **Iterate:** refactor while green; apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions). Profile first; optimize only when metrics prove the bottleneck is real.
+   - **Act on evidence, not anticipation:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
    - **Fan-out:** dispatch subagents only when the content is residue (per `rules/common/dispatch-protocol.md`); each implements one independent component with lint + format + type-check + tests, verifies before returning; you integrate.
    - **Log implementation notes:** append to `implementation-notes.md` as you build: ambiguous-spec decisions, deviations and why (default to the conservative option), tradeoffs (alternatives considered), open questions to confirm.
 4. **Review:** check the diff against the checklist and the acceptance criteria; show evidence (test output, return value). Can't verify → don't ship.
    - **Gravity:** every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
    - **No self-acceptance:** the context that produced the work never accepts it; acceptance evidence comes from a fresh agent or the user. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
-   - **Audit behavior:** fix defects found mid-review beyond the original flags; audit the whole against the audit's acceptance criteria, not only what was flagged; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
+   - **Audit behavior:** audit and fix the whole against the audit's acceptance criteria, never only what was flagged; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
    - **Quiz before ship:** for non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 ## Doc content and structure
