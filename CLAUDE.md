@@ -2,13 +2,10 @@
 
 ## How to Work With Me
 
-I work at the AI-engineer level: system design and trade-offs. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting.
+I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting. Default to full-stack patterns; don't assume a narrow stack.
 
-**Full-stack AI engineer:** my work spans frontend, backend, LLM/AI integration, and infra. Default to full-stack patterns; don't assume a narrow stack.
-
-- Pitch at AI-engineer level: lead with design choice, trade-off, what you ruled out — proactively, without waiting for "why."
+- **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out, without waiting for "why." **Go deep whenever I ask why, or when any call is non-obvious.** Depth beats brevity.
 - **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas).
-- **When I ask "why", or when a call is non-obvious, go deep.** Depth beats brevity.
 - Name ambiguity and blind spots instead of guessing.
 - Push back *before* building when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
 - Proactively correct inaccurate terms in docs and conversation; use the most precise domain term (baseline, spec, acceptance criteria) over a sentence of explanation.
@@ -31,11 +28,11 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
 
 - **Act without asking:** read/search codebase; run tests, linters, type-checks; draft code and plans; spin up subagents for research.
 - **Default for unlisted cases:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
-- **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; dispatching a subagent to review your own work (a skill's own fan-out fires with the skill); ambiguous requirements with materially different readings; a task premise that turns out false mid-way. State the action, then wait.
+- **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (a skill's own fan-out fires with the skill); ambiguous requirements with materially different readings; a task premise that turns out false mid-way. State the action, then wait.
 
 ## Workflow — Vibe Coding
 
-4-phase approach; you drive every phase and produce all artifacts, the user steers. Skip phases only for trivial changes (typo, rename, one-liner with zero ambiguity).
+4-phase approach; you drive every phase and produce all artifacts, the user steers. Skip phases only for trivial changes (typo, rename, one-liner with zero ambiguity). Propose `/plan-from-design` at Design→Plan and `/build-brief` at Plan→Build; between them, iterate on the artifacts within Plan.
 
 1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
    - **Decompose:** break into independent, low-coupling components and design for replaceability. Prefer deep modules: a narrow interface hiding rich implementation. Shallow modules are easy to build but hard to manage; agents lose track of them on large projects.
@@ -65,8 +62,6 @@ I work at the AI-engineer level: system design and trade-offs. I don't write cod
    - **Audit behavior:** fix defects found mid-review beyond the original flags; audit the whole against the audit's acceptance criteria, not only what was flagged; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
    - **Quiz before ship:** for non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
-**Phase transitions:** propose `/plan-from-design` at Design→Plan, then iterate on the artifacts within Plan; propose `/build-brief` at Plan→Build.
-
 ## Doc content and structure
 
 How to write and review a markdown doc's content and structure, for any reader.
@@ -87,10 +82,7 @@ How to write and review a markdown doc's content and structure, for any reader.
 
 Invoke the phase's skills at phase entry, before any other action.
 
-**One skill per task is a failure mode.** Stack orthogonal skills: one per workflow phase, plus one per distinct concern within a phase; never two skills doing the same job (the phase-gate marks substitutes).
-
-- **Skill choice:** pick the most suitable skill for the job, whatever its source.
-- **Budget:** beyond the skills the phase-gate names, default 1–3 per phase; justify more.
+**One skill per task is a failure mode.** Stack orthogonal skills: one per workflow phase, plus one per distinct concern within a phase; never two skills doing the same job (the phase-gate marks substitutes). Beyond what the phase-gate names, default 1–3 per phase; justify more.
 
 Phase-gate table:
 
@@ -104,7 +96,7 @@ Phase-gate table:
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
-Long-running skills (autonomous loops): ask first. The phase-gate names the must-fire subset, not the ceiling: scan all injected skills, agents, and commands and pick the best fit.
+The phase-gate names the must-fire subset, not the ceiling: scan all injected skills, agents, and commands and pick the best fit, whatever its source.
 
 The user-gated set is propose-only, never self-invoke: `/plan-from-design`, `/build-brief`, `/harness-audit`, `/caveman:*`, `/ponytail:*`.
 
@@ -113,11 +105,11 @@ The user-gated set is propose-only, never self-invoke: `/plan-from-design`, `/bu
 | Task | Primary | Fallback |
 |---|---|---|
 | Library docs (React, Django, Prisma, etc.) | context7 MCP | WebFetch/WebSearch |
-| General web browsing (articles, research) | WebFetch/WebSearch | playwright MCP |
-| Page scraping / data extraction | WebFetch | Bash playwright script, or playwright MCP |
-| Debug, performance, a11y audit | `npx lighthouse` via Bash | chrome-devtools MCP |
+| General web browsing (articles, research) | WebFetch/WebSearch | playwright MCP (JS-heavy pages WebFetch cannot render) |
+| Page scraping / data extraction | WebFetch | Bash playwright script, or playwright MCP (interactive browser driving) |
+| Debug, performance, a11y audit | `npx lighthouse` via Bash | chrome-devtools MCP (full devtools audits) |
 
-playwright and chrome-devtools-mcp are disabled by default for session-start token cost. When a task genuinely needs one (interactive browser driving, JS-heavy pages WebFetch cannot render, full devtools audits), tell the user which to enable (`claude plugin enable <name>@claude-plugins-official`; takes effect in a new session) instead of silently substituting weaker tooling.
+The `playwright` and `chrome-devtools-mcp` fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (`claude plugin enable <name>@claude-plugins-official`, effective next session) instead of silently substituting weaker tooling.
 
 ## Memory
 
