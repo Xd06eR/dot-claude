@@ -18,8 +18,11 @@ Print the diff of changed files in your reply when the batch closes.
 
 ## House style for durable files
 
-- Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is allowed at any level if the path resolves from any cwd. Path form: relative markdown links inside the rules tree (the injection header carries the referrer's absolute path, so resolution never depends on the session cwd, and links render as clickable navigation on GitHub and in IDE markdown preview); absolute `~/.claude/...` in skill and command bodies (invocation may surface only a symbolic path), in shell commands and write destinations, and when naming the harness root.
+- Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is allowed at any level if the path resolves from any cwd.
+- Reference targets: section names, or concept phrases that appear in the target's body text ("the never-commit rule"); never a bullet label alone (labels get renamed; sections and body-text concepts survive).
+- Path form: relative markdown links inside the rules tree (the injection header carries the referrer's absolute path, so resolution never depends on the session cwd, and links render as clickable navigation on GitHub and in IDE markdown preview); absolute `~/.claude/...` in skill and command bodies (invocation may surface only a symbolic path), in shell commands and write destinations, and when naming the harness root.
 - Standardize on **main agent** for the orchestrating agent in all harness files; its dispatched workers are subagents; use no other name for it.
+- Headings: sentence case (first word plus proper nouns and coined phrases only, e.g. "Act vs Ask"); no trailing punctuation.
 - No model names or tier assumptions; the injection tells the agent what its harness offers — write no environment conditionals. Functional `model:` frontmatter in `agents/*.md` is exempt.
 
 ## Lesson write-back
