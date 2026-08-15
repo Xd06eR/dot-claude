@@ -32,7 +32,7 @@ Print the diff of changed files in your reply when the batch closes.
 - **Findings format:** every finding from any audit or review of the inventory follows `- **[SEVERITY]** [file:line]: [issue] — [fix]` (severity scale: read `~/.claude/rules/common/code-review.md` when scoring findings).
 - **Verify built-ins via the live list:** filesystem search cannot verify built-in skills; check the session's available-skills list before claiming stale or missing.
 - **Format:** edited durable files pass CLAUDE.md's Doc content and structure rules before the batch closes.
-- **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff every code block and table cell.
+- **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff per `~/.claude/rules/common/dispatch-protocol.md` §3.
 
 ## Size budget
 

@@ -30,10 +30,10 @@ Automated scanning via the `security-guidance` plugin — see [common/security.m
 
 ## Supply Chain Security
 
-- Run `npm audit` (or `pnpm audit`) before adding dependencies and in CI
+- Principle per [common/security.md](../common/security.md) (Review checklist); npm mechanics below
+- Run `npm audit` (or `pnpm audit`) on add and in CI; trace flagged packages with `npm ls <package>`
 - Pin exact versions in `package.json` (no `^`/`~`) and commit the lockfile
-- Use `npm ls <package>` to trace why a flagged package is in the tree (detection is `npm audit`)
-- Prefer actively maintained packages, recent updates, and clear license
+- Check the license before adding
 
 ## Input Validation
 

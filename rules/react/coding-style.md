@@ -69,7 +69,7 @@ return <h1>{user.isAdmin ? "Welcome, admin" : `Hello ${user.name}`}</h1>;
 
 ## Server / Client Boundary (Next.js App Router, RSC)
 
-- Default a new file to Server Component — only add `"use client"` when the file uses state, effects, refs, browser APIs, or event handlers
+- Server Components are the default (boundary model per [architecture.md](./architecture.md)); add `"use client"` only when the file uses state, effects, refs, browser APIs, or event handlers
 - Place the `"use client"` directive on line 1, before any imports
 - Never import a Client Component file from inside a `"use server"` action file
 - Never re-export server-only code through a client module — the bundler will silently include it
@@ -82,16 +82,12 @@ return <h1>{user.isAdmin ? "Welcome, admin" : `Hello ${user.name}`}</h1>;
 
 ## Hooks Discipline
 
-See [hooks.md](./hooks.md) for the full ruleset. Style highlights:
-
-- Custom hooks must start with `use` — enforced by `eslint-plugin-react-hooks`
-- Group all hook calls at the top of the component, before any conditional logic
-- Avoid creating ad-hoc hooks for one-line wrappers — inline the call instead
+See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for one-line wrappers — inline the call instead.
 
 ## State
 
 - State location (local → lift → Context → external store): see [react/architecture.md](../react/architecture.md#state-location-decision-tree)
-- Never duplicate state that can be derived — compute during render
+- Compute during render instead of storing derivable state (principle per [web/architecture.md](../web/architecture.md))
 
 ## Class Components
 
@@ -107,4 +103,4 @@ components/UserCard/
   index.ts              # re-export only
 ```
 
-Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, read `~/.claude/rules/web/coding-style.md` (File organization) — it loads only on web files, so it stays out of plain `.ts` sessions.
+Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, see [web/coding-style.md](../web/coding-style.md#file-organization).

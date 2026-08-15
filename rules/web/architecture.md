@@ -136,7 +136,7 @@ const { ScrollTrigger } = await import('gsap/ScrollTrigger');
 
 ### Animation Performance
 
-- Animate compositor-friendly properties only
+- Animate compositor-friendly properties only (allow/deny list: [coding-style.md](./coding-style.md#animation-only-properties))
 - Use `will-change` narrowly and remove it when done
 - Prefer CSS for simple transitions
 - Use `requestAnimationFrame` or established animation libraries for JS motion

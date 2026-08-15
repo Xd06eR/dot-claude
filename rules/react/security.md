@@ -3,8 +3,11 @@ paths:
   - "**/*.tsx"
   - "**/*.jsx"
   - "**/components/**/*.ts"
+  - "**/components/**/*.js"
   - "**/app/**/*.ts"
   - "**/pages/**/*.ts"
+  - "**/hooks/**/*.ts"
+  - "**/hooks/**/*.js"
 ---
 
 # React Security
@@ -158,9 +161,9 @@ When using `renderToString` or `renderToPipeableStream`:
 
 ## Third-Party Components
 
-- Run `npm audit` before adding any UI library
+- Dependency vetting per [common/security.md](../common/security.md) (Review checklist); UI-library checks below
 - Check that the library does not internally use `dangerouslySetInnerHTML` on its input (e.g., rich text editors)
-- Pin versions, review changelogs before major upgrades
+- Review changelogs before major upgrades
 - Be wary of components that accept HTML strings as props
 
 ## Source Map Exposure in Production

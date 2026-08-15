@@ -19,8 +19,7 @@ paths:
 ## Library Choice
 
 - **React Testing Library (RTL)** — the standard for component testing. Tests behavior through the rendered DOM.
-- **Vitest** — preferred runner for new Vite-based projects. Faster than Jest, native ESM, same API.
-- **Jest** — still documented for Next.js projects. RTL works identically.
+- **Runner:** per [typescript/testing.md](../typescript/testing.md) (vitest for new projects; Jest where the framework defaults to it). RTL works identically under both.
 - **Playwright Component Testing** — when component tests need a real browser engine (animation, layout, complex events)
 - **Cypress Component Testing** — alternative real-browser component runner
 
@@ -150,7 +149,7 @@ Component test with RTL + JSDOM cannot:
 - Test browser-native animation, CSS transitions
 - Test cross-frame interactions (iframes, popups)
 
-For those, use Playwright Component Testing or end-to-end Playwright/Cypress runs. See `e2e-testing` skill.
+For those, use Playwright Component Testing or an E2E run (framework per [typescript/testing.md](../typescript/testing.md)). See `e2e-testing` skill.
 
 ## Coverage Targets
 

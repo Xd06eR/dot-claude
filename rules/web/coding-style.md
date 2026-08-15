@@ -1,9 +1,9 @@
 ---
 paths:
-  - "**/*.css"
   - "**/*.html"
   - "**/*.tsx"
   - "**/*.jsx"
+  - "**/*.css"
   - "**/*.scss"
   - "**/*.sass"
   - "**/*.less"
@@ -15,7 +15,7 @@ paths:
 
 ## File Organization
 
-Organize by feature or page/route area, not by file type:
+By feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)):
 
 ```text
 src/

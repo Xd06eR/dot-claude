@@ -36,7 +36,7 @@ Adjust origins to the project; do not cargo-cult this block unchanged.
 ## XSS Prevention
 
 - Never inject unsanitized HTML
-- Avoid `innerHTML` / `dangerouslySetInnerHTML` unless sanitized first
+- Avoid `innerHTML` unless sanitized first (React sinks per [react/security.md](../react/security.md))
 - Escape dynamic template values
 - Sanitize user HTML with a vetted sanitizer library when absolutely necessary
 

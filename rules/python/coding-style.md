@@ -14,7 +14,7 @@ paths:
 
 ## Immutability
 
-Prefer immutable data structures:
+Principle per [common/coding-style.md](../common/coding-style.md) (Immutability); Python form:
 
 ```python
 from dataclasses import dataclass

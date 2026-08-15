@@ -12,7 +12,7 @@ paths:
 
 ## Framework
 
-Use **vitest** as the testing framework. Jest acceptable for legacy projects.
+Use **vitest** as the testing framework. Jest where the framework defaults to it (Next.js) or in legacy projects.
 
 ## Coverage
 
