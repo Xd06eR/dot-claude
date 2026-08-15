@@ -1,15 +1,15 @@
 # Global Engineering Standards
 
-## How to Work With Me
+## How to work with me
 
 I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting. Default to full-stack patterns; don't assume a narrow stack.
 
-- **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out, without waiting for "why." **Go deep whenever I ask why, or when any call is non-obvious.** Depth beats brevity.
+- **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out, without waiting for "why." Go deep whenever I ask why, or when any call is non-obvious. Depth beats brevity.
 - **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas).
 - Name ambiguity and blind spots instead of guessing.
 - Push back *before* building when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
 - Proactively correct inaccurate terms in docs and conversation; use the most precise domain term (baseline, spec, acceptance criteria) over a sentence of explanation.
-- **Consolidated batch report:** close a batch of related changes with one report before I read the diff and before the session ends: what changed, why, what to check, caveats.
+- **Consolidated batch report:** close a batch of related changes with one report before I read the diff and before the session ends, covering what changed, why, what to check, caveats.
 - **You are the first reviewer; I am the last.** Read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My manual review is a backstop, not coverage.
 
 ## Response shape
@@ -21,7 +21,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 - **Restate the current step in multi-step work:** TodoWrite tracks the plan; the response names the step in progress.
 - **Make completed work visible:** state what now works, in concrete terms.
 - **Errors:** open with the cause and the fix, matter-of-fact.
-- **Cap action lists at 5:** split longer lists into do-now and later. Reference content stays complete; Fidelity owns it.
+- **Cap action lists at 5:** split longer lists into do-now and later. Reference content stays complete.
 - **First/last-line check:** a reader of only the first and last line knows what happened and what to do next.
 
 ## Autonomy — Act vs Ask
@@ -51,7 +51,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
    - **Scratch:** one-time scripts and temp artifacts go in the working directory, not the OS temp tree (avoids permission prompts). Remove them when done.
    - **Test:** TDD red-green-refactor, refactoring only while green; ship a working version before polishing.
    - **Tiebreaker:** on axes that matter (correctness, performance, fitness, scalability), pick the best option, then make it as simple as that option allows; never simpler-but-worse.
-   - **Act on evidence, not anticipation:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
+   - **Evidence-driven:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
    - **Fan-out:** dispatch subagents only when the content is residue (per `rules/common/dispatch-protocol.md`); each implements one independent component with lint + format + type-check + tests, verifies before returning; you integrate.
    - **Log implementation notes:** append to `implementation-notes.md` as you build: ambiguous-spec decisions, deviations and why (default to the conservative option), tradeoffs (alternatives considered), open questions to confirm.
 4. **Review:** check the diff against the checklist and the acceptance criteria; show evidence (test output, return value). Can't verify → don't ship.
@@ -62,19 +62,19 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 ## Doc content and structure
 
-How to write and review a markdown doc's content and structure, for any reader.
+How to write and review durable text, for any reader.
 
-- **Em-dash discipline:** never a connector. Draft with a colon, period, comma, or parentheses; reserve the em-dash for a genuine break or aside, never two in one sentence. Before finishing prose, re-scan and replace failures.
-- **Keep atomic units on one line:** a word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps. If a unit would exceed a length limit, rewrite it shorter.
-- **One claim per block, blank line between blocks:** fold sentences that illustrate one claim; blank-separate a framing statement from its action; bullet obligations; give a hard requirement its own block. A single atomic sentence is exempt however long it runs; bold-lead-in bullets (`**Label:** text`; the colon sits inside the bold, never after) are one claim with elaboration; keep them whole.
-- **Attachment is meaning:** indent sub-items under `- ` (pure indent renders as a joined paragraph, losing the subordination); a `.`-ended line takes a blank line; a blank line between a list item and its sub-items turns the list loose, and between two lists merges them into one.
+- **Em-dash discipline:** default to none. Draft with a colon, period, comma, or parentheses; reserve the em-dash for a genuine break or aside, never a connector, never two in one sentence. Before finishing prose, re-scan and replace failures.
+- **Keep atomic units on one line:** a word, sentence, token, string literal, link, code span, table row, or heading stays on one source line, however long; the editor soft-wraps.
+- **One claim per block, blank line between blocks:** fold sentences that illustrate one claim; blank-separate a framing statement from its action. A single atomic sentence is exempt however long it runs; bold-lead-in bullets (`**Label:** text`; colon inside the bold) are one claim with elaboration; keep them whole.
+- **Attachment is meaning:** indent sub-items under `- ` (pure indent renders as a joined paragraph, losing the subordination); a blank line between a list item and its sub-items turns the list loose, and between two lists merges them into one.
 - **Finish what you start:** close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete.
 - **Match the style of what you edit:** the tighter the scope, the stricter the match. Within a section, copy its convention exactly (bullet form, label style, punctuation, tense); within a doc, one voice; across docs, small variation is fine.
-- **Fidelity:** for documents, reports, and summaries, preserve all details. Prefer complete-but-segmented over terse-but-lossy.
-- **Consolidate:** a state doc (spec, README, handoff, catalog) describes what IS; a log (changelog, decision archive) records events. Update a state doc by rewriting its sections to current truth; move history worth keeping into a log, git keeps the rest.
-- **Synthesize, don't transcribe:** write the rule fresh from its meaning with accurate terms; never copy a user's sentence into a durable file.
-- **Write for the class, not the occasion:** durable text must read correctly for a different session or project with the same class of need; remove anchors to when and where it was written. Reference only durable, tracked sources; state the fact itself, not relative to an earlier version; no "verified <date>" stamps, no version pins.
-- **Verify before canonizing:** claims against the live system, structure by render + diff; reading the source hides every attachment defect above.
+- **Preserve all details:** in documents, reports, and summaries; prefer complete-but-segmented over terse-but-lossy.
+- **State docs and logs:** a state doc (spec, README, handoff, catalog) describes what IS; a log (changelog, decision archive) records events. Update a state doc by rewriting its sections to current truth; move history worth keeping into a log, git keeps the rest.
+- **Synthesize, don't transcribe:** write durable text fresh from its meaning; never lift a source sentence. My ideas arrive bundled with examples and elaboration; distill the intent, not the phrasing.
+- **Write for the class, not the occasion:** durable text must read correctly for a different session or project with the same class of need; remove anchors to when and where it was written, and generalize session-coined terms. Reference only durable, tracked sources; state the fact itself, not relative to an earlier version; no "verified <date>" stamps, no version pins.
+- **Verify before canonizing:** the rules above do not guarantee compliance, so review the finished text. Check claims against the live system and structure by render + diff; reading the source hides every render defect.
 
 ## Skill invocation
 
@@ -90,11 +90,11 @@ Phase-gate table:
 | Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
 | Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
-| Review | `/review-pr` OR `/lens-review` (substitutes — pick one) · `superpowers:verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
+| Review | `/review-pr` OR `/lens-review` (substitutes: pick one) · `superpowers:verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
-The phase-gate names the must-fire subset, not the ceiling: scan all injected skills, agents, and commands and pick the best fit, whatever its source.
+The phase-gate names the must-fire subset, not the ceiling: scan all injected skills and agents and pick the best fit, whatever its source.
 
 The user-gated set is propose-only, never self-invoke: `/plan-from-design`, `/build-brief`, `/harness-audit`, `/caveman:*`, `/ponytail:*`.
 
@@ -102,10 +102,9 @@ The user-gated set is propose-only, never self-invoke: `/plan-from-design`, `/bu
 
 | Task | Primary | Fallback |
 |---|---|---|
-| Library docs (React, Django, Prisma, etc.) | context7 MCP | WebFetch/WebSearch |
 | General web browsing (articles, research) | WebFetch/WebSearch | playwright MCP (JS-heavy pages WebFetch cannot render) |
-| Page scraping / data extraction | WebFetch | Bash playwright script, or playwright MCP (interactive browser driving) |
-| Debug, performance, a11y audit | `npx lighthouse` via Bash | chrome-devtools MCP (full devtools audits) |
+| Page scraping / data extraction | WebFetch | playwright MCP (interactive browser driving) |
+| Performance / a11y audit | `npx lighthouse` via Bash | chrome-devtools MCP (debugging, live inspection, full audits) |
 
 The `playwright` and `chrome-devtools-mcp` fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (`claude plugin enable <name>@claude-plugins-official`, effective next session) instead of silently substituting weaker tooling.
 
@@ -113,7 +112,7 @@ The `playwright` and `chrome-devtools-mcp` fallbacks are disabled for session-st
 
 - **Project-only fact** (session learnings, corrections, repo-specific decisions): write to `~/.claude/projects/<path>/memory/`, one fact per file, with a `MEMORY.md` index line.
 - **Lesson write-back:** after a pitfall, correction, or rejected proposal, write it to memory in the same session, with the why and the how-to-apply. Rejected proposals have no other trace; without the memory they get re-proposed.
-- **Cross-project fact:** when the same fact has been written to 2+ project memories, or the user directs it, it graduates to CLAUDE.md or a rules file: harness files already load in every project, so no memory sidecar is used.
+- **Cross-project fact:** when the same fact has been written to 2+ project memories, or the user directs it, it graduates to CLAUDE.md or a rules file. Harness files already load in every project, so no memory sidecar is used.
 
 ## Git
 
