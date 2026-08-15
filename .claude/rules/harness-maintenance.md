@@ -18,7 +18,7 @@ Print the diff of changed files in your reply when the batch closes.
 
 ## House style for durable files
 
-- Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is allowed at any level if the path resolves from any cwd.
+- Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is allowed at any level if the path resolves from any cwd. Path form: relative markdown links inside the rules tree (the injection header carries the referrer's absolute path, so resolution never depends on the session cwd, and links render as clickable navigation on GitHub and in IDE markdown preview); absolute `~/.claude/...` in skill and command bodies (invocation may surface only a symbolic path), in shell commands and write destinations, and when naming the harness root.
 - Standardize on **main agent** for the orchestrating agent in all harness files; its dispatched workers are subagents; use no other name for it.
 - No model names or tier assumptions; the injection tells the agent what its harness offers — write no environment conditionals. Functional `model:` frontmatter in `agents/*.md` is exempt.
 
@@ -29,10 +29,10 @@ Print the diff of changed files in your reply when the batch closes.
 
 ## Audit execution
 
-- **Findings format:** every finding from any audit or review of the inventory follows `- **[SEVERITY]** [file:line]: [issue] — [fix]` (severity scale: read `~/.claude/rules/common/code-review.md` when scoring findings).
+- **Findings format:** every finding from any audit or review of the inventory follows `- **[SEVERITY]** [file:line]: [issue] — [fix]` (severity scale: read [code-review.md](../../rules/common/code-review.md) when scoring findings).
 - **Verify built-ins via the live list:** filesystem search cannot verify built-in skills; check the session's available-skills list before claiming stale or missing.
 - **Format:** edited durable files pass CLAUDE.md's Doc content and structure rules before the batch closes.
-- **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff per `~/.claude/rules/common/dispatch-protocol.md` §3.
+- **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff per [dispatch-protocol.md](../../rules/common/dispatch-protocol.md) §3.
 
 ## Size budget
 
