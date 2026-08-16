@@ -74,6 +74,7 @@ Assume prompt injection succeeds: anything in the context may be steering the mo
 
 - [ ] Completions validated against a schema before use; retries bounded; final failure rejects, never falls through to unvalidated output
 - [ ] Model output never reaches `eval`/`exec`, a shell, raw SQL, a file path, an outbound URL, or rendered HTML unvalidated; model-written code runs only in a sandbox
+- [ ] Model output treated as unverified claims; load-bearing facts cross-checked against authoritative sources before acting on them
 - [ ] Untrusted content (user text, retrieved documents, tool results, tool descriptions) never enters the system or instruction role; delimiters and data-marking are hygiene, not a boundary
 - [ ] Model and tool output persisted into memory or instructions re-enters as untrusted input, never as trusted context
 - [ ] Tool-call arguments validated server-side, with authorization checked against the end user's entitlements, never the agent's own service credentials
@@ -81,6 +82,7 @@ Assume prompt injection succeeds: anything in the context may be steering the mo
 - [ ] Retrieval enforces the caller's permissions inside the retrieval query (namespace or metadata filter), never by pruning results afterward or asking the model to withhold them
 - [ ] System prompts, tool schemas, and hidden context carry no secrets and no authorization logic; treat them all as disclosable
 - [ ] Token, spend, and recursion caps on every model call and agent loop
+- [ ] Model, provider, plugin, and dataset sources vetted and pinned; third-party artifacts integrity-checked (signing, file hashes) before load
 - [ ] Prompts and completions redacted before logging; no secrets, tokens, or PII in traces
 
 ## Automated Security

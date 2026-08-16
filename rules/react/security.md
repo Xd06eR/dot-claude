@@ -114,7 +114,7 @@ Prefixed env vars are bundled into the client. Treat them as public.
 |---|---|---|
 | Next.js | `NEXT_PUBLIC_*` | All others |
 | Vite | `VITE_*` | `.env` server-side only |
-| React Router (framework) / Remix | none | All; `process.env` reachable only in `loader`/`action` |
+| React Router (framework) / Remix | `VITE_*` (Vite-built apps) | All others; `process.env` server-side only, reaches the client only via loader data |
 
 ```ts
 // CRITICAL: secret leaked to client bundle
