@@ -52,9 +52,9 @@ Research before coding. Planning, TDD, review follow CLAUDE.md's 4-phase workflo
 
 - **Code navigation:** use LSP for definitions, references, and symbols; grep is for text patterns.
 
-## TodoWrite
+## Task tracking
 
-Use TodoWrite to track multi-step work, verify you understood the task, and enable real-time steering.
+Track multi-step work with the session's task tool (TodoWrite or the TaskCreate family); the list verifies you understood the task and enables real-time steering.
 
 The list itself is a check: out-of-order, missing, extra, or wrong-granularity steps mean the plan was misread — fix the understanding, not just the list.
 
@@ -80,4 +80,4 @@ When creating PRs:
 3. Draft comprehensive PR summary.
 4. Include test plan with TODOs.
 
-> For the full development process (planning, TDD, code review) before git operations, see CLAUDE.md (Workflow — Vibe Coding section).
+> For the full development process (planning, TDD, code review) before git operations, see CLAUDE.md (Workflow — 4-phase section).
