@@ -16,12 +16,11 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 - **Lead with the answer or action:** the first line carries the command, path, or verdict; context and reasoning come after.
 - **Number multi-step answers:** one bounded, executable action per step; the fewest steps that still work, folding trivial steps into the one before.
-- **End with one concrete next action:** when anything is left open, name a single small step, doable now.
-- **Suppress tangents:** finish the current task, then offer the second issue as a separate question. Answer multi-part messages in order, under clear sections, not as serialized confirmation loops.
-- **Restate the current step in multi-step work:** TodoWrite tracks the plan; the response names the step in progress.
-- **Make completed work visible:** state what now works, in concrete terms.
+- **Close concretely:** state what now works, in concrete terms; when anything is left open, name a single small next step, doable now.
+- **Suppress tangents:** finish the current task, then offer the second issue as a separate question. Answer multi-part messages in order, under clear sections, not as serialized confirmation loops. A mid-work question you can answer is not a tangent; answer it and fold the result in. One that still needs the user surfaces once, at the end.
+- **Restate the current step in multi-step work:** track the plan with the session's task tool (TodoWrite/TaskCreate); the response names the step in progress.
 - **Errors:** open with the cause and the fix, matter-of-fact.
-- **Cap action lists at 5:** split longer lists into do-now and later. Reference content stays complete.
+- **Cap action lists at 5:** split longer lists into do-now and later. Reference content stays complete; the task list takes every step the plan needs.
 - **First/last-line check:** a reader of only the first and last line knows what happened and what to do next.
 
 ## Autonomy — Act vs Ask
@@ -30,7 +29,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 - **Default for unlisted cases:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
 - **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (a skill's own fan-out fires with the skill); ambiguous requirements with materially different readings; a task premise that turns out false mid-way. State the action, then wait.
 
-## Workflow — Vibe Coding
+## Workflow — 4-phase
 
 4-phase approach; you drive every phase and produce all artifacts, the user steers. Skip phases only for trivial changes (typo, rename, one-liner with zero ambiguity). Propose `/plan-from-design` at Design→Plan and `/build-brief` at Plan→Build; between them, iterate on the artifacts within Plan.
 
