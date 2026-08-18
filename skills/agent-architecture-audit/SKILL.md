@@ -1,6 +1,6 @@
 ---
 name: agent-architecture-audit
-description: Use when releasing an agent app, debugging wrapper regression, or investigating tool-call failures. Full-stack diagnostic for agent and LLM applications. Audits the 12-layer agent stack for wrapper regression, memory pollution, tool discipline failures, hidden repair loops, and rendering corruption. Produces severity-ranked findings with code-first fixes. Essential for developers building agent applications, autonomous loops, or any LLM-powered feature.
+description: Use when releasing an agent app, debugging wrapper regression or tool-call failures, or auditing autonomous loops. Audits the 12-layer agent stack for wrapper regression, memory pollution, tool discipline failures, hidden repair loops, and rendering corruption. Produces severity-ranked findings with code-first fixes.
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 origin: ECC
 ---
@@ -29,7 +29,7 @@ A diagnostic workflow for agent systems that hide failures behind wrapper layers
 - General code debugging — use `agent-introspection-debugging`
 - Code review — use language-specific reviewer agents
 - Security scanning — use the `security-auditor` agent
-- Agent performance benchmarking — use `eval-harness`
+- Agent performance benchmarking
 - Writing new features — use the appropriate workflow skill
 
 ## The 12-Layer Stack
@@ -250,5 +250,4 @@ Audits should produce structured reports following this shape:
 ## Related Skills
 
 - `agent-introspection-debugging` — Debug agent runtime failures (loops, timeouts, state errors)
-- `eval-harness` — Benchmark agent reliability (pass@k) and set up eval-driven development
 - `security-auditor` agent — Security audit for code and configuration
