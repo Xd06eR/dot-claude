@@ -27,7 +27,7 @@ Activate this skill for:
 - producing a structured human-readable debug report
 
 Do not use this skill as the primary source for:
-- feature verification after code changes; use `superpowers:verification-before-completion`
+- feature verification after code changes; use `verification-before-completion`
 - framework-specific debugging when a narrower skill already exists
 - runtime promises the current harness cannot enforce automatically
 
@@ -137,7 +137,7 @@ Good pattern:
 
 ## Related skills
 
-- Use `superpowers:verification-before-completion` after recovery if code was changed.
+- Use `verification-before-completion` after recovery if code was changed.
 - Use `plan-review` when the issue is not technical failure but decision ambiguity.
 - Use `/harness-audit` if the failure came from conflicting local state or repo drift.
 

@@ -88,15 +88,18 @@ Invoke the phase's skills at phase entry, before any other action.
 
 **One skill per task is a failure mode.** Stack orthogonal skills: one per workflow phase, plus one per distinct concern within a phase; never two skills doing the same job (the phase-gate marks substitutes). Beyond what the phase-gate names, default 1–3 per phase; justify more.
 
+- **Skill check before any action:** the phase-gate covers phase entry; beyond it, when an injected skill or agent fits the task at hand, invoke it first and name what you invoked and for what ("Using X to Y").
+- **User instructions beat skill instructions:** when a skill's process conflicts with the user's stated instruction, the user's wins.
+
 Phase-gate table:
 
 | Phase | Invoke (must-fire) | Situational (on-demand) |
 |---|---|---|
-| Design | `superpowers:brainstorming` · `grill-me` · `grill-with-docs` | `search-first` · `design-consultation` |
-| Plan | `superpowers:writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
-| Build | `superpowers:test-driven-development` (or `tdd`) · `superpowers:subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
+| Design | `brainstorming` · `grill-me` · `grill-with-docs` | `search-first` · `design-consultation` |
+| Plan | `writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
+| Build | `test-driven-development` (or `tdd`) · `subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
-| Review | `/review-pr` OR `/lens-review` (substitutes: pick one) · `superpowers:verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
+| Review | `/review-pr` OR `/lens-review` (substitutes: pick one) · `verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `superpowers:systematic-debugging` · `diagnose` | — |
 
