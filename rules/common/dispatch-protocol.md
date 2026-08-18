@@ -6,7 +6,7 @@ How the main agent delegates work to subagents: what to dispatch, how results co
 
 The main agent plans, decides, and integrates; subagents carry work whose full contents the main agent does not need. The test: "will I reason from these exact contents later, or do I only need the answer?" Contents → read it yourself, however many files; answer → dispatch. What degrades a session is residue, not a large relevant working set.
 
-Parallel fan-out gates on independence: no shared state, no sequential dependency between chunks.
+Parallel fan-out gates on independence (no shared state, no sequential dependency between chunks) and declares its budget up front, with a hard stop.
 
 The agent that writes code must itself have read the code it changes; editing from a subagent's summary produces confident wrong patches. Do not dispatch a one-call read; dispatch overhead must be smaller than the work.
 
@@ -32,7 +32,7 @@ Per task type, the acceptance criteria must cover:
 
 - **Merge:** a precheck pass counts the concepts in both sources; every concept survives or each drop carries a reason; byte-diff every code block and table cell.
 - **Research:** primary sources preferred; load-bearing claims carry a source URL and retrieval date; the unconfirmable marked UNVERIFIED, never guessed.
-- **Review:** every finding has file:line + severity + a concrete failure scenario; an explicit ship-or-block verdict.
+- **Review:** every finding has file:line + severity + a quoted evidence line + a concrete failure scenario (no scenario, no finding); an explicit ship-or-block verdict.
 
 Report contract, binding on every subagent:
 
@@ -49,9 +49,21 @@ Report contract, binding on every subagent:
 
 ## 5. No self-verification
 
-The principle lives in CLAUDE.md's Review phase (no self-acceptance). Acceptance mechanics:
+The principle lives in CLAUDE.md's Review phase (acceptance evidence comes from a fresh agent). Acceptance mechanics:
 
 - **Code:** run the tests, linters, or the actual command; paste the decisive output (the passing or failing lines, not the full transcript) into the report. If no runnable check exists, write one first (see the TDD rule in CLAUDE.md).
 - **Batch final-audit:** for bulk edit batches, run the acceptance audit in main context and propose a parallel fresh-subagent pass; reconcile both sets of findings before reporting.
 - **Research/review:** spot-check the load-bearing items — re-fetch one cited URL, re-read one cited line; a report whose evidence does not check out is rejected in full.
 - **Scope compliance:** an out-of-brief edit is a defect even when the content is good — unrequested content per CLAUDE.md's Build principles, format per its Doc content and structure, corrupted code blocks or tables (byte-diff every block).
+
+## 6. Audit dispatches (wide and high-stakes)
+
+Nothing in this section fires on its own; it governs audit or review work already under way. When the work at hand is both **wide** (one pass cannot verify it line-by-line) and **high-stakes** (a missed finding means an irreversible break, a security hole, a broken public contract, or a wrong architecture call), propose this shape with the justification and wait for the user's call. The shape applies only where findings are objectively refutable; taste audits do not qualify. If the target or lens set is ambiguous, ask first: auditing the wrong one reports a clean pass on content it never checked.
+
+- **Independent lens finders:** 3-4 subagents, one per lens matched to the audit's purpose; no shared context, no cross-briefing. A pass on one lens is never evidence for another.
+- **Disproof verifier:** one subagent tries to refute every finding against its source; what cannot be re-grounded is dropped. False negatives acceptable; false positives are the enemy.
+- **Main-agent reconciliation:** dedup, severity-rank, coverage map. A finding stands until refuted with evidence; silence is not a refutation. An empty findings list is legitimate.
+- **Completeness against a discussion:** when a session transcript is the claim source, run it as a source pair. The main agent audits the artifacts, a transcript finder audits what was said; enumerate the claims and derive the gap list by script, never by re-reading.
+- **Mechanize first:** scriptable checks (links, counts, drift greps) run before any finder dispatches.
+- **Soundness probes:** for value-fixing content (numbers, formulas, thresholds), verify by recomputation and boundary evaluation, never by trusting the stated value.
+- **Read-only:** the audit never edits its target; fixes are a separate, user-gated step.
