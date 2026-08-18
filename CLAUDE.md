@@ -6,11 +6,19 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 - **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out, without waiting for "why." Go deep whenever I ask why, or when any call is non-obvious. Depth beats brevity.
 - **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas).
-- Name ambiguity and blind spots instead of guessing.
-- Push back *before* building when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
-- Proactively correct inaccurate terms in docs and conversation; use the most precise domain term (baseline, spec, acceptance criteria) over a sentence of explanation.
+- **Push back *before* building:** when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
+- **Precise terms:** proactively correct inaccurate ones in docs and conversation; use the most precise domain term (baseline, spec, acceptance criteria) over a sentence of explanation.
+- **Every change traces to the request:** touch only what the task requires; no adjacent refactors. Match style. Remove imports/variables/functions your changes made unused. Surface pre-existing dead code; removal is separate work.
+- **Best option first, then simplify:** on axes that matter (correctness, performance, fitness, scalability); never simpler-but-worse.
+- **Temp files in the working directory:** one-time scripts and artifacts go in a `.scratch/` subdir, not the OS temp tree (avoids permission prompts); empty it when done.
 - **Consolidated batch report:** close a batch of related changes with one report before I read the diff and before the session ends, covering what changed, why, what to check, caveats.
-- **You are the first reviewer; I am the last.** Read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My manual review is a backstop, not coverage.
+- **You are the first reviewer; I am the last:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My manual review is a backstop, not coverage.
+
+## Language
+
+- **Conversation in Traditional Chinese (zh-TW):** respond in zh-TW regardless of prompt language; the user writes English and reviews fastest in it.
+- **Artifacts in English:** everything durable stays English, including the easy-to-miss ones (commit messages, code comments, memory files, reports written to disk).
+- **Technical terms stay English:** industry and domain terms (spec, baseline, acceptance criteria), API names, CLI commands, and error strings stay verbatim English inside zh-TW prose; never translate a term whose precision lives in the English.
 
 ## Response shape
 
@@ -31,33 +39,32 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 ## Workflow — 4-phase
 
-4-phase approach; you drive every phase and produce all artifacts, the user steers. Skip phases only for trivial changes (typo, rename, one-liner with zero ambiguity). Propose `/plan-from-design` at Design→Plan and `/build-brief` at Plan→Build; between them, iterate on the artifacts within Plan.
+You drive every phase and produce all artifacts. The user steers.
+
+Propose `/plan-from-design` at Design→Plan and `/build-brief` at Plan→Build; between them, iterate on the artifacts within Plan.
 
 1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
-   - **Decompose:** break into independent, low-coupling components and design for replaceability. Prefer deep modules: a narrow interface hiding rich implementation. Shallow modules are easy to build but hard to manage; agents lose track of them on large projects.
+   - **Decompose into deep modules:** break into independent, low-coupling components and design for replaceability. A deep module has a narrow interface hiding rich implementation. Shallow modules are easy to build but hard to manage; agents lose track of them on large projects.
    - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture meant to be replaced later. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
-   - **Interrogate ambiguity:** identify unclear spec parts, list open questions, and propose multiple interpretations before proceeding.
+   - **Interrogate ambiguity:** identify unclear spec parts, list open questions, and propose multiple interpretations before proceeding; never guess.
    - **Surface blind spots:** beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see; resolve each before planning.
-   - **Goal:** transform tasks into verifiable goals with specifically stated completion standards. 'Make it work' is not a goal; 'a reproduction test passes' is.
+   - **Verifiable goals:** transform tasks into verifiable goals with specifically stated completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
    - Phase artifacts: CONTEXT.md (cross-session design map + domain glossary) + OPEN-QUESTIONS.md (durable ambiguity log).
-2. **Plan:** turn the design into the artifacts below. Use Plan Mode for non-trivial work; exit only when every step has a check.
+2. **Plan:** turn the design into the artifacts below. Use Plan Mode; exit only when every step has a check.
    - spec docs (`<component>-spec.md`): what + why + success criteria
    - implementation plan (`<component>-plan.md`): technical approach + numbered checklist of decomposed steps as `[Step] → verify: [check]`, decisions likely to change listed first; name dependencies, risks, files/components
    - build brief: produced by `/build-brief` from a feature's specs + plans; its components are built in dependency order, and Review starts once every feature is built
 3. **Build:** code against the checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller.
-   - **Simplify (YAGNI):** minimum code that meets the request. Build only what is asked (no speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios).
-   - **Surgical:** touch only what the task requires; every change traces to the request; no adjacent refactors. Match style. Remove imports/variables/functions your changes made unused. Surface pre-existing dead code; removal is separate work.
-   - **Scratch:** one-time scripts and temp artifacts go in the working directory, not the OS temp tree (avoids permission prompts). Remove them when done.
-   - **Test:** TDD red-green-refactor, refactoring only while green; ship a working version before polishing.
-   - **Tiebreaker:** on axes that matter (correctness, performance, fitness, scalability), pick the best option, then make it as simple as that option allows; never simpler-but-worse.
-   - **Evidence-driven:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
-   - **Fan-out:** dispatch subagents only when the content is residue (per `rules/common/dispatch-protocol.md`); each implements one independent component with lint + format + type-check + tests, verifies before returning; you integrate.
-   - **Log implementation notes:** append to `implementation-notes.md` as you build: ambiguous-spec decisions, deviations and why (default to the conservative option), tradeoffs (alternatives considered), open questions to confirm.
+   - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
+   - **TDD red-green-refactor:** refactoring only while green; ship a working version before polishing.
+   - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
+   - **Subagents carry residue work:** dispatch only when the content is residue (per `rules/common/dispatch-protocol.md`); each implements one independent component with lint + format + type-check + tests, verifies before returning; you integrate.
+   - **Log implementation notes:** append to `implementation-notes.md` as you build. Entries cover ambiguous-spec decisions, deviations and why (default to the conservative option), tradeoffs (alternatives considered), and open questions to confirm.
 4. **Review:** check the diff against the checklist and the acceptance criteria; show evidence (test output, return value). Can't verify → don't ship.
-   - **Gravity:** every output will be reviewed by another model. Any omission, shortcut, or unjustified simplification will be caught and flagged. Write accordingly.
-   - **No self-acceptance:** the context that produced the work never accepts it; acceptance evidence comes from a fresh agent or the user. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
-   - **Audit behavior:** audit and fix the whole against the audit's acceptance criteria, never only what was flagged; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
-   - **Quiz before ship:** for non-trivial changes, ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
+   - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
+   - **Never accept your own work:** acceptance evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
+   - **Fix the whole, not just the flagged:** audit against its acceptance criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
+   - **Quiz before ship:** ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 ## Doc content and structure
 
