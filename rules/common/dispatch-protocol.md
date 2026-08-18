@@ -39,6 +39,7 @@ Report contract, binding on every subagent:
 - Return conclusions, decisions, findings, and `file:line` evidence in full: everything the main agent needs to act on and to judge the work, including the reasoning behind non-obvious calls. No size limit ever forces dropping substance.
 - Exclude only residue: raw file contents, full command transcripts, re-derivable bulk.
 - When substance runs long (30+ lines), write it to disk in full and return a faithful structured summary plus the path.
+- No silent file work: the main agent prepares the files a dispatch needs and owns the durable-file lifecycle; a subagent that creates, modifies, or deletes files (build dispatches included) lists every touched path with its operation in the report, and removes its temp files before returning.
 - Always state what was NOT covered.
 
 ## 4. Attempts, escalation, and stopping
