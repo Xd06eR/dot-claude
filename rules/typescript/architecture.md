@@ -10,7 +10,7 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md#file-organization) with TypeScript/JavaScript module-structure conventions. React component architecture lives in [react/architecture.md](../react/architecture.md).
 
-## Directory Shape
+## Directory shape
 
 Organize by feature; each feature folder hides its internals behind a public entry point:
 
@@ -31,7 +31,7 @@ src/
 └── app/                        # composition root: wiring, routes, entry
 ```
 
-## Module Boundaries
+## Module boundaries
 
 - Import a feature only through its `index.ts` barrel — never deep-import a sibling feature's internal file.
 - Import direction flows one way: `app` → `features` → `shared`. Nothing imports upward; `shared/` imports nothing from `features/`.
@@ -43,7 +43,7 @@ src/
 - Tests live beside the source (`foo.test.ts` next to `foo.ts`), not in a parallel `__tests__` tree, unless the project convention says otherwise.
 - Feature-private helpers stay inside the feature folder; promote to `shared/` only after a second feature needs them.
 
-## Path Aliases
+## Path aliases
 
 - Configure a root alias (`@/` → `src/`) in `tsconfig.json` and use it instead of `../../../` chains beyond one level.
 - Keep aliases consistent across `tsconfig.json`, the bundler, and the test runner.

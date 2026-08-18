@@ -46,7 +46,7 @@ paths:
 
 # Testing Requirements
 
-## Coverage Target
+## Coverage target
 
 ≥80% baseline for new code — coverage is a floor, not evidence. Language-specific testing rules may refine targets per layer.
 
@@ -56,7 +56,7 @@ Workflow: failing test (RED) → minimal implementation (GREEN) → refactor →
 
 See the `superpowers:test-driven-development` skill for the full red-green-refactor workflow; the owned `tdd` skill carries the house extras (seams, tautological-test anti-pattern).
 
-## Test Types
+## Test types
 
 Three layers, use as needed:
 
@@ -74,7 +74,7 @@ When tests fail:
 
 A flaky test is a defect: fix the test, never mute it with retries.
 
-## Test Structure (AAA Pattern)
+## Test structure (AAA pattern)
 
 Prefer Arrange-Act-Assert structure for tests:
 
@@ -92,6 +92,6 @@ test('calculates similarity correctly', () => {
 })
 ```
 
-### Test Naming
+### Test naming
 
 Name the behavior under test: `test('returns empty array when no markets match query', ...)`.

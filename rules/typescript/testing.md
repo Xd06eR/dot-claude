@@ -18,7 +18,7 @@ Use **vitest** as the testing framework. Jest where the framework defaults to it
 
 Measure coverage with `vitest run --coverage`.
 
-## Test Organization
+## Test organization
 
 Use `describe` / `it` blocks for grouping; `.todo` stubs an unimplemented test:
 
@@ -29,7 +29,7 @@ describe('auth flow', () => {
 })
 ```
 
-## E2E Testing
+## E2E testing
 
 Use **Playwright** as the E2E testing framework for critical user flows.
 

@@ -25,7 +25,7 @@ Use these rules for FastAPI projects alongside the general Python rules.
 - Use async database and HTTP clients from async endpoints.
 - Do not call `requests`, sync SQLAlchemy sessions, or blocking file/network operations from async routes.
 
-## Dependency Injection
+## Dependency injection
 
 ```python
 @router.get("/users/{user_id}")

@@ -14,7 +14,7 @@ paths:
 
 > This file extends [typescript/coding-style.md](../typescript/coding-style.md) and [common/coding-style.md](../common/coding-style.md) with React specific content.
 
-## File Extensions
+## File extensions
 
 - `.tsx` for any file containing JSX, even one-liner snippets
 - `.ts` for pure logic, custom hooks without JSX, type definitions, utilities
@@ -29,7 +29,7 @@ paths:
 - Event handlers: `handleClick`, `handleSubmit` inside the component; the prop that receives it is `onClick`, `onSubmit`
 - Boolean props: `isLoading`, `hasError`, `canSubmit` — never `loading` or `error` alone for booleans
 
-## Component Shape
+## Component shape
 
 ```tsx
 type Props = {
@@ -67,7 +67,7 @@ return <h1>{greeting}</h1>;
 return <h1>{user.isAdmin ? "Welcome, admin" : `Hello ${user.name}`}</h1>;
 ```
 
-## Server / Client Boundary (Next.js App Router, RSC)
+## Server / client boundary (Next.js App Router, RSC)
 
 - Server Components are the default (boundary model per [architecture.md](./architecture.md)); add `"use client"` only when the file uses state, effects, refs, browser APIs, or event handlers
 - Place the `"use client"` directive on line 1, before any imports
@@ -80,7 +80,7 @@ return <h1>{user.isAdmin ? "Welcome, admin" : `Hello ${user.name}`}</h1>;
 - Then third-party libs, then absolute project imports, then relative
 - Type-only imports: `import type { ReactNode } from "react"` — never mix runtime and type imports in one statement when ESLint's `consistent-type-imports` is configured
 
-## Hooks Discipline
+## Hooks discipline
 
 See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for one-line wrappers — inline the call instead.
 
@@ -89,11 +89,11 @@ See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for
 - State location (local → lift → Context → external store): see [react/architecture.md](../react/architecture.md#state-location-decision-tree)
 - Compute during render instead of storing derivable state (principle per [web/architecture.md](../web/architecture.md))
 
-## Class Components
+## Class components
 
 Forbidden in new code (one exception: error boundaries, per [react/architecture.md](../react/architecture.md#suspense--error-boundaries)). Convert legacy class components to function components when touching them for non-trivial changes.
 
-## File Layout per Component
+## File layout per component
 
 ```
 components/UserCard/

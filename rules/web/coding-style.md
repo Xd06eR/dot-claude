@@ -13,7 +13,7 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md) with web-specific frontend content.
 
-## File Organization
+## File organization
 
 By feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)):
 
@@ -46,7 +46,7 @@ src/
 
 Per-component packaging (a folder per component) lives in [react/coding-style.md](../react/coding-style.md#file-layout-per-component).
 
-## CSS Custom Properties
+## CSS custom properties
 
 Define design tokens as variables. Do not hardcode palette, typography, or spacing repeatedly:
 
@@ -67,7 +67,7 @@ Define design tokens as variables. Do not hardcode palette, typography, or spaci
 }
 ```
 
-## Animation-Only Properties
+## Animation-only properties
 
 Prefer compositor-friendly motion:
 - `transform`
@@ -85,7 +85,7 @@ Avoid animating layout-bound properties:
 - `border`
 - `font-size`
 
-## Semantic HTML First
+## Semantic HTML first
 
 ```html
 <header>

@@ -8,7 +8,7 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md#file-organization) with Python package-structure conventions. FastAPI application structure lives in [fastapi.md](fastapi.md).
 
-## Directory Shape
+## Directory shape
 
 Use the `src/` layout; each package hides its internals behind a public entry point:
 
@@ -27,7 +27,7 @@ tests/                        # mirrors src/ structure
 pyproject.toml                # single project config root
 ```
 
-## Module Boundaries
+## Module boundaries
 
 - When the project uses `__init__.py` re-exports: import a package only through its `__init__.py`, never deep-import a sibling package's internal module — package internals stay replaceable.
 - Import direction flows one way: `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.

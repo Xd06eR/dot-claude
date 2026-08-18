@@ -57,7 +57,7 @@ paths:
 
 Prefer immutable patterns by default — create new objects rather than mutating shared state or inputs; local accumulators and hot paths may mutate.
 
-## File Organization
+## File organization
 
 MANY SMALL FILES > FEW LARGE FILES:
 - High cohesion, low coupling
@@ -65,7 +65,7 @@ MANY SMALL FILES > FEW LARGE FILES:
 - Extract utilities from large modules
 - Organize by feature/domain, not by type
 
-## Error Handling
+## Error handling
 
 ALWAYS handle errors comprehensively:
 - Handle errors at the level that can act; propagate otherwise — don't catch what you can't recover from
@@ -73,7 +73,7 @@ ALWAYS handle errors comprehensively:
 - Log detailed error context on the server side
 - Never silently swallow errors
 
-## Input Validation
+## Input validation
 
 ALWAYS validate at system boundaries:
 - Validate all user input before processing
@@ -81,11 +81,11 @@ ALWAYS validate at system boundaries:
 - Fail fast with clear error messages
 - Never trust external data (API responses, user input, file content)
 
-## API Response Format
+## API response format
 
 Match the project's existing response shape. When it has none, return errors as RFC 9457 problem details; whatever the shape, keep it consistent across endpoints.
 
-## Naming Conventions
+## Naming conventions
 
 > Language-specific rules in `rules/<language>/coding-style.md` override these defaults.
 
@@ -94,20 +94,20 @@ Match the project's existing response shape. When it has none, return errors as 
 - Constants: `UPPER_SNAKE_CASE`
 - Abbreviate in small scope, spell out cross-module
 
-## Code Smells to Avoid
+## Code smells to avoid
 
-### Deep Nesting
+### Deep nesting
 
 Prefer early returns over deeply nested conditionals.
 
-### Magic Numbers
+### Magic numbers
 
 Use named constants for meaningful thresholds, delays, and limits.
 
-### Long Functions
+### Long functions
 
 Split large functions into focused pieces with clear responsibilities.
 
-## Code Quality Checklist
+## Code quality checklist
 
 See [code-review.md](code-review.md#review-checklist) for the pre-complete checklist.

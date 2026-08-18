@@ -10,13 +10,13 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md) with TypeScript/JavaScript specific content. Focus is on non-default project conventions; standard TS style is assumed.
 
-## Types and Interfaces
+## Types and interfaces
 
 - Add parameter and return types to exported functions, shared utilities, and public class methods
 - Let TypeScript infer obvious local variable types
 - Extract repeated inline object shapes into named types or interfaces
 
-### Interfaces vs. Type Aliases
+### Interfaces vs. type aliases
 
 - Use `interface` for object shapes that may be extended or implemented
 - Use `type` for unions, intersections, tuples, mapped types, and utility types
@@ -46,14 +46,14 @@ function getErrorMessage(error: unknown): string {
 }
 ```
 
-### React Props
+### React props
 
 - Define component props with a named `interface` or `type`
 - Type callback props explicitly
 - Do not use `React.FC` unless there is a specific reason to do so
 
 
-### JavaScript Files
+### JavaScript files
 
 - In `.js` and `.jsx` files, use JSDoc when types improve clarity and a TypeScript migration is not practical
 - Keep JSDoc aligned with runtime behavior
@@ -68,7 +68,7 @@ function updateUser(user: Readonly<User>, name: string): User {
 }
 ```
 
-## Input Validation
+## Input validation
 
 Use Zod for schema-based validation and infer types from the schema:
 

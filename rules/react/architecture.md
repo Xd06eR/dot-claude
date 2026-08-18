@@ -14,11 +14,11 @@ paths:
 
 > React-specific architecture. For hook-specific rules see [hooks.md](./hooks.md).
 
-## Logic Extraction
+## Logic extraction
 
 Extract shared logic into custom hooks first — they reuse behavior without imposing a file split. Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
 
-## State Location Decision Tree
+## State location decision tree
 
 1. Used by one component → `useState` inside it
 2. Used by parent + a few children → lift to nearest common ancestor, pass via props
@@ -26,7 +26,7 @@ Extract shared logic into custom hooks first — they reuse behavior without imp
 4. High-frequency updates shared across the tree → external store (Zustand, Jotai, Redux Toolkit)
 5. Server-derived data → server-state library (TanStack Query, SWR, or a Server Component fetch) — not application state
 
-## Server / Client Component Boundary (RSC, Next.js App Router)
+## Server / Client Component boundary (RSC, Next.js App Router)
 
 - Server Components are the default — they run on the server, do not ship to the client, and can `await` directly
 - Client Components opt in with `"use client"` at the top of the file
@@ -91,7 +91,7 @@ export function UserForm() {
 
 Use controlled inputs only when the value drives other UI, requires real-time validation, or formatting.
 
-### Form Libraries
+### Form libraries
 
 For complex forms (multi-step, dynamic field arrays, cross-field validation), use a library:
 
@@ -99,7 +99,7 @@ For complex forms (multi-step, dynamic field arrays, cross-field validation), us
 - TanStack Form — typed, framework-agnostic
 - Final Form — when subscription-based re-renders matter
 
-## Data Fetching
+## Data fetching
 
 | Strategy | When |
 |---|---|
@@ -110,7 +110,7 @@ For complex forms (multi-step, dynamic field arrays, cross-field validation), us
 
 Never fetch in a `useEffect` when a real cache library is available — they handle deduping, cache invalidation, error retry, and Suspense integration.
 
-## Compound Components
+## Compound components
 
 For related controls (Tabs, Accordion, Menu), use compound components sharing state via Context.
 
@@ -130,6 +130,6 @@ export function Input({ ref, ...rest }: { ref?: React.Ref<HTMLInputElement> } & 
 
 Older codebases on React 18 still need `forwardRef` (slated for deprecation — prefer ref-as-prop when upgrading).
 
-## Skill Reference
+## Skill reference
 
 See `frontend-a11y` skill for accessibility patterns.

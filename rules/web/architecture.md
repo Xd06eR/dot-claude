@@ -13,7 +13,7 @@ paths:
 
 > Web-specific architecture, design-quality, and performance rules. Component patterns (compound components, container/presentational) live in [react/architecture.md](../react/architecture.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
 
-## State Management
+## State management
 
 Treat these separately:
 
@@ -27,7 +27,7 @@ Treat these separately:
 - Do not duplicate server state into client stores
 - Derive values instead of storing redundant computed state
 
-## URL As State
+## URL as state
 
 Persist shareable state in the URL:
 
@@ -37,30 +37,30 @@ Persist shareable state in the URL:
 - active tab
 - search query
 
-## Data Fetching
+## Data fetching
 
-### Stale-While-Revalidate
+### Stale-while-revalidate
 
 - Return cached data immediately
 - Revalidate in the background
 - Prefer existing libraries instead of rolling this by hand
 
-### Optimistic Updates
+### Optimistic updates
 
 - Snapshot current state
 - Apply optimistic update
 - Roll back on failure
 - Emit visible error feedback when rolling back
 
-### Parallel Loading
+### Parallel loading
 
 - Fetch independent data in parallel
 - Avoid parent-child request waterfalls
 - Prefetch likely next routes or states when justified
 
-## Design Quality
+## Design quality
 
-### Anti-Template Policy
+### Anti-template policy
 
 Do not ship generic template-looking UI. Frontend output should look intentional, opinionated, and specific to the product.
 
@@ -77,7 +77,7 @@ Banned patterns:
 
 Do not default to dark mode automatically. Choose the visual direction the product actually wants.
 
-### Component Checklist
+### Component checklist
 
 - [ ] Does it avoid looking like a default Tailwind or shadcn template?
 - [ ] Does it have intentional hover/focus/active states?
@@ -89,7 +89,7 @@ For full design work, use the design skills: `design-consultation` (system from 
 
 ## Performance
 
-### Core Web Vitals Targets
+### Core Web Vitals targets
 
 | Metric | Target |
 |--------|--------|
@@ -99,7 +99,7 @@ For full design work, use the design skills: `design-consultation` (system from 
 | FCP | < 1.5s |
 | TBT | < 200ms |
 
-### Bundle Budget
+### Bundle budget
 
 | Page Type | JS Budget (gzipped) | CSS Budget |
 |-----------|---------------------|------------|
@@ -107,7 +107,7 @@ For full design work, use the design skills: `design-consultation` (system from 
 | App page | < 300kb | < 50kb |
 | Microsite | < 80kb | < 15kb |
 
-### Loading Strategy
+### Loading strategy
 
 1. Inline critical above-the-fold CSS where justified
 2. Preload the hero image and primary font only
@@ -119,7 +119,7 @@ const gsapModule = await import('gsap');
 const { ScrollTrigger } = await import('gsap/ScrollTrigger');
 ```
 
-### Image Optimization
+### Image optimization
 
 - Explicit `width` and `height`
 - `loading="eager"` plus `fetchpriority="high"` for hero media only
@@ -127,14 +127,14 @@ const { ScrollTrigger } = await import('gsap/ScrollTrigger');
 - Prefer AVIF or WebP with fallbacks
 - Never ship source images far beyond rendered size
 
-### Font Loading
+### Font loading
 
 - Max two font families unless there is a clear exception
 - `font-display: swap`
 - Subset where possible
 - Preload only the truly critical weight/style
 
-### Animation Performance
+### Animation performance
 
 - Animate compositor-friendly properties only (allow/deny list: [coding-style.md](./coding-style.md#animation-only-properties))
 - Use `will-change` narrowly and remove it when done
@@ -142,7 +142,7 @@ const { ScrollTrigger } = await import('gsap/ScrollTrigger');
 - Use `requestAnimationFrame` or established animation libraries for JS motion
 - Avoid scroll handler churn; use IntersectionObserver or libraries that throttle via passive listeners/rAF
 
-### Performance Checklist
+### Performance checklist
 
 - [ ] All images have explicit dimensions
 - [ ] No accidental render-blocking resources

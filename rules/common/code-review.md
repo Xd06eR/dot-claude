@@ -46,7 +46,7 @@ paths:
 
 # Code Review Standards
 
-## When to Review
+## When to review
 
 **MANDATORY review triggers:**
 
@@ -65,7 +65,7 @@ paths:
 
 **Review scale tracks automation scale:** N automated or looped changes need N reviewed diffs — a skim of the summary is not review. Spot-check the gate itself periodically by sampling its verdicts; gates drift.
 
-## Review Checklist
+## Review checklist
 
 Before marking code complete:
 
@@ -81,7 +81,7 @@ Before marking code complete:
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
 - [ ] Test coverage meets the new-code baseline (per testing.md)
 
-## Security Review Triggers
+## Security review triggers
 
 **Apply extra scrutiny when reviewing:**
 
@@ -93,7 +93,7 @@ Before marking code complete:
 - Cryptographic operations
 - Payment or financial code
 
-## Review Severity Levels
+## Review severity levels
 
 | Level | Meaning | Action |
 |-------|---------|--------|
@@ -102,7 +102,7 @@ Before marking code complete:
 | MEDIUM | Maintainability concern | **INFO** - Consider fixing |
 | LOW | Style or minor suggestion | **NOTE** - Optional |
 
-## Review Tools
+## Review tools
 
 | Tool | Type | Use when |
 |------|------|----------|
@@ -121,7 +121,7 @@ Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/revi
 
 Post-review remediation (fix agents, not review lenses): `react-build-resolver` (React build failures), `code-simplifier` (clarity/consistency refinement).
 
-## Review Workflow
+## Review workflow
 
 ```
 1. Run git diff to understand changes
@@ -132,7 +132,7 @@ Post-review remediation (fix agents, not review lenses): `react-build-resolver` 
 6. Use relevant tool from Review Tools table for domain-specific review
 ```
 
-## Common Issues to Catch
+## Common issues to catch
 
 ### Security
 

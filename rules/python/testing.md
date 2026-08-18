@@ -16,7 +16,7 @@ Use **pytest** as the testing framework.
 
 Measure coverage with `pytest --cov=src` (pytest-cov).
 
-## Test Organization
+## Test organization
 
 Use `pytest.mark` for test categorization:
 
