@@ -58,7 +58,7 @@ Track multi-step work with the session's task tool (TodoWrite or the TaskCreate 
 
 The list itself is a check: out-of-order, missing, extra, or wrong-granularity steps mean the plan was misread — fix the understanding, not just the list.
 
-## Research & Reuse
+## Research & reuse
 
 Mandatory before adding a capability or a dependency:
 
@@ -71,7 +71,7 @@ Mandatory before adding a capability or a dependency:
 - Prefer adopting or porting a proven approach over writing net-new code when it meets the requirement.
 - See `search-first` skill for structured research-before-coding workflow.
 
-## Pull Request Workflow
+## Pull request workflow
 
 When creating PRs:
 

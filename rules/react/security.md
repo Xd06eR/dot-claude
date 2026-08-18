@@ -40,7 +40,7 @@ Audit checklist for every `dangerouslySetInnerHTML` call:
 - If user-derived: is it sanitized at the **same call site**? (Sanitization at the API boundary is acceptable only if every consumer is verified.)
 - Is the sanitizer config allowlisting tags, not denylisting?
 
-## Unsafe URL Schemes
+## Unsafe URL schemes
 
 `javascript:` and `data:` URLs in `href`, `src`, and `xlink:href` execute arbitrary code.
 
@@ -63,7 +63,7 @@ function safeUrl(url: string): string | undefined {
 
 React 19+ throws on `javascript:` URLs in `href`/`src`; validate schemes anyway — `data:` and other schemes, and non-React sinks, are not covered.
 
-## `target="_blank"` Without `rel`
+## `target="_blank"` without `rel`
 
 `<a target="_blank">` without `rel="noopener noreferrer"` lets the target page access `window.opener` and run navigation hijacks.
 
@@ -77,7 +77,7 @@ React 19+ throws on `javascript:` URLs in `href`/`src`; validate schemes anyway 
 
 Modern browsers default to `noopener` when `target="_blank"`, but do not rely on browser defaults — be explicit.
 
-## Server Action Input Validation
+## Server Action input validation
 
 Server Actions (`"use server"`) run with the same trust level as a public API endpoint. Validate every input.
 
@@ -106,7 +106,7 @@ export async function updateUser(_state: unknown, formData: FormData) {
 - Middleware is not authorization — re-check auth inside every Server Action and data-owning layout
 - Anything passed across the RSC boundary to a Client Component ships to the browser — pass IDs, not records with internal fields
 
-## Secret Exposure via Env Vars
+## Secret exposure via env vars
 
 Prefixed env vars are bundled into the client. Treat them as public.
 
@@ -138,7 +138,7 @@ Configure server-side — full nonce-based header block in [web/security.md](../
 - For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces — both Next.js and Remix support nonce injection
 - `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries — document the tradeoff
 
-## Prototype Pollution via Object Spread
+## Prototype pollution via object spread
 
 ```tsx
 // WRONG: untrusted JSON spread directly into state
@@ -151,7 +151,7 @@ const parsed = Allowed.parse(await req.json());
 setState({ ...state, ...parsed });
 ```
 
-## SSR Template Injection
+## SSR template injection
 
 When using `renderToString` or `renderToPipeableStream`:
 
@@ -159,13 +159,13 @@ When using `renderToString` or `renderToPipeableStream`:
 - Values passed to `dangerouslySetInnerHTML` are NOT escaped — same rules as client
 - Manually constructed HTML wrappers around the React output must be escaped or sanitized — never concatenate user input into the surrounding HTML template
 
-## Third-Party Components
+## Third-party components
 
 - Dependency vetting per [common/security.md](../common/security.md) (Review checklist); UI-library checks below
 - Check that the library does not internally use `dangerouslySetInnerHTML` on its input (e.g., rich text editors)
 - Review changelogs before major upgrades
 - Be wary of components that accept HTML strings as props
 
-## Source Map Exposure in Production
+## Source map exposure in production
 
 Production builds should ship without source maps, or with sourcemaps uploaded to an error tracker (Sentry) and stripped from the public bundle. Public source maps leak internal logic and file structure.

@@ -13,7 +13,7 @@ paths:
 
 Always configure a production CSP.
 
-### Nonce-Based CSP
+### Nonce-based CSP
 
 Use a per-request nonce for scripts instead of `'unsafe-inline'`.
 
@@ -36,21 +36,21 @@ Adjust origins to the project; do not cargo-cult this block unchanged.
 - Every `<script>` tag, static or inline, must carry the nonce: with `strict-dynamic`, CSP3 browsers ignore host sources and `'unsafe-inline'`, so a nonce-less script is blocked even when its origin matches `'self'`
 - Browsers without CSP3 support (Safari <15.4, IE11, pre-2016 Chrome/Firefox; ~1% global usage) ignore `strict-dynamic` and enforce the host allowlist, so dynamically-loaded scripts get no coverage there unless their hosts are listed explicitly
 
-## XSS Prevention
+## XSS prevention
 
 - Never inject unsanitized HTML
 - Avoid `innerHTML` unless sanitized first (React sinks per [react/security.md](../react/security.md))
 - Escape dynamic template values
 - Sanitize user HTML with a vetted sanitizer library when absolutely necessary
 
-## Third-Party Scripts
+## Third-party scripts
 
 - Load asynchronously
 - Use SRI when serving from a CDN
 - Re-audit when adding or upgrading a third-party script
 - Prefer self-hosting for critical dependencies when practical
 
-## HTTPS and Headers
+## HTTPS and headers
 
 ```text
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload

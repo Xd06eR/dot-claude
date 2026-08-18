@@ -46,7 +46,7 @@ paths:
 
 # Security Guidelines
 
-## Mandatory Security Checks
+## Mandatory security checks
 
 Before ANY commit:
 - [ ] No hardcoded secrets (API keys, passwords, tokens)
@@ -61,14 +61,14 @@ Before ANY commit:
 - [ ] Dependencies vetted: audit run on add (`npm audit` / `pip-audit`), versions pinned, new packages checked for maintenance and provenance
 - [ ] SSRF guards on outbound fetches; path-traversal guards on file paths
 
-## Secret Management
+## Secret management
 
 - NEVER hardcode secrets in source code
 - ALWAYS use environment variables or a secret manager
 - Validate that required secrets are present at startup
 - Rotate any secrets that may have been exposed
 
-## LLM Integration
+## LLM integration
 
 Assume prompt injection succeeds: anything in the context may be steering the model, so every security control is enforced outside it, in deterministic code. Model output is untrusted input, and so is everything interpolated into a prompt.
 
@@ -85,11 +85,11 @@ Assume prompt injection succeeds: anything in the context may be steering the mo
 - [ ] Model, provider, plugin, and dataset sources vetted and pinned; third-party artifacts integrity-checked (signing, file hashes) before load
 - [ ] Prompts and completions redacted before logging; no secrets, tokens, or PII in traces
 
-## Automated Security
+## Automated security
 
 The `security-guidance` plugin auto-runs pattern warnings on edit and security review on diff and commit.
 
-## Security Response Protocol
+## Security response protocol
 
 If security issue found:
 1. STOP immediately
