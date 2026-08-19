@@ -65,7 +65,7 @@ Write a single comprehensive brief covering every component in the feature:
 4. **Dispatch plan** — split the feature's components:
    - INDEPENDENT components: one subagent each, in parallel, per `rules/common/dispatch-protocol.md` (residue test, escalation levers, report contract).
    - Sequential/dependent components: built in the main session, in dependency order.
-   - Every build prompt (main session or dispatched) runs the TDD loop per `test-driven-development` (or `tdd`) at the seams agreed in the specs, with `/implement`'s cadence: failing test first, implement, then lint + format + type-check + tests; typecheck and single test files regularly, the full suite once at the end. Verify before returning.
+   - Every build prompt (main session or dispatched) runs the TDD loop per `tdd` at the seams agreed in the specs, with `/implement`'s cadence: failing test first, implement, then lint + format + type-check + tests; typecheck and single test files regularly, the full suite once at the end. Verify before returning.
 5. **Feature acceptance** — the feature is done when every component's acceptance passes. State explicitly.
 
 ## Integration

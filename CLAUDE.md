@@ -95,13 +95,13 @@ Phase-gate table:
 
 | Phase | Invoke (must-fire) | Situational (on-demand) |
 |---|---|---|
-| Design | `brainstorming` · `grill-me` · `grill-with-docs` | `search-first` · `design-consultation` |
-| Plan | `writing-plans` · `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
-| Build | `test-driven-development` (or `tdd`) · `subagent-driven-development` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
+| Design | `grill-me` · `grill-with-docs` | `search-first` · `design-consultation` |
+| Plan | `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
+| Build | `tdd` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
 | Review | `/review-pr` OR `/lens-review` (substitutes: pick one) · `verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
-| Debug | `systematic-debugging` · `diagnosing-bugs` | — |
+| Debug | `diagnosing-bugs` | — |
 
 The phase-gate names the must-fire subset, not the ceiling: scan all injected skills and agents and pick the best fit, whatever its source.
 

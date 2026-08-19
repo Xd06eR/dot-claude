@@ -6,7 +6,7 @@ origin: mattpocock
 
 Implement the work described by the user in the spec or tickets.
 
-Use TDD where possible, at pre-agreed seams — `test-driven-development` is the standard; `tdd` carries the house extras (seams, tautological-test anti-pattern).
+Use TDD where possible, at pre-agreed seams — per the `tdd` skill (standard + house extras: seams, tautological-test anti-pattern).
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 

@@ -54,7 +54,7 @@ paths:
 
 Workflow: failing test (RED) → minimal implementation (GREEN) → refactor → verify coverage meets target.
 
-See the `test-driven-development` skill for the full red-green-refactor workflow; the owned `tdd` skill carries the house extras (seams, tautological-test anti-pattern).
+See the `tdd` skill for the full red-green-refactor workflow and the house extras (seams, tautological-test anti-pattern).
 
 ## Test types
 
