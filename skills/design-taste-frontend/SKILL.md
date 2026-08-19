@@ -34,7 +34,8 @@ Before touching code or tweaking dials, **infer what the user actually wants**. 
 3. **Reference signals** - URLs they linked, screenshots they pasted, products they named, brands they're competing with.
 4. **Audience** - B2B procurement panel vs. design-conscious consumer vs. recruiter scanning a portfolio. The audience picks the aesthetic, not your taste.
 5. **Brand assets that already exist** - logo, color, type, photography. For redesigns, these are starting material, not optional input (see [references/redesign-protocol.md](references/redesign-protocol.md)).
-6. **Quiet constraints** - accessibility-first audiences, public-sector, regulated industries, trust-first commerce, kids' products. These constraints OVERRIDE aesthetic preference.
+6. **Settled design system** - if a `DESIGN.md` (or equivalent tokens file) exists, its tokens are authoritative and override anything inferred from the signals above.
+7. **Quiet constraints** - accessibility-first audiences, public-sector, regulated industries, trust-first commerce, kids' products. These constraints OVERRIDE aesthetic preference.
 
 ### 0.B Output a one-line "Design Read" before generating
 Before any code, state in one line: **"Reading this as: \<page kind> for \<audience>, with a \<vibe> language, leaning toward \<design system or aesthetic family>."**

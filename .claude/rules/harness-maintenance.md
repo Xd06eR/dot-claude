@@ -45,7 +45,7 @@ Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~
 ## CLAUDE.md and instruction docs
 
 - CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
-- The CLAUDE.md catalog is routing-only: phase-fired + auto-invoked names, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Slash prefix = user-typed invocation; bare name = model-invoked skill. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
+- The CLAUDE.md catalog is routing-only: the fixed openings and the user-invoked set, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Slash prefix = user-typed invocation; bare name = model-invoked skill. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
 
 ## Rules
 
@@ -55,7 +55,7 @@ Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~
 ## Skills, commands, and agents
 
 - **Persona and headings:** agents get a terse persona (1–3 sentences: role, specialty, responsibility) after the frontmatter, at the top of the body, and no H1 — the frontmatter name already provides it. Commands and skills get no persona; an H1 only when a genuine title beyond the bare name.
-- **Frontmatter:** name, description-with-trigger, tools, origin (origin last); add `part-of` for multi-agent families. Quote the description with `""` only when it contains a colon.
+- **Frontmatter:** name, description-with-trigger, then `disable-model-invocation` and `argument-hint` when present, tools, origin (origin last); add `part-of` for multi-agent families. Quote the description with `""` only when it contains a colon.
 - **Description = the routing surface:** stance + trigger + what it returns; never a workflow summary. A `## When to invoke` body section is an anti-pattern — relocate its content into the description, never drop it.
 - **Pre-existing components:** change only when an effectiveness case justifies it. Description re-tailoring is justified (it is routing); cosmetic trims are not.
 - **Multi-exemplar:** read sibling components before writing; base format and structure on the best practice across them, never on one target.

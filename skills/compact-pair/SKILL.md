@@ -1,6 +1,6 @@
 ---
 name: compact-pair
-description: Produce the pre-compact prompt pair for a session about to be compacted: a custom /compact instruction (a short positive Keep-list) and a post-compact resume prompt (re-ground reads + scaled context recovery). Auto-invoke when the user signals they will compact, asks for compact or resume prompts, or the session spans multiple compactions.
+description: "Produce the pre-compact prompt pair for a session about to be compacted: a custom /compact instruction (a short positive Keep-list) and a post-compact resume prompt (re-ground reads + scaled context recovery). Auto-invoke when the user signals they will compact, asks for compact or resume prompts, or the session spans multiple compactions."
 origin: custom
 ---
 

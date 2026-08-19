@@ -89,6 +89,7 @@ Run a comprehensive pull request review using multiple specialized agents, each 
    - comment-analyzer: N
    - silent-failure-hunter: N
    - type-design-analyzer: N
+   - spec-reviewer: N
 
    ## Recommendation
    BLOCK — N CRITICAL finding(s) must fix before merge.
@@ -120,6 +121,6 @@ The one substantive addition. Each finding-producing agent returns findings inde
 
 - Dispatch agents other than the seven in step 4: `code-reviewer`, `pr-test-analyzer`, `comment-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `spec-reviewer`, `code-simplifier`.
 - Run `git commit`, `git push`, or any destructive op. Output commands for the user.
-- Emit usage examples, agent descriptions, tips, workflow integration, or troubleshooting notes; CLAUDE.md phase-gates route usage.
+- Emit usage examples, agent descriptions, tips, workflow integration, or troubleshooting notes; CLAUDE.md routes usage.
 - Skip aggregation. The dedup and severity normalization are the point of this command.
 - Auto-apply fixes from finding-producing agents. Only `code-simplifier` applies changes, and only after review passes.

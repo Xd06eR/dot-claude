@@ -1,6 +1,6 @@
 ---
 name: react-build-resolver
-description: Diagnose and fix React build failures across Vite, webpack, Next.js, CRA, Parcel, esbuild, and Bun: JSX/TSX compile errors, hydration mismatches, server/client component boundary failures, missing types, bundler configuration. Dispatch when a React build fails. Returns per-file fixes applied plus a final build status (SUCCESS/FAILED, errors fixed, files modified, blockers).
+description: "Diagnose and fix React build failures across Vite, webpack, Next.js, CRA, Parcel, esbuild, and Bun: JSX/TSX compile errors, hydration mismatches, server/client component boundary failures, missing types, bundler configuration. Dispatch when a React build fails. Returns per-file fixes applied plus a final build status (SUCCESS/FAILED, errors fixed, files modified, blockers)."
 tools: Read, Write, Edit, Bash, Grep, Glob
 origin: ECC
 ---
@@ -31,7 +31,7 @@ Your mission is to fix React build failures across Vite, webpack, Next.js, Creat
 
 This agent owns **React build / bundler / runtime hydration** failures.
 
-For pure TypeScript type errors with no React involvement (no JSX/TSX, no `react` import), defer to a future `typescript-build-resolver` or fix inline only when the error blocks the React build.
+Pure TypeScript type errors with no React involvement (no JSX/TSX, no `react` import) are out of scope unless they block the React build; fix only the blocking ones, note the rest in the final report.
 
 ## Core Responsibilities
 

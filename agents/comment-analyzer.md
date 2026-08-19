@@ -48,7 +48,7 @@ When analyzing comments, you will:
 
 ## Severity Mapping
 
-Map findings to the house scale; the plugin's category is preserved alongside:
+Map findings to the house scale; the original category is preserved alongside:
 
 - **HIGH** (Critical Issues): Comments that are factually incorrect or highly misleading
 - **MEDIUM** (Improvement Opportunities): Comments that could be enhanced

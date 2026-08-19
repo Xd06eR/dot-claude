@@ -116,8 +116,10 @@ Before marking code complete:
 | `silent-failure-hunter` | Agent | Hunt swallowed errors, bad fallbacks, missing propagation |
 | `type-design-analyzer` | Agent | Type encapsulation + invariant review |
 | `security-auditor` | Agent | Adversarial security audit of a diff or design (pre-ship gate) |
+| `spec-reviewer` | Agent | Spec-fidelity review of a diff against its originating spec/PRD |
+| `database-reviewer` | Agent | PostgreSQL review: query optimization, schema design, RLS/security |
 
-Review tools (`review-pr`, `lens-review`) are substitutes — pick one. `review-pr` aggregates the concern-agents; `lens-review` runs 5 review lenses with confidence scoring. Authoritative phase-gate order in CLAUDE.md.
+Review tools (`review-pr`, `lens-review`) are substitutes — pick one. `review-pr` aggregates the concern-agents; `lens-review` runs 5 review lenses with confidence scoring.
 
 Post-review remediation (fix agents, not review lenses): `react-build-resolver` (React build failures), `code-simplifier` (clarity/consistency refinement).
 
@@ -129,7 +131,7 @@ Post-review remediation (fix agents, not review lenses): `react-build-resolver` 
 3. Review code quality checklist
 4. Run relevant tests
 5. Verify the new-code coverage baseline (per testing.md)
-6. Use relevant tool from Review Tools table for domain-specific review
+6. Use relevant tool from Review tools table for domain-specific review
 ```
 
 ## Common issues to catch

@@ -47,7 +47,7 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 ### D. Routing and invocation
 
 7. **Description drift (auto-invocation).** Descriptions keyed to trigger phrases ("use when the user says X") instead of intent/phase ("use at the [phase] when [situation]"): the former only fire on literal lexical matches and are the top cause of skills not auto-invoking. Also flag a description whose chaining clause names a renamed, converted, or deleted skill.
-8. **Skill-invocation probe.** For skills with clear trigger phrases, run `claude -p '<probe prompt>' --tools "Skill" --output-format stream-json --verbose` and check the stream for a real `Skill` tool_use (`"name":"Skill"`) invoking the expected skill, or a phase-gate predecessor of it (a build-phrased probe may correctly fire a Design-phase skill first). A positive proves prompt-to-skill routing and actual invocation, not just an announce line. A zero is uninformative, not evidence of breakage. The skill's full workflow still needs an interactive session to verify.
+8. **Skill-invocation probe.** For skills with clear trigger phrases, run `claude -p '<probe prompt>' --tools "Skill" --output-format stream-json --verbose` and check the stream for a real `Skill` tool_use (`"name":"Skill"`) invoking the expected skill, or a fixed-entry predecessor of it (a build-phrased probe may correctly fire a Design entry first). A positive proves prompt-to-skill routing and actual invocation, not just an announce line. A zero is uninformative, not evidence of breakage. The skill's full workflow still needs an interactive session to verify.
 9. **Routing-not-inventory.** An always-loaded file (CLAUDE.md, unscoped rules) enumerating discoverable items: skill/agent lists with restated descriptions, situational enumerations that duplicate the session injection. The catalog is a routing table: phase-fired and auto-invoked names only. Descriptions live in frontmatter; discovery comes from the injection.
 
 ### E. Installs and safety
@@ -55,7 +55,7 @@ Detect what kind of target it is (a harness dir like `~/.claude`, or a project r
 10. **Dead skill/agent installs.** A thing that reads "available" but fails at invocation:
     - A `SKILL.md` whose body references a bundled file, script, or sibling skill that is not on disk.
     - A skill dir whose `SKILL.md` is a broken symlink (`find skills -xtype l`, want 0).
-    - An agent named in a phase-gate or chaining clause that has no `agents/*.md`.
+    - An agent named in a chaining clause or routing reference that has no `agents/*.md`.
 11. **Git-safety in skills.** Any skill body that executes `git commit`/`git push`/`gh pr create`/`glab mr create` or another remote mutation instead of emitting it as an output-for-the-user block. Mutations belong in a fenced block whose first line is an explicit do-not-execute marker. Flag any that run directly (violates the never-run-git rule: the agent outputs exact commands, the user runs them).
 12. **Cross-platform commands.** Skill/hook commands assuming one OS. The harness runs on Linux, macOS, and Windows Git Bash.
     - bare `python3` or bare `python` without a `command -v python3 || command -v python` detect chain

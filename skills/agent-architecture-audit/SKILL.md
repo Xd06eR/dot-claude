@@ -26,7 +26,7 @@ A diagnostic workflow for agent systems that hide failures behind wrapper layers
 - You suspect hidden repair/retry loops silently mutating responses
 
 **Do not use for:**
-- General code debugging — use `agent-introspection-debugging`
+- General code debugging — use `diagnosing-bugs`
 - Code review — use language-specific reviewer agents
 - Security scanning — use the `security-auditor` agent
 - Agent performance benchmarking
