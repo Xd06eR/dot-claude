@@ -56,7 +56,7 @@ Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~
 
 - **Persona and headings:** agents get a terse persona (1–3 sentences: role, specialty, responsibility) after the frontmatter, at the top of the body, and no H1 — the frontmatter name already provides it. Commands and skills get no persona; an H1 only when a genuine title beyond the bare name.
 - **Frontmatter:** name, description-with-trigger, tools, origin (origin last); add `part-of` for multi-agent families. Quote the description with `""` only when it contains a colon.
-- **Description = the routing surface:** stance + trigger + what it returns. A `## When to invoke` body section is an anti-pattern — relocate its content into the description, never drop it.
+- **Description = the routing surface:** stance + trigger + what it returns; never a workflow summary. A `## When to invoke` body section is an anti-pattern — relocate its content into the description, never drop it.
 - **Pre-existing components:** change only when an effectiveness case justifies it. Description re-tailoring is justified (it is routing); cosmetic trims are not.
 - **Multi-exemplar:** read sibling components before writing; base format and structure on the best practice across them, never on one target.
 - **Adoption mechanics:** strip `disable-model-invocation: true` on adopted skills meant to stay auto-invokable; strip self-run git mutations from adopted components (CLAUDE.md's never-commit rule binds component bodies); tag `origin:` as `custom` (hand-built here), the source name (ported-from: plugins by plugin name, repos by repo name), or `A + B` (two-source merge).
