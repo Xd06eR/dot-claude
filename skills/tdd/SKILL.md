@@ -1,7 +1,7 @@
 ---
 name: tdd
 description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
-origin: mattpocock
+origin: mattpocock + superpowers
 ---
 
 # Test-Driven Development
@@ -35,5 +35,27 @@ When the shape of that interface is itself in question — how deep the module i
 ## Rules of the loop
 
 - **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
+- **Verify the red.** Run the test and watch it fail for the expected reason (the feature is missing), not on a typo or an error. A test that passes immediately is testing existing behavior; fix the test. If you didn't watch it fail, you don't know it tests the right thing.
+- **Verify the green.** Run the test and watch it pass, the rest of the test file still green, output pristine. On failure, fix the code, not the test.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **A hard-to-write test is a design signal.** Simplify the interface, inject the dependency, or write the wished-for API and its assertion first. `codebase-design` has the vocabulary for the interface questions.
+- **Refactoring is not part of the loop.** It belongs to the review stage (see `/review-pr`), not the red → green implementation cycle.
+
+## Rationalizations
+
+The loop's enemies, answered:
+
+- **"I'll test after."** Tests written after pass immediately, which proves nothing: you never watched them fail, so you never proved they can catch the bug.
+- **"Too simple to test."** Simple code breaks. The test takes seconds.
+- **"I already manually tested it."** Manual verification leaves nothing re-runnable: the next change re-breaks the case with no test to catch it, and cases get skipped under pressure. A test runs the same way every time.
+- **"Keep the written code as reference."** You'll adapt it: that is testing after. Delete means delete.
+- **"Deleting hours of work is wasteful."** Sunk cost. The real choice is rewrite with proof versus keep code you can't trust.
+- **"TDD slows me down."** It catches bugs before commit and keeps refactors safe; the shortcut route is debugging in production.
+
+## Done means
+
+- [ ] Every new behavior has a test, written first, at a pre-agreed seam.
+- [ ] You watched each test fail, for the expected reason.
+- [ ] You can name the production change that would make each test fail.
+- [ ] Each implementation was the minimal code to pass its test.
+- [ ] The full suite is green and the output is pristine.
