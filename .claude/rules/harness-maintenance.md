@@ -45,7 +45,7 @@ Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~
 ## CLAUDE.md and instruction docs
 
 - CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
-- The CLAUDE.md catalog is routing-only: phase-fired + auto-invoked names, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Slash prefix = command, bare name = skill. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
+- The CLAUDE.md catalog is routing-only: phase-fired + auto-invoked names, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Slash prefix = user-typed invocation; bare name = model-invoked skill. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
 
 ## Rules
 
@@ -60,7 +60,7 @@ Any single rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~
 - **Pre-existing components:** change only when an effectiveness case justifies it. Description re-tailoring is justified (it is routing); cosmetic trims are not.
 - **Multi-exemplar:** read sibling components before writing; base format and structure on the best practice across them, never on one target.
 - **Adoption mechanics:** strip `disable-model-invocation: true` on adopted skills meant to stay auto-invokable; strip self-run git mutations from adopted components (CLAUDE.md's never-commit rule binds component bodies); tag `origin:` as `custom` (hand-built here), the source name (ported-from: plugins by plugin name, repos by repo name), or `A + B` (two-source merge).
-- **Commands:** never hardcode folder names; audit/check commands inline their full spec — never repoint, since the referenced file may be the audit target, and spec overlap with CLAUDE.md is deliberate, not drift; per-session artifact templates live in the command body, with durable text holding only trigger + pointer.
+- **Skills and commands:** never hardcode folder names; audit/check components inline their full spec — never repoint, since the referenced file may be the audit target, and spec overlap with CLAUDE.md is deliberate, not drift; per-session artifact templates live in the component body, with durable text holding only trigger + pointer.
 
 ## Extraction and curation
 

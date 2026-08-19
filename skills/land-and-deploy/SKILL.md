@@ -62,7 +62,7 @@ The merge cannot be undone without a revert, so confirm the branch is actually r
    - GitLab: `glab ci status` for the MR's pipeline.
    - No CI configured: run the repo's test suite yourself as the stand-in. Detect the command the way `ship` does (first match wins: `npm test` with the matching package manager, else `pytest`, `cargo test`, `go test ./...`, `make test`). Ask in plain text if none is detectable. Paste the tail as evidence. Tests introduced by this branch failing: **stop.**
 2. **Merge conflicts** (read-only): GitHub `gh pr view --json mergeable -q .mergeable`; `CONFLICTING`: **stop.** "Resolve conflicts against `<base>` and push, then retry."
-3. **Large or unreviewed diff:** if the diff is large (roughly 200+ lines), suggest once, non-blocking: "Large diff, consider `/review-pr` before landing."
+3. **Large or unreviewed diff:** if the diff is large (roughly 200+ lines), suggest once, non-blocking: "Large diff, consider `review-pr` before landing."
 4. **Go-ahead (blocking, plain text):** summarize the state (CI, conflicts, diff size), then ask: "Ready to land #NNN into `<base>`? This merge is irreversible without a revert. Reply `go` to proceed." Wait for an explicit `go`. Treat silence or a vague reply as not-yet.
 
 ## Step 4: Land — output the merge command, then confirm it landed

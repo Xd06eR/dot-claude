@@ -39,7 +39,7 @@ When the shape of that interface is itself in question — how deep the module i
 - **Verify the green.** Run the test and watch it pass, the rest of the test file still green, output pristine. On failure, fix the code, not the test.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **A hard-to-write test is a design signal.** Simplify the interface, inject the dependency, or write the wished-for API and its assertion first. `codebase-design` has the vocabulary for the interface questions.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see `/review-pr`), not the red → green implementation cycle.
+- **Refactoring is not part of the loop.** It belongs to the review stage (see `review-pr`), not the red → green implementation cycle.
 
 ## Rationalizations
 

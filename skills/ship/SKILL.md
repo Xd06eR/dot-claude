@@ -41,7 +41,7 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
    git diff <base>...HEAD --stat
    git log <base>..HEAD --oneline
    ```
-4. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `/review-pr` before shipping." Do not block.
+4. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `review-pr` before shipping." Do not block.
 
 ## Step 3: Merge the base branch (before tests)
 
@@ -81,7 +81,7 @@ Read the full diff and sanity-check it yourself:
 git diff <base>...HEAD
 ```
 
-Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `/review-pr`.
+Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `review-pr`.
 
 ## Step 6: Bump VERSION
 

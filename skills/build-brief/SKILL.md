@@ -1,6 +1,8 @@
 ---
-description: Plan→Build command. Produce one comprehensive build brief per feature (a group of components named in $ARGUMENTS) from the project's Plan-phase artifacts. Run at the Plan→Build handoff.
-argument-hint: "[feature: component1, component2, ...]"
+name: build-brief
+description: Produce one comprehensive build brief per feature (a group of components named in $ARGUMENTS) from the project's Plan-phase artifacts. Run at the Plan→Build handoff.
+disable-model-invocation: true
+argument-hint: "<feature: component1, component2, ...>"
 origin: custom + mattpocock
 ---
 

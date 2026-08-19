@@ -1,11 +1,12 @@
 ---
+name: compact-pair
 description: Produce the pre-compact prompt pair for a session about to be compacted: a custom /compact instruction (a short positive Keep-list) and a post-compact resume prompt (re-ground reads + scaled context recovery). Auto-invoke when the user signals they will compact, asks for compact or resume prompts, or the session spans multiple compactions.
 origin: custom
 ---
 
-# Compact Prep
+# Compact Pair
 
-Produce two prompts, written fresh from the current session state — never canned text. The user pastes the first into `/compact`'s custom-instruction field and the second into the fresh session after compaction. Sibling artifact: the `handoff` skill writes a state doc for another agent; this command writes the compaction-machinery prompts for continuing this session's work. Use the right one.
+Produce two prompts, written fresh from the current conversation state — never canned text. The user pastes the first into `/compact`'s custom-instruction field and the second into the fresh session after compaction. Sibling artifact: the `handoff` skill writes a state doc for another agent; this skill writes the compaction-machinery prompts for continuing this session's work. Use the right one.
 
 Best fired around ~60% context utilization: compacting while context is still clean produces a better summary. What compaction silently drops when left to itself (the keep-checklist's source): exact file paths, error messages verbatim, debugging steps, decisions with rationale, config values and function names.
 

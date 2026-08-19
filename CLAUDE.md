@@ -99,7 +99,7 @@ Phase-gate table:
 | Plan | `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
 | Build | `tdd` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
 | QA | `qa` | `e2e-testing` |
-| Review | `/review-pr` OR `/lens-review` (substitutes: pick one) · `verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
+| Review | `review-pr` OR `lens-review` (substitutes: pick one) · `verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
 | Debug | `diagnosing-bugs` | — |
 

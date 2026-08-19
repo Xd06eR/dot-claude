@@ -1,4 +1,5 @@
 ---
+name: lens-review
 description: Code review a diff or PR via 5 parallel review lenses (CLAUDE.md compliance, bug scan, git history, prior PR comments, in-code comments) with confidence-scored filtering. Run at the Review phase before merge. Writes a review report citing file:line.
 argument-hint: "[pr-url | diff-ref | base..head]"
 origin: code-review plugin

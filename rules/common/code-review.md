@@ -107,8 +107,8 @@ Before marking code complete:
 | Tool | Type | Use when |
 |------|------|----------|
 | `security-guidance` plugin | Auto-running | Pattern warnings + diff review + commit review — always active |
-| `/review-pr` | Command | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup) |
-| `/lens-review` | Command | 5-lens confidence-scored review of a diff or PR (compliance, bug scan, git history, prior comments, in-code comments) |
+| `review-pr` | Skill | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup) |
+| `lens-review` | Skill | 5-lens confidence-scored review of a diff or PR (compliance, bug scan, git history, prior comments, in-code comments) |
 | `diagnosing-bugs` | Skill | Root cause analysis on bugs found |
 | `code-reviewer` | Agent | CLAUDE.md compliance + bug review of a diff |
 | `comment-analyzer` | Agent | Comment-rot hunt on a diff |
@@ -117,7 +117,7 @@ Before marking code complete:
 | `type-design-analyzer` | Agent | Type encapsulation + invariant review |
 | `security-auditor` | Agent | Adversarial security audit of a diff or design (pre-ship gate) |
 
-Review tools (`/review-pr`, `/lens-review`) are substitutes — pick one. `/review-pr` aggregates the concern-agents; `/lens-review` runs 5 review lenses with confidence scoring. Authoritative phase-gate order in CLAUDE.md.
+Review tools (`review-pr`, `lens-review`) are substitutes — pick one. `review-pr` aggregates the concern-agents; `lens-review` runs 5 review lenses with confidence scoring. Authoritative phase-gate order in CLAUDE.md.
 
 Post-review remediation (fix agents, not review lenses): `react-build-resolver` (React build failures), `code-simplifier` (clarity/consistency refinement).
 

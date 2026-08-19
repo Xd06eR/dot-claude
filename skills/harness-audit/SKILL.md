@@ -1,6 +1,8 @@
 ---
+name: harness-audit
 description: Audit current dir or a target dir for drift, contradictions, stale refs, format defects, weak-model-misread wording, routing violations, dead installs, and context-cost bloat. Run at the start of a harness-improvement session or when drift is suspected. Periodic review, not rebuild.
-argument-hint: "[optional target dir; defaults to cwd]"
+disable-model-invocation: true
+argument-hint: "[target dir — defaults to cwd]"
 origin: custom
 ---
 
@@ -93,7 +95,7 @@ Context is a standing cost: every always-loaded byte is paid every session. Esti
 4. **Doc drift.** Comments, README, docstrings describing old behavior after code changed.
 5. **Dependency hygiene.** Unused dependencies declared, missing lockfile, inconsistent version pins.
 
-For project targets, do NOT duplicate work covered by `review`, `qa`, `/review-pr`, `claude-md-improver`. Focus on drift and contradictions. Defer pure code-quality findings to those skills.
+For project targets, do NOT duplicate work covered by `review`, `qa`, `review-pr`, `claude-md-improver`. Focus on drift and contradictions. Defer pure code-quality findings to those skills.
 
 ## Method (no self-verification)
 

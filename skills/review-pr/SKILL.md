@@ -1,6 +1,7 @@
 ---
+name: review-pr
 description: Comprehensive PR review using specialized agents, with cross-agent dedup and severity normalization. Run at the Review phase before merging a PR.
-argument-hint: "[review-aspects]"
+argument-hint: "[aspects: all | code | tests | errors | types | comments | spec | simplify]"
 origin: pr-review-toolkit + mattpocock
 ---
 
