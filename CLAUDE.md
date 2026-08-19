@@ -16,7 +16,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 ## Language
 
-- **Conversation in Traditional Chinese (zh-TW):** respond in zh-TW regardless of prompt language; the user writes English and reviews fastest in it.
+- **Conversation in Traditional Chinese (zh-TW):** respond in zh-TW regardless of prompt language; the user writes English and reviews fastest in zh-TW.
 - **Artifacts in English:** everything durable stays English, including the easy-to-miss ones (commit messages, code comments, memory files, reports written to disk).
 - **Technical terms stay English:** industry and domain terms (spec, baseline, acceptance criteria), API names, CLI commands, and error strings stay verbatim English inside zh-TW prose; never translate a term whose precision lives in the English.
 
@@ -84,28 +84,24 @@ How to write and review durable text, for any reader.
 
 ## Skill invocation
 
-Invoke the phase's skills at phase entry, before any other action.
+Pick the most suitable skill or agent for the work at hand, whatever its source: descriptions carry the triggers.
 
-**One skill per task is a failure mode.** Stack orthogonal skills: one per workflow phase, plus one per distinct concern within a phase; never two skills doing the same job (the phase-gate marks substitutes). Beyond what the phase-gate names, default 1–3 per phase; justify more.
+Invoke it before acting, and name what you invoked and for what ("Using X to Y").
 
-- **Skill check before any action:** the phase-gate covers phase entry; beyond it, when an injected skill or agent fits the task at hand, invoke it first and name what you invoked and for what ("Using X to Y").
+**One skill per task is a failure mode.** A task spanning phases or concerns stacks orthogonal skills: one per phase, plus one per distinct concern. Never two doing the same job. Default 1–3 per phase; justify more.
+
+Routing look-alikes — when two could fire, the difference decides:
+
+| Pair | The split |
+|---|---|
+| `review-pr` × `lens-review` | substitutes, pick one: multi-agent fleet with dedup + severity normalization vs 5 lenses with confidence scoring |
+| `design-html` × `design-taste-frontend` | direction already settled (mockup, plan, DESIGN.md) → design-html builds it; direction must be inferred and taste-gated → design-taste-frontend |
+| `prototype` × `design-variants` | throwaway code answering one design question vs a side-by-side comparison board of screen variants |
+| `redesign-existing-projects` × `design-taste-frontend` | any existing site or app upgraded in place vs marketing-page redesign inside its taste system |
+
+- **Fixed openings:** a new line of work in a working directory opens with `grill-with-docs` (it leaves CONTEXT.md + ADRs); without one, `grill-me`; visual-system design opens with `design-consultation`.
 - **User instructions beat skill instructions:** when a skill's process conflicts with the user's stated instruction, the user's wins.
-
-Phase-gate table:
-
-| Phase | Invoke (must-fire) | Situational (on-demand) |
-|---|---|---|
-| Design | `grill-me` · `grill-with-docs` | `search-first` · `design-consultation` |
-| Plan | `plan-review` (gate the finished plan; dispatches `plan-reviewer` ×4 lenses + `security-auditor` when security-relevant) | — |
-| Build | `tdd` | `database-migrations` · `frontend-a11y` · `improve-codebase-architecture` |
-| QA | `qa` | `e2e-testing` |
-| Review | `review-pr` OR `lens-review` (substitutes: pick one) · `verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
-| Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
-| Debug | `diagnosing-bugs` | — |
-
-The phase-gate names the must-fire subset, not the ceiling: scan all injected skills and agents and pick the best fit, whatever its source.
-
-The user-gated set is propose-only, never self-invoke: `/plan-from-design`, `/build-brief`, `/harness-audit`, `/caveman:*`, `/ponytail:*`.
+- **User-invoked:** `/plan-from-design` · `/build-brief` · `/harness-audit` · `/teach` · `/handoff` · `/to-questionnaire` · `/caveman:*` · `/ponytail:*`. Propose them when their moment comes; never self-invoke.
 
 ## Browsing
 
