@@ -1,6 +1,6 @@
 ---
 name: land-and-deploy
-description: "Ship phase for landing and deploying a finished, reviewed, green branch: merge it to the base branch, deploy to whatever the repo already configures (CI-on-merge, or a platform CLI or deploy script run after your plain-text go-ahead), then verify the release is healthy with HTTP and smoke checks before walking away. Gates the irreversible merge behind a readiness check and hands the merge, push, and any revert back as commands you run. After it lands, chain `deploy-watch` for the post-deploy monitoring window and `document-release` to record what shipped; on a failed verify, hand off to `diagnose`."
+description: "Ship phase for landing and deploying a finished, reviewed, green branch: merge it to the base branch, deploy to whatever the repo already configures (CI-on-merge, or a platform CLI or deploy script run after your plain-text go-ahead), then verify the release is healthy with HTTP and smoke checks before walking away. Gates the irreversible merge behind a readiness check and hands the merge, push, and any revert back as commands you run. After it lands, chain `deploy-watch` for the post-deploy monitoring window and `document-release` to record what shipped; on a failed verify, hand off to `diagnosing-bugs`."
 allowed-tools: Bash, Read, Grep
 origin: gstack
 ---
@@ -144,7 +144,7 @@ The merge triggered the deploy. Watch it, read-only:
   gh run watch <run-id>    # or poll: gh run view <run-id> --json status,conclusion
   ```
 - Vercel/Netlify/Render with no CI run to watch: wait roughly 60s for propagation, then rely on the verify step.
-- Deploy workflow fails: show the failing job and offer the revert block (Step 8) or `diagnose`. Do not retry blindly.
+- Deploy workflow fails: show the failing job and offer the revert block (Step 8) or `diagnosing-bugs`. Do not retry blindly.
 
 ### Branch B — manual deploy (run only after a plain-text go-ahead)
 
@@ -154,7 +154,7 @@ Show the exact command you detected, then ask: "Deploy `<app>` to production wit
 fly deploy        # or: vercel deploy --prod, npm run deploy, make deploy — whatever the repo defines
 ```
 
-Stream the result. Nonzero exit: show the output and offer the revert block (Step 8) or `diagnose`. Do not add `--force` and do not delete anything.
+Stream the result. Nonzero exit: show the output and offer the revert block (Step 8) or `diagnosing-bugs`. Do not add `--force` and do not delete anything.
 
 **Staging first (optional):** if Step 5 found a staging target (a staging workflow, a preview deploy, or a staging URL) and the change includes code, offer in plain text to deploy and verify staging first, then production. Default to production if the user does not ask for staging.
 
@@ -172,7 +172,7 @@ You need a URL: use the argument, the `CLAUDE.md` production URL, or ask. No URL
 
 Healthy: tell the user what you observed (status, load, no console errors), then go to Step 8.
 
-Unhealthy: show the evidence and ask whether to revert (Step 8), investigate with `diagnose`, or treat it as warm-up and accept. Never revert without an explicit answer.
+Unhealthy: show the evidence and ask whether to revert (Step 8), investigate with `diagnosing-bugs`, or treat it as warm-up and accept. Never revert without an explicit answer.
 
 ## Step 8: Revert (escape hatch, output only)
 
@@ -196,7 +196,7 @@ Then chain the natural next step:
 - Verified live: "Run `deploy-watch <url>` to watch it through the stabilization window."
 - Merged but unverified: "Check it manually, or run `deploy-watch <url>` once you have the URL."
 - Shipped something notable: "Run `document-release` to sync README, CHANGELOG, and docs with what landed."
-- Verify failed or reverted: "Run `diagnose` to find the root cause before re-shipping."
+- Verify failed or reverted: "Run `diagnosing-bugs` to find the root cause before re-shipping."
 
 ## Important rules
 

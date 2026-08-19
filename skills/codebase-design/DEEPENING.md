@@ -35,9 +35,3 @@ Third-party services (Stripe, Twilio, etc.) you don't control. The deepened modu
 - Write new tests at the deepened module's interface. The **interface is the test surface**.
 - Tests assert on observable outcomes through the interface, not internal state.
 - Tests should survive internal refactors — they describe behaviour, not implementation. If a test has to change when the implementation changes, it's testing past the interface.
-
-## Interface shapes that make testing natural
-
-- **Accept dependencies, don't create them.** A module that constructs its own gateway/client inside can't be tested past its seam.
-- **Return results, don't produce side effects.** A returned value is assertable through the interface; an in-place mutation is not.
-- **Small surface area.** Fewer methods = fewer tests needed. Fewer params = simpler test setup.

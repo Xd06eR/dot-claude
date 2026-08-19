@@ -101,7 +101,7 @@ Phase-gate table:
 | QA | `qa` | `e2e-testing` |
 | Review | `/review-pr` OR `/lens-review` (substitutes: pick one) · `verification-before-completion` · `teach-back` · dispatch the `silent-failure-hunter` agent (Agent tool, not Skill) | — |
 | Ship | `ship` · `land-and-deploy` · `deploy-watch` · `document-release` | — |
-| Debug | `superpowers:systematic-debugging` · `diagnose` | — |
+| Debug | `systematic-debugging` · `diagnosing-bugs` | — |
 
 The phase-gate names the must-fire subset, not the ceiling: scan all injected skills and agents and pick the best fit, whatever its source.
 

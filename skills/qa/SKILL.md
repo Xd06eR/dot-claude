@@ -1,6 +1,6 @@
 ---
 name: qa
-description: "QA phase for a working web app: drive it in a real browser like a user, inventory pages and flows, exercise each and log every bug with severity and repro steps to an in-repo report, then fix the fixable ones as tight working-tree edits and re-verify until the app is clean. Hand hard-to-reproduce bugs to `diagnose`; once QA passes, `ship` to take the branch out."
+description: "QA phase for a working web app: drive it in a real browser like a user, inventory pages and flows, exercise each and log every bug with severity and repro steps to an in-repo report, then fix the fixable ones as tight working-tree edits and re-verify until the app is clean. Hand hard-to-reproduce bugs to `diagnosing-bugs`; once QA passes, `ship` to take the branch out."
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack
 ---
@@ -171,7 +171,7 @@ For each fixable issue, in severity order:
 
 **Do not commit inside this loop.** Fixes accumulate as working-tree edits. The commit commands are output at the end.
 
-**Self-regulation:** if two consecutive fixes cause regressions, or the diff is growing well past the bugs it targets, or you are adding the same guard at multiple call sites, stop and reassess with the user rather than pressing on. Hand a bug you cannot reproduce or cannot fix cleanly to `diagnose`.
+**Self-regulation:** if two consecutive fixes cause regressions, or the diff is growing well past the bugs it targets, or you are adding the same guard at multiple call sites, stop and reassess with the user rather than pressing on. Hand a bug you cannot reproduce or cannot fix cleanly to `diagnosing-bugs`.
 
 ## Phase 7: Final QA
 

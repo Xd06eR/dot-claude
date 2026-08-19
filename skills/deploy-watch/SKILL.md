@@ -1,6 +1,6 @@
 ---
 name: deploy-watch
-description: "Post-deploy verification phase: after a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Polls health and smoke endpoints, tails deploy logs, re-runs critical-path checks, and compares against a pre-deploy baseline where one exists, then returns a verdict (healthy, degraded, or rollback-recommended) with evidence. Recommends and prints exact rollback commands on failure but never runs them. When the deploy-watch flags a regression hand off to `diagnose` for root cause; when it comes back clean consider `document-release` to record what shipped."
+description: "Post-deploy verification phase: after a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Polls health and smoke endpoints, tails deploy logs, re-runs critical-path checks, and compares against a pre-deploy baseline where one exists, then returns a verdict (healthy, degraded, or rollback-recommended) with evidence. Recommends and prints exact rollback commands on failure but never runs them. When the deploy-watch flags a regression hand off to `diagnosing-bugs` for root cause; when it comes back clean consider `document-release` to record what shipped."
 allowed-tools: Bash, Read, Write, Grep
 origin: gstack
 ---
@@ -148,7 +148,7 @@ kubectl rollout undo deployment/<name>
 git revert --no-edit <deploy-commit-sha>
 ```
 
-Keep only the lines for the actual platform. Drop the rest. Then hand off to `diagnose` to find why the deploy broke.
+Keep only the lines for the actual platform. Drop the rest. Then hand off to `diagnosing-bugs` to find why the deploy broke.
 
 ## Important rules
 

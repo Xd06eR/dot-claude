@@ -109,7 +109,7 @@ Before marking code complete:
 | `security-guidance` plugin | Auto-running | Pattern warnings + diff review + commit review — always active |
 | `/review-pr` | Command | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup) |
 | `/lens-review` | Command | 5-lens confidence-scored review of a diff or PR (compliance, bug scan, git history, prior comments, in-code comments) |
-| `diagnose` | Skill | Root cause analysis on bugs found |
+| `diagnosing-bugs` | Skill | Root cause analysis on bugs found |
 | `code-reviewer` | Agent | CLAUDE.md compliance + bug review of a diff |
 | `comment-analyzer` | Agent | Comment-rot hunt on a diff |
 | `pr-test-analyzer` | Agent | Behavioral test-coverage gap analysis |
