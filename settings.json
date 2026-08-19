@@ -18,7 +18,6 @@
     "codex@openai-codex": false,
     "context7@claude-plugins-official": true,
     "document-skills@anthropic-agent-skills": true,
-    "feature-dev@claude-plugins-official": true,
     "github@claude-plugins-official": false,
     "hookify@claude-plugins-official": false,
     "impeccable@impeccable": false,
