@@ -1,6 +1,6 @@
 ---
 name: make-pdf
-description: "Docs and artifacts phase: turn a finished Markdown file into a publication-quality PDF with proper margins, page numbers, running headers and footers, styled code blocks and tables, and an optional cover page, table of contents, and draft watermark, using whatever PDF toolchain the machine already has (pandoc with a PDF engine, else a headless browser's print-to-PDF, else styled HTML you print yourself). Use it when a Markdown document needs to become a shareable, printable artifact. Pairs with `document-generate` to write the document first and `diagram` to create figures to embed."
+description: "Docs and artifacts phase: turn a finished Markdown file into a publication-quality PDF using whatever PDF toolchain the machine already has. Use when a Markdown document needs to become a shareable, printable artifact. Pairs with `document-generate` to write the document first and `diagram` to create figures to embed."
 allowed-tools: Bash, Read, Write
 origin: gstack
 ---

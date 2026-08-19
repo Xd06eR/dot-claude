@@ -1,6 +1,6 @@
 ---
 name: document-generate
-description: "Docs and artifacts phase, works any time but commonly after a build: generate missing documentation from existing code by reading what a feature, module, or project actually does and writing accurate, structured docs (README sections, API reference, architecture overviews, usage examples) organized by the Diataxis quadrants. Use when a codebase has behavior that is real but undocumented. After generating, consider `diagram` for architecture figures, `make-pdf` to turn the doc set into a distributable, and `document-release` to keep docs current after a later ship."
+description: "Docs and artifacts phase: generate missing documentation by reading what the code actually does. Use when a codebase has behavior that is real but undocumented. Returns structured docs (README sections, API reference, architecture overviews, usage examples). After generating, consider `diagram` for architecture figures, `make-pdf` to turn the doc set into a distributable, and `document-release` to keep docs current after a later ship."
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 origin: gstack
 ---
