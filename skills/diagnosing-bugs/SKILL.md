@@ -1,7 +1,7 @@
 ---
 name: diagnosing-bugs
 description: Diagnosis loop for hard bugs and performance regressions. Use when the user says "diagnose"/"debug this", or reports something broken/throwing/failing/slow.
-origin: mattpocock
+origin: mattpocock + superpowers
 ---
 
 # Diagnosing Bugs
@@ -43,7 +43,7 @@ Treat the loop as a product. Once you have _a_ loop, **tighten** it:
 
 - Can I make it faster? (Cache setup, skip unrelated init, narrow the test scope.)
 - Can I make the signal sharper? (Assert on the specific symptom, not "didn't crash".)
-- Can I make it more deterministic? (Pin time, seed RNG, isolate filesystem, freeze network.)
+- Can I make it more deterministic? (Pin time, seed RNG, isolate filesystem, freeze network. Where the loop waits on async work, poll for the condition you assert on rather than sleeping a fixed delay.)
 
 A 30-second flaky loop is barely better than no loop; a 2-second deterministic one is tight — a debugging superpower.
 
@@ -96,6 +96,12 @@ Each hypothesis must be **falsifiable**: state the prediction it makes.
 
 If you cannot state the prediction, the hypothesis is a vibe — discard or sharpen it.
 
+Evidence passes feed the ranking:
+
+- **Check recent changes.** `git log` / `git diff` on the failing area, new dependencies, config and environment differences — they re-rank the list instantly.
+- **Diff against a working example.** Find the nearest code path that works and list every difference from the broken one, however small — each difference is a hypothesis candidate. If a reference implementation exists, read it completely; skimming guarantees a missed difference.
+- **Multi-component systems: sweep every boundary first.** When the failure could live in any of several components (CI → build → signing, API → service → database), instrument each boundary and run the loop once before ranking — log what enters and exits each component, and verify that environment and config propagate across it. One run shows WHERE the chain breaks; rank hypotheses within the failing component.
+
 **Show the ranked list to the user before testing.** They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it — proceed with your ranking if the user is AFK.
 
 ## Phase 4 — Instrument
@@ -109,6 +115,8 @@ Tool preference:
 3. Never "log everything and grep".
 
 **Tag every debug log** with a unique prefix, e.g. `[DEBUG-a4f2]`. Cleanup at the end becomes a single grep. Untagged logs survive; tagged logs die.
+
+**Deep call stacks: trace the bad value backward.** When the error surfaces deep in a call stack, trace it level by level until you find where it originated, and fix there — at the source, not the symptom.
 
 **Perf branch.** For performance regressions, logs are usually wrong. Instead: establish a baseline measurement (timing harness, `performance.now()`, profiler, query plan), then bisect. Measure first, fix second.
 
@@ -127,6 +135,8 @@ If a correct seam exists:
 3. Apply the fix.
 4. Watch it pass.
 5. Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.
+
+When the bug was caused by invalid data, the fix alone leaves the door open — validate at every layer the data passes through (entry point, business logic, environment guard), and prove each layer by bypassing the one above it, so the bug becomes structurally impossible.
 
 ## Phase 6 — Cleanup
 
