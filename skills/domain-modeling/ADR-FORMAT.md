@@ -1,32 +1,70 @@
 # ADR Format
 
-ADRs live in `docs/adr/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc.
+ADRs live in `docs/adr/` and use sequential numbering: `0001-slug.md`, `0002-slug.md`, etc. Create the directory lazily — only when the first ADR is needed.
 
-Create the `docs/adr/` directory lazily — only when the first ADR is needed.
+An ADR is a **point-in-time snapshot of a decision**: it carries the context of the choice and pointers to the design. It does not carry the design.
 
-## Template
+## Two sources, one format
+
+ADRs are written in two situations, always in this format:
+
+- **At bake.** Every independently-reversible ruling from a baked entry becomes an ADR (see Granularity below). This is the primary source.
+- **During ordinary design discussion.** Offer an ADR only when all three conditions under **When to offer an ADR** below are true.
+
+## The guardrail: choice, never specification
+
+- Correct: "Sessions expire after 30 days of inactivity." The value is itself the choice.
+- Wrong: the migration DDL for the `expires_at` column the value lives in.
+
+The test: **if canonical would rewrite it later, the ADR must not have copied it.** Point at the canonical doc instead. A choice that was made stays made, even after it is superseded; a copied spec goes stale and reads as current with no signal to the reader.
+
+## Format
 
 ```md
-# {Short title of the decision}
+# NNNN — {short title of the decision}
 
-{1-3 sentences: what's the context, what did we decide, and why.}
+**Status:** accepted | superseded by NNNN
+**Supersedes:** NNNN                (when applicable)
+
+**Context.** What forced the decision — the defect, constraint, or gap, compressed to the failure it names.
+
+**Decision.** What was chosen. One line per ruling absorbed. Choices only, with pointers to the canonical doc that carries the specification.
+
+**Considered options.** Each rejected alternative and the specific reason it lost. Record only alternatives that were real: a rejection is worth its line only when the option is plausible enough to be proposed again.
+
+**Consequences.** Blast radius, and what this constrains later. Absorbed minor rulings are named here by their original id.
 ```
 
-That's it. An ADR can be a single paragraph. The value is in recording *that* a decision was made and *why* — not in filling out sections.
+The fuller sections are the standard, not the exception: canonical carries the spec and code carries the behavior, but neither carries the why — the rejected options and the forces behind the choice live only here. A trivial ADR may still collapse to Context + Decision.
 
-## Optional sections
+## Granularity
 
-Only include these when they add genuine value. Most ADRs won't need them.
+**One ADR per independently-reversible choice.** Not one per entry, not one per ruling. The test: could a future session reverse this choice without touching the others?
 
-- **Status** frontmatter (`proposed | accepted | deprecated | superseded by ADR-NNNN`) — useful when decisions are revisited
-- **Considered Options** — only when the rejected alternatives are worth remembering
-- **Consequences** — only when non-obvious downstream effects need to be called out
+Execute the test per ruling: estimating per entry silently drops qualifying rulings.
 
-## Numbering
+Three-way placement, so nothing carrying a real trade-off is dropped:
 
-Scan `docs/adr/` for the highest existing number and increment by one.
+| Ruling shape | Home |
+|---|---|
+| Independently reversible | its own ADR |
+| Has a real rejected alternative but rides on another decision | a line in the parent's **Considered options** |
+| Pure consequence, no alternative | a line in the parent's **Consequences**, named by original id |
 
-## When to offer an ADR
+ADRs take their own numbering sequence: one entry can yield several ADRs, so ADR numbers cannot mirror entry numbers.
+
+## Index
+
+`docs/adr/README.md`, one row appended per ADR at write time. It renders as the folder's landing page, so discovery costs one file open.
+
+| ADR | Title | Status | Canonical touched |
+|---|---|---|---|---|
+
+## Frozen body
+
+The body is frozen at write: nothing in a written ADR is ever edited. `Status` is the single exception, flipped to `superseded by NNNN` when a later decision replaces it. This is what lets the model carry history that canonical deliberately discards.
+
+## When to offer an ADR (discussion source)
 
 All three of these must be true:
 
@@ -34,7 +72,7 @@ All three of these must be true:
 2. **Surprising without context** — a future reader will look at the code and wonder "why on earth did they do it this way?"
 3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
 
-If a decision is easy to reverse, skip it — you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing."
+If a decision is easy to reverse, skip it: you'll just reverse it. If it's not surprising, nobody will wonder why. If there was no real alternative, there's nothing to record beyond "we did the obvious thing."
 
 ### What qualifies
 
@@ -44,4 +82,4 @@ If a decision is easy to reverse, skip it — you'll just reverse it. If it's no
 - **Boundary and scope decisions.** "Customer data is owned by the Customer context; other contexts reference it by ID only." The explicit no-s are as valuable as the yes-s.
 - **Deliberate deviations from the obvious path.** "We're using manual SQL instead of an ORM because X." Anything where a reasonable reader would assume the opposite. These stop the next engineer from "fixing" something that was deliberate.
 - **Constraints not visible in the code.** "We can't use AWS because of compliance requirements." "Response times must be under 200ms because of the partner API contract."
-- **Rejected alternatives when the rejection is non-obvious.** If you considered GraphQL and picked REST for subtle reasons, record it — otherwise someone will suggest GraphQL again in six months.
+- **Rejected alternatives when the rejection is non-obvious.** If you considered GraphQL and picked REST for subtle reasons, record it: otherwise someone will suggest GraphQL again in six months.
