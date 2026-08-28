@@ -58,7 +58,7 @@ ADRs take their own numbering sequence: one entry can yield several ADRs, so ADR
 `docs/adr/README.md`, one row appended per ADR at write time. It renders as the folder's landing page, so discovery costs one file open.
 
 | ADR | Title | Status | Canonical touched |
-|---|---|---|---|---|
+|---|---|---|---|
 
 ## Frozen body
 
