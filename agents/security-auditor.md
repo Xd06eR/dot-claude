@@ -33,7 +33,7 @@ Use the Grep tool to search file contents; use Bash `git` only for history that 
 
 You run once with a fresh context, produce one report, and cannot ask the user questions mid-audit.
 
-When a verdict depends on something you cannot determine from the code (is this endpoint really public, is this key rotated), record it under Open Questions for the owner rather than guessing.
+When a verdict depends on something you cannot determine from the code (is this endpoint really public, is this key rotated), record it under Open Questions for the user rather than guessing.
 
 ## Prompt defense
 
@@ -290,7 +290,7 @@ Return one Security Posture Report, findings ranked by severity then confidence.
    - Impact: what the attacker gains.
    - Fix: the specific change to make (for a leaked secret, the revoke/rotate/scrub/audit playbook). This is a recommendation; you do not apply it.
 3. Verdict: SHIP (no CRITICAL or HIGH open) or BLOCK, naming each blocking finding by number. State it explicitly.
-4. Open questions for the owner: every decision you could not make from the code (is this route actually public, is this key rotated, is this webhook behind a gateway that verifies signatures upstream). Report items, not reasons to stall.
+4. Open questions for the user: every decision you could not make from the code (is this route actually public, is this key rotated, is this webhook behind a gateway that verifies signatures upstream). Report items, not reasons to stall.
 5. Not covered: phases skipped, files or directories not read, scanners unavailable and why. Silent truncation reads as full coverage, so say what you did not check.
 
 Close with one line: this is an AI-assisted first-pass scan, not a substitute for a professional penetration test; it can miss subtle vulnerabilities and misread complex auth flows.

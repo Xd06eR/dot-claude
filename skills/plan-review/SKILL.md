@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: "Plan phase, once a plan or spec exists and before build starts: gate it through independent review lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, and surface only genuine taste calls for you to decide. Chain it after /plan-from-design; on approval, proceed to build."
+description: "Plan phase, once a plan or spec exists and before build starts: gate it through independent review lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, and surface only genuine taste calls for you to decide."
 allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
 ---
@@ -11,11 +11,11 @@ Gate a plan, spec, or PRD before build.
 
 Dispatch four independent review lenses in parallel, add a security pass when the plan warrants one, then merge every report into one verdict.
 
-Auto-resolve the lens conflicts the six decision principles can settle, and surface only the genuine taste calls to the owner.
+Auto-resolve the lens conflicts the six decision principles can settle, and surface only the genuine taste calls to the user.
 
 The reviewers are fresh-context agents that never see each other, so disagreement between lenses is signal, not noise.
 
-Your job is the merge: dedupe, rank, resolve what the principles resolve, and hand the owner a short list of real decisions.
+Your job is the merge: dedupe, rank, resolve what the principles resolve, and hand the user a short list of real decisions.
 
 ## When to use
 
@@ -25,7 +25,7 @@ When the merged verdict is approved, proceed to build.
 
 ## Step 1: Locate the plan
 
-If the dispatch or the owner names the plan, whether a path or inline text, use that. Otherwise search context and the repo for the artifact: a plan the conversation just produced, or a file like `*-plan.md`, `*-spec.md`, `PLAN.md`, or `SPEC.md` (use Glob).
+If the dispatch or the user names the plan, whether a path or inline text, use that. Otherwise search context and the repo for the artifact: a plan the conversation just produced, or a file like `*-plan.md`, `*-spec.md`, `PLAN.md`, or `SPEC.md` (use Glob).
 
 When exactly one candidate is obvious, use it and say which one. Only when it is genuinely ambiguous, ask in plain text which plan to review: one question, not an interview.
 
@@ -56,7 +56,7 @@ Every `plan-reviewer` prompt names exactly three things:
   - quote the plan's own lines or a repo `file:line` as evidence
   - rank findings by severity
   - list open questions, each tagged with the decision it blocks
-  - end with exactly one verdict (`SHIP`, `SHIP-WITH-CHANGES`, `BLOCK`, or `NEEDS-OWNER-DECISION`)
+  - end with exactly one verdict (`SHIP`, `SHIP-WITH-CHANGES`, `BLOCK`, or `NEEDS-USER-DECISION`)
   - state what was not covered.
 
 If Step 2 triggered, add one `security-auditor` dispatch in the same turn. Tell it the artifact is a plan or design doc with no code yet, so it runs the STRIDE threat model against the described design, skips the code and infrastructure scans, and records anything it cannot verify without code as an open question.
@@ -84,21 +84,21 @@ Conflict tiebreakers, keyed to the lens that raised the conflict:
 - **Eng lens:** P5 (explicit) and P3 (pragmatic) dominate.
 - **Design lens:** P5 (explicit) and P1 (completeness) dominate.
 
-## Auto-resolve vs owner decision
+## Auto-resolve vs user decision
 
 Classify every conflict or borderline call:
 
 - **Mechanical:** one clearly right answer. Auto-resolve silently, then log it as a decided item.
-- **Taste:** reasonable people could disagree. Auto-resolve with a recommendation, but surface it to the owner. Three sources: close approaches (top two both viable), borderline scope (in blast radius but 3-5 files, or an ambiguous radius), and a lens that disagrees with a valid point.
-- **User challenge:** two or more lenses independently agree the owner's stated direction should change (merge, split, add, or remove a feature or workflow the owner specified). NEVER auto-resolved.
+- **Taste:** reasonable people could disagree. Auto-resolve with a recommendation, but surface it to the user. Three sources: close approaches (top two both viable), borderline scope (in blast radius but 3-5 files, or an ambiguous radius), and a lens that disagrees with a valid point.
+- **User challenge:** two or more lenses independently agree the user's stated direction should change (merge, split, add, or remove a feature or workflow the user specified). NEVER auto-resolved.
 
-Auto-resolve replaces the owner's judgment with the principles. It does not replace the analysis.
+Auto-resolve replaces the user's judgment with the principles. It does not replace the analysis.
 
-A user challenge goes to the owner with richer context than a taste call: what the owner said, what the lenses recommend, why, what context the lenses might be missing, and the cost if the lenses are wrong and the original direction was right.
+A user challenge goes to the user with richer context than a taste call: what the user said, what the lenses recommend, why, what context the lenses might be missing, and the cost if the lenses are wrong and the original direction was right.
 
-The owner's stated direction is the default. The lenses must make the case for change, not the reverse.
+The user's stated direction is the default. The lenses must make the case for change, not the reverse.
 
-If a lens flags the change as a security or feasibility risk rather than a preference, say so plainly so the framing is appropriately urgent, but the owner still decides.
+If a lens flags the change as a security or feasibility risk rather than a preference, say so plainly so the framing is appropriately urgent, but the user still decides.
 
 ## Completeness and novelty
 
@@ -122,8 +122,8 @@ This is what feeds P4, reuse over rebuild.
 
 1. **Dedupe:** the same underlying issue raised by more than one lens is ONE finding. Credit every lens that raised it, and note that cross-lens agreement is a high-confidence signal.
 2. **Rank:** order all findings by severity, worst first, across every lens. Security findings keep their own severity.
-3. **Resolve conflicts:** when two lenses point opposite directions on one decision, apply the principles with the lens-keyed tiebreakers. A principle that settles it makes a decided item (name the principle). A call reasonable people would still dispute, with no principle to settle it, becomes an owner decision.
-4. **Verdict:** the overall verdict is the worst per-lens verdict. Any `BLOCK` (security included) makes the plan `BLOCK`. Else any open user challenge or unsettled taste call makes it `NEEDS-OWNER-DECISION`. Else any `SHIP-WITH-CHANGES` holds. Else `SHIP`.
+3. **Resolve conflicts:** when two lenses point opposite directions on one decision, apply the principles with the lens-keyed tiebreakers. A principle that settles it makes a decided item (name the principle). A call reasonable people would still dispute, with no principle to settle it, becomes a user decision.
+4. **Verdict:** the overall verdict is the worst per-lens verdict. Any `BLOCK` (security included) makes the plan `BLOCK`. Else any open user challenge or unsettled taste call makes it `NEEDS-USER-DECISION`. Else any `SHIP-WITH-CHANGES` holds. Else `SHIP`.
 
 ## Step 5: The merged report
 
@@ -166,11 +166,11 @@ When taste calls run past roughly seven, group them by lens and warn that the pl
 
 ## Step 6: Apply changes on request
 
-Offer this once, only for a `SHIP-WITH-CHANGES` verdict: the owner can reply `apply` and you edit the named changes into the plan.
+Offer this once, only for a `SHIP-WITH-CHANGES` verdict: the user can reply `apply` and you edit the named changes into the plan.
 
 Edit the plan file only, one change per named item, with the Edit tool. These edits are reversible.
 
-Never touch another repo file, and never edit on a `BLOCK` or an unresolved owner decision without the owner's word.
+Never touch another repo file, and never edit on a `BLOCK` or an unresolved user decision without the user's word.
 
 Show the diff, and on approval point to build.
 
@@ -191,5 +191,5 @@ Then merge and output exactly as Steps 4 and 5 describe.
 - **One lens per reviewer.** Never merge two lenses into one dispatch. Independence is the point.
 - **Reviewers are read-only.** Only the merge owner edits, only the plan file, only on request.
 - **No verdict without evidence.** Every finding cites a plan line or a repo `file:line`.
-- **The owner's direction is the default.** Auto-resolve what the principles settle. Never auto-resolve a user challenge or a genuine taste call.
+- **The user's direction is the default.** Auto-resolve what the principles settle. Never auto-resolve a user challenge or a genuine taste call.
 - **Say what you did not check.** A lens that failed to return or a repo area left unread is reported, not silently dropped.

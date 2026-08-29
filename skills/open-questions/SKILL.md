@@ -16,7 +16,7 @@ Entry-level statuses:
 
 - 🟡 **OPEN** — no ruling yet
 - 🟢 **RULED** — all sub-questions ruled, bake not yet run
-- ⛔ **BLOCKED** — cannot proceed; name the gate (owner-time, a dependency, something external)
+- ⛔ **BLOCKED** — cannot proceed; name the gate (user-time, a dependency, something external)
 
 Per-ruling marker:
 

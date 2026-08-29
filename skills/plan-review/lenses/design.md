@@ -202,7 +202,7 @@ These are the decisions the plan silently hands to whoever builds it.
 - Block when any dimension sits below 8 with a user-visible consequence, or any instant-fail hard-rejection pattern is present and unaddressed.
 - Every finding names the broken principle (taste is debuggable), the concrete consequence the user will feel, and the specific fix.
   The verdict is explicit: ship, or block with the blocking findings named.
-  Every open question carries its deferral cost so the owner sees what shipping-without-deciding actually chooses.
+  Every open question carries its deferral cost so the user sees what shipping-without-deciding actually chooses.
 - Follow-ups to recommend where they fit: no design system yet points to design-consultation before UI work
 - a genuinely unsettled visual direction points to design-variants to explore concrete options
 - an approved direction ready to build points to design-html.

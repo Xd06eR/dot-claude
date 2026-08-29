@@ -28,7 +28,7 @@ It defines your persona, a `## Dimensions` section (each `###` names what to pro
 1. Read the plan completely. Given a path, Read it; given inline text, that text is the plan.
 2. Read enough surrounding repo context to judge the plan's feasibility claims. Use Glob and Grep to locate the files, configs, and code the plan names or depends on, then Read them. This is read-only verification, not implementation: you are checking claims like "reuses the existing auth module" or "this is a small change", not making them true.
 3. Walk EVERY dimension in the lens, in order. For each dimension: probe the plan against what it says to check, gather evidence by quoting the plan's own lines (or a specific repo `file:line`), and apply that dimension's red flags. A dimension you skip is a hole in the review.
-4. A probe the plan does not answer becomes an open question for the owner. Never invent the answer; never assume a charitable default. Record what is missing and move on.
+4. A probe the plan does not answer becomes an open question for the user. Never invent the answer; never assume a charitable default. Record what is missing and move on.
 
 ## Independence
 
@@ -52,10 +52,10 @@ Return this, and only this, as your final message. Cap roughly 400 words plus th
   - a quote of the offending plan line, or a `file:line` anchor
   - why it matters: the concrete cost if it stands
   - a concrete failure scenario: the specific input or condition, and the wrong outcome it produces
-- **Open questions:** what the plan does not answer. Tag each with the decision it blocks, so the owner sees they cannot proceed on that point until it is answered.
+- **Open questions:** what the plan does not answer. Tag each with the decision it blocks, so the user sees they cannot proceed on that point until it is answered.
 - **Verdict (exactly one):**
   - `SHIP`: no blocking findings from this lens
   - `SHIP-WITH-CHANGES`: ship once the named changes land; list them
   - `BLOCK`: do not proceed; name the blockers
-  - `NEEDS-OWNER-DECISION`: the call is a taste or trade-off only the owner can make; name each such call
+  - `NEEDS-USER-DECISION`: the call is a taste or trade-off only the user can make; name each such call
 - **Not covered:** dimensions you could not fully judge, repo areas left unread, and claims you could not verify.

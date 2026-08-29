@@ -188,6 +188,6 @@ Can the plan's DX claims be checked against reality later, so the shipped time-t
 - Ship when every applicable dimension is 8+.
   Block, or ship-with-changes, when any dimension sits below 6 with a named adoption cost; a time to hello world over ten minutes is a blocking issue on its own.
 - Every finding names the violated principle, the concrete cost the developer pays, and the specific plan change that fixes it.
-  The verdict is explicit, and every unresolved decision goes to the owner as an open question carrying its cost, never silently defaulted.
+  The verdict is explicit, and every unresolved decision goes to the user as an open question carrying its cost, never silently defaulted.
 - After build, the plan's DX claims should be verified against the shipped product: does the real time-to-hello-world match the target the plan committed to?
   Recommend that live check as the follow-up.

@@ -1,6 +1,6 @@
 ---
 name: qa
-description: "Use at the QA phase on a working web app: drives it in a real browser like a user and returns a severity-ranked bug report with repro steps, fixing the fixable ones as tight working-tree edits. Hand hard-to-reproduce bugs to `diagnosing-bugs`; once QA passes, `ship` to take the branch out."
+description: "Use at the QA phase on a working web app: drives it in a real browser like a user and returns a severity-ranked bug report with repro steps, fixing the fixable ones as tight working-tree edits."
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack
 ---
@@ -167,7 +167,7 @@ For each fixable issue, in severity order:
 2. **Fix:** read the source, then make the minimal change that resolves it. One concern at a time, tight diff. Do not refactor adjacent code, add features, or fix a symptom where the root cause is one guard upstream that every caller routes through.
 3. **Re-test:** navigate back to the affected page, screenshot the after-state, re-check console. Confirm the fix took effect and introduced no new error.
 4. **Classify:** **verified** (re-test confirms, no new errors), **best-effort** (applied but not fully verifiable, e.g. needs external state), or **reverted** (made things worse: edit the file back to its pre-fix state and mark the issue deferred).
-5. **Regression test (optional):** if the repo already has a test framework and the bug is not pure CSS, read 2-3 nearby test files to match their conventions and add one focused test that sets up the exact precondition, exercises the path, and asserts the correct behavior (not "it renders"). If the repo has no test framework, flag that and skip. Do not add a test dependency mid-QA; that is an ask-first change the owner makes deliberately.
+5. **Regression test (optional):** if the repo already has a test framework and the bug is not pure CSS, read 2-3 nearby test files to match their conventions and add one focused test that sets up the exact precondition, exercises the path, and asserts the correct behavior (not "it renders"). If the repo has no test framework, flag that and skip. Do not add a test dependency mid-QA; that is an ask-first change the user makes deliberately.
 
 **Do not commit inside this loop.** Fixes accumulate as working-tree edits. The commit commands are output at the end.
 
@@ -220,3 +220,7 @@ git commit -m "fix(qa): <short description> (ISSUE-001)"
 8. **One commit per fix, output only.** This skill never commits, pushes, or mutates a remote. It hands you the commands.
 9. **Revert on regression.** If a fix makes things worse, discard the edit immediately and defer the issue.
 10. **Stay inside the working repo.** Report, screenshots, and baseline live under the output dir; write no state or metrics anywhere else.
+
+## Chaining
+
+Once QA passes, `ship` takes the branch out.

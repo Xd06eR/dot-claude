@@ -194,5 +194,5 @@ Every review, independent of findings, must produce two lists: a "NOT in scope" 
 Ship the plan when no blocking findings remain and the test and failure-mode coverage holds.
 Otherwise block, and name the blocking findings.
 State the load-bearing architecture call in one line so the decision carries its rationale.
-Route every probe the plan does not answer to the owner as an open question, never a silent default.
-A finding with an "obvious fix" is still a finding: name it and let the owner decide, rather than quietly assuming the fix.
+Route every probe the plan does not answer to the user as an open question, never a silent default.
+A finding with an "obvious fix" is still a finding: name it and let the user decide, rather than quietly assuming the fix.
