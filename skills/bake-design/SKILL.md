@@ -6,8 +6,6 @@ argument-hint: <register entry #NN>
 origin: custom
 ---
 
-# Bake Design
-
 Canonical docs are determined-only: no open or provisional markers inside. One item per bake.
 
 A bake separates design from context: the design goes to canonical (state, rewritten), the context (the why and the rejected options) goes to ADRs (log, frozen), and the entry leaves the register.

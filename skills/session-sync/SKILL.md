@@ -5,8 +5,6 @@ disable-model-invocation: true
 origin: custom
 ---
 
-# Session Sync
-
 Bridge two sessions: §Start re-grounds at the beginning of one, §End captures state before one dies. This skill writes `TODO.md` and `PROGRESS-LOG.md`, with one exception — `bake-design` appends the bake session narrative to `PROGRESS-LOG.md` (it must land at bake time, not batched to session end).
 
 Routing, in order. Wording alone is unreliable, so check state first:

@@ -6,8 +6,6 @@ argument-hint: What will the next session be used for?
 origin: mattpocock
 ---
 
-# Handoff
-
 Write a handoff document so a fresh agent can continue the work. Save it to the working directory's `.scratch/` by default; if the user names a location, use that instead. Report the saved path.
 
 If the user passed arguments, treat them as the next session's focus and tailor the doc toward it.

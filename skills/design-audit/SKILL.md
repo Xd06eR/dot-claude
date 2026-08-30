@@ -5,8 +5,6 @@ argument-hint: <consistency | completeness | soundness> [docs | full]
 origin: custom
 ---
 
-# Design Audit
-
 Three different questions about doc health. Each one passes cleanly in exactly the situation another is meant to catch, so passing one check is never evidence of another:
 
 | Check | Compares | Question |
