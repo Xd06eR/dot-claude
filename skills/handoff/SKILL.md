@@ -6,12 +6,26 @@ argument-hint: What will the next session be used for?
 origin: mattpocock
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+# Handoff
 
-Include a "suggested skills" section in the document, naming which skills the next agent should call the Skill tool for.
+Write a handoff document so a fresh agent can continue the work. Save it to the working directory's `.scratch/` by default; if the user names a location, use that instead. Report the saved path.
 
-Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
+If the user passed arguments, treat them as the next session's focus and tailor the doc toward it.
 
-Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
+## Document structure
 
-If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
+Six sections, all required — one with nothing to report says so, and the case may call for more:
+
+1. **Done:** what is complete, with the evidence (test output, commit, command result).
+2. **Not done:** what remains, stated honestly, including partial work.
+3. **Facts:** the established truths the next agent needs (decisions made, paths, ids, config values).
+4. **Assumptions:** what was assumed but never verified; the next agent verifies before building on these.
+5. **Next step:** the single action to resume with.
+6. **Pitfalls:** traps and dead ends already hit; what not to retry.
+
+Then a **suggested skills** section naming which skills the next agent should invoke, and for what.
+
+## Rules
+
+- Never duplicate content already captured in other artifacts (specs, plans, ADRs, commits, diffs): reference them by path.
+- Redact sensitive information (keys, passwords, personal data) before writing.
