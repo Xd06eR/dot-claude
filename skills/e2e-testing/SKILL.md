@@ -4,8 +4,6 @@ description: Playwright E2E testing patterns, Page Object Model, configuration, 
 origin: ECC
 ---
 
-# E2E Testing Patterns
-
 Comprehensive Playwright patterns for building stable, fast, and maintainable E2E test suites.
 
 ## Test File Organization

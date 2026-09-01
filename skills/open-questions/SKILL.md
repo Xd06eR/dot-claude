@@ -4,8 +4,6 @@ description: Maintain the project's live register of open design questions and t
 origin: custom
 ---
 
-# Open Questions
-
 The live register of design questions still in flight. One register per project (default `OPEN-QUESTIONS.md` at the project root; the project's `CLAUDE.md` may name another path). If the project keeps no such file, this skill does nothing: never push for its creation, never park rulings in another file.
 
 The register is a state document holding live items only. An entry leaves the register at bake: the design goes to canonical, the context goes to ADRs. The reasoning narrative of a session belongs to `PROGRESS-LOG.md` when the project keeps one.

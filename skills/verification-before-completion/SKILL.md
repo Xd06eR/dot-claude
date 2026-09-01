@@ -4,8 +4,6 @@ description: Use when about to claim work is complete, fixed, or passing, before
 origin: superpowers
 ---
 
-# Verification Before Completion
-
 ## Overview
 
 **Core principle:** Evidence before claims, always.

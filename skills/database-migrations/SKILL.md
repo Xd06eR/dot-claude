@@ -4,8 +4,6 @@ description: Database migration best practices for schema changes, data migratio
 origin: ECC
 ---
 
-# Database Migration Patterns
-
 Safe, reversible database schema changes for production systems.
 
 ## When to Activate

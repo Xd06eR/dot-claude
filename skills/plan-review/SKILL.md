@@ -5,8 +5,6 @@ allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
 ---
 
-# Plan Review
-
 Gate a plan, spec, or PRD before build.
 
 Dispatch four independent review lenses in parallel, add a security pass when the plan warrants one, then merge every report into one verdict.

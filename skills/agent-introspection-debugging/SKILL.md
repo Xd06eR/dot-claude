@@ -4,8 +4,6 @@ description: Use when an agent loop is stuck, repeating, or degrading. Structure
 origin: ECC
 ---
 
-# Agent Introspection Debugging
-
 Use this skill when an agent run is failing repeatedly, consuming tokens without progress, looping on the same tools, or drifting away from the intended task.
 
 This is a workflow skill, not a hidden runtime. It teaches the agent to debug itself systematically before escalating to a human.

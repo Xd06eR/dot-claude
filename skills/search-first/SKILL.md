@@ -4,8 +4,6 @@ description: Use when about to write custom code for a problem that may have exi
 origin: ECC
 ---
 
-# /search-first — Research Before You Code
-
 Systematizes the "search for existing solutions before implementing" workflow.
 
 ## Trigger

@@ -4,8 +4,6 @@ description: Anti-slop frontend skill for landing pages, portfolios, and redesig
 origin: taste-skill
 ---
 
-# design-taste-frontend: Anti-Slop Frontend Skill
-
 > Landing pages, portfolios, and redesigns. Not dashboards, not data tables, not multi-step product UI.
 > Every rule is **contextual**. None of it fires automatically. First read the brief, then pull only what fits.
 

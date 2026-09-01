@@ -4,8 +4,6 @@ description: Apply concrete design-engineering details that make interfaces feel
 origin: ECC
 ---
 
-# Make Interfaces Feel Better
-
 Use this skill for the small design-engineering details that compound into a more polished interface.
 
 ## When to Use

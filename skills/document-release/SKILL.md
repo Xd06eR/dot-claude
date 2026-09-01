@@ -5,8 +5,6 @@ allowed-tools: Bash, Read, Edit, Grep, Glob
 origin: gstack
 ---
 
-# Document Release
-
 Post-ship documentation sweep. After a release lands (or a feature branch is about to merge), every doc file in the repo should match what shipped. This skill reads the diff, audits each doc against it, fixes clear factual drift, polishes CHANGELOG voice, flags coverage gaps, and outputs the commit plus PR/MR body update for the user to run.
 
 **Git safety rule (non-negotiable):** this skill never runs the commit, push, or PR/MR-edit commands, and never mutates a remote. It does the local doc edits itself and OUTPUTS the rest as a command block. The final terminal action is always the user's.

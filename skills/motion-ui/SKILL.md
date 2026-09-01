@@ -4,8 +4,6 @@ description: Production-ready UI motion system for React/Next.js. Covers tokens,
 origin: ECC
 ---
 
-# Motion System
-
 Production-ready UI motion system for React / Next.js.
 
 Focused on **performance, accessibility, and usability** — not decoration.

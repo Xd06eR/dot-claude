@@ -5,8 +5,6 @@ argument-hint: "[pr-url | diff-ref | base..head]"
 origin: code-review plugin
 ---
 
-# Code Review
-
 Provide a code review for the given diff or pull request ($ARGUMENTS). The command writes a review report the user reads; it does not post any comment to GitHub.
 
 To do this, follow these steps precisely:

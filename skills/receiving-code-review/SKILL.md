@@ -4,8 +4,6 @@ description: Use when receiving code review feedback, before implementing sugges
 origin: superpowers
 ---
 
-# Code Review Reception
-
 ## Overview
 
 Code review requires technical evaluation, not emotional performance.

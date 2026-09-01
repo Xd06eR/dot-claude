@@ -5,8 +5,6 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 origin: ECC
 ---
 
-# Agent Architecture Audit
-
 A diagnostic workflow for agent systems that hide failures behind wrapper layers, stale memory, retry loops, or transport/rendering mutations.
 
 ## When to Activate

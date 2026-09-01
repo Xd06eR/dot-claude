@@ -4,8 +4,6 @@ description: Upgrades existing websites and apps to premium quality. Audits curr
 origin: taste-skill
 ---
 
-# Redesign Skill
-
 ## How This Works
 
 When applied to an existing project, follow this sequence:
