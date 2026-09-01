@@ -17,7 +17,6 @@
     "claude-md-management@claude-plugins-official": true,
     "codex@openai-codex": false,
     "context7@claude-plugins-official": true,
-    "document-skills@anthropic-agent-skills": true,
     "github@claude-plugins-official": false,
     "hookify@claude-plugins-official": false,
     "impeccable@impeccable": false,
