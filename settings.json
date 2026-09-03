@@ -16,19 +16,14 @@
     "caveman@caveman": true,
     "chrome-devtools-mcp@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
-    "codex@openai-codex": false,
     "context7@claude-plugins-official": true,
-    "github@claude-plugins-official": false,
-    "hookify@claude-plugins-official": false,
     "impeccable@impeccable": false,
     "playwright@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
-    "supabase@claude-plugins-official": false,
-    "typescript-lsp@claude-plugins-official": true,
-    "vercel@claude-plugins-official": false
+    "typescript-lsp@claude-plugins-official": true
   },
   "env": {
     "CLAUDE_CODE_EFFORT_LEVEL": "xhigh",
@@ -39,13 +34,6 @@
     "ENABLE_TOOL_SEARCH": "true"
   },
   "extraKnownMarketplaces": {
-    "anthropic-agent-skills": {
-      "autoUpdate": false,
-      "source": {
-        "repo": "anthropics/skills",
-        "source": "github"
-      }
-    },
     "caveman": {
       "autoUpdate": false,
       "source": {
@@ -57,13 +45,6 @@
       "autoUpdate": false,
       "source": {
         "repo": "pbakaus/impeccable",
-        "source": "github"
-      }
-    },
-    "openai-codex": {
-      "autoUpdate": false,
-      "source": {
-        "repo": "openai/codex-plugin-cc",
         "source": "github"
       }
     },
@@ -134,6 +115,8 @@
     "defaultMode": "default",
     "deny": [
       "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gh/**)",
       "Read(**/.env)",
       "Read(**/.env.*)",
       "Read(**/.envrc)",
