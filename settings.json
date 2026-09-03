@@ -132,7 +132,11 @@
       "ScheduleWakeup",
       "TaskOutput",
       "TodoWrite",
-      "ToolSearch"
+      "ToolSearch",
+      "ListMcpResourcesTool",
+      "ReadMcpResourceTool",
+      "ReadMcpResourceDirTool",
+      "ReportFindings"
     ],
     "disableBypassPermissionsMode": "disable"
   },
