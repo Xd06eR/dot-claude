@@ -136,7 +136,14 @@
       "Read(~/.ssh/**)",
       "Read(**/.env)",
       "Read(**/.env.*)",
-      "Read(**/.envrc)"
+      "Read(**/.envrc)",
+      "NotebookEdit",
+      "EnterWorktree",
+      "ExitWorktree",
+      "CronCreate",
+      "CronDelete",
+      "CronList",
+      "ListAgents"
     ],
     "disableBypassPermissionsMode": "disable"
   },
