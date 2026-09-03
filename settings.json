@@ -130,7 +130,8 @@
       "DesignSync",
       "ScheduleWakeup",
       "TaskOutput",
-      "TodoWrite"
+      "TodoWrite",
+      "ToolSearch"
     ],
     "disableBypassPermissionsMode": "disable"
   },
