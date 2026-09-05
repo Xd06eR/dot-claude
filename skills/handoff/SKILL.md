@@ -12,6 +12,8 @@ If the user passed arguments, treat them as the next session's focus and tailor 
 
 ## Document structure
 
+The doc opens with a **read order**: the durable artifacts the next session re-grounds from, in order, each named for what it carries.
+
 Six sections, all required — one with nothing to report says so, and the case may call for more:
 
 1. **Done:** what is complete, with the evidence (test output, commit, command result).
@@ -27,3 +29,4 @@ Then a **suggested skills** section naming which skills the next agent should in
 
 - Never duplicate content already captured in other artifacts (specs, plans, ADRs, commits, diffs): reference them by path.
 - Redact sensitive information (keys, passwords, personal data) before writing.
+- State the doc's lifecycle: what retires it (refresh or delete on a named event or condition), and warn that claims decay since it does not update itself.
