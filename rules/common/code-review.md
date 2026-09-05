@@ -102,26 +102,7 @@ Before marking code complete:
 | MEDIUM | Maintainability concern | **INFO** - Consider fixing |
 | LOW | Style or minor suggestion | **NOTE** - Optional |
 
-## Review tools
-
-| Tool | Type | Use when |
-|------|------|----------|
-| `security-guidance` plugin | Auto-running | Pattern warnings + diff review + commit review — always active |
-| `review-pr` | Skill | Multi-agent PR review (aggregated, severity-normalized, cross-agent dedup) |
-| `lens-review` | Skill | 5-lens confidence-scored review of a diff or PR (compliance, bug scan, git history, prior comments, in-code comments) |
-| `diagnosing-bugs` | Skill | Root cause analysis on bugs found |
-| `code-reviewer` | Agent | CLAUDE.md compliance + bug review of a diff |
-| `comment-analyzer` | Agent | Comment-rot hunt on a diff |
-| `pr-test-analyzer` | Agent | Behavioral test-coverage gap analysis |
-| `silent-failure-hunter` | Agent | Hunt swallowed errors, bad fallbacks, missing propagation |
-| `type-design-analyzer` | Agent | Type encapsulation + invariant review |
-| `security-auditor` | Agent | Adversarial security audit of a diff or design (pre-ship gate) |
-| `spec-reviewer` | Agent | Spec-fidelity review of a diff against its originating spec/PRD |
-| `database-reviewer` | Agent | PostgreSQL review: query optimization, schema design, RLS/security |
-
-Review tools (`review-pr`, `lens-review`) are substitutes — pick one. `review-pr` aggregates the concern-agents; `lens-review` runs 5 review lenses with confidence scoring.
-
-Post-review remediation (fix agents, not review lenses): `react-build-resolver` (React build failures), `code-simplifier` (clarity/consistency refinement).
+**Calibrate the report:** one substantiated blocker outweighs a list of nits.
 
 ## Review workflow
 
@@ -131,7 +112,7 @@ Post-review remediation (fix agents, not review lenses): `react-build-resolver` 
 3. Review code quality checklist
 4. Run relevant tests
 5. Verify the new-code coverage baseline (per testing.md)
-6. Use relevant tool from Review tools table for domain-specific review
+6. Dispatch the relevant review skill or agent for domain-specific review
 ```
 
 ## Common issues to catch
@@ -146,3 +127,15 @@ The `security.md` mandatory checks own this list (same scope, always co-loaded).
 - Missing pagination - add LIMIT to queries
 - Unbounded queries - add constraints
 - Missing caching - cache expensive operations
+
+### Over-engineering
+
+Hunt complexity only; correctness, security, and performance stay with their own passes.
+
+- Dead code, unused flexibility, speculative features - delete
+- Hand-rolled versions of what the standard library ships - use the stdlib function
+- Dependencies or code doing the platform's job - use the native feature
+- Abstractions with one implementation, configs nobody sets, layers with one caller - inline or remove
+- Same logic achievable in fewer lines - show the shorter form
+- Repo-wide, also hunt: one-product factories, wrappers that only delegate, files exporting one thing, dead flags and config
+- Never flag a minimal smoke test or assert self-check for deletion
