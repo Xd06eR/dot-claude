@@ -137,7 +137,6 @@ Good pattern:
 
 - Use `verification-before-completion` after recovery if code was changed.
 - Use `plan-review` when the issue is not technical failure but decision ambiguity.
-- Use `/harness-audit` if the failure came from conflicting local state or repo drift.
 
 ## Output Standard
 
