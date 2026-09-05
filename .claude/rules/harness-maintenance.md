@@ -26,10 +26,9 @@ Print the diff of changed files in your reply when the batch closes.
 - Bullet labels state the rule's content, never a coined concept: the label is recall and scannability, not a name to decode.
 - No model names or tier assumptions; the injection tells the agent what its harness offers. Write no environment conditionals. Functional `model:` frontmatter in `agents/*.md` is exempt.
 
-## Lesson write-back
+## Lesson capture
 
-- Harness lessons follow CLAUDE.md's lesson write-back, then land in the owning harness file once stable across sessions (ask-first, or same-session for a standing convention or rejected tool call); the memory is `.bak`-parked on landing.
-- Keep the project `MEMORY.md` index current; condense when the index exceeds ~30 lines; merge same-theme memories.
+- Harness lessons follow CLAUDE.md's proposal gate; the accepted rule lands in the owning harness file (ask-first, or same-session for a standing convention or a rejected tool call).
 
 ## Audit execution
 
@@ -56,7 +55,7 @@ Any single unscoped rules file beyond ~8 KB, or the unscoped (always-loaded) set
 
 - **Persona and headings:** agents get a terse persona (1–3 sentences: role, specialty, responsibility) after the frontmatter, at the top of the body, and no H1: the frontmatter name already provides it. Commands and skills get no persona; an H1 only when a genuine title beyond the bare name.
 - **Frontmatter:** name, description-with-trigger, then `disable-model-invocation` and `argument-hint` when present, tools, origin (origin last); add `part-of` for multi-agent families. Quote the description with `""` only when it contains a colon. Argument-hint marks required slots with `<>`, optional with `[]`; quote it only when YAML requires (a leading `[` or an inner colon).
-- **Description = the routing surface:** stance + trigger + what it returns; never a workflow summary. Keep it to one to three sentences carrying stance, trigger, and the mis-invocation guard, with returns as a phrase at most; path specs and behavioral detail live in the body. A `## When to invoke` body section is an anti-pattern: relocate its content into the description, never drop it. User-invoked components (`disable-model-invocation: true`) drop the trigger and the mis-invocation guard — both exist for model-side invocation decisions — and keep a one-to-two-sentence statement of what it does; naming the workflow gate it runs at ("Run at the staging→canonical gate") counts as stance, not trigger.
+- **Description = the routing surface:** stance + trigger + what it returns; never a workflow summary. Keep it to one to three sentences carrying stance, trigger, and the mis-invocation guard, with returns as a phrase at most; path specs and behavioral detail live in the body. When trimming, cut marketing and pure restatements only; words the user would type when hitting the problem (symptoms, failure modes, their own scope terms) carry the match — never trade them for category names. A `## When to invoke` body section is an anti-pattern: relocate its content into the description, never drop it. User-invoked components (`disable-model-invocation: true`) drop the trigger and the mis-invocation guard — both exist for model-side invocation decisions — and keep a one-to-two-sentence statement of what it does; naming the workflow gate it runs at ("Run at the staging→canonical gate") counts as stance, not trigger.
 - **Pre-existing components:** change only when an effectiveness case justifies it. Description re-tailoring is justified (it is routing); cosmetic trims are not.
 - **Multi-exemplar:** read sibling components before writing; base format and structure on the best practice across them, never on one target.
 - **Adoption mechanics:** strip `disable-model-invocation: true` on adopted skills meant to stay auto-invokable; strip self-run git mutations from adopted components (CLAUDE.md's never-commit rule binds component bodies); tag `origin:` as `custom` (hand-built here), the source name (ported-from: plugins by plugin name, repos by repo name), or `A + B` (two-source merge).
