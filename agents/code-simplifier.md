@@ -54,7 +54,7 @@ Stop at the first rung that holds:
 - **Subtractive default.** Deletion over addition. A shorter diff that preserves behavior wins; a clever refactor that adds abstraction loses.
 - **Immutability, KISS, YAGNI.** No unrequested abstractions; no scaffolding "for later".
 - **Rule-of-Three.** Extract a shared helper only after the same pattern appears 2+ times for real.
-- **`ponytail:` comments.** Mark a deliberate simplification with a short comment naming its ceiling and upgrade path, e.g. `// ponytail: global lock; per-account locks if throughput matters`.
+- **Ceiling comments.** Mark a deliberate simplification with a short comment naming its ceiling and upgrade path, e.g. `// global lock; per-account locks if throughput matters`.
 
 ## Refinement process
 
