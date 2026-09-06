@@ -1,11 +1,9 @@
 ---
 name: inherit-legacy-style
-description: Onboard an AI coding agent onto a hand-written legacy project without style drift (the model imposing its pretrained mainstream idioms). Scans the codebase for implicit conventions across 4 meta-architecture dimensions, resolves conflicts with the user one at a time, and codifies the consensus into an enforceable .ai-style-rules.md. Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved. Language- and framework-agnostic; aligns meta-architecture only, not syntax.
+description: Onboard an AI coding agent onto a hand-written legacy project without style drift (the model imposing its pretrained mainstream idioms). Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved. Returns an enforceable .ai-style-rules.md codifying the codebase's implicit conventions. Language- and framework-agnostic; aligns meta-architecture only, not syntax.
 allowed-tools: Read, Glob, Grep, Bash, Edit, Write, AskUserQuestion
 origin: ECC
 ---
-
-# Inherit Legacy Style
 
 Prevents AI code style drift in legacy projects by scanning the codebase for implicit conventions across 4 meta-architecture dimensions. Resolves conflicts with the user one at a time, and crystallizes the consensus into an enforceable `.ai-style-rules.md`. Fully language- and framework-agnostic.
 
@@ -110,7 +108,7 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 ## Anti-Patterns
 
 - FAIL: Do NOT skip the scale measurement step — sampling a 30-file project "starves" it. Full-scanning a 5,000-file repo blows up.
-- FAIL: Do NOT stack multiple conflict questions at once — grilling is strictly one-at-a-time
+- FAIL: Do NOT stack multiple conflict questions at once — batched answers conflate distinct conflicts.
 - FAIL: Do NOT overwrite old rules in incremental mode — always append evolution logs
 - FAIL: Do NOT default to "hard hook" without asking — enforcement strength is the user's call
 - FAIL: Do NOT judge syntax or tech-stack quality — this skill aligns meta-architecture only

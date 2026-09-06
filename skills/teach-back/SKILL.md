@@ -1,6 +1,6 @@
 ---
 name: teach-back
-description: Use when the user wants to verify they deeply understand a completed work session, feature, or change — at the Review phase before ship, at the end of a session, or on request. Distinct from grill-me (stress-tests a plan before building).
+description: Use when the user wants to verify they deeply understand a completed work session, feature, or change — at the Review phase before ship, at the end of a session, or on request.
 origin: custom
 ---
 
