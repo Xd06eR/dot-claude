@@ -1,69 +1,39 @@
 ---
 name: plan-from-design
-description: Turn baseline design docs, a settled conversation, or a vague request into per-component spec + implementation plan (with embedded numbered checklist). Run at the Design→Plan handoff; gates via plan-review before /build-brief.
+description: Turn canonical design docs into per-component spec + implementation plan.
 disable-model-invocation: true
-argument-hint: "[design-doc dir, glob, or files — omit for conversation mode] [--out <dir>]"
-origin: custom + mattpocock
+argument-hint: "[design docs dir, glob, or files — the feature to plan]"
+origin: custom + mattpocock + superpowers
 ---
 
-# Plan Generator (Design → Plan)
+Produce one spec + implementation-plan pair per component, emit each as files `/build-brief` later consumes.
 
-Design→Plan handoff.
+## Input — canonical design docs
 
-Produce one spec + implementation-plan pair per BUILD-TARGET component, emit each as files `/build-brief` later consumes.
+The input is always canonical design: user-approved + baked into the canonical design set (`docs/design/`), carrying no open or provisional markers.
 
-`plan-review` gates this output before Build.
+No canonical docs? Route on state: still unsettled → back to the Design phase (`grill-me` / `grill-with-docs`); settled in conversation but unbaked → `/bake-design`, then return.
 
-## Input modes
+The invocation names the design-doc source (a directory, a glob, or a list of files); the default layout puts it at `docs/design/`. It may also name an output location to use instead of the default `docs/plan/`. If it names no source, stop and ask where the canonical design docs live; do not guess a folder.
 
-Three states the input can be in. Pick by what exists, not by preference:
+The invocation also names the feature to plan. The feature carves the build scope out of the named docs: the sections describing it are what gets built; everything else in the docs is standing context (existing contracts the plan must respect). No feature named means greenfield: the whole source is the build scope.
 
-- **Mode A — baseline design docs.** The default. Read the docs, decompose, emit.
-- **Mode B — settled conversation.** No design docs, but the discussion already settled what + why. Synthesize from the conversation — do NOT interview. If a needed decision never came up, flag it or ask one targeted question; do not restart clarification.
-- **Mode C — vague or underspecified request.** Interrogate first (below) until what + why are locked, then proceed as Mode B.
-
-**Baseline** = design that is owner-approved + baked into the canonical design set (e.g., `system_design/`), carrying no OPEN/TBD markers.
-
-Anything still in progress (staging, open-questions, research) is NOT baseline — exclude it.
-
-## Mode C: interrogate until unambiguous
-
-Ambiguity is a bug; find it before writing. Never produce the spec from the first message.
-
-- **Round discipline:** 3-5 numbered questions per round, highest-ambiguity first. End every message with the questions. Call out assumptions explicitly ("I am assuming X, right?").
-- **Lock the why first:** who is affected, current behavior (verified, not assumed), expected behavior, why now, how done is observed. No *how* before *what* and *why* are locked.
-- **Lock scope early:** explicit out-of-scope list; the smallest version that delivers the value; failure modes and rollback.
-- **Read code before asking.** Before any technical question, read evidence via Grep/Glob/Read and cite `path:line`. Never ask what reading answers. If genuinely greenfield, say so and proceed.
-- **Quantify.** "Several files" is not acceptable — exact counts, metrics, targets.
-- **Draft review:** present the full draft and ask "does this capture what you want — what did I get wrong?" Iterate until confirmed.
-- **Stranger self-check:** re-read the confirmed draft as the unfamiliar implementer. Every residual ambiguity — vague criterion, fuzzy metric, undecided choice — gets fixed or flagged. The bar: a stranger executes with zero follow-up questions. For a deeper adversarial pass, hand the draft to `grill-me`.
-
-## Inputs — Mode A: BASELINE design docs ONLY
-
-Arguments: "$ARGUMENTS" — Mode A **required**: the design-doc source (a directory, a glob, or a list of files holding the baseline design). Mode B/C: omit — the source is the conversation.
-
-The command does NOT assume any folder name. You point it at wherever the baseline design lives.
-
-Optional: `--out <dir>` overrides the default `plan-docs/` output location. There is NO positional output dir — use `--out`.
+Ground the boundary on the code, not the docs: what exists in code is already built (reuse or extend); what is absent is this build. Grep the codebase for every contract the feature names, read the signatures the plan consumes from the code as built, and surface a doc-vs-code mismatch as a finding rather than planning against the doc's version.
 
 Also read:
 
 - the project's `CLAUDE.md` — standing context
 
-Everything else (WIP notes, open-question files, staging dirs, research, archives) is NOT baseline — exclude it.
-
-In Mode A, if `$ARGUMENTS` is empty, stop and ask where the baseline design docs live. Do not guess a folder.
-
-If a pointed-at doc still carries open/TBD markers, it is not baseline yet — flag it. Do not invent.
+Any other doc is NOT canonical: exclude it. A doc that still carries open or provisional markers is not canonical yet: flag it. Do not invent.
 
 ## Classify each design doc — build target vs reference doc
 
-Not every baseline doc is a build target.
+Not every canonical doc is a build target. When the invocation names a feature, the unit is the feature's sections, not whole docs: the rest of a named doc is standing context.
 
 Classify each before writing:
 
 - **BUILD TARGET** — defines something to CONSTRUCT (a schema, a pipeline, a service, the UI, a storage layer, an API). Gets a spec + plan.
-- **REFERENCE doc** — a digest, summary, or reference card that states subordination ("derived from," "reference card," "subordinate to") OR whose content is fully covered by other docs. NOT built independently. Gets NO spec/plan; recorded in INDEX as "reference — consumed by <X, Y>; no standalone build."
+- **REFERENCE doc** — a digest, summary, or reference card that states subordination ("derived from," "reference card," "subordinate to") OR whose content is fully covered by other docs. NOT built independently. Gets NO spec/plan; recorded in INDEX as reference-only.
 
 When unsure, check whether the doc defines a thing to BUILD or just summarizes other docs.
 
@@ -81,7 +51,7 @@ State the proposed components before writing.
 
 ## Seams before specs
 
-Sketch the seams at which each component will be tested. Prefer existing seams to new ones, use the highest seam possible, and keep the count low — the ideal number across the codebase is one. New seams go at the highest point that works.
+Sketch the seams at which each component will be tested. Prefer existing seams to new ones and keep the new-seam count low: the ideal is one new seam across the build, placed at the highest point that works.
 
 Check with the user that the seams match their expectations before writing the specs.
 
@@ -91,24 +61,46 @@ Foundation-first.
 
 Cross-ref graph: referenced-by-many → early (foundation). References-many → late (UI/edge).
 
-## Emit per component → `plan-docs/` (or `--out <dir>`)
+## Emit per component → `docs/plan/`
 
 For each BUILD-TARGET component, write:
 
 - `<component>-spec.md` — what + why + SUCCESS CRITERIA, distilled from the design doc. Success criteria must be CHECKABLE (a test that passes, a query that returns X), not "works" or "is good." Also carries: **Implementation Decisions** (modules built/modified, interfaces, contracts, schema changes, architectural calls — NO file paths or code snippets, they go stale fast; exception: a prototype snippet that encodes a decision more precisely than prose, trimmed to the decision-rich parts), **Testing Decisions** (what makes a good test here — external behavior through the agreed seams, not implementation details; which modules are tested; prior art in the codebase), and **Out of Scope** (mandatory beyond trivial scope). Leave zero design decisions for the implementer.
-- `<component>-plan.md` — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first.
+- `<component>-plan.md` — technical approach plus a numbered checklist of decomposed steps as `[Step] → verify: [check]`, with decisions likely to change listed first. Also carries two binding blocks:
+  - **Global Constraints** — the project-wide requirements that bind every step, copied VERBATIM from the design docs: exact values, version floors, naming rules, platform requirements, one line each. Downstream reviewers use this block as their attention lens, so exact values must travel, not paraphrases.
+  - **Interfaces** — **Consumes:** the exact signatures this component uses from earlier components. **Produces:** the exact names, parameter types, and return types later components rely on. A fresh-context builder sees only its own spec+plan; this block is how it learns its neighbors' names and types.
 
-The checklist lives INSIDE the plan as a section — not a separate file. One spec + one plan per component, no third doc.
+The checklist lives INSIDE the plan as a section, not a separate file. One spec + one plan per component, no third doc. Each step is one verifiable action; fold setup, configuration, and scaffolding into the step whose deliverable needs them: no standalone scaffolding steps.
 
 **Distill, do not invent.**
 
-Specs capture OWNER-APPROVED decisions already in the baseline. No new schema, contract, or prompt-template decisions — those require the project's change-control workflow (staging → owner approval → bake into the baseline set).
+Specs capture USER-APPROVED decisions already in the canonical set. No new schema, contract, or prompt-template decisions: those require the project's change-control workflow (an `OPEN-QUESTIONS.md` entry → user approval → bake via `/bake-design`).
 
-If a spec needs a decision not present in the baseline, flag it. Do not invent.
+If a spec needs a decision not present in the canonical set, flag it. Do not invent.
 
-## INDEX → `plan-docs/INDEX.md`
+## No placeholders
 
-INDEX = the cross-feature menu with dependency ordering (feature = 2-6 components). These are the only batching terms — never "batch" or "menu".
+Every step must contain what the builder needs to act. These are plan failures. Never write them:
+
+- "TBD", "TODO", "implement later", "fill in details"
+- "Add appropriate error handling" / "add validation" / "handle edge cases"
+- "Write tests for the above" (name the test and what it asserts)
+- "Similar to component N" (repeat the content: steps may be read out of order)
+- References to types, functions, or interfaces no spec or plan defines
+
+## Self-review before emitting
+
+Run this checklist yourself before writing the files, not a subagent dispatch:
+
+1. **Spec coverage:** skim each requirement in the source design. Can you point to the step that implements it? List any gaps; add the missing component or step.
+2. **Placeholder scan:** search the plan for the patterns above. Fix them.
+3. **Type consistency:** do the names, signatures, and property types used by later components match what earlier components produce? A `clearLayers()` produced in one component but consumed as `clearFullLayers()` in another is a build-time failure.
+
+Fix issues inline. No re-review: fix and move on.
+
+## INDEX → `docs/plan/INDEX.md`
+
+INDEX = the cross-feature list with dependency ordering (feature = 2-6 components). Working terms are feature / INDEX / component only.
 
 Ordered BUILD-TARGET component list + one-line dependency graph + status tracker (☐ design done · ☐ spec+plan · ☐ plan-reviewed · ☐ built).
 
@@ -126,6 +118,4 @@ Do not run `/build-brief` until `plan-review` passes.
 
 ## Output
 
-Write `plan-docs/` (or the `--out <dir>`) + `INDEX.md`, print the component classification + list + order for review.
-
-Do not start `/build-brief` — user reviews + `plan-review` gates first.
+Write `docs/plan/` (or the override) + `INDEX.md`, print the component classification + list + order for review.
