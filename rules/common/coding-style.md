@@ -110,4 +110,4 @@ Split large functions into focused pieces with clear responsibilities.
 
 ## Code quality checklist
 
-See [code-review.md](code-review.md#review-checklist) for the pre-complete checklist.
+See [review-standards.md](review-standards.md#review-checklist) for the pre-complete checklist.

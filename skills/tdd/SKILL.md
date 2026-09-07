@@ -4,11 +4,7 @@ description: Test-driven development. Use when the user wants to build features 
 origin: mattpocock + superpowers
 ---
 
-# Test-Driven Development
-
 TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle — consult them before and during the loop, not after.
-
-When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 
 ## What a good test is
 
@@ -39,7 +35,7 @@ When the shape of that interface is itself in question — how deep the module i
 - **Verify the green.** Run the test and watch it pass, the rest of the test file still green, output pristine. On failure, fix the code, not the test.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **A hard-to-write test is a design signal.** Simplify the interface, inject the dependency, or write the wished-for API and its assertion first. `codebase-design` has the vocabulary for the interface questions.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see `review-pr`), not the red → green implementation cycle.
+- **Refactoring is not part of the loop.** It belongs to the review stage (see `code-review`), not the red → green implementation cycle.
 
 ## Rationalizations
 

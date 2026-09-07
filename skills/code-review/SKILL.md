@@ -1,11 +1,9 @@
 ---
-name: review-pr
-description: Comprehensive PR review using specialized agents, with cross-agent dedup and severity normalization. Run at the Review phase before merging a PR.
-argument-hint: "[aspects: all | code | tests | errors | types | comments | spec | simplify]"
-origin: pr-review-toolkit + mattpocock
+name: code-review
+description: Comprehensive code review of a PR or diff using specialized agents, with cross-agent dedup and severity normalization. Run before merging a PR.
+argument-hint: "[aspects: all | code | tests | errors | types | comments | spec | git-history | prior-comments | simplify]"
+origin: pr-review-toolkit + mattpocock + code-review plugin
 ---
-
-# Comprehensive PR Review
 
 Run a comprehensive pull request review using multiple specialized agents, each focusing on a different aspect of code quality.
 
@@ -15,6 +13,7 @@ Run a comprehensive pull request review using multiple specialized agents, each 
 
 1. **Determine Review Scope**
    - Check git status to identify changed files
+   - Read `docs/build/implementation-notes.md` if it exists: build-phase deviations, tradeoffs, and parked findings inform where the review looks hardest
    - Parse arguments to see if user requested specific review aspects
    - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent — fail here, not inside the agents
    - Default: Run all applicable reviews
@@ -27,6 +26,8 @@ Run a comprehensive pull request review using multiple specialized agents, each 
    - **types** - Analyze type design and invariants (if new types added)
    - **code** - General code review for project guidelines
    - **spec** - Review fidelity to the originating spec/PRD (if one exists)
+   - **git-history** - Check the diff against the touched files' git history: a change that contradicts or reintroduces a prior fix
+   - **prior-comments** - Check prior PR/MR review comments on the touched files for feedback that applies here
    - **simplify** - Simplify code for clarity and maintainability
    - **all** - Run all applicable reviews (default)
 
@@ -44,6 +45,8 @@ Run a comprehensive pull request review using multiple specialized agents, each 
    - **If error handling changed**: silent-failure-hunter
    - **If types added/modified**: type-design-analyzer
    - **If an originating spec/issue/PRD exists**: spec-reviewer. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
+   - **If the touched files carry recent fixes or reverts** (`git log --oneline -20 -- <files>` shows them): the git-history pass — run it in the main context, not a dispatch: read the history and blame of each touched file; a change that contradicts or reintroduces a prior fix is a finding
+   - **If prior merged PRs touched these files and carry review comments** (`gh pr list --state merged`, then `gh pr view --comments`): the prior-comments pass — also main context; feedback that applies to this change is a finding
    - **After passing review**: code-simplifier (polish and refine)
 
 5. **Launch Review Agents**
@@ -107,7 +110,7 @@ The one substantive addition. Each finding-producing agent returns findings inde
 
 1. **Collect.** Gather every finding from every dispatched finding-producing agent. Each finding carries the contract: location (`file:line` or range) + severity (`CRITICAL` / `HIGH` / `MEDIUM` / `LOW`) + issue + fix.
 2. **Dedup.** Merge findings that target the same `file:line` (or overlapping line ranges) and the same issue. Each merged entry cites every contributing agent, e.g. `[code-reviewer, type-design-analyzer]`. Do not drop a finding only one agent produced; do not double-count identical findings from two agents.
-3. **Normalize.** All findings already carry `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` (severity scale: read `~/.claude/rules/common/code-review.md` if a definition is needed). Group by severity bucket.
+3. **Normalize.** All findings already carry `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` (severity scale: read `~/.claude/rules/common/review-standards.md` if a definition is needed). Group by severity bucket.
 4. **Rank and output.** CRITICAL first, then HIGH, MEDIUM, LOW. Each entry: severity, location, issue, contributing agent(s), fix.
 5. **Per-agent tally.** Append a one-line count per dispatched finding-producing agent (pre-dedup count), so no agent's contribution is hidden by dedup.
 6. **Ship/block recommendation.** Block if any CRITICAL; otherwise ship. HIGH findings are ship-with-caution, not block.
@@ -122,5 +125,5 @@ The one substantive addition. Each finding-producing agent returns findings inde
 - Dispatch agents other than the seven in step 4: `code-reviewer`, `pr-test-analyzer`, `comment-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `spec-reviewer`, `code-simplifier`.
 - Run `git commit`, `git push`, or any destructive op. Output commands for the user.
 - Emit usage examples, agent descriptions, tips, workflow integration, or troubleshooting notes; CLAUDE.md routes usage.
-- Skip aggregation. The dedup and severity normalization are the point of this command.
+- Skip aggregation. The dedup and severity normalization are the point of this skill.
 - Auto-apply fixes from finding-producing agents. Only `code-simplifier` applies changes, and only after review passes.

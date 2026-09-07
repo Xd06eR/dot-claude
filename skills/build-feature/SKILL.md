@@ -1,6 +1,6 @@
 ---
 name: build-feature
-description: Execute a feature's build brief (docs/build/<feature>.md). Returns the integration result, the feature acceptance run, and an exhaustive rulings report.
+description: Execute a feature's build brief (docs/build/<feature>.md); with no feature named, build the settled design directly. Returns the integration result, the feature acceptance run, and an exhaustive rulings report.
 disable-model-invocation: true
 argument-hint: "[feature — omit to build the settled design directly]"
 origin: custom + superpowers
@@ -20,7 +20,7 @@ No feature named: direct mode (below). A named feature with no brief is an error
 
 No brief, no campaign: the work is the settled design — the doc section named in the TODO hand-off row, the register entry, or the conversation. If it cannot be built in one context, stop: it needs `/plan-from-design` and a brief.
 
-Build it here: failing test first at the agreed seams (`tdd`), minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`review-pr` or a fresh reviewer), commit, and report any ruling you made — the Rulings discipline applies at any size.
+Build it here: failing test first (`tdd`), minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`code-review` or a fresh reviewer), commit, and report any ruling you made — the Rulings discipline applies at any size.
 
 ## Pre-flight scan
 
@@ -113,7 +113,7 @@ Review clean, or every open finding parked at the cap → ledger `<comp>: comple
 2. **Log** decisions, deviations, and tradeoffs to `docs/build/implementation-notes.md`.
 3. **Update** `docs/build/INDEX.md` (feature ✅).
 4. **Rulings I made:** collect every ledger line containing `Ruling:` into your final message, in the order made, each with its cost-if-wrong. The list is exhaustive: it is the only place decisions taken on the user's behalf reach them.
-5. **Stop.** The Review phase (`review-pr`) starts only after every feature in the INDEX is ✅.
+5. **Stop.** The Review phase (`code-review`) starts only after every feature in the INDEX is ✅.
 
 ## Rationalizations
 

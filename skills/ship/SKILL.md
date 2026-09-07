@@ -1,11 +1,9 @@
 ---
 name: ship
-description: Use at the ship phase, when a feature or fix is complete, tested, and ready to leave the branch. Prepares the exact commit, push, and PR commands for you to run. After shipping, consider `deploy-watch` for post-deploy monitoring or `document-release` to update docs.
+description: Use when a feature or fix is complete, tested, and ready to leave the branch. Prepares the exact commit, push, and PR commands for you to run.
 allowed-tools: Bash, Read, Edit, Grep
 origin: gstack
 ---
-
-# Ship
 
 Take a finished, tested feature branch to a reviewable, mergeable state: merge the base branch, run tests, review the diff, bump VERSION, update CHANGELOG, then hand back the exact commit, push, and PR commands.
 
@@ -41,7 +39,7 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
    git diff <base>...HEAD --stat
    git log <base>..HEAD --oneline
    ```
-4. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `review-pr` before shipping." Do not block.
+4. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `code-review` before shipping." Do not block.
 
 ## Step 3: Merge the base branch (before tests)
 
@@ -81,7 +79,7 @@ Read the full diff and sanity-check it yourself:
 git diff <base>...HEAD
 ```
 
-Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `review-pr`.
+Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `code-review`.
 
 ## Step 6: Bump VERSION
 
@@ -168,3 +166,7 @@ If a PR/MR already exists for this branch, output the update form instead (`gh p
 - **Preserve the repo's VERSION format and CHANGELOG conventions.** Do not impose new ones.
 - **Stay inside the working repo.** Edit only VERSION and CHANGELOG (plus files you fixed during review). Write no state, metrics, or config files anywhere else.
 - The goal: after this skill runs, the user has a green test result, a bumped VERSION, a written CHANGELOG entry, and a ready-to-paste commit, push, and PR block.
+
+## Chaining
+
+After shipping, consider `deploy-watch` for post-deploy monitoring or `document-release` to update docs.
