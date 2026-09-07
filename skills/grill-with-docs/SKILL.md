@@ -4,4 +4,4 @@ description: A relentless interview to sharpen a plan or design, which also crea
 origin: mattpocock
 ---
 
-Call the Skill tool twice, for "grilling" and "domain-modeling". If the project keeps an open-questions file (default `OPEN-QUESTIONS.md`), call it for "open-questions" too.
+Call the Skill tool three times, for "grilling", "domain-modeling", and "open-questions".

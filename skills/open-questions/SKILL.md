@@ -1,10 +1,10 @@
 ---
 name: open-questions
-description: Maintain the project's live register of open design questions and their rulings (OPEN-QUESTIONS.md). Use when a design discussion produces rulings, open questions, or rejected options in a project that keeps the file.
+description: Maintain the project's live register of open design questions and their rulings (OPEN-QUESTIONS.md). Use when a design discussion produces rulings, open questions, or rejected options.
 origin: custom
 ---
 
-The live register of design questions still in flight. One register per project (default `OPEN-QUESTIONS.md` at the project root; the project's `CLAUDE.md` may name another path). If the project keeps no such file, this skill does nothing: never push for its creation, never park rulings in another file.
+The live register of design questions still in flight. One register per project (default `OPEN-QUESTIONS.md` at the project root; the project's `CLAUDE.md` may name another path), created lazily on the first ruling or question it needs to hold: never park rulings in another file.
 
 The register is a state document holding live items only. An entry leaves the register at bake: the design goes to canonical, the context goes to ADRs. The reasoning narrative of a session belongs to `PROGRESS-LOG.md` when the project keeps one.
 
@@ -60,4 +60,4 @@ An entry with related neighbors may add an **Interaction:** block naming which e
 - **Create the file lazily** — only when the first open question needs a home.
 - **Prune trigger.** If the register exceeds ~1,500 lines OR ~100 KB, run a prune sweep: bake what is ready, drop what is stale, restate what still matters. Sprawl while open is legitimate, so the threshold is loose; the byte half exists because line counts miss prose walls.
 - **Entries leave at bake.** `/bake-design` deletes a fully-baked entry; a partially-baked entry stays, holding only its unbaked rulings. Nothing is archived into the register.
-- When the project keeps a `TODO.md`, actionable entries (above all BLOCKED ones) also surface there as task rows referencing the entry number, written by `/session-sync`, the table's owner. The register holds the design detail, `TODO.md` holds the pick-next menu.
+- When the project keeps a `TODO.md`, actionable entries (above all BLOCKED ones) also surface there as task rows referencing the entry number, written by `/session-sync` and `/bake-design`'s hand-off row. The register holds the design detail, `TODO.md` holds the pick-next menu.
