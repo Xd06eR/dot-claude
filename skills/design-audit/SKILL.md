@@ -72,9 +72,9 @@ EOF
 
 ## Consistency
 
-Source: the docs themselves — `design-docs/`, `OPEN-QUESTIONS.md`, and `docs/adr/`. Read the set the run covers, then run the greps and the link check by script and judge each hit by eye. The script attests absence (no drifted term anywhere, no dead link); only the read catches a contradiction no pattern names.
+Source: the docs themselves — `docs/design/`, `OPEN-QUESTIONS.md`, and `docs/adr/`. Read the set the run covers, then run the greps and the link check by script and judge each hit by eye. The script attests absence (no drifted term anywhere, no dead link); only the read catches a contradiction no pattern names.
 
-1. **Determined-only.** Grep `design-docs/*.md` for `OPEN`, `TBD`, `maybe`, `?`, `⚠️`, and the status glyphs (`🟡`, `🟢`, `⛔`). Judge each hit in context: a literal `?` in prose or code spans, and text quoting the rule itself, are not violations. Report genuinely open design content with the fix "move to `OPEN-QUESTIONS.md`".
+1. **Determined-only.** Grep `docs/design/*.md` for `OPEN`, `TBD`, `maybe`, `?`, `⚠️`, and the status glyphs (`🟡`, `🟢`, `⛔`). Judge each hit in context: a literal `?` in prose or code spans, and text quoting the rule itself, are not violations. Report genuinely open design content with the fix "move to `OPEN-QUESTIONS.md`".
 2. **Terminology.** Grep for drifted or banned terms against `CONTEXT.md`.
 3. **Contracts.** Every event name, path, field name, and schema column identical across all docs that touch it. Name-level, not semantic: two docs can still assign the same field different owners, so pair this check with a judgment read when the docs describe who writes what.
 4. **Stale proposals.** Grep for terms dropped or superseded per `docs/adr/` and `OPEN-QUESTIONS.md`: any hit is either gone or marked superseded at its source.
