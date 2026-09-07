@@ -5,7 +5,7 @@ disable-model-invocation: true
 origin: custom
 ---
 
-Bridge two sessions: §Start re-grounds at the beginning of one, §End captures state before one dies. This skill writes `TODO.md` and `PROGRESS-LOG.md`, with one exception — `bake-design` appends the bake session narrative to `PROGRESS-LOG.md` (it must land at bake time, not batched to session end).
+Bridge two sessions: §Start re-grounds at the beginning of one, §End captures state before one dies. This skill writes `TODO.md` and `PROGRESS-LOG.md`, with two exceptions — `bake-design` appends the bake session narrative to `PROGRESS-LOG.md` (it must land at bake time, not batched to session end) and writes the bake hand-off row to `TODO.md`.
 
 Routing, in order. Wording alone is unreliable, so check state first:
 
@@ -33,7 +33,7 @@ Compaction drops the conversation from context; the transcript stays on disk. Wr
 
 1. **Rewrite `TODO.md`'s "▶ Next-session resume" block** per the TODO.md format below. This block is the only part of `TODO.md` that gets rewritten.
 2. **Condense mechanically.** If `TODO.md` exceeds ~250 lines OR ~10 KB, fold still-relevant old material into the resume block now, not when someone notices. Line counts miss prose walls; the byte threshold is the backstop for that failure shape.
-3. **Verify capture before logging.** If the session produced design rulings, confirm each one landed in `OPEN-QUESTIONS.md` or a design doc. The log entry records the session; it is not the capture net for rulings. Then propose `design-audit` `full` on the transcript: completeness, consistency's said-vs-written, and soundness on rulings still unbaked; state the spend (how many agents, reading what) and wait for the call. Soundness findings land in the entry itself, not only in the report.
+3. **Verify capture before logging.** If the session produced design rulings, confirm each one landed in `OPEN-QUESTIONS.md` or a design doc. The log entry records the session; it is not the capture net for rulings. Then propose `design-audit` `full` on the transcript: completeness, consistency's said-vs-written, and soundness on rulings still unbaked; state the spend (how many agents, reading what) and wait for the call; skip the proposal when a bake already ran `full` this session. Soundness findings land in the entry itself, not only in the report.
 4. **Append to `PROGRESS-LOG.md`**, one dated entry: what was decided and why. Record the number or constraint that killed each alternative, rejected proposals with their reasons, and corrections the user made mid-discussion. The outcome lives in the state docs; the reasoning lives here.
 5. **Cross-check consistency.** `TODO.md` against `OPEN-QUESTIONS.md` — no gaps, statuses consistent.
 6. **Commit and push the captured docs.**
