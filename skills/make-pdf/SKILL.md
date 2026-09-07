@@ -1,11 +1,9 @@
 ---
 name: make-pdf
-description: "Docs and artifacts phase: turn a finished Markdown file into a publication-quality PDF using whatever PDF toolchain the machine already has. Use when a Markdown document needs to become a shareable, printable artifact. Pairs with `document-generate` to write the document first and `diagram` to create figures to embed."
+description: "Docs and artifacts phase: turn a finished Markdown file into a publication-quality PDF using whatever PDF toolchain the machine already has. Use when a Markdown document needs to become a shareable, printable artifact."
 allowed-tools: Bash, Read, Write
 origin: gstack
 ---
-
-# Make PDF
 
 Turn a finished Markdown file into a publication-quality PDF: 1in margins, a running header and footer, page numbers, styled code blocks and tables, and an optional cover page, table of contents, and draft watermark. The renderer is whatever this machine already has, detected at run time, so the skill needs no bundled binary.
 
