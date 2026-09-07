@@ -30,7 +30,7 @@ A mode sets the claim source (the text the claims are enumerated from) for which
 
 The transcript is read once, by the subagent, and feeds every check that can use it: Completeness (its claim source), Consistency's said-vs-written, and Soundness (ruling reasoning and question-ordering are visible there, invisible in the docs). The read is smaller than session size implies, because the extractor strips tool calls and results; the script prints the real estimate before anything is dispatched.
 
-Dispatch rules, binding on every run: never brief the subagent on the main context's findings (anchoring destroys the second source's independence); the subagent reports and never writes; reconcile before reporting. A finding stands until refuted with evidence; silence is not a refutation. One-sided findings are the expected yield, never noise. The subagent sees what the main context lost; the main context sees doc state the transcript never mentions. A wide, high-stakes audit where a missed finding is irreversible routes to the `audit-dispatch` skill's fan-out instead; routine runs never qualify.
+Dispatch rules, binding on every run: never brief the subagent on the main context's findings (anchoring destroys the second source's independence); the subagent reports and never writes; reconcile before reporting. A finding stands until refuted with evidence; silence is not a refutation. One-sided findings are the expected yield, never noise. The subagent sees what the main context lost; the main context sees doc state the transcript never mentions.
 
 ### Transcript extraction (full mode only)
 

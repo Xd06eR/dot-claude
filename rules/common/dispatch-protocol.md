@@ -56,6 +56,3 @@ The principle lives in CLAUDE.md's Review phase (acceptance evidence comes from 
 - **Research/review:** spot-check the load-bearing items — re-fetch one cited URL, re-read one cited line; a report whose evidence does not check out is rejected in full.
 - **Scope compliance:** an out-of-brief edit is a defect even when the content is good — unrequested content per CLAUDE.md's Build principles, format per its Doc content and structure, corrupted code blocks or tables (byte-diff every block).
 
-## 6. Audit dispatches (wide and high-stakes)
-
-When the work at hand is both **wide** (one pass cannot verify it line-by-line) and **high-stakes** (a missed finding means an irreversible break, a security hole, a broken public contract, or a wrong architecture call), invoke the `audit-dispatch` skill: it carries the fan-out shape (independent lens finders, a disproof verifier, main-agent reconciliation) and the rule that the shape is proposed to the user, never assumed. The shape applies only where findings are objectively refutable; taste audits do not qualify.
