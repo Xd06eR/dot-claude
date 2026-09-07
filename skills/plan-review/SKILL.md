@@ -15,12 +15,6 @@ The reviewers are fresh-context agents that never see each other, so disagreemen
 
 Your job is the merge: dedupe, rank, resolve what the principles resolve, and hand the user a short list of real decisions.
 
-## When to use
-
-Reach for this once a plan or spec exists and build has not started: it is the gate between planning and building. Chain it after `/plan-from-design`, or run it any time a plan needs a review before work begins.
-
-When the merged verdict is approved, proceed to build.
-
 ## Step 1: Locate the plan
 
 If the dispatch or the user names the plan, whether a path or inline text, use that. Otherwise search context and the repo for the artifact: a plan the conversation just produced, or a file like `*-plan.md`, `*-spec.md`, `PLAN.md`, or `SPEC.md` (use Glob).
