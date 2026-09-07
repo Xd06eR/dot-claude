@@ -1,11 +1,9 @@
 ---
 name: design-html
-description: Build phase for turning an approved design direction into production-quality, framework-appropriate HTML/CSS. Detects what the repo is built with (plain HTML/CSS, React, Next, Vue, Svelte, Solid, Astro), derives an implementation spec from a mockup image, a written plan, or a description, then generates semantic, responsive, accessible markup with design tokens, dark mode, and real content. Takes its direction from `design-consultation` upstream; after building, polish with `make-interfaces-feel-better` and verify behavior with `qa`.
+description: Build phase for turning an approved design direction into production markup. Use when a mockup image, a written plan, or a description needs to become real UI. Returns semantic, responsive, accessible HTML/CSS matched to the repo's framework, with design tokens, dark mode, and real content.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack
 ---
-
-# Design HTML
 
 Turn an approved design direction into production-quality front-end code. Read the direction (an approved mockup image, a written plan, or a description in the conversation), detect what the repo is built with, and generate semantic, responsive, accessible markup with real content.
 
@@ -137,3 +135,7 @@ Krug's rules, applied while building, not just while designing:
 - **Surgical edits in refinement.** Edit the file in place; do not regenerate it and lose the user's live tweaks.
 - **Stay inside the working repo.** Write only the output file and an optional `DESIGN.md`. No state, metrics, or files elsewhere.
 - **One page per invocation.** For a multi-page design, run the skill once per page.
+
+## Chaining
+
+Takes its direction from `design-consultation` upstream. After building, polish with `make-interfaces-feel-better` and verify behavior with `qa`.

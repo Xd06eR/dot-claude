@@ -1,10 +1,8 @@
 ---
 name: loop-design-check
-description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (gate whether to build it, define a machine-decidable goal, pick the loop type and skeleton) or when reviewing a loop before it goes automatic. Covers the judgment layer only; the mechanism layer is the built-in /loop and /schedule plus rules/common/dispatch-protocol.md.
+description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop, or when reviewing a loop before it goes automatic. Covers the judgment layer only; the mechanism layer is the built-in /loop and /schedule plus rules/common/dispatch-protocol.md.
 origin: ECC
 ---
-
-# Loop Design + Review
 
 > **Premise.** An LLM is a feed-forward system: prompt in → tokens out, with no built-in "steer toward the goal" across turns. To make it *behave* like a goal-oriented system, you wrap a feedback loop around it. This skill helps you **write** that loop correctly and **review** it so it won't run away.
 

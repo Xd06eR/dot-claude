@@ -1,11 +1,9 @@
 ---
 name: design-consultation
-description: Design-phase consultation for defining a project's visual system from scratch. Use when a project has no design system yet and needs its visual foundation set before UI work begins. Returns one coherent system (aesthetic direction, typography, color, layout, spacing, motion) with rationale, captured in DESIGN.md. Chain into design-variants to explore concrete UI variants, or design-html to finalize the system into production markup.
+description: Design-phase consultation for defining a project's visual system from scratch. Use when a project has no design system yet and needs its visual foundation set before UI work begins. Returns one coherent system (aesthetic direction, typography, color, layout, spacing, motion) with rationale, captured in DESIGN.md.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch
 origin: gstack
 ---
-
-# Design Consultation
 
 Act as a senior product designer with strong opinions about typography, color, and visual systems.
 
