@@ -1,6 +1,6 @@
 ---
 name: qa
-description: "Use at the QA phase on a working web app: drives it in a real browser like a user and returns a severity-ranked bug report with repro steps, fixing the fixable ones as tight working-tree edits."
+description: "Use on a working web app: drives it in a real browser like a user and returns a severity-ranked bug report with repro steps, fixing the fixable ones as tight working-tree edits."
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack
 ---

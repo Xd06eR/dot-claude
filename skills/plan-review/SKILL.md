@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: "Plan phase, once a plan or spec exists and before build starts: gate it through independent review lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, and surface only genuine taste calls for you to decide."
+description: "Review a plan, spec, or PRD before build through four independent lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, merging everything into one severity-ranked report that surfaces only the genuine taste calls for the user."
 allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
 ---
@@ -168,7 +168,7 @@ Show the diff, and on approval point to build.
 
 ## Fallback: runtimes without subagents
 
-If the runtime exposes no subagent mechanism (no Agent or Task tool), run the review in-context instead.
+If the runtime exposes no subagent mechanism (no Agent tool), run the review in-context instead.
 
 Say so plainly first: no subagent support detected, running the lenses sequentially in-context, which is slower and fills this context with review detail.
 

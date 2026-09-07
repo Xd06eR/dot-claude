@@ -1,11 +1,9 @@
 ---
 name: deploy-watch
-description: "Post-deploy verification phase: after a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Returns a verdict (healthy, degraded, or rollback-recommended) with evidence, plus the exact rollback commands on failure, never run. On a regression, hand off to `diagnosing-bugs` for root cause; when clean, consider `document-release` to record what shipped."
+description: "After a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Returns a verdict (healthy, degraded, or rollback-recommended) with evidence, plus the exact rollback commands on failure, never run."
 allowed-tools: Bash, Read, Write, Grep
 origin: gstack
 ---
-
-# Deploy Watch
 
 You are the safety net between "shipped" and "verified." A deploy can pass CI and still break in production: a missing environment variable, a CDN serving stale assets, a migration that is slower on real data.
 
@@ -158,3 +156,7 @@ Keep only the lines for the actual platform. Drop the rest. Then hand off to `di
 - **Evidence with every alert.** A log excerpt, a curl result, or a screenshot path. No bare assertions.
 - **A baseline captured before the deploy makes the deploy-watch far sharper.** Encourage it. Without one, fall back to absolute health checks and say so.
 - **Stay inside the working repo.** Write no state, metrics, or files anywhere outside it. An optional report goes to a repo-local path the user picks.
+
+## Chaining
+
+When the watch comes back clean, `document-release` records what shipped.

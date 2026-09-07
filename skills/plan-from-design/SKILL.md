@@ -28,14 +28,10 @@ Any other doc is NOT canonical: exclude it. A doc that still carries open or pro
 
 ## Classify each design doc — build target vs reference doc
 
-Not every canonical doc is a build target. When the invocation names a feature, the unit is the feature's sections, not whole docs: the rest of a named doc is standing context.
-
-Classify each before writing:
+Not every canonical doc is a build target.
 
 - **BUILD TARGET** — defines something to CONSTRUCT (a schema, a pipeline, a service, the UI, a storage layer, an API). Gets a spec + plan.
 - **REFERENCE doc** — a digest, summary, or reference card that states subordination ("derived from," "reference card," "subordinate to") OR whose content is fully covered by other docs. NOT built independently. Gets NO spec/plan; recorded in INDEX as reference-only.
-
-When unsure, check whether the doc defines a thing to BUILD or just summarizes other docs.
 
 State the classification of every doc before writing.
 
@@ -102,19 +98,17 @@ Fix issues inline. No re-review: fix and move on.
 
 INDEX = the cross-feature list with dependency ordering (feature = 2-6 components). Working terms are feature / INDEX / component only.
 
-Ordered BUILD-TARGET component list + one-line dependency graph + status tracker (☐ design done · ☐ spec+plan · ☐ plan-reviewed · ☐ built).
+Ordered BUILD-TARGET component list + one-line dependency graph + status tracker (☐ spec+plan · ☐ plan-reviewed · ☐ built).
 
 REFERENCE docs listed separately: "reference — consumed by <X, Y>; no standalone build."
 
-Rule at top: `plan-review` gates every build target before `/build-brief`.
+Rule at top: `plan-review` before `/build-brief` when the user calls it.
 
 ## Gate
 
 After emitting, iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change.
 
-Then the user runs `plan-review` (the Plan-phase gate).
-
-Do not run `/build-brief` until `plan-review` passes.
+Then propose `plan-review` when the plan warrants an independent pass; the choice is the user's. With it run or declined, `/build-brief` is next.
 
 ## Output
 

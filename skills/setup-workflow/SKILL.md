@@ -1,11 +1,11 @@
 ---
 name: setup-workflow
-description: Writes the Workflow-docs block into a project's CLAUDE.md, adopting the 4-phase workflow's document conventions for future sessions. Run once per project; re-run to switch layouts or after the conventions change.
+description: Writes the Workflow-docs block into a project's CLAUDE.md, adopting the 4-phase workflow's document conventions for future sessions.
 disable-model-invocation: true
 origin: custom
 ---
 
-Write the block below into the project's `CLAUDE.md` and nothing else: directories and artifact files are created lazily by their writer skills when they first have content.
+Write the block below into the project's `CLAUDE.md` and nothing else: directories and artifact files are created lazily by their writer skills when they first have content. Re-run to switch layouts or after the workflow conventions change.
 
 ## Process
 
