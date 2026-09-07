@@ -168,7 +168,7 @@ When the user approves, restate the winning direction plainly: which variant, th
 
 Then offer next steps in plain text:
 
-- **Finalize:** hand the approved variant to `design-html` to generate production markup and CSS from it.
+- **Finalize:** hand the approved variant to `design-build` to generate production markup and CSS from it.
 - **Iterate more:** another refinement round on the winner (back to Step 5).
 - **Rethink the system:** if no variant really landed and the visual direction is still unclear, step back to `design-consultation` to rebuild the design system before shooting again.
 - **Done:** leave the variants in `design-variants/` for later.

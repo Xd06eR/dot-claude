@@ -303,7 +303,7 @@ Do not deviate without explicit user approval.
 
 Finally, list every decision back to the user and flag any that used your defaults without their explicit confirmation, so they know exactly what is shipping. Ask, in plain text, whether to ship it, change something, or start over. Write the files once confirmed.
 
-If the session produced screen-level mockups or page layouts, suggest finalizing the system into production markup with `design-html`; to explore concrete UI variants first, suggest `design-variants`.
+If the session produced screen-level mockups or page layouts, suggest finalizing the system into production markup with `design-build`; to explore concrete UI variants first, suggest `design-variants`.
 
 ## Important rules
 

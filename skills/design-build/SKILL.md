@@ -1,5 +1,5 @@
 ---
-name: design-html
+name: design-build
 description: Build phase for turning an approved design direction into production markup. Use when a mockup image, a written plan, or a description needs to become real UI. Returns semantic, responsive, accessible HTML/CSS matched to the repo's framework, with design tokens, dark mode, and real content.
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack

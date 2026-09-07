@@ -205,4 +205,4 @@ These are the decisions the plan silently hands to whoever builds it.
   Every open question carries its deferral cost so the user sees what shipping-without-deciding actually chooses.
 - Follow-ups to recommend where they fit: no design system yet points to design-consultation before UI work
 - a genuinely unsettled visual direction points to design-variants to explore concrete options
-- an approved direction ready to build points to design-html.
+- an approved direction ready to build points to design-build.
