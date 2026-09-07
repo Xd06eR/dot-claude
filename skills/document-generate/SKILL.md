@@ -1,11 +1,9 @@
 ---
 name: document-generate
-description: "Docs and artifacts phase: generate missing documentation by reading what the code actually does. Use when a codebase has behavior that is real but undocumented. Returns structured docs (README sections, API reference, architecture overviews, usage examples). After generating, consider `diagram` for architecture figures, `make-pdf` to turn the doc set into a distributable, and `document-release` to keep docs current after a later ship."
+description: "Docs and artifacts phase: generate missing documentation by reading what the code actually does. Use when a codebase has behavior that is real but undocumented. Returns structured docs (README sections, API reference, architecture overviews, usage examples)."
 allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 origin: gstack
 ---
-
-# Document Generate
 
 Produce accurate, structured documentation for a feature, module, or whole project by deriving every claim from the code itself. The value is fidelity: docs that match what the code actually does, with real signatures, real defaults, and examples that would run if pasted.
 

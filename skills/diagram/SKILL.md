@@ -1,11 +1,9 @@
 ---
 name: diagram
-description: "Design phase: turn an English description or mermaid source into a diagram triplet: `.mmd` source, an editable `.excalidraw` file (flowcharts, via the bundled converter), and rendered SVG/PNG where mermaid-cli is installed. Chain into `document-generate` or `make-pdf` when a document needs the figure embedded."
+description: "Design phase: turn an English description or mermaid source into a diagram triplet: `.mmd` source, an editable `.excalidraw` file (flowcharts, via the bundled converter), and rendered SVG/PNG where mermaid-cli is installed."
 allowed-tools: Bash, Read, Write, Grep
 origin: gstack
 ---
-
-# Diagram — English in, source out
 
 Turn a description or mermaid source into a diagram artifact set. All outputs go into `./diagrams/` (or the repo root if that directory doesn't exist), named with a kebab-case slug derived from the diagram's subject.
 
@@ -77,10 +75,13 @@ For PNG, `-s 3` gives ~300dpi output. If mermaid-cli is missing, deliver `.mmd` 
 
 - **Never ship without at least the source.** The `.mmd` file is the core deliverable.
 - **Cleanup:** no temporary files remain. All outputs go into the target directory.
-- **For PDFs:** remind the user that `make-pdf` renders mermaid fences natively — embedding the `.mmd` source in markdown is better than embedding the PNG.
 
 ## Completion status
 
 - **DONE**: `.mmd` source, `.excalidraw` (flowcharts), and rendered SVG/PNG delivered and shown.
 - **DONE_WITH_NOTE**: source delivered. Rendering or conversion skipped (missing mermaid-cli, non-flowchart type, or converter fallback) with guidance.
 - **BLOCKED**: unable to write outputs (permissions, disk full).
+
+## Chaining
+
+Chain into `document-generate` when a generated document needs the figure embedded.
