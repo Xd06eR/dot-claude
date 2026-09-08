@@ -86,7 +86,7 @@ Every step must contain what the builder needs to act. These are plan failures. 
 
 ## Self-review before emitting
 
-Run this checklist yourself before writing the files, not a subagent dispatch:
+Run this checklist yourself over the drafted files, not as a subagent dispatch:
 
 1. **Spec coverage:** skim each requirement in the source design. Can you point to the step that implements it? List any gaps; add the missing component or step.
 2. **Placeholder scan:** search the plan for the patterns above. Fix them.

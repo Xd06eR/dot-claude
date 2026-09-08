@@ -27,7 +27,7 @@ Compaction drops the conversation from context; the transcript stays on disk. Wr
 5. **Read any `OPEN-QUESTIONS.md` entry the user names** (#NN) in full before discussing it. Entries are deleted at bake; their decision record lives in `docs/adr/`.
 6. **Echo and stop.** Report current state, the classified task list, and what you would pick next with one line of reasoning. Wait for the user's pick before doing any work. The pick routes normally: a design discussion opens with `grill-with-docs`; a settled entry goes to `/bake-design`.
 
-§Start should not dump every doc verbatim. Read enough to echo state accurately, then wait.
+Read enough to echo state accurately, then wait.
 
 ## §End — ending a session
 
@@ -59,7 +59,3 @@ Compaction drops the conversation from context; the transcript stays on disk. Wr
 - **Gate is required.** `—` means pickable; anything else names why the row is not pickable (a blocker, or the trigger that has not fired). §Start reads the Gate column to classify. Never infer from prose.
 - The task table is edited in place as tasks open, move, and close.
 - Don't-re-litigate decisions are NOT a section here: they live in `docs/adr/`.
-
-## Notes
-
-- `TODO.md` holds exactly two things: the "▶ Next-session resume" block and the current task table.

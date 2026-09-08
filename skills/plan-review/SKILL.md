@@ -1,6 +1,7 @@
 ---
 name: plan-review
 description: "Review a plan, spec, or PRD before build through four independent lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, merging everything into one severity-ranked report that surfaces only the genuine taste calls for the user."
+argument-hint: "[lenses: all | ceo | design | devex | eng]"
 allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
 ---
@@ -19,7 +20,7 @@ Your job is the merge: dedupe, rank, resolve what the principles resolve, and ha
 
 If the dispatch or the user names the plan, whether a path or inline text, use that. Otherwise search context and the repo for the artifact: a plan the conversation just produced, or a file like `*-plan.md`, `*-spec.md`, `PLAN.md`, or `SPEC.md` (use Glob).
 
-When exactly one candidate is obvious, use it and say which one. Only when it is genuinely ambiguous, ask in plain text which plan to review: one question, not an interview.
+When exactly one candidate is obvious, use it and say which one. Only when it is genuinely ambiguous, ask in plain text which plan to review: one question.
 
 ## Step 2: Decide the security pass
 
@@ -36,7 +37,7 @@ When none apply, skip it and say so in the report.
 
 ## Step 3: Dispatch the panel
 
-Issue all reviewer dispatches in a single turn so they run in parallel.
+Issue all reviewer dispatches in a single turn so they run in parallel. The invocation names the lenses to run; unnamed, run all four.
 
 Each lens is one dispatch with subagent_type `plan-reviewer`. Never fold two lenses into one dispatch.
 
@@ -56,8 +57,6 @@ If Step 2 triggered, add one `security-auditor` dispatch in the same turn. Tell 
 Its verdict is `SHIP` or `BLOCK`.
 
 Collect all four or five reports before merging.
-
-If a reviewer fails to return, note it as an uncovered lens rather than guessing its verdict.
 
 ## The 6 decision principles
 
@@ -96,7 +95,7 @@ If a lens flags the change as a security or feasibility risk rather than a prefe
 
 The merge applies two standing biases when it scores options.
 
-**Boil the Ocean:** AI makes completeness cheap, so the complete thing is the goal. Prefer full coverage (tests, edge cases, error paths), one lake at a time.
+AI makes completeness cheap, so the complete thing is the goal. Prefer full coverage (tests, edge cases, error paths), one lake at a time.
 
 The only work genuinely out of scope is the unrelated kind (rewrites, multi-quarter migrations). Flag that as separate scope, never as an excuse for a shortcut.
 
@@ -154,8 +153,6 @@ Lenses: CEO, Design, DevEx, Eng[, Security]   Overall verdict: <verdict>
 
 Skip the "Needs your decision" section when there are none.
 
-When taste calls run past roughly seven, group them by lens and warn that the plan carried unusually high ambiguity.
-
 ## Step 6: Apply changes on request
 
 Offer this once, only for a `SHIP-WITH-CHANGES` verdict: the user can reply `apply` and you edit the named changes into the plan.
@@ -165,18 +162,6 @@ Edit the plan file only, one change per named item, with the Edit tool. These ed
 Never touch another repo file, and never edit on a `BLOCK` or an unresolved user decision without the user's word.
 
 Show the diff, and on approval point to build.
-
-## Fallback: runtimes without subagents
-
-If the runtime exposes no subagent mechanism (no Agent tool), run the review in-context instead.
-
-Say so plainly first: no subagent support detected, running the lenses sequentially in-context, which is slower and fills this context with review detail.
-
-Read each of the four lens files with Read, then for each one adopt its persona, walk its dimensions against the plan, and produce the same per-lens report the agent would.
-
-If Step 2 triggered, run the security pass in-context too, using the `security-auditor` method against the plan as a design doc.
-
-Then merge and output exactly as Steps 4 and 5 describe.
 
 ## Rules
 
