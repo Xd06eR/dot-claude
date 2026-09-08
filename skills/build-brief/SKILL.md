@@ -2,7 +2,7 @@
 name: build-brief
 description: Produce one comprehensive build brief per feature (a group of components) from the project's spec and plan docs.
 disable-model-invocation: true
-argument-hint: "<feature: component1, component2, ...>"
+argument-hint: <feature>
 origin: custom + mattpocock
 ---
 
@@ -26,7 +26,7 @@ More than ~7 is too big: split along dependency seams into two features.
 
 ## Inputs — Plan-phase artifacts ONLY
 
-The invocation names the feature and the components in it.
+The invocation names the feature. Discover its components from the plan INDEX and the specs it names.
 
 Each named component must already have a spec and a plan (produced by `/plan-from-design`).
 

@@ -2,7 +2,7 @@
 name: code-simplifier
 description: Simplifies recently modified code for clarity, consistency, and maintainability while preserving exact functionality. Dispatch after a coding task or logical chunk of code lands; it edits in place rather than reporting findings. Returns a terse change report.
 tools: Read, Edit, Grep, Glob, Bash
-origin: pr-review-toolkit + code-simplifier
+origin: pr-review-toolkit + code-simplifier plugin
 part-of: code-review
 ---
 

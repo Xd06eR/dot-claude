@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: "Review a plan, spec, or PRD before build through four independent lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, merging everything into one severity-ranked report that surfaces only the genuine taste calls for the user."
+description: Review a plan, spec, or PRD before build through four independent lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, merging everything into one severity-ranked report that surfaces only the genuine taste calls for the user.
 argument-hint: "[lenses: all | ceo | design | devex | eng]"
 allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
