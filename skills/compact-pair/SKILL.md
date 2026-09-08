@@ -8,10 +8,10 @@ Produce two prompts, written fresh from the current conversation state — never
 
 Best fired around ~60% context utilization: compacting while context is still clean produces a better summary. What compaction silently drops when left to itself (the keep-checklist's source): exact file paths, error messages verbatim, debugging steps, decisions with rationale, config values and function names.
 
-1. Gather the current state from the session's durable docs (state/context docs, todo files, plan files — whatever the session has been maintaining), not from memory. Extract: the resume reads (which docs, in what order), the current task state (what is done, what is committed, what verdicts exist), and the next task and its gate. Do NOT extract standing rules (git, review, wording, process): those auto-load with the harness every session, so restating them is pure cost.
+1. Gather the current state from the session's durable docs (state/context docs, todo files, plan files — whatever the session has been maintaining), not from memory. Extract: the resume reads (which docs, in what order), the current task state (what is done, what is committed, what verdicts exist), and the next task and its gate. Do NOT extract standing rules (git, review, wording, process): those auto-load with the harness every session, so restating them is pure cost. Check the docs' sync state while gathering — the Keep list below branches on it.
 
 2. Write the custom compact instruction as one compact block — a `Keep:` line with a compressed item list, nothing else. The standard is a positive preserve-list; there is no Drop clause (naming what to exclude drags it into the summarizer's context — absence is the drop mechanism). Optionally add `Focus on X` as a positive priority when one thread matters most.
-   - Keep: pointers to the durable docs + their read order; decisions WITH their rationale; exact file paths that matter; the current task state; the next task + its gate; unresolved errors verbatim where they exist. No standing-rule restatements (auto-loaded), no examples.
+   - Keep: pointers to the durable docs + their read order; decisions WITH their rationale when the docs are stale or absent — with the docs synced, pointers and session-only state only, never decision restatements (a handful of items, not a paragraph per thread); exact file paths that matter; the current task state; the next task + its gate; unresolved errors verbatim. No standing-rule restatements (auto-loaded), no examples.
    - Form rule: each item is a phrase, not a sentence; the whole instruction is one block. If an item needs a full sentence or a numbered list, compress it.
 
 3. Write the post-compact resume prompt with this shape, and nothing else (a pure resume prompt: the fresh session already has the auto-loaded instructions, so repeat none of them). Write it in the user's voice — "you" = the agent, "I" = the user; never third-person "the user" narration.
@@ -25,4 +25,4 @@ Best fired around ~60% context utilization: compacting while context is still cl
    - If the next task does not depend on recent history at all, recommend `/clear` over `/compact`: nothing to preserve means no compact instruction and no resume prompt.
    - Output as one fenced block.
 
-4. Present both blocks with a one-line usage note each. The user runs `/compact` with the instruction, then pastes the resume prompt into the fresh session.
+4. Present both blocks with a one-line usage note each.

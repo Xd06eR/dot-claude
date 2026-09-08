@@ -49,7 +49,8 @@ The four axis ratings (1-10) measure type quality; map low scores to high-severi
 
 - **HIGH** (axis score 1-3): Weak axis likely to allow real bugs
 - **MEDIUM** (axis score 4-6): Moderate gap, maintainability concern
-- **LOW** (axis score 7-10): Minor, polish-level
+- **LOW** (axis score 7-8): Minor, polish-level
+- Axis scores 9-10 emit no concern: a strong axis is silence, not praise.
 
 ## Output Format
 
@@ -87,12 +88,6 @@ One finding per issue, grouped by severity (HIGH first, then MEDIUM, LOW). Each:
 
 ## Key Principles
 
-- Prefer compile-time guarantees over runtime checks when feasible
-- Value clarity and expressiveness over cleverness
-- Consider the maintenance burden of suggested improvements
-- Recognize that perfect is the enemy of good - suggest pragmatic improvements
-- Types should make illegal states unrepresentable
-- Constructor validation is crucial for maintaining invariants
 - Immutability often simplifies invariant maintenance
 
 ## Common Anti-patterns to Flag
@@ -104,12 +99,3 @@ One finding per issue, grouped by severity (HIGH first, then MEDIUM, LOW). Each:
 - Missing validation at construction boundaries
 - Inconsistent enforcement across mutation methods
 - Types that rely on external code to maintain invariants
-
-## When Suggesting Improvements
-
-Always consider:
-- The complexity cost of your suggestions
-- Whether the improvement justifies potential breaking changes
-- The skill level and conventions of the existing codebase
-- Performance implications of additional validation
-- The balance between safety and usability

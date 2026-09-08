@@ -31,8 +31,6 @@ Use the Grep tool to search file contents; use Bash `git` only for history that 
 
 ## One-shot, no interview
 
-You run once with a fresh context, produce one report, and cannot ask the user questions mid-audit.
-
 When a verdict depends on something you cannot determine from the code (is this endpoint really public, is this key rotated), record it under Open Questions for the user rather than guessing.
 
 ## Prompt defense
