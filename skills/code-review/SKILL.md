@@ -1,33 +1,29 @@
 ---
 name: code-review
 description: Comprehensive code review of a PR or diff using specialized agents, with cross-agent dedup and severity normalization. Run before merging a PR.
-argument-hint: "[aspects: all | code | tests | errors | types | comments | spec | git-history | prior-comments | simplify]"
+argument-hint: "[aspects: all | code | tests | errors | types | spec | simplify]"
 origin: pr-review-toolkit + mattpocock + code-review plugin
 ---
 
-Run a comprehensive pull request review using multiple specialized agents, each focusing on a different aspect of code quality.
-
-**Review Aspects (optional):** "$ARGUMENTS"
+The invocation may name review aspects to run; unnamed, run all applicable.
 
 ## Review Workflow:
 
 1. **Determine Review Scope**
    - Check git status to identify changed files
    - Read `docs/build/implementation-notes.md` if it exists: build-phase deviations, tradeoffs, and parked findings inform where the review looks hardest
-   - Parse arguments to see if user requested specific review aspects
+   - Read the invocation for named review aspects
    - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent — fail here, not inside the agents
+   - Run the history probe in the main context, no dispatch: read the touched files' recent history (`git log`, `git blame` where the diff edits loaded areas) and prior merged-PR comments on them (`gh pr list --state merged`, `gh pr view --comments`). A change that contradicts or reintroduces a prior fix, or repeats something a prior review already flagged, is a finding like any other. Greenfield files and no prior PRs end the probe.
    - Default: Run all applicable reviews
 
 2. **Available Review Aspects:**
 
-   - **comments** - Analyze code comment accuracy and maintainability
    - **tests** - Review test coverage quality and completeness
    - **errors** - Check error handling for silent failures
    - **types** - Analyze type design and invariants (if new types added)
-   - **code** - General code review for project guidelines
+   - **code** - General code review for project guidelines, comments included
    - **spec** - Review fidelity to the originating spec/PRD (if one exists)
-   - **git-history** - Check the diff against the touched files' git history: a change that contradicts or reintroduces a prior fix
-   - **prior-comments** - Check prior PR/MR review comments on the touched files for feedback that applies here
    - **simplify** - Simplify code for clarity and maintainability
    - **all** - Run all applicable reviews (default)
 
@@ -39,27 +35,16 @@ Run a comprehensive pull request review using multiple specialized agents, each 
 4. **Determine Applicable Reviews**
 
    Based on changes:
-   - **Always applicable**: code-reviewer (general quality)
+   - **Always applicable**: code-reviewer (general quality, comments included)
    - **If test files changed**: pr-test-analyzer
-   - **If comments/docs added**: comment-analyzer
    - **If error handling changed**: silent-failure-hunter
    - **If types added/modified**: type-design-analyzer
    - **If an originating spec/issue/PRD exists**: spec-reviewer. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
-   - **If the touched files carry recent fixes or reverts** (`git log --oneline -20 -- <files>` shows them): the git-history pass — run it in the main context, not a dispatch: read the history and blame of each touched file; a change that contradicts or reintroduces a prior fix is a finding
-   - **If prior merged PRs touched these files and carry review comments** (`gh pr list --state merged`, then `gh pr view --comments`): the prior-comments pass — also main context; feedback that applies to this change is a finding
    - **After passing review**: code-simplifier (polish and refine)
 
 5. **Launch Review Agents**
 
-   **Sequential approach** (one at a time):
-   - Easier to understand and act on
-   - Each report is complete before next
-   - Good for interactive review
-
-   **Parallel approach** (user can request):
-   - Launch all agents simultaneously
-   - Faster for comprehensive review
-   - Results come back together
+   Launch sequentially by default: each report is complete before the next dispatch. Parallel on explicit request.
 
 6. **Aggregate Results**
 
@@ -89,7 +74,6 @@ Run a comprehensive pull request review using multiple specialized agents, each 
    ## Per-agent finding counts
    - code-reviewer: N
    - pr-test-analyzer: N
-   - comment-analyzer: N
    - silent-failure-hunter: N
    - type-design-analyzer: N
    - spec-reviewer: N
@@ -106,7 +90,7 @@ Run a comprehensive pull request review using multiple specialized agents, each 
 
 ## Aggregation
 
-The one substantive addition. Each finding-producing agent returns findings independently; without this step, the same defect reported by two agents appears twice, and findings are not severity-normalized or ranked.
+Each finding-producing agent returns findings independently; without this step, the same defect reported by two agents appears twice, and findings are not severity-normalized or ranked.
 
 1. **Collect.** Gather every finding from every dispatched finding-producing agent. Each finding carries the contract: location (`file:line` or range) + severity (`CRITICAL` / `HIGH` / `MEDIUM` / `LOW`) + issue + fix.
 2. **Dedup.** Merge findings that target the same `file:line` (or overlapping line ranges) and the same issue. Each merged entry cites every contributing agent, e.g. `[code-reviewer, type-design-analyzer]`. Do not drop a finding only one agent produced; do not double-count identical findings from two agents.
@@ -118,11 +102,11 @@ The one substantive addition. Each finding-producing agent returns findings inde
 
 ## code-simplifier gating
 
-`code-simplifier` runs LAST, only after the finding-producing agents finish and the review passes (no CRITICAL and no HIGH), AND only when `simplify` is explicitly named in `$ARGUMENTS`. It is never included under `all`: step 2 lists `simplify` as a separate aspect, and step 4 places code-simplifier after passing review. It applies simplifications in place; it does not produce findings.
+`code-simplifier` runs LAST, only after the finding-producing agents finish and the review passes (no CRITICAL and no HIGH), and only when the invocation names `simplify` — never under `all`. It applies simplifications in place; it does not produce findings.
 
 ## Ruled out (do not do)
 
-- Dispatch agents other than the seven in step 4: `code-reviewer`, `pr-test-analyzer`, `comment-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `spec-reviewer`, `code-simplifier`.
+- Dispatch agents other than the six in step 4: `code-reviewer`, `pr-test-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `spec-reviewer`, `code-simplifier`.
 - Run `git commit`, `git push`, or any destructive op. Output commands for the user.
 - Emit usage examples, agent descriptions, tips, workflow integration, or troubleshooting notes; CLAUDE.md routes usage.
 - Skip aggregation. The dedup and severity normalization are the point of this skill.
