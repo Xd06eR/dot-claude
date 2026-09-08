@@ -70,6 +70,7 @@ For PNG, `-s 3` gives ~300dpi output. If mermaid-cli is missing, deliver `.mmd` 
 2. List the generated file paths.
 3. Editability note: "Open the `.excalidraw` file at excalidraw.com (or a local Excalidraw) to refine visually" — or the paste path for non-flowcharts.
 4. If the user wants changes, edit the `.mmd` source and re-run Steps 2-3 — the source is the single source of truth.
+5. When a generated document needs the figure embedded, chain into `document-generate`.
 
 ## Important rules
 
@@ -81,7 +82,3 @@ For PNG, `-s 3` gives ~300dpi output. If mermaid-cli is missing, deliver `.mmd` 
 - **DONE**: `.mmd` source, `.excalidraw` (flowcharts), and rendered SVG/PNG delivered and shown.
 - **DONE_WITH_NOTE**: source delivered. Rendering or conversion skipped (missing mermaid-cli, non-flowchart type, or converter fallback) with guidance.
 - **BLOCKED**: unable to write outputs (permissions, disk full).
-
-## Chaining
-
-Chain into `document-generate` when a generated document needs the figure embedded.

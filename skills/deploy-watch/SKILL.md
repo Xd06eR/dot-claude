@@ -1,6 +1,6 @@
 ---
 name: deploy-watch
-description: "After a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Returns a verdict (healthy, degraded, or rollback-recommended) with evidence, plus the exact rollback commands on failure, never run."
+description: After a release goes out, watch the live target for a bounded window to confirm it is healthy before walking away. Returns a verdict (healthy, degraded, or rollback-recommended) with evidence, plus the exact rollback commands on failure, never run.
 allowed-tools: Bash, Read, Write, Grep
 origin: gstack
 ---
@@ -126,6 +126,8 @@ Evidence: <log excerpts, screenshot paths, smoke output tails>
 
 The report is the deliverable. Print it. If the user wants a durable record, save it to a repo-local path they choose (for example `deploy-watch-report.md`). Write nothing outside the working repo.
 
+When the verdict is HEALTHY, `document-release` records what shipped.
+
 ## Step 6: Rollback recommendation (only on ROLLBACK RECOMMENDED)
 
 Do NOT roll back yourself. State plainly why rollback is warranted (the persistent critical finding and its evidence), then output the exact commands for the user, matched to the platform you detected. Do NOT execute any of it yourself.
@@ -156,7 +158,3 @@ Keep only the lines for the actual platform. Drop the rest. Then hand off to `di
 - **Evidence with every alert.** A log excerpt, a curl result, or a screenshot path. No bare assertions.
 - **A baseline captured before the deploy makes the deploy-watch far sharper.** Encourage it. Without one, fall back to absolute health checks and say so.
 - **Stay inside the working repo.** Write no state, metrics, or files anywhere outside it. An optional report goes to a repo-local path the user picks.
-
-## Chaining
-
-When the watch comes back clean, `document-release` records what shipped.

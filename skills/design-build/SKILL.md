@@ -23,7 +23,7 @@ Establish what you are building from. One of three modes:
 - **Plan:** a written spec, PRD, or plan describes the UI. Read it and build the spec from its prose.
 - **Freeform:** only a description in the conversation. Ask, in plain text, for the missing essentials: purpose and audience, visual feel (light/dark, dense/spacious, serious/playful), and the content sections (hero, features, pricing, and so on). Do not proceed on guesses for these.
 
-If a `DESIGN.md` (or equivalent design-tokens file) exists in the repo, read it. Its tokens (brand colors, fonts, spacing scale) are authoritative and override anything inferred from a mockup.
+If a `DESIGN.md` (or equivalent design-tokens file) exists in the repo, read it; `design-consultation` is the usual upstream source. Its tokens (brand colors, fonts, spacing scale) are authoritative and override anything inferred from a mockup.
 
 Settle two things before generating: a short **screen name** (for example `landing`, `dashboard`, `pricing`) and the **output path inside the repo**. Default to a sensible in-repo location (a static file goes in a `previews/` or `design/` directory; a component goes alongside the repo's other components) and state the path you chose. Never write outside the working repo.
 
@@ -110,6 +110,8 @@ Where no such capability exists, say so and rely on the user's browser.
 
 After about ten rounds without "done", ask once, in plain text, whether to keep iterating or call it.
 
+Once the build is called done, polish with `make-interfaces-feel-better` and verify behavior with `qa`.
+
 ## Step 7: Extract design tokens (optional)
 
 If no `DESIGN.md` exists, offer once, in plain text, to write one from the tokens you just used (colors, fonts, spacing, radii, shadows). If the user agrees, write `DESIGN.md` to the repo root so later design work stays consistent.
@@ -135,7 +137,3 @@ Krug's rules, applied while building, not just while designing:
 - **Surgical edits in refinement.** Edit the file in place; do not regenerate it and lose the user's live tweaks.
 - **Stay inside the working repo.** Write only the output file and an optional `DESIGN.md`. No state, metrics, or files elsewhere.
 - **One page per invocation.** For a multi-page design, run the skill once per page.
-
-## Chaining
-
-Takes its direction from `design-consultation` upstream. After building, polish with `make-interfaces-feel-better` and verify behavior with `qa`.

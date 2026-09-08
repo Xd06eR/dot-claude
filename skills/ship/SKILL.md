@@ -158,6 +158,8 @@ glab mr create --target-branch <base> --title "<type>: <summary>" --description 
 
 If a PR/MR already exists for this branch, output the update form instead (`gh pr edit` or `glab mr update`), not a second create. No remote configured: output only the grouped commit commands and omit the push and PR/MR lines.
 
+After the user ships, `deploy-watch` watches the live deploy and `document-release` updates any docs the release made stale.
+
 ## Important rules
 
 - **Never run the commit, push, or PR-create commands yourself.** Prepare and output them. The user runs them. This is the skill's core contract.
@@ -166,7 +168,3 @@ If a PR/MR already exists for this branch, output the update form instead (`gh p
 - **Preserve the repo's VERSION format and CHANGELOG conventions.** Do not impose new ones.
 - **Stay inside the working repo.** Edit only VERSION and CHANGELOG (plus files you fixed during review). Write no state, metrics, or config files anywhere else.
 - The goal: after this skill runs, the user has a green test result, a bumped VERSION, a written CHANGELOG entry, and a ready-to-paste commit, push, and PR block.
-
-## Chaining
-
-After shipping, consider `deploy-watch` for post-deploy monitoring or `document-release` to update docs.

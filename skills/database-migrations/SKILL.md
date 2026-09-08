@@ -34,7 +34,7 @@ Before applying any migration:
 - [ ] Tested against a copy of production data
 - [ ] Rollback plan documented
 
-Before applying, have the migration reviewed by the `database-reviewer` agent — it covers query plans, schema design, RLS, and concurrency hazards.
+Before applying, dispatch the `database-reviewer` agent for an adversarial pass — indexes, RLS policies, query plans, schema design, anti-patterns, and concurrency hazards.
 
 ## PostgreSQL Patterns
 

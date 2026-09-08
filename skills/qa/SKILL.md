@@ -189,6 +189,8 @@ Include:
 - Summary: total found, fixes applied (verified/best-effort/reverted counts), deferred issues, and the health-score delta (baseline to final).
 - A one-line PR-ready summary: "QA found N issues, fixed M, health score X to Y."
 
+When the report comes back clean, `ship` takes the branch out.
+
 ## Phase 9: Prepare the commit commands (OUTPUT ONLY)
 
 You have fixed and re-verified. Now assemble one commit per fix so each is atomic and bisectable.
@@ -220,7 +222,3 @@ git commit -m "fix(qa): <short description> (ISSUE-001)"
 8. **One commit per fix, output only.** This skill never commits, pushes, or mutates a remote. It hands you the commands.
 9. **Revert on regression.** If a fix makes things worse, discard the edit immediately and defer the issue.
 10. **Stay inside the working repo.** Report, screenshots, and baseline live under the output dir; write no state or metrics anywhere else.
-
-## Chaining
-
-Once QA passes, `ship` takes the branch out.
