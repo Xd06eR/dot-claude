@@ -8,15 +8,11 @@ origin: custom + mattpocock
 
 Read the spec+plan for the components the user groups into a feature, produce ONE comprehensive build brief for that feature.
 
-The brief is executed by `/build-feature <feature>`, which owns the build loop (dispatch, per-component review, fix loop, ledger). This skill only writes the brief.
+The brief is executed by `/build-feature <feature>`, which owns the build loop (batched dispatch, review, fix loop, ledger). This skill only writes the brief.
 
 ## What is a feature
 
 A feature is a buildable chunk of the project spanning MULTIPLE components — smaller than the whole project, bigger than a single component.
-
-The project has many features. Each feature is one build-brief.
-
-Do NOT emit one brief per component: that multiplies files. Group related components into a feature and emit one comprehensive brief covering all of them.
 
 **Sizing:** A feature usually spans 2-6 components.
 
@@ -51,7 +47,7 @@ Write a single comprehensive brief covering every component in the feature. Stru
 1. **Execution header** (top of the file): one line naming the executor — "Executed by `/build-feature <feature>`. This document is the requirements source; progress lives in `docs/build/<feature>.ledger.md`."
 2. **Feature goal** — what this feature delivers overall + its load-bearing design decisions (drawn from the component specs).
 3. **Global constraints** — carried VERBATIM from the component plans' Global Constraints blocks: exact values, naming rules, version floors. They bind every build step, and reviewers use them as their attention lens.
-4. **Component map** — the components in this feature, with dependency order between them (foundation → dependent). Cross-ref graph: referenced-by-many → early. References-many → late. Dependencies are blocking edges: a component whose blockers are all done can start immediately: work that frontier.
+4. **Component map** — the components in this feature, with dependency order between them (foundation → dependent). Cross-ref graph: referenced-by-many → early. References-many → late. Dependencies are blocking edges: a component starts only when its blockers are complete.
 5. **Per component** — a section for each:
    - **Goal** — what this component delivers within the feature.
    - **Scope** — files/modules/subsystems it creates or touches.

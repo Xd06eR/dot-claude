@@ -6,7 +6,7 @@ argument-hint: "[feature — omit to build the settled design directly]"
 origin: custom + superpowers
 ---
 
-Execute one feature's build brief: fresh builder subagent per independent component, fresh reviewer per component, bounded fix loop, ledger that survives compaction. One feature per invocation.
+Execute one feature's build brief: one fresh builder per dependency batch, review in the main context, bounded fix loop, ledger that survives compaction. One feature per invocation.
 
 ## Setup
 
@@ -35,39 +35,41 @@ Rule on each finding against the brief before execution begins; surface to the u
 
 Run the feature without pausing between components. Four things stop you, and only these: an irreversible or destructive operation; a security-sensitive action; a side effect outside the repo (a merge, a push, a publish); a brief so broken that every path forward is a guess. Everything else you decide yourself and ledger as `Ruling: <what you decided> — <why> — <what it costs if wrong>`. At feature end you report every ruling to the user.
 
-## The component loop
+## The build loop
 
-Work the frontier: any component whose blockers are all done.
+Work one batch at a time: a batch is every component whose blockers are all complete. One builder builds a batch whole, in dependency order; the fresh context per batch re-reads exactly the Interfaces the batch consumes. Split a batch only when it cannot fit one context window.
 
 ### 1. Dispatch the builder
 
-One fresh builder subagent per component. Never dispatch builders in parallel: they share the working tree and the branch, so interleaved commits would contaminate each other's review diffs (a sibling's commits would silently enter every `BASE..HEAD` range). The frontier still sets the order; builders run one at a time. Record BASE (`git rev-parse HEAD`) before dispatching.
+One fresh builder subagent per batch. Never dispatch builders in parallel: they share the working tree and the branch, so interleaved commits would contaminate each other's review diffs (a sibling's commits would silently enter every `BASE..HEAD` range). Record BASE (`git rev-parse HEAD`) before dispatching.
 
 The dispatch prompt contains exactly:
 
-1. One line on where this component fits in the feature.
-2. The brief path and its component section — "read this first; it is your requirements source."
-3. The Interfaces this component consumes from components already built (exact signatures).
+1. One line on where this batch fits in the feature.
+2. The brief path and the batch's component sections — "read these first; they are your requirements source."
+3. The Interfaces these components consume from components already built (exact signatures).
 4. The Global Constraints block, verbatim.
 5. The report-file path and the report contract (below).
 6. The no-subagents rule: the builder never dispatches subagents, above all never a reviewer. Review arrives from you after the report.
 
 Never paste prior components' history into a dispatch. Choose the model explicitly: the cheapest tier that can handle the work, with a mid-tier floor for builders working from prose.
 
-Builder contract: implement at the seams agreed in the specs per the `tdd` skill (failing test first); run lint + format + type-check + the covering tests regularly and the full suite once at the end; self-review the diff; if a file it is creating grows beyond the brief's intent, stop and report DONE_WITH_CONCERNS rather than splitting it unilaterally (the Interfaces block its neighbors build against points at that module); write the full report to the report file (what was built, tests and their output, TDD evidence RED/GREEN, files changed, self-review findings, concerns); return under 15 lines: **Status** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT · commits (short SHA + subject) · one-line test summary · concerns · report-file path.
+Builder contract: implement at the seams agreed in the specs per the `tdd` skill (failing test first); run lint + format + type-check + the covering tests regularly and the full suite once at the end; self-review the diff; if a file it is creating grows beyond the brief's intent, stop and report DONE_WITH_CONCERNS rather than splitting it unilaterally (the Interfaces block its neighbors build against points at that module); write the full report to the report file (what was built per component, tests and their output, TDD evidence RED/GREEN, files changed, self-review findings, concerns); return under 15 lines: **Status per component** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT · commits (short SHA + subject) · one-line test summary · concerns · report-file path.
 
 ### 2. Handle the report
 
-- **DONE:** produce the diff file and dispatch the reviewer.
+- **DONE:** produce the batch diff and review it (below).
 - **DONE_WITH_CONCERNS:** read the concerns. Correctness or scope concerns get addressed before review; observations go to the ledger and review proceeds.
 - **NEEDS_CONTEXT:** provide the missing context and resume or re-dispatch.
 - **BLOCKED:** diagnose the blocker: context problem (provide it and re-dispatch), capability (re-dispatch one tier up), component too large (split it with the user), brief wrong (rule on the correction, ledger it, re-dispatch with the ruling carried in the dispatch). Never force the same agent to retry with nothing changed.
 
-### 3. Review the component
+A batch report may mix states: give each BLOCKED or NEEDS_CONTEXT component its remedy; the DONE components proceed to review.
 
-Write the diff to a file the reviewer reads once: `git log --oneline BASE..HEAD`, `git diff --stat BASE..HEAD`, and `git diff -U10 BASE..HEAD`, redirected to one file. BASE is the commit you recorded before dispatch: never `HEAD~1`, which silently truncates multi-commit components.
+### 3. Review the batch
 
-Dispatch one fresh reviewer with: the brief's component section, the report file, the diff file, and the Global Constraints verbatim (its attention lens). Two verdicts are required: spec compliance (nothing missing, nothing extra, nothing misunderstood) and quality. Do not pre-judge findings ("don't flag X", "at most Minor"): adjudicate in the loop instead. Do not add open-ended directives ("check all uses", "run race tests if useful") without a concrete, component-specific reason.
+Write the diff to one file: `git log --oneline BASE..HEAD`, `git diff --stat BASE..HEAD`, and `git diff -U10 BASE..HEAD`, redirected. BASE is the commit recorded before dispatch: never `HEAD~1`, which silently truncates multi-commit batches.
+
+Run the contract below in the main context, component by component. Dispatch a fresh reviewer instead when the batch is large, touches a security surface, or its Produces blocks feed many later components: hand it the component sections, the report file, the diff file, and the Global Constraints verbatim; note the dispatch in the ledger. Per component, two verdicts: spec compliance (nothing missing, nothing extra, nothing misunderstood) and quality. Do not pre-judge findings ("don't flag X", "at most Minor"): adjudicate in the loop instead. Do not add open-ended directives without a concrete, component-specific reason.
 
 The reviewer works under this contract:
 
@@ -91,7 +93,7 @@ Five rounds maximum per component. A round is one fix dispatch plus one scoped r
 
 - **Rounds 1-3 — resume the original builder** (SendMessage). Send the open findings verbatim. It fixes, re-runs the covering tests, and appends the fix report (what changed, covering tests, command, output) to its report file. Confirm the fix report contains the covering tests, the command, and the output before dispatching the re-review; without all three the re-review cannot verify and the round burns.
 - **Rounds 4-5 — fresh builder one model tier up**, with the brief path, the report path, the open findings, and this framing: "A prior builder attempted this component; you own it now. Read the report file for what was tried."
-- **The re-review is scoped.** Dispatch a fresh reviewer under the same contract, over the fix diff only (`FIX_BASE..HEAD`, where FIX_BASE is the head the previous review saw). It verdicts each finding ADDRESSED or NOT ADDRESSED (attempted is not addressed; the specific defect must no longer exist) and flags new breakage in the fix diff only. New Critical/Important breakage joins the open findings; out-of-scope observations go to the ledger as deferred minors.
+- **The re-review is scoped.** Run it in the main context under the same contract (a batch that took a dispatched reviewer keeps one), over the fix diff only (`FIX_BASE..HEAD`, where FIX_BASE is the head the previous review saw). Verdict each finding ADDRESSED or NOT ADDRESSED (attempted is not addressed; the specific defect must no longer exist) and flag new breakage in the fix diff only. New Critical/Important breakage joins the open findings; out-of-scope observations go to the ledger as deferred minors.
 
 After each round, ledger: `<comp>: fix round <R>/5 (<X> addressed, <Y> open — <one-liners>; commits <a>..<b>)`.
 
@@ -101,7 +103,7 @@ After each round, ledger: `<comp>: fix round <R>/5 (<X> addressed, <Y> open — 
 - **Real, but nothing downstream builds on it:** park it the same way, ruled real-and-deferred.
 - **Real and load-bearing:** rule on the smallest change that unblocks dependent work, ledger it, and carry it into the next component's dispatch. Stop for the user only when the defect leaves every path forward a guess.
 
-Adjudicate only at the cap. Adjudicating earlier to end a loop is pre-judging under another name. Every adjudication is a ledger entry. A silent discard is forbidden.
+Adjudicate only at the cap. Adjudicating earlier to end a loop is pre-judging under another name.
 
 ### 5. Complete the component
 
@@ -110,7 +112,7 @@ Review clean, or every open finding parked at the cap → ledger `<comp>: comple
 ## Feature completion
 
 1. **Integrate** in the main session: resolve seams between components, then run the feature's full acceptance from the brief.
-2. **Log** decisions, deviations, and tradeoffs to `docs/build/implementation-notes.md`.
+2. **Log** decisions, deviations, and tradeoffs to `docs/build/implementation-notes.md`, copying in each component's deferred minors and parked findings — the Review phase reads that file, not the ledger.
 3. **Update** `docs/build/INDEX.md` (feature ✅).
 4. **Rulings I made:** collect every ledger line containing `Ruling:` into your final message, in the order made, each with its cost-if-wrong. The list is exhaustive: it is the only place decisions taken on the user's behalf reach them.
 5. **Stop.** The Review phase (`code-review`) starts only after every feature in the INDEX is ✅.
