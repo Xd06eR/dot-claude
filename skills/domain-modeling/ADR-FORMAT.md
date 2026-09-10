@@ -32,7 +32,7 @@ The test: **if canonical would rewrite it later, the ADR must not have copied it
 
 **Considered options.** Each rejected alternative and the specific reason it lost. Record only alternatives that were real: a rejection is worth its line only when the option is plausible enough to be proposed again.
 
-**Consequences.** Blast radius, and what this constrains later. Absorbed minor rulings are named here by their original id.
+**Consequences.** Blast radius, and what this constrains later. Absorbed minor rulings land here as one self-contained line each.
 ```
 
 The fuller sections are the standard, not the exception: canonical carries the spec and code carries the behavior, but neither carries the why — the rejected options and the forces behind the choice live only here. A trivial ADR may still collapse to Context + Decision.
@@ -49,7 +49,7 @@ Three-way placement, so nothing carrying a real trade-off is dropped:
 |---|---|
 | Independently reversible | its own ADR |
 | Has a real rejected alternative but rides on another decision | a line in the parent's **Considered options** |
-| Pure consequence, no alternative | a line in the parent's **Consequences**, named by original id |
+| Pure consequence, no alternative | a line in the parent's **Consequences** |
 
 ADRs take their own numbering sequence: one entry can yield several ADRs, so ADR numbers cannot mirror entry numbers.
 
@@ -63,6 +63,8 @@ ADRs take their own numbering sequence: one entry can yield several ADRs, so ADR
 ## Frozen body
 
 The body is frozen at write: nothing in a written ADR is ever edited. `Status` is the single exception, flipped to `superseded by NNNN` when a later decision replaces it. This is what lets the model carry history that canonical deliberately discards.
+
+Cross-reference only what outlives the register: other ADRs (`ADR-NNNN`) and canonical docs. Never cite open-question entry ids (`#NN`) — entries are deleted at bake or sweep, so the citation dies with its target and the frozen body cannot be repaired.
 
 ## When to offer an ADR (discussion source)
 
