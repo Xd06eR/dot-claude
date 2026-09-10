@@ -30,6 +30,6 @@ This project uses the 4-phase workflow (Design → Plan → Build → Review). C
 - `docs/plan/` — per-component `<component>-spec.md` + `<component>-plan.md` + `INDEX.md` (dependency order + status tracker). Consumable: once the feature's Review passes, the spec's durable content flows home (decisions → ADR, as-built deltas → design, criteria → tests); then spec, plan, and the feature's INDEX rows delete, each in its own commit.
 - `docs/build/` — per-feature `<feature>.md` brief + `<feature>.ledger.md` (build progress log) + `INDEX.md`. Consumable: retires with the feature's plan docs once Review passes.
 - `TODO.md` — session resume anchor (`▶ Next-session resume`) + current task table. First read at session start.
-- `PROGRESS-LOG.md` — append-only session log: the reasoning narrative behind each session's work.
+- `PROGRESS-LOG.md` — append-only session log: the reasoning narrative behind each session's work, condensed to a recent window (~500 lines OR ~50 KB; outgoing entries delete whole, verbatim stays in git).
 - `docs/build/implementation-notes.md` — build-phase decisions, deviations, and tradeoffs, logged as built. Consumable: a feature's entries retire with its plan docs once Review passes; the file deletes when no build work is in flight.
 ```
