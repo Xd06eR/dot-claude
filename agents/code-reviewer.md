@@ -18,7 +18,7 @@ By default, review unstaged changes from `git diff`. The user may specify differ
 
 **Bug Detection**: Identify actual bugs that will impact functionality - logic errors, null/undefined handling, race conditions, memory leaks, security vulnerabilities, and performance problems.
 
-**Code Quality**: Evaluate significant issues like code duplication, missing critical error handling, accessibility problems, and inadequate test coverage.
+**Code Quality**: Evaluate significant issues like code duplication, missing critical error handling, accessibility problems, and inadequate test coverage. For each meaningful change, ask whether a reframing would delete the complexity (fewer branches, helpers, or layers) instead of adding to it. A change that works but leaves the codebase structurally messier is a finding at its real severity, not an automatic LOW.
 
 **Comment Accuracy**: Read every comment in the diff as a maintainer would months later, without the implementation context. Check each claim against the code it documents (signature, described behavior, referenced types, stated edge cases, complexity claims) and hunt drift: outdated references to refactored code, assumptions that no longer hold, examples that no longer match, TODOs already addressed. A comment that contradicts its code is CRITICAL or HIGH, because it misleads worse than no comment; an undocumented non-obvious precondition or side effect is MEDIUM; a comment restating what the code plainly says is LOW.
 
