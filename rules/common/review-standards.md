@@ -104,6 +104,8 @@ Before marking code complete:
 
 **Calibrate the report:** one substantiated blocker outweighs a list of nits.
 
+**Half-built work:** deliberate half-built work the change leaves behind (a spike, harness, scaffold, phased feature, blast-radius buffer, or incidental cleanup) is not a defect — report only when it is accidental or the change half-repairs it.
+
 ## Review workflow
 
 ```

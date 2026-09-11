@@ -47,7 +47,7 @@ On top of project guidelines, check the diff against this fixed set of Fowler co
 Report a finding only when its trigger is nameable and it survives the False Positive Filter below. Severity:
 
 - **CRITICAL**: Critical bug or explicit CLAUDE.md violation
-- **HIGH**: Important issue requiring attention
+- **HIGH**: Important issue requiring attention — misreported HIGH findings cost reviewer trust over time
 - **MEDIUM**: Valid but low-impact issue
 - **LOW**: Minor nitpick not explicitly in CLAUDE.md
 
@@ -74,4 +74,5 @@ Examples of false positives to drop before reporting:
 - General code quality issues (eg. lack of test coverage, general security issues, poor documentation), unless explicitly required in CLAUDE.md
 - Issues that are called out in CLAUDE.md, but explicitly silenced in the code (eg. due to a lint ignore comment)
 - Changes in functionality that are likely intentional or are directly related to the broader change
+- Breakage the branch intends (removing a feature flag, a safeguard, or a deprecated path) when the change is well-scoped — still report when the intent is unclear, the impact looks under-weighted, or the change reads as malicious
 - Real issues, but on lines that the user did not modify in their pull request
