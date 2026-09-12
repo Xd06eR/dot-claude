@@ -30,6 +30,7 @@
     "DISABLE_FEEDBACK_COMMAND": "1",
     "DISABLE_TELEMETRY": "1",
     "DO_NOT_TRACK": "1",
+    "ENABLE_CODE_SECURITY_REVIEW": "0",
     "ENABLE_TOOL_SEARCH": "false"
   },
   "extraKnownMarketplaces": {
