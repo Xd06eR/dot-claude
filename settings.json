@@ -52,7 +52,7 @@
             "type": "command"
           },
           {
-            "command": "~/.claude/hooks/block-dangerous-git.sh",
+            "command": "~/.claude/hooks/block-git-gh-mutations.sh",
             "type": "command"
           },
           {
