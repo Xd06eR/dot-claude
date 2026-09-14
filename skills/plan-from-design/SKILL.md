@@ -15,10 +15,7 @@ A named feature carves its sections out of the docs; everything else in them is 
 
 Ground the boundary on the code, not the docs: what exists in code is already built (reuse or extend); what is absent is this build. Grep the codebase for every contract the feature names, read the signatures the plan consumes from the code as built, and surface a doc-vs-code mismatch as a finding rather than planning against the doc's version.
 
-Also read, when present:
-
-- `CONTEXT.md` — standing context: terms, settled decisions, design state
-- `OPEN-QUESTIONS.md` — non-empty flags the affected area as not baseline
+Also read `OPEN-QUESTIONS.md` when present: non-empty flags the affected area as not baseline.
 
 ## Decompose by component
 
@@ -106,18 +103,34 @@ Fix issues inline. No re-review: fix and move on.
 
 INDEX = the cross-feature component list with dependency ordering. Working terms are feature / INDEX / component only.
 
+The shape, on a two-feature example:
+
 ```markdown
 # Plan INDEX
 
-1. user-model — ☐ spec+plan · ☐ plan-reviewed · ☐ built
-2. auth-api — ☐ spec+plan · ☐ plan-reviewed · ☐ built (consumes: user-model)
-3. login-ui — ☐ spec+plan · ☐ plan-reviewed · ☐ built (consumes: auth-api)
+Ordered by dependency, within and across features.
 
-Dependency graph: user-model → auth-api → login-ui
+## auth-flow
+
+1. user-model
+2. auth-api (consumes: user-model)
+3. login-ui (consumes: auth-api)
+
+## notes
+
+1. notes-model
+2. notes-api (consumes: notes-model; auth-api)
+```
+
+Rows are born bare; the only later mark is `· plan-reviewed`, added when an independent review passes. The file ends with a `## Dependency graph` section — one mermaid block drawn from the rows' consumes annotations (they are authoritative; the graph is the human-readable render):
+
+```mermaid
+graph LR
+  um["user-model"] --> aa["auth-api"] --> lu["login-ui"]
+  nm["notes-model"] --> na["notes-api"]
+  aa --> na
 ```
 
 ## Gate
 
-Print the component list + dependency order for review. Iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Once settled, output the exact commit command for the new `docs/plan/` content.
-
-Then propose `plan-review` when the plan warrants an independent pass; the choice is the user's. With it run or declined, `/build-brief` is next.
+Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, advance the feature's `TODO.md` task row to the chosen next step (review the plan when an independent pass is chosen, build when declined) and output the exact commit command covering it and the new `docs/plan/` content. `/build-brief` follows when review passes or is declined.
