@@ -68,17 +68,17 @@ What the skeleton cannot show:
 
 ## INDEX → `docs/build/INDEX.md`
 
-The shape, with two features in flight:
+A feature's row sits below every row its Depends on names. The shape, with two features in flight:
 
 ```markdown
 # Build INDEX
 
 Build features in dependency order.
 
-| Feature | Components | Built |
-|---|---|---|
-| auth-flow | user-model, auth-api, login-ui | ☐ |
-| notes | notes-model, notes-api, notes-ui | ☐ |
+| Feature | Components | Depends on | Built |
+|---|---|---|---|
+| auth-flow | user-model, auth-api, login-ui | — | ☐ |
+| notes | notes-model, notes-api, notes-ui | auth-flow | ☐ |
 ```
 
 ## Gate
