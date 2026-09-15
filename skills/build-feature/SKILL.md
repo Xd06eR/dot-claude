@@ -46,7 +46,7 @@ Before dispatching anything, scan the brief once for conflicts and write the tab
 - One row per pair of components that share a file or an interface: what one produces against what the other consumes, and what you found.
 - One row per component: whether its own text agrees with itself (its build steps against its acceptance, its Consumes against earlier components' Produces) and whether it mandates anything a reviewer would flag as a defect (deliberate duplication to keep components decoupled, a test that asserts nothing), so the conflict gets ruled on before execution, not mid-loop.
 
-Rule on each finding against the brief before execution begins; surface to the user what you cannot rule on. "The scan is clean" without those rows is not a scan you ran. The scan's table also schedules commits: a boundary commit is due before any split batch that would touch lines still carrying uncommitted changes.
+Rule on each finding against the brief before execution begins; surface to the user what you cannot rule on. "The scan is clean" without those rows is not a scan you ran. The scan's table also serves the commit cadence below: its overlap rows are where a boundary commit comes due.
 
 ## Autonomy
 
