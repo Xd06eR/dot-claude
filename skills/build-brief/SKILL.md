@@ -5,7 +5,7 @@ argument-hint: <feature ... | all>
 origin: custom + mattpocock
 ---
 
-Read the spec+plan for the components of the named feature(s) and produce ONE comprehensive build brief per feature. This skill only writes the briefs.
+Read the spec+plan for the components of the named feature(s) and produce ONE comprehensive build brief per feature. This skill only writes the briefs and their INDEX rows.
 
 ## What is a feature
 
