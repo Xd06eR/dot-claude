@@ -23,7 +23,7 @@ If a named component has no spec or plan, stop and say so: Plan has not produced
 
 ## Synthesize ONE feature brief → `docs/build/<feature>.md`
 
-One brief per feature, covering every component. The shape, on a small auth feature:
+One brief per feature, covering every component. The shape, on a small auth feature (one section per component, in map order; auth-api shown):
 
 ```markdown
 Executed by `/build-feature auth-flow`. This document is the requirements source; progress lives in `docs/build/auth-flow.ledger.md`.
@@ -48,7 +48,7 @@ user-model → auth-api → login-ui
 - Scope: session module, auth routes, middleware.
 - Depends on: user-model.
 - Interfaces — Consumes: `createUser`, `findByEmail`. Produces: `attachAuth(router): void`, `requireSession`, `AuthError`.
-- Build steps: <the component plan's checklist, ordered>
+- Build steps: <the component plan's checklist, verbatim>
 - Acceptance: every success criterion in the auth-api spec passes as an integration test.
 
 ## Feature acceptance
