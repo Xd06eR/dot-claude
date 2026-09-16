@@ -2,16 +2,13 @@
 name: session-sync
 description: "Sync work across sessions: §Start re-grounds from TODO.md; §End captures state into TODO.md and PROGRESS-LOG.md."
 disable-model-invocation: true
+argument-hint: <start | end>
 origin: custom
 ---
 
 Bridge two sessions: §Start re-grounds at the beginning of one, §End captures state before one dies. This skill writes `TODO.md` and `PROGRESS-LOG.md`, with two exceptions — `bake-design` appends the bake session narrative to `PROGRESS-LOG.md` (it must land at bake time, not batched to session end) and writes the bake hand-off row to `TODO.md`.
 
-Routing, in order. Wording alone is unreliable, so check state first:
-
-1. **Session state decides it.** A session with prior work in it (decisions made, files edited) is §End. A session that has done nothing yet is §Start.
-2. **Wording confirms it.** "resume / continue" points at §Start. "compact / pause" points at §End.
-3. **When the two disagree, or anything is unclear: run §Start.** Apart from the step-1 pull, it is read-only. §End rewrites the "▶ Next-session resume" block, so running it by mistake in a fresh session overwrites its real content with an empty one, the only irreversible failure in this skill.
+Run the section the argument names: `start` → §Start, `end` → §End; the rest of the message is context for that section. A missing or unclear argument runs §Start (read-only apart from the step-1 pull): a mistaken §End is the only irreversible failure here — it rewrites a real resume block into an empty one.
 
 Compaction drops the conversation from context; the transcript stays on disk. Write everything down before compacting anyway; the transcript is a recovery tool, never the plan.
 
@@ -25,7 +22,7 @@ Compaction drops the conversation from context; the transcript stays on disk. Wr
    - **Blocked** — name the blocker.
    - **Not due** — a trigger that has not fired; state the current reading against it.
 5. **Read any `OPEN-QUESTIONS.md` entry the user names** (#NN) in full before discussing it. Entries are deleted at bake; their decision record lives in `docs/adr/`.
-6. **Echo and stop.** Report current state, the classified task list, and what you would pick next with one line of reasoning. Wait for the user's pick before doing any work. The pick routes normally: a design discussion opens with `grill-with-docs`; a settled entry goes to `/bake-design`.
+6. **Echo and stop.** Report current state, the classified task list, and what you would pick next with one line of reasoning. Wait for the user's pick before doing any work.
 
 Read enough to echo state accurately, then wait.
 
@@ -35,10 +32,10 @@ Read enough to echo state accurately, then wait.
 2. **Condense mechanically.** If `TODO.md` exceeds ~250 lines OR ~10 KB, fold still-relevant old material into the resume block now, not when someone notices. Line counts miss prose walls; the byte threshold is the backstop for that failure shape.
 3. **Verify capture before logging.** If the session produced design rulings, confirm each one landed in `OPEN-QUESTIONS.md`, an ADR, or a design doc. The log entry records the session; it is not the capture net for rulings. Then propose `design-audit` `full` on the transcript: completeness, consistency's said-vs-written, and soundness on rulings still unbaked; state the spend (how many agents, reading what) and wait for the call; skip the proposal when a bake already ran `full` this session. Soundness findings land in the entry itself, not only in the report.
 4. **Append to `PROGRESS-LOG.md`**, one dated entry: what was decided and why. Record the number or constraint that killed each alternative, rejected proposals with their reasons, and corrections the user made mid-discussion. The outcome lives in the state docs; the reasoning lives here.
-5. **Condense mechanically.** If `PROGRESS-LOG.md` exceeds ~500 lines OR ~50 KB, delete the oldest whole entries down under the window. Confirm the outgoing entries are committed first — deletion hands the verbatim to git history, which is the archive; the file is the recent window. No archive file, no marker line.
-6. **Cross-check consistency.** `TODO.md` against `OPEN-QUESTIONS.md` — no gaps, statuses consistent.
+5. **Condense mechanically.** If `PROGRESS-LOG.md` exceeds ~750 lines OR ~75 KB, delete the oldest whole entries down under ~500 lines / ~50 KB, so an ordinary session's appends don't re-trigger the trim. Confirm the outgoing entries are committed first — deletion hands the verbatim to git history, which is the archive; the file is the recent window. No archive file, no marker line.
+6. **Cross-check consistency.** `TODO.md` against `OPEN-QUESTIONS.md` and the two INDEXes — no gaps, statuses consistent: each feature row names its current phase action (bake / plan / review-the-plan / build / review), a `#NN` reference resolves to a live register entry (bake retires it), and the INDEXes carry no feature the task table lacks, nor the reverse.
 7. **Commit and push the captured docs.**
-8. **Confirm** the next session has everything it needs, and it is safe to compact or switch away.
+8. **Confirm** the next session has everything it needs, and it is safe to compact or let the session die.
 
 ## TODO.md format
 
