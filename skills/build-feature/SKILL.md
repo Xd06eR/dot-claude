@@ -132,7 +132,7 @@ Review clean, or every open finding parked at the cap → ledger `<comp>: comple
 
 1. **Integrate** in the main session: resolve seams between components, then run the feature's full acceptance from the brief.
 2. **Log** decisions, deviations, and tradeoffs to `docs/build/implementation-notes.md` under the feature's `## <feature>` section, copying in each component's deferred minors and parked findings — the Review phase reads that file, not the ledger.
-3. **Update** `docs/build/INDEX.md` (the feature's Built → ☑) and advance the feature's `TODO.md` task row to the review step.
+3. **Update** `docs/build/INDEX.md` (the feature's Built → ☑) and advance the feature row in `TODO.md` to the review step.
 4. **Rulings I made:** collect every ledger line containing `Ruling:` into your final message, in the order made, each with its cost-if-wrong. The list is exhaustive: it is the only place decisions taken on the user's behalf reach them.
 5. **Stop.** After the last feature: propose `code-review` when the build warrants an independent pass; the choice is the user's.
 

@@ -165,7 +165,7 @@ Show the diff, and on approval point to build.
 
 ## Rules
 
-- **The verdict is recorded.** On a pass (`SHIP`, or `SHIP-WITH-CHANGES` once the changes land), mark the reviewed components' rows with `· plan-reviewed` in `docs/plan/INDEX.md` and advance the feature's `TODO.md` task row to its build step; a `BLOCK` or an unresolved decision leaves both untouched.
+- **The verdict is recorded.** On a pass (`SHIP`, or `SHIP-WITH-CHANGES` once the changes land), mark the reviewed components' rows with `· plan-reviewed` in `docs/plan/INDEX.md` and advance the feature row in `TODO.md` to its build step; a `BLOCK` or an unresolved decision leaves both untouched.
 - **One lens per reviewer.** Never merge two lenses into one dispatch. Independence is the point.
 - **Reviewers are read-only.** Only the merge owner edits, only the plan file, only on request.
 - **No verdict without evidence.** Every finding cites a plan line or a repo `file:line`.
