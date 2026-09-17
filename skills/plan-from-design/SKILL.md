@@ -9,7 +9,7 @@ Produce one spec + implementation-plan pair per component, emitted as files `/bu
 
 ## Input
 
-The invocation names the design-doc source and what to plan; the source defaults to `docs/design/`.
+The invocation names the design-doc source and what to plan; the source defaults to `docs/design/`. When the folder carries a `| Doc | Scope |` index (its `CLAUDE.md`), pick the docs from it before reading wholesale.
 
 A named feature carves its sections out of the docs; everything else in them is standing context the plan must respect. When the work is the next thing baked, the project's `TODO.md` task table holds the row — `git show <commit> -- <docs>` on its bake commit bounds the newly baked design. A source doc that defines nothing to construct is flagged, not planned. No docs at the named or default location: stop and ask where they live.
 
@@ -133,4 +133,4 @@ graph LR
 
 ## Gate
 
-Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, advance the feature's `TODO.md` task row to the chosen next step (review the plan when an independent pass is chosen, build when declined) and output the exact commit command covering it and the new `docs/plan/` content. `/build-brief` follows when review passes or is declined.
+Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, advance the feature row in `TODO.md` to the chosen next step (review the plan when an independent pass is chosen, build when declined) and output the exact commit command covering it and the new `docs/plan/` content. `/build-brief` follows when review passes or is declined.
