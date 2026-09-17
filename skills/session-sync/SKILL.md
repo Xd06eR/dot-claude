@@ -39,19 +39,29 @@ Read enough to echo state accurately, then wait.
 
 ## TODO.md format
 
+The shape, on a project mid-flight (feature rows at three lifecycle stages, plus one general task row):
+
 ```markdown
 # TODO
 
 ## ▶ Next-session resume
 
-<3-6 lines, bullets, no prose walls: current state · what just finished · where to resume · don't-re-litigate pointers (ADR refs, never restated)>
+- payments-flow is mid-build: webhook-handler in fix round 2 (detail in its ledger)
+- auth-flow passed Review; consumables retired
+- Next: resume webhook-handler's fix loop
+- Don't re-litigate: integer-cent pricing (ADR-0009)
 
 ## Tasks
 
 | Pri | Effort | Task | Gate |
 |---|---|---|---|
+| P0 | medium | payments-flow — build | — |
+| P1 | easy | notifications — docs/design/notifications.md §Events · bake 4f2a9c1 — plan | — |
+| P1 | hard | search — bake (#7) | #7 still open |
+| P2 | trivial | Sweep stale README badges | — |
 ```
 
+- The resume block is 3-6 lines of bullets, no prose walls: current state · what just finished · where to resume · don't-re-litigate pointers (ADR refs, never restated).
 - **One task per row**, one bounded action each. Open-question items reference their entry (`#NN`).
 - **Pri:** P0 critical path (blocks build) · P1 important, do soon · P2 improvement/housekeeping. **Effort:** trivial / easy / medium / hard.
 - **Gate is required.** `—` means pickable; anything else names why the row is not pickable (a blocker, or the trigger that has not fired). §Start reads the Gate column to classify. Never infer from prose.
