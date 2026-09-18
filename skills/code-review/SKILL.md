@@ -7,7 +7,7 @@ origin: pr-review-toolkit + mattpocock + code-review plugin
 
 The invocation may name review aspects to run; unnamed, run all applicable.
 
-## Review Workflow:
+## Review workflow
 
 1. **Determine Review Scope**
    - Check git status to identify changed files
@@ -15,17 +15,16 @@ The invocation may name review aspects to run; unnamed, run all applicable.
    - Read the invocation for named review aspects
    - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent — fail here, not inside the agents
    - Run the history probe in the main context, no dispatch: read the touched files' recent history (`git log`, `git blame` where the diff edits loaded areas) and prior merged-PR comments on them (`gh pr list --state merged`, `gh pr view --comments`). A change that contradicts or reintroduces a prior fix, or repeats something a prior review already flagged, is a finding like any other. Greenfield files and no prior PRs end the probe.
-   - Default: Run all applicable reviews
 
 2. **Available Review Aspects:**
 
-   - **tests** - Review test coverage quality and completeness
-   - **errors** - Check error handling for silent failures
-   - **types** - Analyze type design and invariants (if new types added)
-   - **code** - General code review for project guidelines, comments included
-   - **spec** - Review fidelity to the originating spec/PRD (if one exists)
-   - **simplify** - Simplify code for clarity and maintainability
-   - **all** - Run all applicable reviews (default)
+   - **tests:** Review test coverage quality and completeness
+   - **errors:** Check error handling for silent failures
+   - **types:** Analyze type design and invariants (if new types added)
+   - **code:** General code review for project guidelines, comments included
+   - **spec:** Review fidelity to the originating spec/PRD (if one exists)
+   - **simplify:** Simplify code for clarity and maintainability
+   - **all:** Run all applicable reviews (default)
 
 3. **Identify Changed Files**
    - Run `git diff --name-only` to see modified files
@@ -35,12 +34,12 @@ The invocation may name review aspects to run; unnamed, run all applicable.
 4. **Determine Applicable Reviews**
 
    Based on changes:
-   - **Always applicable**: code-reviewer (general quality, comments included)
-   - **If test files changed**: pr-test-analyzer
-   - **If error handling changed**: silent-failure-hunter
-   - **If types added/modified**: type-design-analyzer
-   - **If an originating spec/issue/PRD exists**: spec-reviewer. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
-   - **After passing review**: code-simplifier (polish and refine)
+   - **Always applicable:** code-reviewer (general quality, comments included)
+   - **If test files changed:** pr-test-analyzer
+   - **If error handling changed:** silent-failure-hunter
+   - **If types added/modified:** type-design-analyzer
+   - **If an originating spec/issue/PRD exists:** spec-reviewer. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
+   - **After passing review:** code-simplifier (polish and refine)
 
 5. **Launch Review Agents**
 
@@ -100,7 +99,7 @@ Each finding-producing agent returns findings independently; without this step, 
 6. **Ship/block recommendation.** Block if any CRITICAL; otherwise ship. HIGH findings are ship-with-caution, not block.
 7. **Empty case.** If zero findings, say so explicitly. Do not imply clean by silence.
 
-## code-simplifier gating
+## `code-simplifier` gating
 
 `code-simplifier` runs LAST, only after the finding-producing agents finish and the review passes (no CRITICAL and no HIGH), and only when the invocation names `simplify` — never under `all`. It applies simplifications in place; it does not produce findings.
 
