@@ -21,6 +21,7 @@ Print the diff of changed files in your reply when the batch closes.
 - Reference direction: a dependency reference ("per X §5") may only point at content that loads at least as often as the referrer; a locator (name + path + when to read) is allowed at any level if the path resolves from any cwd.
 - Reference targets: section names, or concept phrases that appear in the target's body text ("the never-commit rule"); never a bullet label alone (labels get renamed; sections and body-text concepts survive).
 - Path form: relative markdown links inside the rules tree (the injection header carries the referrer's absolute path, so resolution never depends on the session cwd, and links render as clickable navigation on GitHub and in IDE markdown preview); absolute `~/.claude/...` in skill, command, and agent bodies (invocation may surface only a symbolic path; a subagent dispatched inside a project repo resolves cwd-relative paths against the project root, where harness files do not exist), in shell commands and write destinations, and when naming the harness root.
+- Component pointers in bodies and the CLAUDE.md catalog mirror the component's invocation mode: slash prefix = user-invoked; bare name = model-invoked.
 - Standardize on **main agent** for the orchestrating agent in all harness files; its dispatched workers are subagents; use no other name for it.
 - Headings: sentence case (first word plus proper nouns and coined phrases only, e.g. "Act vs Ask"); no trailing punctuation.
 - Bullet labels state the rule's content, never a coined concept: the label is recall and scannability, not a name to decode.
@@ -44,7 +45,7 @@ Any single unscoped rules file beyond ~8 KB, or the unscoped (always-loaded) set
 ## CLAUDE.md and instruction docs
 
 - CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
-- The CLAUDE.md catalog is routing-only: the fixed openings and the user-invoked set, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Slash prefix = user-typed invocation; bare name = model-invoked skill. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
+- The CLAUDE.md catalog is routing-only: the fixed openings and the user-invoked set, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
 
 ## Rules
 
