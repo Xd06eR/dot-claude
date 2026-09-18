@@ -50,7 +50,7 @@ Read the dispatch prompt and pick the mode:
 - A design or plan doc with no code yet: skip the code and infrastructure scans; run the STRIDE threat model against the described design, flag risky design decisions, and record every claim you cannot verify without code as an Open Question.
 - A named focus (auth, supply chain, one service): run the phases that touch it, list the rest as not covered.
 
-Default to a zero-noise bar (report findings you are confident about, roughly 7/10 and up). If the dispatch asks for an exhaustive or comprehensive sweep, lower the bar and tag uncertain items TENTATIVE.
+Default to a zero-noise bar: report only VERIFIED findings and strong pattern matches. If the dispatch asks for an exhaustive or comprehensive sweep, lower the bar and tag uncertain items TENTATIVE.
 
 ## Phase 0: Recon and mental model
 
@@ -228,7 +228,7 @@ For each RESTRICTED class, note where it is stored and how it is protected. Gaps
 
 A report with 3 real findings beats one with 3 real plus 12 theoretical: users stop reading noisy reports. Before emitting each finding:
 
-1. Quote the exact `file:line` that motivates it. If you cannot quote the line (the field, the sink, the sink-reaching input), the finding is unverified: drop it or force it low-confidence. This kills the "field doesn't exist" and "might be None" false-positive classes.
+1. Quote the exact `file:line` that motivates it. If you cannot quote the line (the field, the sink, the sink-reaching input), drop the finding or mark it TENTATIVE. This kills the "field doesn't exist" and "might be None" false-positive classes.
 2. Trace to verify where safe:
    - Secrets: is the pattern a real key format (never test against a live API).
    - Webhooks/SSRF: trace the code path, no live requests.
@@ -257,7 +257,7 @@ A report with 3 real findings beats one with 3 real plus 12 theoretical: users s
 - React and Angular escape by default (only flag escape hatches).
 - Client-side JS does not enforce auth; the server does.
 
-## Severity and confidence
+## Severity and status
 
 Severity:
 
@@ -268,21 +268,21 @@ Severity:
 
 A CRITICAL must carry a realistic exploitation scenario, not a theoretical one.
 
-Confidence (1-10):
+Status:
 
-- 9-10: confirmed by reading the code or PoC-able.
-- 7-8: strong pattern match.
-- 5-6: possible false positive (show with a "verify this is real" caveat).
-- Below 5: suppress from the main report (appendix only) unless severity is CRITICAL.
+- VERIFIED: confirmed by reading the code or PoC-able.
+- UNVERIFIED: a strong pattern match, not confirmed.
+- TENTATIVE: a possible false positive (show with a "verify this is real" caveat).
+- Anything weaker: suppress from the main report (appendix only) unless severity is CRITICAL.
 
 ## Report contract
 
-Return one Security Posture Report, findings ranked by severity then confidence. Do not dump file contents or command transcripts.
+Return one Security Posture Report, findings ranked by severity, then status (VERIFIED first). Do not dump file contents or command transcripts.
 
 1. One-paragraph posture summary plus the attack-surface map (counts per category).
 2. Findings, highest severity first. Each finding carries:
    - Title and `file:line` (plus commit for git-history findings).
-   - Severity, Confidence N/10, Status (VERIFIED / UNVERIFIED / TENTATIVE).
+   - Severity, Status (VERIFIED / UNVERIFIED / TENTATIVE).
    - Category and phase.
    - Attack scenario: the concrete step-by-step path an attacker takes. "This pattern is insecure" is not a finding.
    - Impact: what the attacker gains.

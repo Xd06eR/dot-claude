@@ -34,8 +34,9 @@ Use this skill when:
 │     └──────────┘ └──────────┘ └──────────┘  │
 ├─────────────────────────────────────────────┤
 │  3. EVALUATE                                │
-│     Score candidates (functionality, maint, │
-│     community, docs, license, deps)         │
+│     Rate candidate fit: strong, partial,    │
+│     or weak, per axis: functionality,       │
+│     maint, community, docs, license, deps   │
 ├─────────────────────────────────────────────┤
 │  4. DECIDE                                  │
 │     ┌─────────┐  ┌──────────┐  ┌─────────┐  │
@@ -132,7 +133,7 @@ Older Claude Code docs may call this `Task(...)`; use the current agent/subagent
 ```
 Need: Check markdown files for broken links
 Search: npm "markdown dead link checker"
-Found: textlint-rule-no-dead-link (score: 9/10)
+Found: textlint-rule-no-dead-link (fit: strong)
 Action: ADOPT — npm install textlint-rule-no-dead-link
 Result: Zero custom code, battle-tested solution
 ```
@@ -152,7 +153,7 @@ Result: Zero custom code, production-proven libraries
 ```
 Need: Validate project config files against a schema
 Search: npm "config linter schema", "json schema validator cli"
-Found: ajv-cli (score: 8/10)
+Found: ajv-cli (fit: strong)
 Action: ADOPT + EXTEND — install ajv-cli, write project-specific schema
 Result: 1 package + 1 schema file, no custom validation logic
 ```

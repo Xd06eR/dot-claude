@@ -146,7 +146,7 @@ Take a look at the board. Tell me:
 - Which variant is closest? (A / B / C)
 - What to KEEP from it (and anything worth stealing from the others)?
 - What to CHANGE?
-- Optional: rate each 1-5.
+- Optional: rank them best to worst.
 ```
 
 The user answers in prose. Read back what you understood before acting:

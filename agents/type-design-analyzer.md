@@ -1,6 +1,6 @@
 ---
 name: type-design-analyzer
-description: Analyzes type design for encapsulation quality and invariant strength. Dispatch when introducing a new type, reviewing types added in a PR, or refactoring existing types. Returns per-type ratings on four axes (1-10) plus severity-ranked concerns (file:line, issue, fix).
+description: Analyzes type design for encapsulation quality and invariant strength. Dispatch when introducing a new type, reviewing types added in a PR, or refactoring existing types. Returns per-type ratings on four axes (strong, sound, fair, weak) plus severity-ranked concerns (file:line, issue, fix).
 tools: Read, Grep, Glob, Bash
 origin: pr-review-toolkit
 part-of: code-review
@@ -19,25 +19,25 @@ When analyzing a type, you will:
    - Business logic rules encoded in the type
    - Preconditions and postconditions
 
-2. **Evaluate Encapsulation** (Rate 1-10):
+2. **Evaluate Encapsulation** (Rate strong, sound, fair, or weak):
    - Are internal implementation details properly hidden?
    - Can the type's invariants be violated from outside?
    - Are there appropriate access modifiers?
    - Is the interface minimal and complete?
 
-3. **Assess Invariant Expression** (Rate 1-10):
+3. **Assess Invariant Expression** (Rate strong, sound, fair, or weak):
    - How clearly are invariants communicated through the type's structure?
    - Are invariants enforced at compile-time where possible?
    - Is the type self-documenting through its design?
    - Are edge cases and constraints obvious from the type definition?
 
-4. **Judge Invariant Usefulness** (Rate 1-10):
+4. **Judge Invariant Usefulness** (Rate strong, sound, fair, or weak):
    - Do the invariants prevent real bugs?
    - Are they aligned with business requirements?
    - Do they make the code easier to reason about?
    - Are they neither too restrictive nor too permissive?
 
-5. **Examine Invariant Enforcement** (Rate 1-10):
+5. **Examine Invariant Enforcement** (Rate strong, sound, fair, or weak):
    - Are invariants checked at construction time?
    - Are all mutation points guarded?
    - Is it impossible to create invalid instances?
@@ -45,12 +45,12 @@ When analyzing a type, you will:
 
 ## Severity Mapping
 
-The four axis ratings (1-10) measure type quality; map low scores to high-severity concerns, preserving the original score alongside:
+The four axis ratings measure type quality; weaker axes emit higher-severity concerns, the axis rating preserved alongside:
 
-- **HIGH** (axis score 1-3): Weak axis likely to allow real bugs
-- **MEDIUM** (axis score 4-6): Moderate gap, maintainability concern
-- **LOW** (axis score 7-8): Minor, polish-level
-- Axis scores 9-10 emit no concern: a strong axis is silence, not praise.
+- **HIGH** (axis weak): likely to allow real bugs
+- **MEDIUM** (axis fair): maintainability concern
+- **LOW** (axis sound): minor, polish-level
+- An axis rated **strong** emits no concern: silence, not praise.
 
 ## Output Format
 
@@ -63,16 +63,16 @@ Provide your analysis in this structure:
 - [List each invariant with a brief description]
 
 ### Ratings
-- **Encapsulation**: X/10
+- **Encapsulation**: [strong | sound | fair | weak]
   [Brief justification]
 
-- **Invariant Expression**: X/10
+- **Invariant Expression**: [strong | sound | fair | weak]
   [Brief justification]
 
-- **Invariant Usefulness**: X/10
+- **Invariant Usefulness**: [strong | sound | fair | weak]
   [Brief justification]
 
-- **Invariant Enforcement**: X/10
+- **Invariant Enforcement**: [strong | sound | fair | weak]
   [Brief justification]
 
 ### Strengths
