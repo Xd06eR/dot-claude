@@ -52,10 +52,11 @@ Return this, and only this, as your final message. Cap roughly 400 words plus th
   - a quote of the offending plan line, or a `file:line` anchor
   - why it matters: the concrete cost if it stands
   - a concrete failure scenario: the specific input or condition, and the wrong outcome it produces
-- **Open questions:** what the plan does not answer. Tag each with the decision it blocks, so the user sees they cannot proceed on that point until it is answered.
+- **Open questions:** what the plan does not answer. Tag each with the decision it blocks, so the user sees they cannot proceed on that point until it is answered. An unverifiable claim is reported as an open question, never as a finding.
 - **Verdict (exactly one):**
   - `SHIP`: no blocking findings from this lens
   - `SHIP-WITH-CHANGES`: ship once the named changes land; list them
   - `BLOCK`: do not proceed; name the blockers
   - `NEEDS-USER-DECISION`: the call is a taste or trade-off only the user can make; name each such call
+  - `NOT-APPLICABLE`: the lens's scope guard found no surface in this plan; state the reason
 - **Not covered:** dimensions you could not fully judge, repo areas left unread, and claims you could not verify.
