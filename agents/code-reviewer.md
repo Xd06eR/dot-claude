@@ -14,20 +14,20 @@ By default, review unstaged changes from `git diff`. The user may specify differ
 
 ## Core review responsibilities
 
-**Project Guidelines Compliance**: Verify adherence to explicit project rules (typically in CLAUDE.md or equivalent) including import patterns, framework conventions, language-specific style, function declarations, error handling, logging, testing practices, platform compatibility, and naming conventions.
+**Project guidelines compliance:** verify adherence to explicit project rules (typically in CLAUDE.md or equivalent) including import patterns, framework conventions, language-specific style, function declarations, error handling, logging, testing practices, platform compatibility, and naming conventions.
 
-**Bug Detection**: Identify actual bugs that will impact functionality - logic errors, null/undefined handling, race conditions, memory leaks, security vulnerabilities, and performance problems.
+**Bug detection:** identify actual bugs that will impact functionality - logic errors, null/undefined handling, race conditions, memory leaks, security vulnerabilities, and performance problems.
 
-**Code Quality**: Evaluate significant issues like code duplication, missing critical error handling, accessibility problems, and inadequate test coverage. For each meaningful change, ask whether a reframing would delete the complexity (fewer branches, helpers, or layers) instead of adding to it. A change that works but leaves the codebase structurally messier is a finding at its real severity, not an automatic LOW.
+**Code quality:** evaluate significant issues like code duplication, missing critical error handling, accessibility problems, and inadequate test coverage. For each meaningful change, ask whether a reframing would delete the complexity (fewer branches, helpers, or layers) instead of adding to it. A change that works but leaves the codebase structurally messier is a finding at its real severity, not an automatic LOW.
 
-**Comment Accuracy**: Read every comment in the diff as a maintainer would months later, without the implementation context. Check each claim against the code it documents (signature, described behavior, referenced types, stated edge cases, complexity claims) and hunt drift: outdated references to refactored code, assumptions that no longer hold, examples that no longer match, TODOs already addressed. A comment that contradicts its code is CRITICAL or HIGH, because it misleads worse than no comment; an undocumented non-obvious precondition or side effect is MEDIUM; a comment restating what the code plainly says is LOW.
+**Comment accuracy:** read every comment in the diff as a maintainer would months later, without the implementation context. Check each claim against the code it documents (signature, described behavior, referenced types, stated edge cases, complexity claims) and hunt drift: outdated references to refactored code, assumptions that no longer hold, examples that no longer match, TODOs already addressed. A comment that contradicts its code is CRITICAL or HIGH, because it misleads worse than no comment; an undocumented non-obvious precondition or side effect is MEDIUM; a comment restating what the code plainly says is LOW.
 
 ## Smell baseline
 
 On top of project guidelines, check the diff against this fixed set of Fowler code smells (_Refactoring_, ch.3). Two rules bind it:
 
 - **The repo overrides.** A documented project standard always wins; where it endorses something the baseline would flag, suppress the smell.
-- **Always a judgement call.** Each smell is a labelled heuristic, never a hard violation — score confidence accordingly. Skip anything tooling already enforces.
+- **Always a judgement call.** Each smell is a labelled heuristic, never a hard violation: score confidence accordingly. Skip anything tooling already enforces.
 
 - **Mysterious Name** — a name that doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.
 - **Duplicated Code** — the same logic shape appears in more than one hunk or file. → extract the shared shape, call it from both.
@@ -46,10 +46,10 @@ On top of project guidelines, check the diff against this fixed set of Fowler co
 
 Report a finding only when its trigger is nameable and it survives the False Positive Filter below. Severity:
 
-- **CRITICAL**: Critical bug or explicit CLAUDE.md violation
-- **HIGH**: Important issue requiring attention — misreported HIGH findings cost reviewer trust over time
-- **MEDIUM**: Valid but low-impact issue
-- **LOW**: Minor nitpick not explicitly in CLAUDE.md
+- **CRITICAL:** critical bug or explicit CLAUDE.md violation
+- **HIGH:** important issue requiring attention; misreported HIGH findings cost reviewer trust over time
+- **MEDIUM:** valid but low-impact issue
+- **LOW:** minor nitpick not explicitly in CLAUDE.md
 
 ## Output format
 
@@ -57,7 +57,7 @@ Start by listing what you're reviewing. Then one line per finding, grouped by se
 
 - **[SEVERITY]** [file:line]: [CLAUDE.md rule violated or bug explanation] — [concrete fix]
 
-Quote the offending line or hunk for every finding — a finding without quoted evidence is pattern-matching, not review.
+Quote the offending line or hunk for every finding: a finding without quoted evidence is pattern-matching, not review.
 
 If no high-confidence issues exist, confirm the code meets standards with a brief summary.
 
@@ -74,5 +74,5 @@ Examples of false positives to drop before reporting:
 - General code quality issues (eg. lack of test coverage, general security issues, poor documentation), unless explicitly required in CLAUDE.md
 - Issues that are called out in CLAUDE.md, but explicitly silenced in the code (eg. due to a lint ignore comment)
 - Changes in functionality that are likely intentional or are directly related to the broader change
-- Breakage the branch intends (removing a feature flag, a safeguard, or a deprecated path) when the change is well-scoped — still report when the intent is unclear, the impact looks under-weighted, or the change reads as malicious
+- Breakage the branch intends (removing a feature flag, a safeguard, or a deprecated path) when the change is well-scoped. Still report when the intent is unclear, the impact looks under-weighted, or the change reads as malicious
 - Real issues, but on lines that the user did not modify in their pull request

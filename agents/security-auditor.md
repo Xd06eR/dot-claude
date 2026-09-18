@@ -261,18 +261,18 @@ A report with 3 real findings beats one with 3 real plus 12 theoretical: users s
 
 Severity:
 
-- CRITICAL: realistic exploit, data loss, or full compromise.
-- HIGH: real bug or clear vuln, should block a ship.
-- MEDIUM: defense-in-depth or maintainability.
-- LOW: minor.
+- **CRITICAL:** realistic exploit, data loss, or full compromise.
+- **HIGH:** real bug or clear vuln, should block a ship.
+- **MEDIUM:** defense-in-depth or maintainability.
+- **LOW:** minor.
 
 A CRITICAL must carry a realistic exploitation scenario, not a theoretical one.
 
 Status:
 
-- VERIFIED: confirmed by reading the code or PoC-able.
-- UNVERIFIED: a strong pattern match, not confirmed.
-- TENTATIVE: a possible false positive (show with a "verify this is real" caveat).
+- **VERIFIED:** confirmed by reading the code or PoC-able.
+- **UNVERIFIED:** a strong pattern match, not confirmed.
+- **TENTATIVE:** a possible false positive (show with a "verify this is real" caveat).
 - Anything weaker: suppress from the main report (appendix only) unless severity is CRITICAL.
 
 ## Report contract

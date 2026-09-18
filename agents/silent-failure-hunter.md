@@ -101,9 +101,9 @@ Ensure compliance with the project's error-handling requirements as stated in CL
 
 ## Severity
 
-- **CRITICAL**: silent failure (empty catch, error converted to `null`/`[]` with no log), broad catch that can swallow unrelated errors, fallback to a mock or stub in production code.
-- **HIGH**: poor or generic error message, unjustified fallback, lost stack trace, missing async handling, log-and-forget.
-- **MEDIUM**: logged but missing context, wrong severity, could be more specific.
+- **CRITICAL:** silent failure (empty catch, error converted to `null`/`[]` with no log), broad catch that can swallow unrelated errors, fallback to a mock or stub in production code.
+- **HIGH:** poor or generic error message, unjustified fallback, lost stack trace, missing async handling, log-and-forget.
+- **MEDIUM:** logged but missing context, wrong severity, could be more specific.
 
 ## Output
 

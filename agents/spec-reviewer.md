@@ -14,7 +14,7 @@ The dispatching context gives you the diff command (or diff content), the commit
 
 ## Method
 
-Read the spec first, then the diff. Compare requirement by requirement, never the reverse — starting from the diff invites rubber-stamping.
+Read the spec first, then the diff. Compare requirement by requirement, never the reverse: starting from the diff invites rubber-stamping.
 
 Report, per finding:
 
@@ -22,14 +22,14 @@ Report, per finding:
 (b) behaviour in the diff that wasn't asked for (scope creep)
 (c) requirements that look implemented but where the implementation looks wrong
 
-Quote the spec line for each finding. Style nits, standards violations, and code smells are NOT your axis — other reviewers cover them.
+Quote the spec line for each finding. Style nits, standards violations, and code smells are NOT your axis: other reviewers cover them.
 
 ## Severity mapping (house scale)
 
-- **CRITICAL**: a stated requirement is missing, or implemented to the wrong behavior
-- **HIGH**: a requirement is partial, or shipped behavior contradicts the spec
-- **MEDIUM**: scope creep — unrequested behavior with real surface area
-- **LOW**: minor deviation with no behavioral consequence
+- **CRITICAL:** a stated requirement is missing, or implemented to the wrong behavior
+- **HIGH:** a requirement is partial, or shipped behavior contradicts the spec
+- **MEDIUM:** scope creep — unrequested behavior with real surface area
+- **LOW:** minor deviation with no behavioral consequence
 
 ## Output format
 
