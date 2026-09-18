@@ -1,6 +1,6 @@
 ---
 name: type-design-analyzer
-description: Analyzes type design for encapsulation quality and invariant strength. Dispatch when introducing a new type, reviewing types added in a PR, or refactoring existing types. Returns per-type ratings on four axes (strong, sound, fair, weak) plus severity-ranked concerns (file:line, issue, fix).
+description: Analyzes type design for encapsulation quality and invariant strength. Dispatch when introducing a new type, reviewing types added in a PR, or refactoring existing types. Returns per-type ratings on four axes (solid, adequate, marginal, weak) plus severity-ranked concerns (file:line, issue, fix).
 tools: Read, Grep, Glob, Bash
 origin: pr-review-toolkit
 part-of: code-review
@@ -19,25 +19,25 @@ When analyzing a type, you will:
    - Business logic rules encoded in the type
    - Preconditions and postconditions
 
-2. **Evaluate Encapsulation** (Rate strong, sound, fair, or weak):
+2. **Evaluate Encapsulation** (Rate solid, adequate, marginal, or weak):
    - Are internal implementation details properly hidden?
    - Can the type's invariants be violated from outside?
    - Are there appropriate access modifiers?
    - Is the interface minimal and complete?
 
-3. **Assess Invariant Expression** (Rate strong, sound, fair, or weak):
+3. **Assess Invariant Expression** (Rate solid, adequate, marginal, or weak):
    - How clearly are invariants communicated through the type's structure?
    - Are invariants enforced at compile-time where possible?
    - Is the type self-documenting through its design?
    - Are edge cases and constraints obvious from the type definition?
 
-4. **Judge Invariant Usefulness** (Rate strong, sound, fair, or weak):
+4. **Judge Invariant Usefulness** (Rate solid, adequate, marginal, or weak):
    - Do the invariants prevent real bugs?
    - Are they aligned with business requirements?
    - Do they make the code easier to reason about?
    - Are they neither too restrictive nor too permissive?
 
-5. **Examine Invariant Enforcement** (Rate strong, sound, fair, or weak):
+5. **Examine Invariant Enforcement** (Rate solid, adequate, marginal, or weak):
    - Are invariants checked at construction time?
    - Are all mutation points guarded?
    - Is it impossible to create invalid instances?
@@ -48,9 +48,9 @@ When analyzing a type, you will:
 The four axis ratings measure type quality; weaker axes emit higher-severity concerns, the axis rating preserved alongside:
 
 - **HIGH** (axis weak): likely to allow real bugs
-- **MEDIUM** (axis fair): maintainability concern
-- **LOW** (axis sound): minor, polish-level
-- An axis rated **strong** emits no concern: silence, not praise.
+- **MEDIUM** (axis marginal): maintainability concern
+- **LOW** (axis adequate): minor, polish-level
+- An axis rated **solid** emits no concern: silence, not praise.
 
 ## Output Format
 
@@ -63,16 +63,16 @@ Provide your analysis in this structure:
 - [List each invariant with a brief description]
 
 ### Ratings
-- **Encapsulation**: [strong | sound | fair | weak]
+- **Encapsulation**: [solid | adequate | marginal | weak]
   [Brief justification]
 
-- **Invariant Expression**: [strong | sound | fair | weak]
+- **Invariant Expression**: [solid | adequate | marginal | weak]
   [Brief justification]
 
-- **Invariant Usefulness**: [strong | sound | fair | weak]
+- **Invariant Usefulness**: [solid | adequate | marginal | weak]
   [Brief justification]
 
-- **Invariant Enforcement**: [strong | sound | fair | weak]
+- **Invariant Enforcement**: [solid | adequate | marginal | weak]
   [Brief justification]
 
 ### Strengths
