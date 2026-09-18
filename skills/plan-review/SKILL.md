@@ -6,15 +6,9 @@ allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
 ---
 
-Gate a plan, spec, or PRD before build.
+Gate a plan, spec, or PRD before build: dispatch four independent review lenses in parallel, add a security pass when the plan warrants one, then merge every report into one verdict. Auto-resolve the lens conflicts the six decision principles can settle, and surface only the genuine taste calls to the user.
 
-Dispatch four independent review lenses in parallel, add a security pass when the plan warrants one, then merge every report into one verdict.
-
-Auto-resolve the lens conflicts the six decision principles can settle, and surface only the genuine taste calls to the user.
-
-The reviewers are fresh-context agents that never see each other, so disagreement between lenses is signal, not noise.
-
-Your job is the merge: dedupe, rank, resolve what the principles resolve, and hand the user a short list of real decisions.
+The reviewers are fresh-context agents that never see each other, so disagreement between lenses is signal, not noise. Your job is the merge: dedupe, rank, resolve what the principles resolve, and hand the user a short list of real decisions.
 
 ## Step 1: Locate the plan
 
@@ -50,7 +44,7 @@ Every `plan-reviewer` prompt names exactly three things:
   - rank findings by severity
   - list open questions, each tagged with the decision it blocks
   - end with exactly one verdict (`SHIP`, `SHIP-WITH-CHANGES`, `BLOCK`, or `NEEDS-USER-DECISION`)
-  - state what was not covered.
+  - state what was not covered
 
 If Step 2 triggered, add one `security-auditor` dispatch in the same turn. Tell it the artifact is a plan or design doc with no code yet, so it runs the STRIDE threat model against the described design, skips the code and infrastructure scans, and records anything it cannot verify without code as an open question.
 
@@ -99,7 +93,7 @@ AI makes completeness cheap, so the complete thing is the goal. Prefer full cove
 
 The only work genuinely out of scope is the unrelated kind (rewrites, multi-quarter migrations). Flag that as separate scope, never as an excuse for a shortcut.
 
-Score coverage on a 10/7/3 scale: 10 covers all edge cases, 7 the happy path, 3 a shortcut. Do not fabricate scores.
+Label coverage as **complete**, **happy-path**, or **shortcut**: complete covers all edge cases, happy-path the main flow, shortcut anything less. Do not fabricate ratings.
 
 **Three layers of novelty:** before endorsing anything the plan builds from scratch, check its layer.
 
