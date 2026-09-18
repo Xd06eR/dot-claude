@@ -50,7 +50,7 @@ Use this skill when:
 └─────────────────────────────────────────────┘
 ```
 
-## Decision Matrix
+## Decision matrix
 
 | Signal | Action |
 |--------|--------|
@@ -59,9 +59,9 @@ Use this skill when:
 | Multiple weak matches | **Compose** — combine 2-3 small packages |
 | Nothing suitable found | **Build** — write custom, but informed by research |
 
-## How to Use
+## How to use
 
-### Step 0: Tool Availability Preflight
+### Step 0: Tool availability preflight
 
 This is agent guidance, not an executable setup script. Check only the channels that are relevant to the task and project in front of you.
 
@@ -73,7 +73,7 @@ This is agent guidance, not an executable setup script. Check only the channels 
 | MCP/docs tools | Available tool list or local MCP config | Fall back to official docs/web search |
 | Skills directory | `ls ~/.claude/skills ~/.codex/skills` where applicable | Say no local skill catalog was available |
 
-### Quick Mode (inline)
+### Quick mode (inline)
 
 Before writing a utility or adding functionality, mentally run through:
 
@@ -83,7 +83,7 @@ Before writing a utility or adding functionality, mentally run through:
 3. Is there a skill for this? → Check `~/.claude/skills/`
 4. Is there a GitHub implementation/template? → Run GitHub code search for maintained OSS before writing net-new code
 
-### Full Mode (agent)
+### Full mode (agent)
 
 For non-trivial functionality, launch the researcher agent:
 
@@ -100,16 +100,16 @@ Agent(subagent_type="general-purpose", prompt="
 
 Older Claude Code docs may call this `Task(...)`; use the current agent/subagent tool name exposed by the active harness.
 
-## Search Shortcuts by Category
+## Search shortcuts by category
 
-### Development Tooling
+### Development tooling
 
 - Linting → `eslint`, `ruff`, `textlint`, `markdownlint`
 - Formatting → `prettier`, `black`, `gofmt`
 - Testing → `jest`, `pytest`, `go test`
 - Pre-commit → `husky`, `lint-staged`, `pre-commit`
 
-### AI/LLM Integration
+### AI/LLM integration
 
 - Claude SDK → Context7 for latest docs
 - Prompt management → Check MCP servers
@@ -121,7 +121,7 @@ Older Claude Code docs may call this `Task(...)`; use the current agent/subagent
 - Validation → `zod` (TS), `pydantic` (Python)
 - Database → Check for MCP servers first
 
-### Content & Publishing
+### Content & publishing
 
 - Markdown processing → `remark`, `unified`, `markdown-it`
 - Image optimization → `sharp`, `imagemin`
@@ -158,7 +158,7 @@ Action: ADOPT + EXTEND — install ajv-cli, write project-specific schema
 Result: 1 package + 1 schema file, no custom validation logic
 ```
 
-## Anti-Patterns
+## Anti-patterns
 
 - **Jumping to code**: Writing a utility without checking if one exists
 - **Ignoring MCP**: Not checking if an MCP server already provides the capability

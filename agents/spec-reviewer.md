@@ -31,7 +31,7 @@ Quote the spec line for each finding. Style nits, standards violations, and code
 - **MEDIUM**: scope creep — unrequested behavior with real surface area
 - **LOW**: minor deviation with no behavioral consequence
 
-## Output Format
+## Output format
 
 One line per finding, grouped by severity (CRITICAL first):
 
