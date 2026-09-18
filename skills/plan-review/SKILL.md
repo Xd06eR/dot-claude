@@ -43,8 +43,9 @@ Every `plan-reviewer` prompt names exactly three things:
   - quote the plan's own lines or a repo `file:line` as evidence
   - rank findings by severity
   - list open questions, each tagged with the decision it blocks
-  - end with exactly one verdict (`SHIP`, `SHIP-WITH-CHANGES`, `BLOCK`, or `NEEDS-USER-DECISION`)
+  - end with exactly one verdict (`SHIP`, `SHIP-WITH-CHANGES`, `BLOCK`, or `NEEDS-USER-DECISION`; `NOT-APPLICABLE` when the lens's scope guard finds no surface for it)
   - state what was not covered
+  - report unverifiable claims as open questions, never as findings
 
 If Step 2 triggered, add one `security-auditor` dispatch in the same turn. Tell it the artifact is a plan or design doc with no code yet, so it runs the STRIDE threat model against the described design, skips the code and infrastructure scans, and records anything it cannot verify without code as an open question.
 
@@ -68,6 +69,7 @@ Conflict tiebreakers, keyed to the lens that raised the conflict:
 - **CEO lens:** P1 (completeness) and P2 (boil lakes) dominate.
 - **Eng lens:** P5 (explicit) and P3 (pragmatic) dominate.
 - **Design lens:** P5 (explicit) and P1 (completeness) dominate.
+- **DevEx lens:** P6 (bias toward action) and P3 (pragmatic) dominate.
 
 ## Auto-resolve vs user decision
 
@@ -108,7 +110,7 @@ This is what feeds P4, reuse over rebuild.
 1. **Dedupe:** the same underlying issue raised by more than one lens is ONE finding. Credit every lens that raised it, and note that cross-lens agreement is a high-confidence signal.
 2. **Rank:** order all findings by severity, worst first, across every lens. Security findings keep their own severity.
 3. **Resolve conflicts:** when two lenses point opposite directions on one decision, apply the principles with the lens-keyed tiebreakers. A principle that settles it makes a decided item (name the principle). A call reasonable people would still dispute, with no principle to settle it, becomes a user decision.
-4. **Verdict:** the overall verdict is the worst per-lens verdict. Any `BLOCK` (security included) makes the plan `BLOCK`. Else any open user challenge or unsettled taste call makes it `NEEDS-USER-DECISION`. Else any `SHIP-WITH-CHANGES` holds. Else `SHIP`.
+4. **Verdict:** the overall verdict is the worst per-lens verdict, excluding `NOT-APPLICABLE` (that lens found no surface). Any `BLOCK` (security included) makes the plan `BLOCK`. Else any open user challenge or unsettled taste call makes it `NEEDS-USER-DECISION`. Else any `SHIP-WITH-CHANGES` holds. Else `SHIP`.
 
 ## Step 5: The merged report
 
@@ -126,6 +128,7 @@ Lenses: CEO, Design, DevEx, Eng[, Security]   Overall verdict: <verdict>
 - DevEx: <verdict>. <one line>
 - Eng: <verdict>. <one line>
 - Security: <verdict>. <one line>   (only if the pass ran; else "not run: no security surface")
+  (a lens whose scope guard fired reports NOT-APPLICABLE: <reason> and is excluded from the overall verdict)
 
 ### Findings (severity-ranked, deduped)
 | # | Severity | Finding | Lens(es) | Fix |
@@ -146,6 +149,8 @@ Lenses: CEO, Design, DevEx, Eng[, Security]   Overall verdict: <verdict>
 ```
 
 Skip the "Needs your decision" section when there are none.
+
+One more section when the lenses produced non-finding output: `### From the lenses` carries eng's "NOT in scope" and "What already exists" lists and design's follow-up recommendations. Skip it when empty.
 
 ## Step 6: Apply changes on request
 

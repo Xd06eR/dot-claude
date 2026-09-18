@@ -19,7 +19,7 @@ Ground every finding in a concrete target developer (who they are, how many minu
 
 ## Dimensions
 
-### Getting started and time to hello world (usable)
+### Getting started and time to hello world
 
 **What to probe:**
 - can the target developer go from "never heard of this" to "it worked" in one terminal session, under the target time, without leaving the terminal? Look for one-command or one-click installation with no unstated prerequisites (a running Docker daemon, a specific runtime, a paid account)
@@ -47,7 +47,7 @@ Confirm the magical moment is actually designed and its delivery vehicle (hosted
 - which delivery vehicle carries the magical moment left open, each a different build cost
 - any prerequisite the plan assumes the developer already has
 
-### API, CLI, and SDK design (usable, useful)
+### API, CLI, and SDK design
 
 **What to probe:**
 - Is the interface guessable without docs, with consistent grammar across the whole surface?
@@ -77,7 +77,7 @@ Confirm the magical moment is actually designed and its delivery vehicle (hosted
 - dropping a language or endpoint from SDK coverage
 - any reliability contract (retries, idempotency, rate limits) the plan leaves unspecified
 
-### Error messages and debuggability (fights uncertainty)
+### Error messages and debuggability
 
 **What to probe:**
 - Trace three specific error paths in the plan or code and, for each, compare what the developer sees now against what they should see. Every error should carry problem, cause, and fix.
@@ -94,7 +94,7 @@ Confirm the magical moment is actually designed and its delivery vehicle (hosted
 
 **Open-question triggers:** which error tier to target (conversational, coded-with-docs, or structured JSON) when the plan does not say; any error path whose current-versus-intended message the plan leaves undefined.
 
-### Documentation and learning (findable, learn by doing)
+### Documentation and learning
 
 **What to probe:**
 - Can a developer find what they need in under two minutes?
@@ -114,7 +114,7 @@ Confirm the magical moment is actually designed and its delivery vehicle (hosted
 
 **Open-question triggers:** which docs to build first (quick-start examples versus full reference versus architecture guide) when the plan does not choose, since it depends on the primary persona's learning style; the versioning strategy for docs when unstated.
 
-### Upgrade and migration path (credible)
+### Upgrade and migration path
 
 **What to probe:**
 - What breaks on upgrade, and is the blast radius bounded?
@@ -131,7 +131,7 @@ The bar is that upgrades should be boring: the gold standard adds capability gra
 
 **Open-question triggers:** whether to absorb a migration cost now (codemod, compatibility shim) or push it onto every consumer; the deprecation policy and window when the plan is silent.
 
-### Developer environment and tooling (valuable, accessible)
+### Developer environment and tooling
 
 **What to probe:**
 - Does it integrate into the workflows developers already have?
@@ -151,7 +151,7 @@ The bar is that upgrades should be boring: the gold standard adds capability gra
 
 **Open-question triggers:** which platforms, package managers, and CI systems are in scope for the first release when the plan does not bound it; whether types or editor integration are in scope now or deferred.
 
-### Community and ecosystem (findable, desirable)
+### Community and ecosystem
 
 **What to probe:**
 - Is the code open, under a permissive license?
@@ -169,7 +169,7 @@ The bar is that upgrades should be boring: the gold standard adds capability gra
 
 **Open-question triggers:** the license choice when unstated; how much to invest in ecosystem (plugins, contribution tooling, examples) when the plan leaves it open.
 
-### DX measurement and feedback loops (implement, refine)
+### DX measurement and feedback loops
 
 **What to probe:**
 - Is time to hello world instrumented so it can be measured after ship, not just estimated in the plan?
@@ -187,14 +187,15 @@ The bar is that upgrades should be boring: the gold standard adds capability gra
 
 ## Verdict guidance
 
-- Scope guard first: if the plan has no developer-facing surface at all (no API, CLI, SDK, library, platform, or docs), this lens does not apply. Say so plainly, point to an engineering or design review instead, and stop.
+- Scope guard first: if the plan has no developer-facing surface at all (no API, CLI, SDK, library, platform, or docs), this lens does not apply: report the verdict **NOT-APPLICABLE** with the reason and stop.
 - Rate each applicable dimension **solid**, **friction**, or **poor** against what best-in-class looks like for THIS product (Stripe or Vercel tier), not a generic bar: solid = usable without frustration; friction = developers merely tolerate it; poor = developers complain and adoption suffers, and an applicable dimension the plan does not address is poor by default.
 - The gap between the rating and best-in-class is the finding.
-- Evaluate every dimension even for a strategy or spec plan; DX gaps are where adoption breaks down. If a dimension genuinely has no surface in this plan, say "not applicable" and move on rather than skipping it silently.
-- Anchor every rating in evidence: name the persona, the friction point, and the competitor's number. "Getting started: poor because [persona] hits [friction] at step 3, and [competitor] does it in [time]" beats a bare label.
+- Evaluate every dimension even for a strategy or spec plan; DX gaps are where adoption breaks down. If a dimension genuinely has no surface in this plan, mark it "no surface" and move on rather than skipping it silently.
+- Anchor every rating in evidence you can actually produce: the persona, the friction point, and the plan's own targets or the tier table above. A competitor's number counts only when the plan cites it; prior-knowledge numbers are labeled unverifiable or dropped, never presented as fact. "Getting started: poor because [persona] hits [friction] at step 3, against the 2-minute tier" beats a bare label.
 - Weight by journey position: friction in the first five minutes (install, hello world, first error) outranks refinement in later stages, because a developer lost at minute two never reaches them.
 - Ship when every applicable dimension is solid.
 - Friction lands as ship-with-changes: it ships, with the named gaps as the change list.
-- Block, or ship-with-changes, when any dimension is poor with a named adoption cost; a time to hello world over ten minutes is a blocking issue on its own.
+- Block when the poor dimension sits in the first five minutes of the journey (install, hello world, first error); a time to hello world over ten minutes is a blocking issue on its own. Otherwise poor lands as ship-with-changes, with the named adoption cost as the change list.
+- **NEEDS-USER-DECISION:** open questions remain that are decision-shaped (persona choice, coverage cut, platform scope) — a fixable gap rides SHIP-WITH-CHANGES, never the user's desk.
 - Every finding names the violated principle, the concrete cost the developer pays, and the specific plan change that fixes it. The verdict is explicit, and every unresolved decision goes to the user as an open question carrying its cost, never silently defaulted.
 - After build, the plan's DX claims should be verified against the shipped product: does the real time-to-hello-world match the target the plan committed to? Recommend that live check as the follow-up.

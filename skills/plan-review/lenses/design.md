@@ -223,7 +223,7 @@ These are the decisions the plan silently hands to whoever builds it.
 
 ## Verdict guidance
 
-- Scope guard first: if the plan has no UI surface at all (pure backend, API, or infrastructure), design review is not applicable. Say so plainly and stop.
+- Scope guard first: if the plan has no UI surface at all (pure backend, API, or infrastructure), design review is not applicable: report the verdict **NOT-APPLICABLE** with the reason and stop.
 - Rate each applicable dimension **solid** or **unresolved**; when unresolved, state exactly what resolved looks like for THIS plan. The gap is the finding.
 - Ship (design-complete) when every applicable dimension is solid and no hard-rejection slop pattern survives unaddressed. The plan is then ready for implementation and post-build visual QA.
 - Block when any dimension is unresolved with a user-visible consequence, or any instant-fail hard-rejection pattern is present and unaddressed.
@@ -233,3 +233,5 @@ These are the decisions the plan silently hands to whoever builds it.
   - no design system yet points to design-consultation before UI work
   - a genuinely unsettled visual direction points to design-variants to explore concrete options
   - an approved direction ready to build points to design-build
+
+Map the outcome to the wrapper's four verdicts: **SHIP** as above; **SHIP-WITH-CHANGES** when a dimension is unresolved but the gap is fixable at plan level with no user-visible consequence (the change list is the fix); **BLOCK** as above; **NEEDS-USER-DECISION** when open questions remain that are taste calls (typography, visual direction, surface classification) — a fixable gap rides SHIP-WITH-CHANGES, never the user's desk.

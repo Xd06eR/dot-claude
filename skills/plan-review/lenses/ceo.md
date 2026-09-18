@@ -30,7 +30,7 @@ Where the plan's intended ambition is ambiguous, emit the posture choice as an o
 - **Hold scope:** the scope is right. Make it bulletproof. Do not silently reduce or expand.
 - **Reduction:** the plan is overbuilt. Find the minimum viable version that ships the core outcome and cut the rest.
 
-Context defaults for inferring posture: greenfield feature leans expansion; enhancement of an existing system leans selective; bug fix, hotfix, or refactor leans hold; a plan touching more than 15 files leans reduction.
+Context defaults for inferring posture: greenfield feature leans expansion; enhancement of an existing system leans selective; bug fix, hotfix, or refactor leans hold; a plan touching more than 15 files leans reduction (a posture prior — the 8-file complexity smell in Ambition and scope calibration is a separate bar, applied to the plan itself).
 
 An explicit "go big" or "cathedral" signal means expansion; "hold scope but tempt me" or "cherry-pick" means selective.
 
@@ -53,19 +53,6 @@ Genuinely unrelated work (rewrites, multi-quarter migrations) is separate scope,
 **Red flags:** Effort with no articulated outcome; a proxy metric standing in for user value; "nice to have" with no real pain if skipped; a premise the user cannot state in one sentence.
 
 **Open-question triggers:** Plan never states the user or business outcome; no "do nothing" baseline; the problem statement is absent or keeps shifting.
-
-### Existing-code leverage
-
-**What to probe:**
-- Which existing code, flows, or patterns already solve each sub-problem?
-- Can outputs be captured from existing flows instead of building parallel ones?
-- Is the plan rebuilding anything that already exists, and if so why is rebuild better than refactor?
-
-Produces the "what already exists" finding.
-
-**Red flags:** A parallel implementation of a capability already present; rebuild with no stated reason it beats refactor; adjacent working code ignored.
-
-**Open-question triggers:** Plan maps no sub-problem to existing code; rebuild-vs-refactor never justified.
 
 ### Dream-state trajectory
 
@@ -134,17 +121,6 @@ Each accepted expansion or cut is the user's opt-in, never a silent scope change
 
 **Open-question triggers:** Plan names no alternatives or prior art; states no edge or leverage point.
 
-### Taste and consistency calibration
-
-**What to probe:**
-- Does new work match the codebase's best-designed patterns and avoid its known anti-patterns?
-- Is it "engineered enough": neither fragile and hacky nor prematurely abstracted?
-- Explicit over clever, DRY without speculative generality?
-
-**Red flags:** Deviates from established good patterns with no reason; repeats a known anti-pattern; over-engineered or under-engineered.
-
-**Open-question triggers:** A deviation from house style the plan neither names nor justifies.
-
 ### Retrospective and recurring-problem smell
 
 **What to probe:**
@@ -156,151 +132,6 @@ Recurring problem areas are architectural smells, not isolated bugs, and deserve
 **Red flags:** The same area breaking repeatedly; the plan patches a symptom in code that has churned before.
 
 **Open-question triggers:** Plan re-touches a churned area without addressing the underlying architectural smell.
-
-### Architecture
-
-**What to probe:**
-- component boundaries and the dependency graph
-- each new data flow on all four paths (happy, nil, empty, upstream error)
-- state machines including invalid transitions and what prevents them
-- new coupling and whether it is justified
-- scaling (what breaks first at 10x, at 100x?)
-- single points of failure
-- auth boundaries and API surfaces (for each new endpoint or mutation: who can call it, what they get, what they can change)
-- one realistic production failure per new integration (timeout, cascade, corruption, auth) and whether the plan accounts for it
-- rollback posture (revert, feature flag, migration rollback, and how long)
-- **Expansion lens:** what would make this architecture elegant, and what infrastructure would turn it into a platform other features build on?
-
-**Red flags:** Unjustified new coupling; an unmapped single point of failure; no rollback path; a scaling cliff ignored.
-
-**Open-question triggers:** Any of the four data paths, a state transition, or the rollback procedure left unspecified.
-
-### Error and rescue map
-
-**What to probe:**
-- For every codepath that can fail, name what can go wrong and the specific exception class; for each, is it rescued, what is the rescue action, and what does the user see?
-- Every rescued error must retry with backoff, degrade with a user-visible message, or re-raise with added context.
-- For AI or LLM calls, a malformed response, an empty response, hallucinated invalid JSON, and a model refusal are distinct failure modes.
-
-Produces the error-and-rescue registry and the failure-modes registry.
-
-**Red flags:**
-- catch-all handling (rescue StandardError, except Exception, catch Exception) is always a smell: name the specific exceptions
-- log-only rescue with no action
-- swallow-and-continue
-- a failure the user never sees (a silent failure is a critical defect)
-
-A gap is any unrescued error that should be rescued.
-
-**Open-question triggers:** Any failure path with no named exception, no rescue action, or a silent or 500 user outcome. A row that is unrescued, untested, and silent is a critical gap.
-
-### Security and threat model
-
-**What to probe:**
-- new attack surface (endpoints, params, file paths, background jobs)
-- input validation for every new input (nil, empty, wrong type, over-max-length, unicode edges, injection attempts) rejected loudly on failure
-- authorization scoping (can user A reach user B's data by manipulating an ID?)
-- secrets in env vars, not hardcoded, and rotatable
-- new dependency security track record
-- PII, payment, or credential handling consistent with existing patterns
-- injection vectors (SQL, command, template, LLM prompt)
-- audit logging for sensitive operations; per finding: threat, likelihood, impact, and whether the plan mitigates it
-
-**Red flags:** Unvalidated user input; a direct object reference vulnerability; a hardcoded secret; catch-all trust of external data.
-
-**Open-question triggers:** Any new input, endpoint, or data access whose validation, authorization, or audit story the plan omits.
-
-### Data flow and interaction edge cases
-
-**What to probe:**
-- trace each new data flow from input through validation, transform, persist, and output, and at each node the shadow paths (nil, empty, wrong type, too long, exception, timeout, out-of-memory, duplicate key, conflict, locked, stale, partial, encoding); for each new interaction: form double-submit, stale CSRF, submit-during-deploy
-- async navigate-away, timeout, retry-while-in-flight
-- lists at zero results, at 10,000 results, and changing mid-page
-- jobs failing partway, running twice, or backing up for hours
-
-**Red flags:** Happy-path-only handling; an unhandled shadow path; no idempotency on retryable work.
-
-**Open-question triggers:** Any node or interaction whose edge-case handling the plan leaves unspecified.
-
-### Code quality
-
-**What to probe:**
-- Does new code fit the existing structure and patterns, and is any deviation justified?
-- DRY violations, flagged aggressively with file and line references
-- naming for what a thing does, not how
-- over-engineering (an abstraction for a problem that does not exist yet)
-- under-engineering (fragile, happy-path-only, missing defensive checks)
-- any new method branching more than 5 times (propose a refactor)
-
-**Red flags:** Duplicated logic; a speculative abstraction; happy-path fragility; high cyclomatic complexity.
-
-**Open-question triggers:** A pattern deviation or a complex method the plan neither names nor justifies.
-
-### Tests
-
-**What to probe:**
-- Enumerate every new thing (UX flows, data flows, codepaths, async work and jobs, integrations, error and rescue paths).
-- For each, which test type covers it (unit, integration, system, e2e), does a test exist in the plan, and what are the happy-path, failure-path, and edge-case tests?
-- Ambition check: the test that lets you ship at 2am on a Friday, the test a hostile QA engineer writes to break it, and the chaos test.
-
-**Also probe:**
-- test-pyramid shape (many unit, few e2e, not inverted)
-- flakiness risk (time, randomness, external services, ordering)
-- load or stress needs
-- for prompt or LLM changes, which eval suites to run, which cases to add, and which baselines to compare against
-
-**Red flags:** An untested new codepath; an inverted pyramid; tests flaky by construction; no failure-path test.
-
-**Open-question triggers:** Any enumerated new thing with no test specified.
-
-### Performance
-
-**What to probe:**
-- N+1 queries (an includes or preload on each new association traversal)
-- the maximum production size of each new data structure
-- an index for each new query
-- caching for each expensive computation or external call
-- background job worst-case payload, runtime, and retry behavior
-- the top 3 slowest new codepaths and their estimated p99 latency
-- connection-pool pressure on DB, Redis, and HTTP
-
-**Red flags:** An N+1; an unbounded structure or query; a missing index; an uncached hot external call.
-
-**Open-question triggers:** Any new query, structure, or job whose cost at production scale the plan does not address.
-
-### Observability and debuggability
-
-**What to probe:**
-- structured log lines at entry, exit, and each significant branch of every new codepath
-- the metric that tells you it is working and the one that tells you it is broken
-- trace-id propagation across new cross-service or cross-job flows
-- new alerts
-- the dashboard panels you want on day 1
-- whether a bug reported 3 weeks post-ship can be reconstructed from logs alone
-- admin tooling for new operational tasks
-- a runbook per new failure mode
-- **Expansion lens:** what observability would make this feature a joy to operate?
-
-**Red flags:** A new codepath with no logs, metrics, or traces (observability is scope, not an afterthought); no way to tell broken from working.
-
-**Open-question triggers:** Any new failure mode with no signal, alert, or runbook.
-
-### Deployment and rollout
-
-**What to probe:**
-- migration safety (backward-compatible, zero-downtime, table locks)
-- anything that should sit behind a feature flag
-- rollout order (migrate first, deploy second)
-- an explicit step-by-step rollback
-- the deploy-window risk while old and new code run together
-- staging parity
-- a post-deploy verification checklist for the first 5 minutes and the first hour
-- smoke tests to run immediately post-deploy; deployments are not atomic: plan for partial states
-- **Expansion lens:** what deploy infrastructure would make shipping this feature routine?
-
-**Red flags:** A locking migration; no rollback steps; no flag on a risky change; an unconsidered mixed-version window.
-
-**Open-question triggers:** Any migration or deploy step whose safety or rollback the plan omits.
 
 ### Long-term trajectory and tech debt
 
@@ -317,27 +148,9 @@ A gap is any unrescued error that should be rescued.
 
 **Open-question triggers:** A low-reversibility decision the plan does not flag as such; undocumented load-bearing complexity.
 
-### Design and UX (skip if no UI scope)
-
-**What to probe:**
-- plan-level design intentionality, not a pixel audit. Information architecture (what the user sees first, second, third: hierarchy as respect for their time)
-- interaction-state coverage per feature (loading, empty, error, success, partial)
-- the user journey's emotional arc
-- AI-slop risk (generic UI patterns)
-- alignment to the stated design system
-- responsive intention (mobile designed, not an afterthought)
-- accessibility basics (keyboard navigation, screen readers, contrast, touch targets)
-- **Expansion lens:** what would make this UI feel inevitable, and what 30-minute touches would make users think "they thought of that"?
-
-Cut any element that does not earn its pixels.
-
-**Red flags:** Empty and error states unhandled (they are features, not afterthoughts); generic slop; mobile as an afterthought; accessibility ignored.
-
-**Open-question triggers:** Any feature whose loading, empty, error, and success states the plan leaves unspecified.
-
 ## Verdict guidance
 
-**Ship** when the premise is the right problem, scope is calibrated to the moment (neither gold-plated nor shortcut), all four data paths and every failure mode are named with visible outcomes, security, observability, and rollback are treated as scope rather than afterthoughts, the reversibility of every one-way door is acknowledged, and every deferred item is written down. Zero silent failures.
+**Ship** when the premise is the right problem, scope is calibrated to the moment (neither gold-plated nor shortcut), every data path and every failure mode is named with visible outcomes, security, observability, and rollback are treated as scope rather than afterthoughts, the reversibility of every one-way door is acknowledged, and every deferred item is written down. Zero silent failures.
 
 **Block** on any silent failure (an unrescued error the user never sees), an unmitigated high-likelihood and high-impact security finding, a one-way door taken without acknowledgment, a missing rollback path on a risky deploy, or a premise that chases a proxy instead of the real outcome. These are critical gaps.
 
@@ -348,3 +161,5 @@ Cut any element that does not earn its pixels.
 - any point where an independent second opinion disagrees with a review finding
 
 The user holds context the reviewer lacks (domain, timing, relationships, taste), so a strong recommendation is a recommendation, not a decision.
+
+Map the outcome to the wrapper's four verdicts: **SHIP** when the bar above holds; **SHIP-WITH-CHANGES** when the plan is sound but gaps fixable at plan level remain (the change list is the fixes); **BLOCK** on any Block condition above; **NEEDS-USER-DECISION** on any user-decision trigger above — a fixable gap rides SHIP-WITH-CHANGES, never the user's desk.
