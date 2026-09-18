@@ -9,7 +9,7 @@ Execute build briefs: one fresh builder per feature, review in the main context,
 
 ## Setup
 
-No feature named: direct mode (below). Otherwise the invocation names one or more features (`all` means every feature whose Built is `☐` in `docs/build/INDEX.md`), built sequentially in the INDEX's dependency order. A named feature with no brief is an error: `/build-brief` has not run. Every section below runs once per feature.
+No feature named: direct mode (below). Otherwise the invocation names one or more features (`all` means every feature whose Built is `☐` in `docs/build/INDEX.md`), built sequentially in the INDEX's dependency order. A named feature with no brief is an error: `build-brief` has not run. Every section below runs once per feature.
 
 - Read `docs/build/<feature>.md` — the requirements source. Note its Global constraints and each component's Interfaces block.
 - The ledger is `docs/build/<feature>.ledger.md`. Components with a `complete` line are DONE: resume at the first without one. A component whose last line is a fix round is mid-loop: resume the loop at the next round. Create the ledger when it is absent.
@@ -35,7 +35,7 @@ login-ui: complete (1 parked)
 
 ## Direct mode
 
-No brief, no campaign: the work is the settled design itself. If it cannot be built in one context, stop: it needs `/plan-from-design` and a brief.
+No brief, no campaign: the work is the settled design itself. If it cannot be built in one context, stop: it needs `plan-from-design` and a brief.
 
 Build it here: failing test first (`tdd`), minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`code-review` or a fresh reviewer), output the exact commit command for the user to run, and report any ruling you made — the `Ruling:` discipline applies at any size.
 

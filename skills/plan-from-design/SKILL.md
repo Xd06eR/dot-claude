@@ -5,7 +5,7 @@ argument-hint: "[design docs dir or files] [feature]"
 origin: custom + mattpocock + superpowers
 ---
 
-Produce one spec + implementation-plan pair per component, emitted as files `/build-brief` later consumes.
+Produce one spec + implementation-plan pair per component, emitted as files `build-brief` later consumes.
 
 ## Input
 
@@ -133,4 +133,4 @@ graph LR
 
 ## Gate
 
-Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, advance the feature row in `TODO.md` to the chosen next step (review the plan when an independent pass is chosen, build when declined) and output the exact commit command covering it and the new `docs/plan/` content. `/build-brief` follows when review passes or is declined.
+Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, advance the feature row in `TODO.md` to the chosen next step (review the plan when an independent pass is chosen, build when declined) and output the exact commit command covering it and the new `docs/plan/` content. `build-brief` follows when review passes or is declined.

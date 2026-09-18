@@ -26,7 +26,7 @@ If a named component has no spec or plan, stop and say so: Plan has not produced
 One brief per feature, covering every component. The shape, on a small auth feature (one section per component, in map order; auth-api shown):
 
 ```markdown
-Executed by `/build-feature auth-flow`. This document is the requirements source; progress lives in `docs/build/auth-flow.ledger.md`.
+Executed by `build-feature auth-flow`. This document is the requirements source; progress lives in `docs/build/auth-flow.ledger.md`.
 
 # auth-flow — build brief
 
@@ -83,4 +83,4 @@ Build features in dependency order.
 
 ## Gate
 
-Print each feature's component map + blocking edges for review, then quiz the user: does the granularity feel right (too coarse / too fine), are the blocking edges correct (each component gated only by what genuinely blocks it), should any components be merged or split. Iterate until the user approves, then output the exact commit command covering the new `docs/build/` content. Do not start the build; point them at `/build-feature`.
+Print each feature's component map + blocking edges for review, then quiz the user: does the granularity feel right (too coarse / too fine), are the blocking edges correct (each component gated only by what genuinely blocks it), should any components be merged or split. Iterate until the user approves, then output the exact commit command covering the new `docs/build/` content. Do not start the build; point them at `build-feature`.
