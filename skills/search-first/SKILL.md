@@ -160,8 +160,8 @@ Result: 1 package + 1 schema file, no custom validation logic
 
 ## Anti-patterns
 
-- **Jumping to code**: Writing a utility without checking if one exists
-- **Ignoring MCP**: Not checking if an MCP server already provides the capability
-- **Silent skipping**: Reporting "nothing found" when a search channel was unavailable
-- **Over-customizing**: Wrapping a library so heavily it loses its benefits
-- **Dependency bloat**: Installing a massive package for one small feature
+- **Jumping to code:** Writing a utility without checking if one exists
+- **Ignoring MCP:** Not checking if an MCP server already provides the capability
+- **Silent skipping:** Reporting "nothing found" when a search channel was unavailable
+- **Over-customizing:** Wrapping a library so heavily it loses its benefits
+- **Dependency bloat:** Installing a massive package for one small feature

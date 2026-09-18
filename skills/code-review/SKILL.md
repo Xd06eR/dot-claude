@@ -13,7 +13,7 @@ The invocation may name review aspects to run; unnamed, run all applicable.
    - Check git status to identify changed files
    - Read `docs/build/implementation-notes.md` if it exists: build-phase deviations, tradeoffs, and parked findings inform where the review looks hardest
    - Read the invocation for named review aspects
-   - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent — fail here, not inside the agents
+   - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent. Fail here, not inside the agents
    - Run the history probe in the main context, no dispatch: read the touched files' recent history (`git log`, `git blame` where the diff edits loaded areas) and prior merged-PR comments on them (`gh pr list --state merged`, `gh pr view --comments`). A change that contradicts or reintroduces a prior fix, or repeats something a prior review already flagged, is a finding like any other. Greenfield files and no prior PRs end the probe.
 
 2. **Available Review Aspects:**
@@ -101,7 +101,7 @@ Each finding-producing agent returns findings independently; without this step, 
 
 ## `code-simplifier` gating
 
-`code-simplifier` runs LAST, only after the finding-producing agents finish and the review passes (no CRITICAL and no HIGH), and only when the invocation names `simplify` — never under `all`. It applies simplifications in place; it does not produce findings.
+`code-simplifier` runs LAST, only after the finding-producing agents finish and the review passes (no CRITICAL and no HIGH), and only when the invocation names `simplify` (never under `all`). It applies simplifications in place; it does not produce findings.
 
 ## Ruled out (do not do)
 

@@ -98,7 +98,7 @@ If every variant failed, fall back to writing them yourself sequentially and say
 
 ## Step 4: Build the comparison board
 
-Write one board page next to the variants that embeds them side by side. Discover the variant files rather than hardcoding a list. Re-derive the path first — a fresh shell will not have Step 3's variables:
+Write one board page next to the variants that embeds them side by side. Discover the variant files rather than hardcoding a list. Re-derive the path first (a fresh shell will not have Step 3's variables):
 
 ```bash
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
