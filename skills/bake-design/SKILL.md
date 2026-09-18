@@ -40,7 +40,7 @@ The workflow is mechanical on purpose: each gate catches a failure the other ste
 - The old ADR's index row is updated to the new status.
 - The new decision's entry is retired as usual.
 
-Canonical then answers "what now" and the ADR chain answers "what changed and why", with neither polluted by the other: canonical never cites ADR numbers — the design→ADR map lives in the index's `Canonical touched` column.
+Canonical then answers "what now" and the ADR chain answers "what changed and why", with neither polluted by the other: canonical never cites ADR numbers: the design→ADR map lives in the index's `Canonical touched` column.
 
 ## Drop — when an entry is abandoned
 
