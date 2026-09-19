@@ -114,7 +114,7 @@ Before marking code complete:
 3. Review code quality checklist
 4. Run relevant tests
 5. Verify the new-code coverage baseline (per [testing.md](testing.md))
-6. Dispatch the relevant review skill or agent for domain-specific review
+6. Run `code-review` for the general pass; dispatch the relevant specialist agent for domain-specific review
 ```
 
 ## Common issues to catch

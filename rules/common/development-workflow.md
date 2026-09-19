@@ -82,7 +82,7 @@ Mandatory once the reuse ladder above lands on a new capability or dependency:
 
 ## Pull request workflow
 
-When creating PRs:
+When creating PRs, route through `ship`: it owns the readiness gates, the PR body, and the exact command set. In brief:
 
 1. Analyze full commit history (not just latest commit).
 2. Use `git diff [base-branch]...HEAD` to see all changes.

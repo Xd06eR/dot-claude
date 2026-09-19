@@ -52,9 +52,9 @@ paths:
 
 ## Test-Driven Development
 
-Workflow: failing test (RED) → minimal implementation (GREEN) → refactor → verify coverage meets target.
+Workflow: failing test (RED) → minimal implementation (GREEN) → verify coverage meets target.
 
-See the `tdd` skill for the full red-green-refactor workflow and the house extras (seams, tautological-test anti-pattern).
+See the `tdd` skill for the red → green loop and the house extras (seams, the tautological-test anti-pattern); refactoring lands at review.
 
 ## Test types
 

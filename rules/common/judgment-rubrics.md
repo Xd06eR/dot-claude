@@ -22,7 +22,7 @@ Done means ALL of:
 
 Saying "should work", or only shallow evidence for a behavioral claim ("it compiles"), means not done.
 
-**Loop gate:** an unattended loop's "done" is only as good as its gate. The gate must fail the work mechanically (tests, type-checks, builds, schema validation), and the loop needs a hard stop (budget, iteration, or time cap). A verifier with an opinion is not a gate.
+**Loop gate:** an unattended loop's "done" is only as good as its gate. The gate must fail the work mechanically (tests, type-checks, builds, schema validation), and the loop needs a hard stop (budget, iteration, or time cap). A verifier with an opinion is not a gate. Design or review a loop per the `loop-design-check` skill.
 
 ## 3. Wrong direction or wrong execution
 
@@ -36,7 +36,7 @@ Estimate a non-trivial edit's rough size before starting. On any two of these, s
 
 ## 4. Quality floor
 
-Before any work ships (evidence per CLAUDE.md's Review phase, read by a context that did not write it):
+Before any work ships (evidence per CLAUDE.md's Review phase, read by a context that did not write it; the red-flag table lives in the `verification-before-completion` skill):
 
 - A runnable check passed this session, output shown (fresh-context read-back for prose/config)
 - No debug leftovers
