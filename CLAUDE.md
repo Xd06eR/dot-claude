@@ -118,11 +118,9 @@ Routing look-alikes — when two could fire, the difference decides:
 
 The `playwright` and `chrome-devtools-mcp` fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (`claude plugin enable <name>@claude-plugins-official`, effective next session) instead of silently substituting weaker tooling.
 
-## Memory
+## Lesson capture
 
-- **Project-only fact** (session learnings, corrections, repo-specific decisions): write to `~/.claude/projects/<path>/memory/`, one fact per file, with a `MEMORY.md` index line.
-- **Lesson write-back:** after a pitfall, correction, or rejected proposal, write it to memory in the same session, with the why and the how-to-apply. Rejected proposals have no other trace; without the memory they get re-proposed.
-- **Cross-project fact:** when the same fact has been written to 2+ project memories, or the user directs it, it graduates to CLAUDE.md or a rules file. Harness files already load in every project, so no memory sidecar is used.
+- **Proposal gate:** after a pitfall or correction, propose the rule it earns in the same session; it lands in the project's CLAUDE.md only with the user's acceptance and only if every session needs it.
 
 ## Git
 
