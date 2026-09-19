@@ -134,6 +134,6 @@ The `playwright` and `chrome-devtools-mcp` fallbacks are disabled for session-st
 ## Security
 
 - Never commit secrets, API keys, or credentials.
-- Never access sensitive directories or credential stores (`~/.ssh`, `~/.aws`, `~/.config/gh`).
+- Never access sensitive directories, credential stores, or secret files (`~/.ssh`, `~/.aws`, `~/.config/gh`, `**/.env*`).
 
 @RTK.md
