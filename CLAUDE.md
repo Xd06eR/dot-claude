@@ -110,13 +110,9 @@ Routing look-alikes — when two could fire, the difference decides:
 
 ## Browsing
 
-| Task | Primary | Fallback |
-|---|---|---|
-| General web browsing (articles, research) | WebFetch/WebSearch | playwright MCP (JS-heavy pages WebFetch cannot render) |
-| Page scraping / data extraction | WebFetch | playwright MCP (interactive browser driving) |
-| Performance / a11y audit | `npx lighthouse` via Bash | chrome-devtools MCP (debugging, live inspection, full audits) |
+WebFetch/WebSearch for general web browsing and page scraping; `npx lighthouse` via Bash for performance and a11y audits.
 
-The `playwright` and `chrome-devtools-mcp` fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (`claude plugin enable <name>@claude-plugins-official`, effective next session) instead of silently substituting weaker tooling.
+The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser driving) and `chrome-devtools-mcp` (debugging, live inspection, full audits) fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (effective next session) instead of silently substituting weaker tooling.
 
 ## Lesson capture
 
