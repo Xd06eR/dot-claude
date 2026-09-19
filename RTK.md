@@ -14,6 +14,7 @@ rtk proxy <cmd>       # Execute raw command without filtering (for debugging)
 ## Hook-based usage
 
 All other commands are automatically rewritten by the Claude Code hook.
+
 Example: `git status` → `rtk git status` (transparent, 0 tokens overhead)
 
 Complex shell pipelines (chained `find`/`grep`/`sort`/`sed`) can come back garbled through the hook rewrite: use the dedicated Grep/Glob tools for multi-step filtering instead of routed shell chains.
