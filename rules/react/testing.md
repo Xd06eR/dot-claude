@@ -1,15 +1,13 @@
 ---
 paths:
-  - "**/*.test.ts"
   - "**/*.test.tsx"
-  - "**/*.test.js"
   - "**/*.test.jsx"
-  - "**/*.spec.ts"
   - "**/*.spec.tsx"
-  - "**/*.spec.js"
   - "**/*.spec.jsx"
   - "**/__tests__/**/*.ts"
   - "**/__tests__/**/*.tsx"
+  - "**/__tests__/**/*.js"
+  - "**/__tests__/**/*.jsx"
 ---
 
 # React Testing

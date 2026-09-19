@@ -106,9 +106,7 @@ For complex forms (multi-step, dynamic field arrays, cross-field validation), us
 | RSC fetch (`await` in Server Component) | Per-request data in Next.js App Router, no client-side cache needed |
 | TanStack Query | Client-side cache, mutations, optimistic updates, polling |
 | SWR | Lightweight cache + revalidation, simpler than TanStack Query |
-| `fetch` in `useEffect` | Avoid — race conditions, no cache, no retry. Only acceptable for one-off fire-and-forget |
-
-Never fetch in a `useEffect` when a real cache library is available — they handle deduping, cache invalidation, error retry, and Suspense integration.
+| `fetch` in `useEffect` | Avoid — race conditions; no cache, dedup, invalidation, retry, or Suspense integration. Acceptable only for one-off fire-and-forget |
 
 ## Compound components
 

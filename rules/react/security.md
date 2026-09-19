@@ -161,7 +161,7 @@ When using `renderToString` or `renderToPipeableStream`:
 
 ## Third-party components
 
-- Dependency vetting per [common/security.md](../common/security.md) (Review checklist); UI-library checks below
+- Dependency vetting per [common/security.md](../common/security.md#mandatory-security-checks); UI-library checks below
 - Check that the library does not internally use `dangerouslySetInnerHTML` on its input (e.g., rich text editors)
 - Review changelogs before major upgrades
 - Be wary of components that accept HTML strings as props

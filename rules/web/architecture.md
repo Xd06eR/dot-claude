@@ -85,7 +85,7 @@ Do not default to dark mode automatically. Choose the visual direction the produ
 - [ ] Would this look believable in a real product screenshot?
 - [ ] If it supports both themes, do both light and dark feel intentional?
 
-For full design work, use the design skills: `design-consultation` (system from scratch), `design-variants` (explore directions), `design-build` (production UI), `design-taste-frontend` (visual QA).
+For full design work, use the design skills: `design-consultation` (system from scratch), `design-variants` (explore directions), `design-build` (production UI), `design-taste-frontend` (direction-inferred, taste-gated builds).
 
 ## Performance
 

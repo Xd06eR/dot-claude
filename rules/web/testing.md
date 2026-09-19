@@ -1,13 +1,11 @@
 ---
 paths:
-  - "**/*.test.ts"
   - "**/*.test.tsx"
-  - "**/*.test.js"
   - "**/*.test.jsx"
-  - "**/*.spec.ts"
   - "**/*.spec.tsx"
-  - "**/*.spec.js"
   - "**/*.spec.jsx"
+  - "**/e2e/**/*.ts"
+  - "**/e2e/**/*.js"
 ---
 
 # Web Testing Rules
@@ -33,7 +31,7 @@ paths:
 ### 3. Performance
 
 - Run Lighthouse or equivalent against key routes
-- CWV targets live in [architecture.md](architecture.md#core-web-vitals-targets) — read before perf checks (not auto-loaded on test files)
+- CWV targets live in [architecture.md](architecture.md#core-web-vitals-targets) — read before perf checks
 - INP is field-only — verify via CrUX/RUM; TBT is the lab proxy
 
 ### 4. Cross-browser

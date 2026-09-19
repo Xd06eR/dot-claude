@@ -48,7 +48,7 @@ paths:
 
 ## Language and prose
 
-- **US English everywhere:** identifiers, comments, docs, commit messages, e.g. `normalize`, `color`, `behavior` (-ize / -or).
+- **US English spelling:** -ize/-or forms (`normalize`, `color`, `behavior`).
 - **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas; on a non-obvious design choice, one line on *why* it was made. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
 - **Simplicity:** plain over clever unless cleverness is load-bearing.
 - **Formatting:** the formatter owns code syntax. Atomicity still applies to comments, docstrings, and string literals; keep every token whole.
@@ -61,7 +61,7 @@ Prefer immutable patterns by default — create new objects rather than mutating
 
 MANY SMALL FILES > FEW LARGE FILES:
 - High cohesion, low coupling
-- 200-400 lines typical, 800 max
+- 200-400 lines typical
 - Extract utilities from large modules
 - Organize by feature/domain, not by type
 
