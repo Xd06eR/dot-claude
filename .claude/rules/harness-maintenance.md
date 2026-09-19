@@ -23,13 +23,13 @@ Print the diff of changed files in your reply when the batch closes.
 - Path form: relative markdown links inside the rules tree (the injection header carries the referrer's absolute path, so resolution never depends on the session cwd, and links render as clickable navigation on GitHub and in IDE markdown preview); absolute `~/.claude/...` in skill, command, and agent bodies (invocation may surface only a symbolic path; a subagent dispatched inside a project repo resolves cwd-relative paths against the project root, where harness files do not exist), in shell commands and write destinations, and when naming the harness root.
 - Component pointers in bodies and the CLAUDE.md catalog mirror the component's invocation mode: slash prefix = user-invoked; bare name = model-invoked.
 - Standardize on **main agent** for the orchestrating agent in all harness files; its dispatched workers are subagents; use no other name for it.
-- Headings: sentence case (first word plus proper nouns and coined phrases only, e.g. "Act vs Ask"); no trailing punctuation.
+- Headings: sentence case (first word plus proper nouns and coined phrases only, e.g. "Act vs Ask"; H1 document titles exempt); no trailing punctuation.
 - Bullet labels state the rule's content, never a coined concept: the label is recall and scannability, not a name to decode.
 - No model names or tier assumptions; the injection tells the agent what its harness offers. Write no environment conditionals. Functional `model:` frontmatter in `agents/*.md` is exempt.
 
 ## Lesson capture
 
-- Harness lessons follow CLAUDE.md's proposal gate; the accepted rule lands in the owning harness file (ask-first, or same-session for a standing convention or a rejected tool call).
+- Harness lessons follow the proposal gate in CLAUDE.md's Lesson capture section; the accepted rule lands in the owning harness file (ask-first, or same-session for a standing convention or a rejected tool call).
 
 ## Audit execution
 
@@ -40,12 +40,12 @@ Print the diff of changed files in your reply when the batch closes.
 
 ## Size budget
 
-Any single unscoped rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~40 KB total, triggers a trim-or-scope proposal with measured sizes. The total measures unscoped files only: rules files with no `paths:` frontmatter, wherever they live. Scoped and project-scope files are budgeted against their loading frequency, not this cap. Every unscoped KB is paid every session forever. Agents: beyond ~200 lines or descriptions past ~50 words flag for review, not reflexive action — a self-contained brief such as security-auditor may exceed the line budget when its self-containment is load-bearing.
+Any single unscoped rules file beyond ~8 KB, or the unscoped (always-loaded) set beyond ~40 KB total, triggers a trim-or-scope proposal with measured sizes. The total measures unscoped files only: rules files with no `paths:` frontmatter, wherever they live. Scoped and project-scope files are budgeted against their loading frequency, not this cap. Every unscoped KB is paid every session forever. Agents: beyond ~200 lines or descriptions past the § Skills, commands, and agents budget flag for review, not reflexive action — a self-contained brief such as security-auditor may exceed the line budget when its self-containment is load-bearing.
 
 ## CLAUDE.md and instruction docs
 
 - CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
-- The CLAUDE.md catalog is routing-only: the fixed openings and the user-invoked set, no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
+- The CLAUDE.md catalog (the fixed openings and the user-invoked set) is routing-only: no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
 
 ## Rules
 
@@ -65,7 +65,7 @@ Any single unscoped rules file beyond ~8 KB, or the unscoped (always-loaded) set
 
 ## Extraction and curation
 
-- **Extraction pipeline:** read the source and justify what to take → extract verbatim → remove the source's bad parts → enhance what survives → adapt to this harness's conventions and workflows → verify against the sources that nothing useful was lost → final acceptance audit (main context + a fresh subagent in parallel, reconciled; per `rules/common/dispatch-protocol.md` §5) → output the commit command for the user. Extraction is not a rewrite; relocate useful content, never drop it silently.
+- **Extraction pipeline:** read the source and justify what to take → extract verbatim → remove the source's bad parts → enhance what survives → adapt to this harness's conventions and workflows → verify against the sources that nothing useful was lost → final acceptance audit (main context + a fresh subagent in parallel, reconciled; per [dispatch-protocol.md](../../rules/common/dispatch-protocol.md) §5) → output the commit command for the user. Extraction is not a rewrite; relocate useful content, never drop it silently.
 - **Layer check before "covered":** vocabulary coverage (a checklist names the behavior) is not stance coverage (a bar weighs the behavior); a "covered elsewhere" verdict that only matched vocabulary leaves the stance with no seat.
 - **Tone is pressure for a rule:** when a source carries an aggressive stance, extract the rule the tone enforces, in rule form; the tone itself drops.
 - **Keep/drop:** judge components by purpose and workflow fit, never by invocation count: frequency is supporting evidence only. Overlapping components merge, never accumulate. Every verdict is user-gated; a later explicit decision supersedes an earlier one.
