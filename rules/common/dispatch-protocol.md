@@ -46,7 +46,7 @@ Report contract, binding on every subagent:
 
 ## 4. Attempts, escalation, and stopping
 
-- **Diagnose before retrying.** An input error (wrong path, stale premise, missing context) is not a capability ceiling: fix it and rerun. Every retry must change something — the input, a section 2 lever, or the method itself; two failed methods on one subtask means switch strategy or ask the user (signals in `rules/common/judgment-rubrics.md` rubrics 1 and 3).
+- **Diagnose before retrying.** An input error (wrong path, stale premise, missing context) is not a capability ceiling: fix it and rerun. Every retry must change something — the input, a section 2 lever, or the method itself; two failed methods on one subtask means switch strategy or ask the user (signals in [judgment-rubrics.md](judgment-rubrics.md) rubrics 1 and 3).
 - **De-escalate:** once a hard subtask is solved, write the recipe (exact steps, diff pattern, or checklist) and hand batch application to a minimal-effort dispatch.
 
 ## 5. No self-verification

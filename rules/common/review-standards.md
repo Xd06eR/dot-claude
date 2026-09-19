@@ -79,7 +79,7 @@ Before marking code complete:
 - [ ] No hardcoded thresholds, delays, or limits (use named constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
-- [ ] Test coverage meets the new-code baseline (per testing.md)
+- [ ] Test coverage meets the new-code baseline (per [testing.md](testing.md))
 
 ## Security review triggers
 
@@ -113,7 +113,7 @@ Before marking code complete:
 2. Check security checklist first
 3. Review code quality checklist
 4. Run relevant tests
-5. Verify the new-code coverage baseline (per testing.md)
+5. Verify the new-code coverage baseline (per [testing.md](testing.md))
 6. Dispatch the relevant review skill or agent for domain-specific review
 ```
 
@@ -121,7 +121,7 @@ Before marking code complete:
 
 ### Security
 
-The `security.md` mandatory checks own this list (same scope, always co-loaded).
+The [security.md](security.md) mandatory checks own this list (same scope, always co-loaded).
 
 ### Performance
 

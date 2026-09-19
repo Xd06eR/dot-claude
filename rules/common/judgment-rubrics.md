@@ -4,7 +4,7 @@ Decision thresholds, executed mechanically. Scope limit: they compensate for exe
 
 ## 1. When to escalate
 
-Escalate (levers in `rules/common/dispatch-protocol.md` §2, stopping rules in §4) when ANY of:
+Escalate (levers in [dispatch-protocol.md](dispatch-protocol.md) §2, stopping rules in §4) when ANY of:
 
 - The task is a judgment call with no checkable criterion (architecture, API shape, naming)
 - Correct reasoning needs more interdependent code than you can trace in your context
