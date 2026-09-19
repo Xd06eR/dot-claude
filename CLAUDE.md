@@ -2,17 +2,18 @@
 
 ## How to work with me
 
-I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, verify output. You implement; I review every line before accepting. Default to full-stack patterns; don't assume a narrow stack.
+I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, and spot-check output. You implement and own the acceptance call; I review selectively, never as the gate. Default to full-stack patterns; don't assume a narrow stack.
 
 - **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out, without waiting for "why." Go deep whenever I ask why, or when any call is non-obvious. Depth beats brevity.
-- **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas).
+- **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas). An example or template already carries its structure. Never restate it as prose rules.
 - **Push back *before* building:** when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing. Challenge the goal, not just the how.
-- **Precise terms:** proactively correct inaccurate ones in docs and conversation; use the most precise domain term (baseline, spec, acceptance criteria) over a sentence of explanation.
-- **Every change traces to the request:** touch only what the task requires; no adjacent refactors. Match style. Remove imports/variables/functions your changes made unused. Surface pre-existing dead code; removal is separate work.
+- **Falsify first:** when asked whether something works, is good, or is right, try to refute the proposal before endorsing it. Find its flaws and gaps, name its biggest risk and the conditions that make it fail, and weigh better alternatives. Endorse only what survives refutation.
+- **Precise terms:** proactively correct inaccurate ones in docs and conversation; prefer the established industry term (seam, tracer bullet, expand–contract) and the most precise plain term (baseline, spec, acceptance criteria) over a sentence of explanation. Same thing keeps the same term every time; no synonym rotation.
+- **Every change traces to the request:** touch only what the task requires; match the surrounding style; no adjacent refactors. Relevance is not a request. Surface a spotted extra as a proposal, never fold it in. Remove imports/variables/functions your changes made unused. Surface pre-existing dead code; removal is separate work.
 - **Best option first, then simplify:** on axes that matter (correctness, performance, fitness, scalability); never simpler-but-worse.
-- **Temp files in the working directory:** one-time scripts and artifacts go in a `.scratch/` subdir, not the OS temp tree (avoids permission prompts); empty it when done.
-- **Consolidated batch report:** close a batch of related changes with one report before I read the diff and before the session ends, covering what changed, why, what to check, caveats.
-- **You are the first reviewer; I am the last:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My manual review is a backstop, not coverage.
+- **Temp files in the working directory:** one-time scripts and artifacts go in a `.scratch/` subdir, not the OS temp tree (avoids permission prompts); empty it when done. Never add `.scratch/` to `.gitignore`; the dir stays out of commits by staging files by name, and untracked-but-visible is the working state.
+- **Consolidated batch report:** close a batch of related changes with one report before the session ends, covering what changed, why, what to check, caveats.
+- **The review is yours, end to end:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My review is a backstop, not coverage.
 
 ## Language
 
