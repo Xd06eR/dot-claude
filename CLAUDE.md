@@ -44,9 +44,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 ## Workflow — 4-phase
 
-You drive every phase and produce all artifacts. The user steers.
-
-Propose `/plan-from-design` at Design→Plan and `/build-brief` at Plan→Build; between them, iterate on the artifacts within Plan.
+You drive every phase and iterate within it before moving on. The user steers.
 
 1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
    - **Decompose into deep modules:** break into independent, low-coupling components and design for replaceability. A deep module has a narrow interface hiding rich implementation. Shallow modules are easy to build but hard to manage; agents lose track of them on large projects.
@@ -54,22 +52,25 @@ Propose `/plan-from-design` at Design→Plan and `/build-brief` at Plan→Build;
    - **Interrogate ambiguity:** identify unclear spec parts, list open questions, and propose multiple interpretations before proceeding; never guess.
    - **Surface blind spots:** beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see; resolve each before planning.
    - **Verifiable goals:** transform tasks into verifiable goals with specifically stated completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
-   - Phase artifacts: CONTEXT.md (cross-session design map + domain glossary) + OPEN-QUESTIONS.md (durable ambiguity log).
-2. **Plan:** turn the design into the artifacts below. Use Plan Mode; exit only when every step has a check.
-   - spec docs (`<component>-spec.md`): what + why + success criteria
-   - implementation plan (`<component>-plan.md`): technical approach + numbered checklist of decomposed steps as `[Step] → verify: [check]`, decisions likely to change listed first; name dependencies, risks, files/components
-   - build brief: produced by `/build-brief` from a feature's specs + plans; its components are built in dependency order, and Review starts once every feature is built
-3. **Build:** code against the checklist. **One concern per prompt, tight diffs.** Catch scope creep → stop and slice smaller.
+2. **Plan:** turn the design into per-component specs and executable plans. Use Plan Mode; exit only when every step has a check and no design decision is left to the implementer.
+   - **Distill, never invent:** every plan decision traces to the design; a gap is flagged, never filled by the planner.
+   - **Ground the boundary on the code, not the docs:** what exists in code is reused or extended; what is absent is this build. A doc-vs-code mismatch is a finding, never a planning basis.
+3. **Build:** turn the settled design into working code. **One concern per change, tight diffs.** Catch scope creep → stop and slice smaller.
    - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
    - **TDD red-green-refactor:** refactoring only while green; ship a working version before polishing.
    - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
-   - **Subagents carry residue work:** dispatch only when the content is residue (per `rules/common/dispatch-protocol.md`); each implements one independent component with lint + format + type-check + tests, verifies before returning; you integrate.
-   - **Log implementation notes:** append to `implementation-notes.md` as you build. Entries cover ambiguous-spec decisions, deviations and why (default to the conservative option), tradeoffs (alternatives considered), and open questions to confirm.
-4. **Review:** check the diff against the checklist and the acceptance criteria; show evidence (test output, return value). Can't verify → don't ship.
+   - **Subagents carry residue work:** dispatch only when the content is residue (per `~/.claude/rules/common/dispatch-protocol.md`); each implements one feature with lint + format + type-check + tests, verifies before returning; you integrate.
+4. **Review:** check the diff against the success criteria; show evidence (test output, return value). Can't verify → don't ship.
    - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
-   - **Never accept your own work:** acceptance evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
-   - **Fix the whole, not just the flagged:** audit against its acceptance criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
+   - **Never accept your own work:** the acceptance call is yours; its evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
+   - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
    - **Quiz before ship:** ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
+
+The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy.
+
+Any skill exploring a codebase area or producing domain-facing text reads `CONTEXT.md` for the mental model and uses its vocabulary, and respects ADRs in the area; absence is silent, and the writer skills create lazily.
+
+A project adopts this workflow's document set by running `/setup-workflow` once.
 
 ## Doc content and structure
 
@@ -81,7 +82,7 @@ How to write and review durable text, for any reader.
 - **Attachment is meaning:** indent sub-items under `- ` (pure indent renders as a joined paragraph, losing the subordination); a blank line between a list item and its sub-items turns the list loose, and between two lists merges them into one.
 - **Finish what you start:** close every delimiter, fence, and quote; never trail off with `...` or abandon a clause mid-thought. If output runs long, stop at a unit boundary so what ships reads complete.
 - **Match the style of what you edit:** the tighter the scope, the stricter the match. Within a section, copy its convention exactly (bullet form, label style, punctuation, tense); within a doc, one voice; across docs, small variation is fine.
-- **Every element names its consumer:** a line, field, reference, or section earns its place only if something acts on it (a gate, a mechanism, a routing surface, or a human decision point). What nothing acts on is decoration, most often a pre-computed field that is maintained but never authoritative, a pointer to git, temp, or deleted artifacts as discovery, a history no gate reads, or a justification pinned to a temporary premise.
+- **Every element names its consumer:** a line, field, reference, or section earns its place only if something acts on it (a gate, a mechanism, a routing surface, or a human decision point). What nothing acts on is decoration, most often a pre-computed field that is maintained but never authoritative, a pointer to git, temp, or deleted artifacts as discovery, a history no gate reads, a justification pinned to a temporary premise, a rejection nobody would re-propose, or a note that something is absent.
 - **Preserve all details, mention once:** in documents, reports, and summaries; prefer complete-but-segmented over terse-but-lossy. A fact lives in one home per doc and per topic; copies drift.
 - **State docs and logs:** a state doc (spec, README, handoff, catalog) describes what IS; a log (changelog, decision archive) records events. Update a state doc by rewriting its sections to current truth; logs are appended, never rewritten; move history worth keeping into a log, git keeps the rest.
 - **Synthesize, don't transcribe:** write durable text fresh from its meaning; never lift a source sentence. My ideas arrive bundled with examples and elaboration; distill the intent, not the phrasing.
