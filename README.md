@@ -81,66 +81,21 @@ The `PreToolUse` Bash hook requires RTK on `PATH`. See `RTK.md` for install inst
 
 ### Restore plugins
 
-Plugin artifacts are excluded. `settings.json` contains both `extraKnownMarketplaces` and `enabledPlugins` — Claude Code reads these on startup and installs all listed plugins automatically. No manual install step required.
+Plugin artifacts are excluded. `settings.json` contains both `extraKnownMarketplaces` and `enabledPlugins`: Claude Code reads these on startup and installs the enabled plugins automatically. No manual install step required.
 
-If auto-install fails, register marketplaces and install plugins manually.
-
-**Register marketplaces:**
+If auto-install fails, the commands below mirror the enabled set in `settings.json` (`claude-plugins-official` is built in):
 
 ```bash
-claude plugin marketplace add anthropics/claude-plugins-official
-claude plugin marketplace add anthropics/skills
-claude plugin marketplace add JuliusBrussee/caveman
 claude plugin marketplace add pbakaus/impeccable
-claude plugin marketplace add forrestchang/andrej-karpathy-skills
-claude plugin marketplace add openai/codex-plugin-cc
-claude plugin marketplace add DietrichGebert/ponytail
-```
-
-**Install enabled plugins:**
-
-```bash
-claude plugin install andrej-karpathy-skills@karpathy-skills
-claude plugin install caveman@caveman
-claude plugin install chrome-devtools-mcp@claude-plugins-official
 claude plugin install claude-md-management@claude-plugins-official
 claude plugin install context7@claude-plugins-official
-claude plugin install document-skills@anthropic-agent-skills
-claude plugin install feature-dev@claude-plugins-official
-claude plugin install playwright@claude-plugins-official
-claude plugin install ponytail@ponytail
 claude plugin install pyright-lsp@claude-plugins-official
 claude plugin install security-guidance@claude-plugins-official
 claude plugin install skill-creator@claude-plugins-official
-claude plugin install superpowers@claude-plugins-official
 claude plugin install typescript-lsp@claude-plugins-official
 ```
 
-**Install disabled plugins (optional):**
-
-```bash
-claude plugin install codex@openai-codex
-claude plugin install github@claude-plugins-official
-# hookify: disabled — hooks call bare `python3`, which does not exist on Windows
-# Git Bash (only `python` / `py`). Errors on every PreToolUse / PostToolUse /
-# UserPromptSubmit / Stop. No `.claude/hookify.*.local.md` rule files configured,
-# so the plugin does nothing useful here. Re-enable + add a `python3` symlink if
-# custom hookify rules are ever wanted.
-claude plugin install hookify@claude-plugins-official
-claude plugin install impeccable@impeccable
-claude plugin install supabase@claude-plugins-official
-claude plugin install vercel@claude-plugins-official
-```
-
-### Status line path
-
-`settings.json` contains a host-specific `statusLine.command` that runs both plugin statusline scripts in a single PowerShell `-Command` invocation — caveman (`[CAVEMAN]` badge, orange) then ponytail (`[PONYTAIL]` badge, teal), separated by a space. The single `-Command` form keeps the `;` separator inside PowerShell so it is independent of the shell Claude Code spawns. After reinstalling either plugin, locate the new statusline script in its plugin cache and update `settings.json`:
-
-```bash
-# Example paths after reinstalling plugins
-# ~/.claude/plugins/cache/caveman/caveman/<version>/src/hooks/caveman-statusline.ps1
-# ~/.claude/plugins/cache/ponytail/ponytail/<version>/hooks/ponytail-statusline.ps1
-```
+The list skips the disabled entries: their `false` flags are tracked in `settings.json` and restore as-is.
 
 ## Security & credentials
 
