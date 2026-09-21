@@ -44,15 +44,13 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 
 ## Hooks
 
-`settings.json` configures three PreToolUse `Bash` hooks:
+`settings.json` wires three PreToolUse `Bash` hooks. Both scripts are tracked (re-clone restores them); their header comments are the source of truth for the exact patterns.
 
 | Hook | Purpose |
 |------|---------|
-| `rtk hook claude` | Token-optimized CLI proxy. Requires RTK on `PATH`. See `RTK.md`. |
-| `~/.claude/hooks/block-dangerous-git.sh` | Blocks `git push`, `git commit`, `git reset --hard`, `git clean -f`/`-fd`, `git branch -D`, `git checkout .`, `git restore .`, `push --force`. Greps the raw hook JSON (no `jq`, no `sed` extraction) so it runs on Windows Git Bash; patterns are word-anchored and whitespace-required, so near-miss substrings like `gitcommittee` or `git-commit` are not blocked; only the literal command is (prose containing the phrase still blocks — safe-side). |
-| `~/.claude/hooks/block-secret-paths.sh` | Blocks any Bash command matching `\.env` or `\.ssh` (closes the bash bypass of the Read-deny; see Security below). Same raw-grep shape; `.env` is anchored so `process.env` doesn't false-positive. Extend `SECRET_PATTERNS` for new secret paths. |
-
-The active git-guardrails hook lives at `hooks/block-dangerous-git.sh` — tracked directly, so re-clone restores it. (The install-source skill was removed; the hook is the source of truth.)
+| `rtk hook claude` | Token-optimized CLI proxy. Requires RTK on `PATH`; see `RTK.md`. |
+| `~/.claude/hooks/block-git-gh-mutations.sh` | Enforces CLAUDE.md's Git section mechanically: blocks `git` commit/push and destructive ops plus `gh` writes, so all mutations stay user-run. |
+| `~/.claude/hooks/block-secret-paths.sh` | Closes the Bash bypass of the Read-deny: blocks commands touching `.env`, `~/.ssh`, `~/.aws`, `~/.config/gh` (see Security below). |
 
 ## Quick Reference
 
