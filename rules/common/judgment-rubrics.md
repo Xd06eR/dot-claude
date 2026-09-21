@@ -36,7 +36,7 @@ Estimate a non-trivial edit's rough size before starting. On any two of these, s
 
 ## 4. Quality floor
 
-Before any work ships (evidence per CLAUDE.md's Review phase, read by a context that did not write it; the red-flag table lives in the `verification-before-completion` skill):
+Before any work ships (evidence per CLAUDE.md's Review phase, read by a context that did not write it; the red-flag list lives in the `verification-before-completion` skill):
 
 - A runnable check passed this session, output shown (fresh-context read-back for prose/config)
 - No debug leftovers
