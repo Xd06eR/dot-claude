@@ -73,7 +73,7 @@ git remote add origin https://github.com/Xd06eR/dot-claude.git
 git pull origin main
 ```
 
-Only configuration files are tracked — logs, caches, and session data remain untouched. Sync an existing machine with `git -C ~/.claude pull`.
+Only configuration files are tracked. Logs, caches, and session data remain untouched. Sync an existing machine with `git -C ~/.claude pull`.
 
 ### RTK
 
