@@ -29,6 +29,3 @@
 
 # Backup files — never tracked
 **/*.bak
-
-# gstack clone guard — a clone appearing here must never be tracked
-skills/gstack/
