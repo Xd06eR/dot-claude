@@ -90,24 +90,13 @@ How to write and review durable text, for any reader.
 
 ## Skill invocation
 
-Pick the most suitable skill or agent for the work at hand, whatever its source: descriptions carry the triggers.
+Invoke the most suitable skill or agent for the work before acting, and name what you invoked and for what ("Using X to Y").
 
-Invoke it before acting, and name what you invoked and for what ("Using X to Y").
+**Skills fire as the work moves, not once per task:** a task crossing phases or concerns invokes the skill for each, never two doing the same job.
 
-**One skill per task is a failure mode.** A task spanning phases or concerns stacks orthogonal skills: one per phase, plus one per distinct concern. Never two doing the same job. Default 1–3 per phase; justify more.
-
-Routing look-alikes — when two could fire, the difference decides:
-
-| Pair | The split |
-|---|---|
-| `review-pr` × `lens-review` | substitutes, pick one: multi-agent fleet with dedup + severity normalization vs 5 lenses with confidence scoring |
-| `design-html` × `design-taste-frontend` | direction already settled (mockup, plan, DESIGN.md) → design-html builds it; direction must be inferred and taste-gated → design-taste-frontend |
-| `prototype` × `design-variants` | throwaway code answering one design question vs a side-by-side comparison board of screen variants |
-| `redesign-existing-projects` × `design-taste-frontend` | any existing site or app upgraded in place vs marketing-page redesign inside its taste system |
-
-- **Fixed openings:** a new line of work in a working directory opens with `grill-with-docs` (it leaves CONTEXT.md + ADRs); without one, `grill-me`; visual-system design opens with `design-consultation`.
+- **Fixed openings:** a new feature or design in a working directory opens with `grill-with-docs`; without one, `grill-me`; visual-system design opens with `design-consultation`.
 - **User instructions beat skill instructions:** when a skill's process conflicts with the user's stated instruction, the user's wins.
-- **User-invoked:** `/plan-from-design` · `/build-brief` · `/harness-audit` · `/teach` · `/handoff` · `/to-questionnaire` · `/caveman:*` · `/ponytail:*`. Propose them when their moment comes; never self-invoke.
+- **User-invoked:** `/session-sync` · `/setup-workflow` · `/teach` · `/handoff` · `/to-questionnaire`. Propose them when their moment comes.
 
 ## Browsing
 
