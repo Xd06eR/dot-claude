@@ -22,15 +22,20 @@ Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownM
 
 ## Skill Sources
 
-Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream.
+Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream. Compound tags mark components merged from two or more sources.
 
-| Source | Count | Skills |
-|--------|-------|--------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 9 | diagnose, grill-me, grill-with-docs, handoff, improve-codebase-architecture, prototype, tdd, teach, writing-great-skills |
+| Source | Count | Components |
+|--------|-------|------------|
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 14 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, resolving-merge-conflicts, teach, to-questionnaire, wizard, writing-for-agents; agent `spec-reviewer` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
-| [ECC](https://github.com/affaan-m/ECC) | 12 skills + 3 agents | agent-architecture-audit, agent-introspection-debugging, context-budget, eval-harness, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agents `database-reviewer`, `react-build-resolver`, `silent-failure-hunter` |
-| Custom | 1 | teach-back (user-edited derivative) |
-| [gstack](https://github.com/garrytan/gstack) | 13 skills + 2 agents | ship, spec, qa, diagram, make-pdf, deploy-watch, land-and-deploy, document-release, document-generate, design-html, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` |
+| [ECC](https://github.com/affaan-m/ECC) | 10 skills + 1 agent | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agent `database-reviewer` |
+| [gstack](https://github.com/garrytan/gstack) | 11 skills + 2 agents | ship, qa, diagram, deploy-watch, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` (upstream-orphaned: gstack no longer ships agents, kept deliberately) |
+| superpowers (plugin, extracted) | 2 | receiving-code-review, verification-before-completion |
+| [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |
+| Custom | 7 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back |
+| Compound | 6 skills + 5 agents | skills: plan-from-design (custom + mattpocock + superpowers), build-brief (custom + mattpocock), build-feature (custom + superpowers), tdd (mattpocock + superpowers), diagnosing-bugs (mattpocock + superpowers), code-review (pr-review-toolkit + mattpocock + code-review plugin); agents: code-reviewer (pr-review-toolkit + mattpocock), silent-failure-hunter (ECC + pr-review-toolkit), pr-test-analyzer, type-design-analyzer (both pr-review-toolkit), code-simplifier (pr-review-toolkit + code-simplifier plugin) |
+
+Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in `.claude/rules/harness-maintenance.md`.
 
 ## Excluded Data
 
