@@ -9,11 +9,11 @@ Private backup of global agent configuration: system instructions, agent definit
 | `CLAUDE.md` | Global system instructions |
 | `RTK.md` | Proxy configuration |
 | `settings.json` | Agent settings and environment |
-| `agents/` | Agent definitions |
-| `commands/` | Custom slash commands: `harness-audit`, `plan-from-design` (Design→Plan), `build-brief` (Plan→Build), `review-pr` + `lens-review` (Review) |
-| `hooks/` | Lifecycle hooks (git guardrails, etc.) |
+| `agents/` | Agent definitions (9) |
+| `hooks/` | Lifecycle hooks (git/gh mutation + secret-path guards) |
 | `rules/` | Instruction rule modules |
-| `skills/` | Skill modules (see Skill Sources) |
+| `.claude/rules/` | Harness-only rule modules (project-scope: load only when working in this repo) |
+| `skills/` | Skill modules, 53 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
