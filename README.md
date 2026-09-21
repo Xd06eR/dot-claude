@@ -77,7 +77,7 @@ Only configuration files are tracked. Logs, caches, and session data remain unto
 
 ### RTK
 
-The `PreToolUse` Bash hook requires RTK on `PATH`. See `RTK.md` for install instructions.
+The `PreToolUse` Bash hook requires RTK on `PATH`; usage and the command set live in `RTK.md`.
 
 ### Restore plugins
 
