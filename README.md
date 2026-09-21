@@ -20,6 +20,25 @@ Private backup of global agent configuration: system instructions, agent definit
 
 Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownMarketplaces`) are serialized in `settings.json`. No separate plugin artifacts are tracked (`plugins/` is a rebuildable multi-GB cache).
 
+## The Workflow
+
+CLAUDE.md's Workflow section carries the phase principles every session; this section is the human's map: the spine (the pipeline's gates in order) and the four paths (how much of the spine runs). Skill Sources below enumerates the inventory by origin.
+
+### The spine
+
+The pipeline in order: `/setup-workflow` once per project · `/session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa → ship → land-and-deploy → deploy-watch → document-release. Each step's trigger and mechanics live in its skill's description and body.
+
+Free principle: the phases work without the artifacts. `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md`, `PROGRESS-LOG.md`, `docs/design/`, `docs/adr/`, `docs/plan/`, `docs/build/` are adopted per project as needed; nothing forces them.
+
+### The four paths
+
+Two axes, four routes. The docs axis picks the opening: `grill-me` keeps rulings in the conversation (quick work, nothing to maintain), `grill-with-docs` captures them as they are made (a project worth maintaining). The route axis picks how much of the spine runs: a settled design that fits one context builds directly via `build-feature` with no feature named (it steps back to `plan-from-design` past one context); anything bigger, or any work meant to stay maintainable, runs the spine end to end. Planning always consumes a baked design, so a no-docs route bakes from the conversation first.
+
+| Opening | Build directly | Plan first |
+|---|---|---|
+| `grill-me` (no docs) | toy / quick work | quick work, planned (a bake from the conversation precedes it) |
+| `grill-with-docs` (docs) | a small feature in a maintained project | the full cycle — the most maintainable route |
+
 ## Skill Sources
 
 Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream. Compound tags mark components merged from two or more sources.
