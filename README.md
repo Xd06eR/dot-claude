@@ -144,12 +144,12 @@ claude plugin install vercel@claude-plugins-official
 
 ## Security & credentials
 
-**Tokens never live in tracked files.** `settings.json` is tracked and pushed; keep API tokens in an OS env var (`setx ANTHROPIC_AUTH_TOKEN "<token>"`, or PowerShell `[Environment]::SetEnvironmentVariable("ANTHROPIC_AUTH_TOKEN","<token>","User")`), not in `settings.json`. `ANTHROPIC_BASE_URL` and model aliases are not secret and stay there. Keep the repo private; rotate on exposure.
+**Provider connection details (API key, base URL, model name) are local-only.** CC-Switch writes them into `settings.json` per machine; those hunks are never staged (genuine config changes are hunk-staged around them), so the tracked file carries no provider fields and a fresh clone starts clean. Keep the repo private; rotate on exposure.
 
 **Adding a new credential:**
 
-1. Store it outside tracked files (OS env var or a gitignored file), never in `settings.json`.
-2. If the agent must not read its file, block both paths: add a `Read(...)` rule to `permissions.deny`, and add a pattern to `SECRET_PATTERNS` in `hooks/block-secret-paths.sh` (that hook closes the bash bypass of the Read-deny for `.env` / `~/.ssh`).
+1. Never commit it: it lives in a gitignored file or as a local-only `settings.json` hunk that never gets staged.
+2. If the agent must not read its file, block both paths: add a `Read(...)` rule to `permissions.deny`, and add a pattern to `SECRET_PATTERNS` in `hooks/block-secret-paths.sh` (that hook closes the bash bypass of the Read-deny).
 3. If it is a dangerous command (egress, install, remote access), add it to `permissions.ask`.
 4. Restart Claude Code so hook edits load.
 
