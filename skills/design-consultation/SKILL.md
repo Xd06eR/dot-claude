@@ -123,7 +123,7 @@ Then ask, in plain text, how to proceed:
 - (D) start over with a different direction
 - (E) skip the preview and write DESIGN.md
 
-**Optional second opinion.** Where your runtime can dispatch a fresh-context subagent, you may get one independent design direction to compare against yours before presenting: "propose a design direction that would surprise, with specific font names and hex values, and 2 departures from category norms." Present agreements as confidence and divergences as creative alternatives for the user to choose. Skip silently where subagents are unavailable.
+**Optional second opinion.** Where your runtime can dispatch a fresh-context subagent, you may get one independent design direction to compare against yours before presenting. Keep your own draft out of its prompt. An anchored second opinion is manufactured consensus, so brief it only with the ask: "propose a design direction that would surprise, with specific font names and hex values, and 2 departures from category norms." Agreement is not a vote: present divergences as creative alternatives for the user to choose, never tally agreements as confidence. Name the voices that ran: a completed review, an unavailable subagent, or a declined pass is reported, never skipped silently.
 
 ### Design knowledge (informs proposals, never displayed as tables)
 
@@ -177,7 +177,7 @@ Then ask, in plain text, how to proceed:
 
 Space Grotesk earns its place here because every AI design tool converges on it as "the safe alternative to Inter." That is the convergence trap. Treat it like Inter.
 
-**Anti-convergence:** across multiple generations in one project, vary light/dark, fonts, and aesthetic direction. Never propose the same choices twice without saying why. Convergence across generations is slop.
+**Anti-convergence:** across multiple generations in one project, vary fonts, palette, and aesthetic direction. Never propose the same choices twice without saying why. Convergence across generations is slop. Light vs dark is not one of the dials: it follows the use scene (who, where, lighting), fixed until that scene changes; a product supporting both themes ships one system twice: both themes carry the same brand (same faces, same aesthetic, palettes derived from the same tokens), never two independent designs.
 
 **AI slop anti-patterns, never include:**
 
@@ -221,7 +221,7 @@ mkdir -p design-previews
 
 Write the page to `design-previews/design-system-preview.html` (overwrite on each iteration). No framework dependencies; inline everything. The page must:
 
-1. **Load the proposed fonts** via `<link>` from a public font CDN (Google Fonts or Bunny Fonts).
+1. **Load the proposed fonts** via `<link>` from a public font CDN (Google Fonts or Bunny Fonts), loading only faces verified to resolve there. Verify each face before proposing it (a WebSearch or a fetch of its foundry page); omit the unverified and say so. Offline, describe roles, weights, and proportions instead and mark the selection pending verification in DESIGN.md. Invent no face or URL.
 2. **Use the proposed palette throughout**, dogfooding the system.
 3. **Show the real product name** as the hero heading, never "Lorem Ipsum".
 4. **Font specimens:** each candidate in its role (hero, body paragraph, button label, data-table row), side by side where there are multiple candidates, with content that matches the product.
