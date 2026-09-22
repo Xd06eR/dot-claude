@@ -12,7 +12,7 @@ Write the workflow's document conventions into the project: the block into the r
 1. **Detect.** Find the project root (`git rev-parse --show-toplevel`; fall back to the working directory if not a git repo). Does `CLAUDE.md` exist at the root? Do any workflow artifacts already exist (any artifact named in the block below, or folder CLAUDE.md files from an earlier run)? Does a non-default layout exist — design docs living under other paths the user names or you find?
 2. **Interview.** Ask which optional layers the project wants (multi-select, two groups). Design surface: `OPEN-QUESTIONS.md` (rulings captured as they are made; without it they live in the conversation until bake), `CONTEXT.md` (domain glossary), `docs/adr/` (decision snapshots). Continuity: `TODO.md` (the session resume anchor `/session-sync` re-grounds from, plus a machine-kept task queue of pending gate work — every bake/plan/build item a row with its bake commit, so nothing is re-derived; default on), `PROGRESS-LOG.md` (the reasoning trail: decisions, rejected options, corrections). The three `docs/` phase folders (design, plan, build) are not optional: they are the phase artifacts themselves.
 3. **Present findings and the writes.** Show exactly what will be written: the block carrying only the chosen layers' lines plus any named-decline lines, and the per-folder CLAUDE.md files for the chosen layers' folders. If an existing layout diverges from the defaults, adapt paths to reality rather than imposing the defaults.
-4. **Write.** Root `CLAUDE.md`: add the `## Workflow docs` section, or update it in place if one exists — never duplicate it, never overwrite surrounding user content; if the root has no `CLAUDE.md`, ask before creating it. Folders: create the artifact folders and write each folder's CLAUDE.md from the templates below; an existing folder CLAUDE.md updates in place with the same never-overwrite rule. Declined layers get no artifact line, no folder, and no template; references to a declined layer drop from the remaining lines and templates, rewording where a bare drop breaks the sentence (when both `CONTEXT.md` and `docs/adr/` are declined, the docs/design template's routing sentence keeps only its "never here"). Every declined optional layer also earns one named-decline line at the block's end (forms below): each has a writer that fires from the workflow's own momentum (rulings, gate advances, session ends, bakes, term resolutions), and the always-loaded block is where that writer meets a standing refusal instead of recreating the file.
+4. **Write.** Root `CLAUDE.md`: add the `## Workflow docs` section, or update it in place if one exists — never duplicate it, never overwrite surrounding user content; if the root has no `CLAUDE.md`, ask before creating it. Folders: create the artifact folders and write each folder's CLAUDE.md from the templates below; an existing folder CLAUDE.md updates in place with the same never-overwrite rule. Declined layers get no artifact line, no folder, and no template; references to a declined layer drop from the remaining lines and templates, rewording where a bare drop breaks the sentence. Every declined optional layer also earns one named-decline line at the block's end (forms below): each has a writer that fires from the workflow's own momentum (rulings, gate advances, session ends, bakes, term resolutions), and the always-loaded block is where that writer meets a standing refusal instead of recreating the file.
 5. **Stop.** Report what was written. Do not create artifact files, do not start any workflow phase.
 
 ## The block
@@ -22,18 +22,18 @@ Adapt paths to the detected layout; keep one line per artifact.
 ```markdown
 ## Workflow docs
 
-This project uses the 4-phase workflow (Design → Plan → Build → Review). **State docs are rewritten to current truth; logs are appended, never rewritten.** **Commit each phase's artifacts at its gate** (the agent outputs the command, the user runs it). **Retire a feature's consumables the moment its Review passes**: durable content flows home first (decisions → ADR, as-built deltas → design, criteria → tests), then deletion; output one commit command per deletion. Each artifact folder's CLAUDE.md states its conventions. Paths in this block override the defaults the workflow skills name.
+This project uses the 4-phase workflow (Design → Plan → Build → Review). **Retire a feature's consumables the moment its Review passes**: durable content flows home first (decisions → ADR, as-built deltas → design, criteria → tests), then deletion; output one commit command per deletion. Each artifact folder's CLAUDE.md states its conventions. Paths in this block override the defaults the workflow skills name.
 
 One feature's flow: rulings land in `OPEN-QUESTIONS.md` → bake into `docs/design/` → plan into `docs/plan/` → brief and build in `docs/build/` → Review passes → consumables retire. Status homes: structure and order → `docs/plan/INDEX.md`; briefed and built → `docs/build/INDEX.md`; current phase → the feature row in `TODO.md`; mid-build detail → the ledger; history → git.
 
-- `OPEN-QUESTIONS.md` — the design capture surface: every ruling lands here as it is made, created lazily on the first ruling (it may stay empty). Entries leave at bake. [optional layer]
-- `CONTEXT.md` — domain glossary: what things are named here (plus banned synonyms), updated as terms settle. [optional layer]
-- `TODO.md` — the durable task queue + session resume anchor (`▶ Next-session resume`): every gate obligation (bake → plan → build → review) waits as a row holding its bake commit (a frozen pointer: `git show` replays that bake's design text however the docs have moved since); a feature row deletes with its consumables at Review-pass. [optional layer]
-- `PROGRESS-LOG.md` — append-only session log, condensed to a recent window; outgoing entries delete whole, verbatim stays in git. [optional layer]
-- `docs/design/` — canonical design: settled, user-approved, determined-only (no open/provisional markers). Specs derive from these.
-- `docs/adr/` — decision snapshots: one frozen file per independently-reversible choice, indexed in its `README.md`. [optional layer]
-- `docs/plan/` — per-component `<component>-spec.md` + `<component>-plan.md` + `INDEX.md`. Consumable: retires at the feature's Review-pass.
-- `docs/build/` — per-feature `<feature>.md` brief + `<feature>.ledger.md` + `INDEX.md` + `implementation-notes.md`. Consumable: retires at the feature's Review-pass.
+- `OPEN-QUESTIONS.md` — the design capture surface: rulings land as they are made; entries leave at bake. [optional layer]
+- `CONTEXT.md` — the domain glossary. [optional layer]
+- `TODO.md` — the task queue + session resume anchor. [optional layer]
+- `PROGRESS-LOG.md` — the append-only session log. [optional layer]
+- `docs/design/` — canonical design; specs derive from these.
+- `docs/adr/` — decision snapshots. [optional layer]
+- `docs/plan/` — specs + plans + `INDEX.md` (consumable).
+- `docs/build/` — briefs + ledger + `INDEX.md` + `implementation-notes.md` (consumable).
 ```
 
 When an optional layer is declined, append its named-decline line to the block:
@@ -53,7 +53,7 @@ Write one per artifact folder from the templates below; declined layers get no f
 ```markdown
 # docs/design/ — canonical design docs
 
-Settled, user-approved design lives here. Determined-only: no open or provisional markers (opens belong to `OPEN-QUESTIONS.md`). Every doc states what it is and the mental model that makes the rest read correctly, the decisions it fixes, constraints with exact values, its failure modes and their handling, and how it is verified; structure is free, that bar is not. One doc per subsystem: extend the doc whose scope covers the design, open a new one when none does. The same fact reads the same in every doc that touches it; a change updates every affected doc in the same pass. Design content lands only through bake-design's gate; mechanical fixes (typos, dead links) edit directly. Content that defines nothing itself (delete-test: no decision, contract, or construct disappears without it) routes to `CONTEXT.md` or `docs/adr/`, never here. Derived digests (summaries, overviews, reference cards) are not design docs: never baked, never written here. When the user asks for one, it lives outside this folder as an external convenience doc.
+Settled, user-approved design lives here. Determined-only: no open or provisional markers (opens belong to `OPEN-QUESTIONS.md`). The same fact reads the same in every doc that touches it; a change updates every affected doc in the same pass. Design content lands only through bake-design's gate (it owns the content bar and doc placement); mechanical fixes (typos, dead links) edit directly. Derived digests (summaries, overviews, reference cards) are not design docs: never baked, never written here. When the user asks for one, it lives outside this folder as an external convenience doc.
 
 Index the folder's docs in this file as they land: a `| Doc | Scope |` table, one row per doc.
 ```
@@ -83,5 +83,5 @@ Consumable: the brief, the ledger, and the feature's INDEX row retire with its p
 ```markdown
 # docs/adr/ — decision snapshots
 
-One frozen file per independently-reversible choice (a future session could reverse it without touching the others): what forced it, what was chosen, what lost. Frozen once written; supersession flips `Status` and writes a new ADR. Format and numbering per `~/.claude/skills/domain-modeling/ADR-FORMAT.md`; one index row per ADR in `README.md`.
+One frozen file per independently-reversible choice (a future session could reverse it without touching the others): what forced it, what was chosen, what lost. Frozen once written; supersession flips `Status` and writes a new ADR. Format, guardrail, and numbering per `~/.claude/skills/domain-modeling/ADR-FORMAT.md`; one index row per ADR in `README.md`.
 ```
