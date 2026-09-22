@@ -8,6 +8,8 @@ The main agent plans, decides, and integrates; subagents carry work whose full c
 
 Parallel fan-out gates on independence (no shared state, no sequential dependency between chunks) and declares its budget up front, with a hard stop.
 
+**Dispatch is the main agent's alone:** a subagent never dispatches subagents. The independence gate, the declared budget, and the report contract all attach at the dispatch point; a nested dispatch replaces first-hand reports with a summary of summaries, and a subagent that picks its own reviewer grades its own work. Work that outgrows one context is returned as a split proposal, and the main agent re-dispatches.
+
 The agent that writes code must itself have read the code it changes; editing from a subagent's summary produces confident wrong patches. Do not dispatch a one-call read; dispatch overhead must be smaller than the work.
 
 **Long merge and bulk work:** route it to fresh subagents with detailed prompts — a saturated main context degrades merge quality. High-sensitivity verification runs first in main context, with fresh-context confirmation per section 5.
@@ -42,6 +44,7 @@ Report contract, binding on every subagent:
 - Exclude only residue: raw file contents, full command transcripts, re-derivable bulk.
 - When substance runs long (30+ lines), write it to disk in full and return a faithful structured summary plus the path.
 - No silent file work: the main agent prepares the files a dispatch needs and owns the durable-file lifecycle; a subagent that creates, modifies, or deletes files (build dispatches included) lists every touched path with its operation in the report, and removes its temp files before returning.
+- Never dispatches subagents; work that outgrows one context is returned as a split proposal.
 - Always state what was NOT covered.
 
 ## 4. Attempts, escalation, and stopping
