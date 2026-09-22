@@ -54,4 +54,4 @@ The loop's enemies, answered:
 - [ ] You watched each test fail, for the expected reason.
 - [ ] You can name the production change that would make each test fail.
 - [ ] Each implementation was the minimal code to pass its test.
-- [ ] The full suite is green and the output is pristine.
+- [ ] The full suite is green and the output is pristine; a failure that pre-existed your change is reported by name, never silently inherited.
