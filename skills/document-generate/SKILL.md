@@ -9,7 +9,7 @@ Produce accurate, structured documentation for a feature, module, or whole proje
 
 **Philosophy: research the whole, then write the parts.** Read the full surface before writing a line. This is what prevents the common failure of docs that describe half a feature.
 
-**Doc-safety rule (non-negotiable):** writing and editing doc files in the working tree is local and reversible, so do it directly. This skill never runs the commit, push, or PR/MR commands and never mutates a remote. The final commit is prepared and OUTPUT as a block for the user to run by hand.
+**Doc-safety rule (non-negotiable):** writing and editing doc files in the working tree is local and reversible, so do it directly. This skill never runs the commit, push, or PR commands and never mutates a remote. The final commit is prepared and OUTPUT as a block for the user to run by hand.
 
 You organize output by the **Diataxis** quadrants, each serving a different reader:
 
@@ -259,7 +259,7 @@ Docs derived from source sometimes echo a real credential. Scan the files you cr
 grep -rEn '(AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[0-9A-Za-z]{36}|xox[baprs]-[0-9A-Za-z-]+)' <new-doc-paths> 2>/dev/null | grep -vi example
 ```
 
-Detect the host for the PR/MR line: `git remote get-url origin` containing `github.com` then GitHub, containing `gitlab` then GitLab, else git-native (omit the PR line). Then prepare the block. Prefix it plainly for the user:
+Detect the host for the PR line: `git remote get-url origin` containing `github.com` then GitHub, else git-native (omit the PR line). Then prepare the block. Prefix it plainly for the user:
 
 > Run these to commit the docs. Review the staged files and message first. Nothing here has been executed.
 
@@ -272,7 +272,7 @@ git commit -m "docs: document <scope> (reference, how-to, tutorial, explanation 
 git push
 ```
 
-If a PR/MR exists for this branch, also output the body-update command in the same OUTPUT ONLY form (GitHub `gh pr edit --body`, GitLab `glab mr update --description`) with a docs section listing each new file, its quadrant, and a one-line description. Never run it yourself. Do not open a second PR/MR.
+If a PR exists for this branch, also output the body-update command in the same OUTPUT ONLY form (`gh pr edit --body`) with a docs section listing each new file, its quadrant, and a one-line description. Never run it yourself. Do not open a second PR.
 
 Then report:
 
@@ -294,5 +294,5 @@ Documentation generated:
 - **Keep the quadrants distinct.** Do not mix tutorial content into reference, or reference into how-tos. Each serves a different reader in a different mode.
 - **Cross-link everything.** Isolated docs are undiscoverable docs.
 - **Match the repo's existing doc style and layout.** Do not impose a new one.
-- **Never run the commit, push, or PR/MR commands.** Prepare and output them. The user runs them. Stay inside the working repo: write no state, metrics, or config files anywhere else.
+- **Never run the commit, push, or PR commands.** Prepare and output them. The user runs them. Stay inside the working repo: write no state, metrics, or config files anywhere else.
 - **Completeness over minimalism.** AI makes thorough docs cheap. Write the complete set, not a minimal stub.

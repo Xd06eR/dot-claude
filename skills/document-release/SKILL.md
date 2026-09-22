@@ -5,9 +5,9 @@ allowed-tools: Bash, Read, Edit, Grep, Glob
 origin: gstack
 ---
 
-Post-ship documentation sweep. After a release lands (or a feature branch is about to merge), every doc file in the repo should match what shipped. This skill reads the diff, audits each doc against it, fixes clear factual drift, polishes CHANGELOG voice, flags coverage gaps, and outputs the commit plus PR/MR body update for the user to run.
+Post-ship documentation sweep. After a release lands (or a feature branch is about to merge), every doc file in the repo should match what shipped. This skill reads the diff, audits each doc against it, fixes clear factual drift, polishes CHANGELOG voice, flags coverage gaps, and outputs the commit plus PR body update for the user to run.
 
-**Git safety rule (non-negotiable):** this skill never runs the commit, push, or PR/MR-edit commands, and never mutates a remote. It does the local doc edits itself and OUTPUTS the rest as a command block. The final terminal action is always the user's.
+**Git safety rule (non-negotiable):** this skill never runs the commit, push, or PR-edit commands, and never mutates a remote. It does the local doc edits itself and OUTPUTS the rest as a command block. The final terminal action is always the user's.
 
 **Scope:** edits stay inside the working repo's doc files. No metrics, state, telemetry, or config files written anywhere else.
 
@@ -38,13 +38,12 @@ Same detection as `ship`. Detect the host from the remote:
 git remote get-url origin 2>/dev/null
 ```
 
-- URL contains `github.com` then GitHub. Contains `gitlab` then GitLab.
-- Else probe `gh auth status` (GitHub) and `glab auth status` (GitLab); neither then unknown (git-native only).
+- URL contains `github.com` then GitHub.
+- Else probe `gh auth status`; on success GitHub, on failure unknown (git-native only).
 
-Find the base branch (the PR/MR target, else the repo default):
+Find the base branch (the PR target, else the repo default):
 
 - GitHub: `gh pr view --json baseRefName -q .baseRefName`, else `gh repo view --json defaultBranchRef -q .defaultBranchRef.name`.
-- GitLab: `glab mr view -F json` field `.target_branch`, else `glab repo view -F json` field `.default_branch`.
 - Git-native fallback: `git symbolic-ref refs/remotes/origin/HEAD | sed 's|refs/remotes/origin/||'`, else try `origin/main`, then `origin/master`, then default to `main`.
 
 Print the detected base branch. Substitute it for `<base>` everywhere below.
@@ -215,11 +214,9 @@ EOF
 )"
 ```
 
-GitLab: swap the last command for `glab mr update -d "$(cat <<'MRBODY' ... MRBODY)"` with the same body.
+If no PR exists yet, skip the body update with a note. If `gh pr edit` fails, warn and continue: the documentation changes are still in the commit.
 
-If no PR/MR exists yet, skip the body update with a note. If `gh pr edit` or `glab mr update` fails, warn and continue: the documentation changes are still in the commit.
-
-If a VERSION bump happened here after `ship` already created the PR, and the PR title carries a `v<X.Y.Z>` prefix that is now stale, include a title-update line in the block (`gh pr edit --title "v<new>: <summary>"` or `glab mr update -t`). Apply the repo's existing title convention; do not impose one.
+If a VERSION bump happened here after `ship` already created the PR, and the PR title carries a `v<X.Y.Z>` prefix that is now stale, include a title-update line in the block (`gh pr edit --title "v<new>: <summary>"`). Apply the repo's existing title convention; do not impose one.
 
 ## Step 12: Documentation health summary
 

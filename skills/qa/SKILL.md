@@ -75,11 +75,11 @@ Detect the base branch (`git symbolic-ref refs/remotes/origin/HEAD` stripped to 
 
 Map changed files to affected pages/routes (controllers to URL paths, views/components to pages that render them, styles to pages that include them, API handlers to endpoints you can hit directly).
 
-Cross-reference commit messages and any PR/MR description for intent, then verify the app actually does that.
+Cross-reference commit messages and any PR description for intent, then verify the app actually does that.
 
 If the diff maps to no obvious page, fall back to Quick mode: backend and config changes still affect behavior, so open the app and check it works.
 
-**Detect the running app** for diff-aware/local runs by navigating to common dev ports (`:3000`, `:4000`, `:5173`, `:8080`). If none respond, check the PR/MR or environment for a staging URL. If still nothing, ask the user for the URL in plain text and wait.
+**Detect the running app** for diff-aware/local runs by navigating to common dev ports (`:3000`, `:4000`, `:5173`, `:8080`). If none respond, check the PR or environment for a staging URL. If still nothing, ask the user for the URL in plain text and wait.
 
 ## Phase 1: Orient
 
