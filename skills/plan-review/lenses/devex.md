@@ -187,7 +187,7 @@ The bar is that upgrades should be boring: the gold standard adds capability gra
 
 ## Verdict guidance
 
-- Scope guard first: if the plan has no developer-facing surface at all (no API, CLI, SDK, library, platform, or docs), this lens does not apply: report the verdict **NOT-APPLICABLE** with the reason and stop.
+- Scope guard first: if the plan has no developer-facing surface at all (no API, CLI, SDK, library, platform, docs, or agent-facing surface: a skill, MCP server, or agent definition, where the primary user is an AI agent), this lens does not apply: report the verdict **NOT-APPLICABLE** with the reason and stop.
 - Rate each applicable dimension **solid**, **friction**, or **poor** against what best-in-class looks like for THIS product (Stripe or Vercel tier), not a generic bar: solid = usable without frustration; friction = developers merely tolerate it; poor = developers complain and adoption suffers, and an applicable dimension the plan does not address is poor by default.
 - The gap between the rating and best-in-class is the finding.
 - Evaluate every dimension even for a strategy or spec plan; DX gaps are where adoption breaks down. If a dimension genuinely has no surface in this plan, mark it "no surface" and move on rather than skipping it silently.

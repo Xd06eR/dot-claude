@@ -169,4 +169,4 @@ Show the diff, and on approval point to build.
 - **Reviewers are read-only.** Only the merge owner edits, only the plan file, only on request.
 - **No verdict without evidence.** Every finding cites a plan line or a repo `file:line`.
 - **The user's direction is the default.** Auto-resolve what the principles settle. Never auto-resolve a user challenge or a genuine taste call.
-- **Say what you did not check.** A lens that failed to return or a repo area left unread is reported, not silently dropped.
+- **Say what you did not check.** A lens that failed to return or a repo area left unread is reported, not silently dropped; the merge owner never self-performs a missing lens and presents it as coverage.
