@@ -19,13 +19,12 @@ Detect the host from the remote, then the branch this work targets.
 git remote get-url origin 2>/dev/null
 ```
 
-- URL contains `github.com` then GitHub. Contains `gitlab` then GitLab.
-- Else probe: `gh auth status` succeeds then GitHub; `glab auth status` succeeds then GitLab; neither then unknown (git-native only).
+- URL contains `github.com` then GitHub.
+- Else probe: `gh auth status` succeeds then GitHub; on failure, unknown (git-native only).
 
-Find the base branch (the PR/MR target, else the repo default):
+Find the base branch (the PR target, else the repo default):
 
 - GitHub: `gh pr view --json baseRefName -q .baseRefName`, else `gh repo view --json defaultBranchRef -q .defaultBranchRef.name`.
-- GitLab: `glab mr view -F json` field `.target_branch`, else `glab repo view -F json` field `.default_branch`.
 - Git-native fallback: `git symbolic-ref refs/remotes/origin/HEAD | sed 's|refs/remotes/origin/||'`, else try `origin/main`, then `origin/master`, then default to `main`.
 
 Print the detected base branch. Substitute it for `<base>` everywhere below.
@@ -39,7 +38,8 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
    git diff <base>...HEAD --stat
    git log <base>..HEAD --oneline
    ```
-4. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `code-review` before shipping." Do not block.
+4. **Distribution pipeline check.** If the diff introduces a new standalone artifact (a CLI binary, library package, or tool — a `cmd/` directory, `main.go`, `bin/` entry point, or new package manifest), not a web service with existing deployment, verify a release pipeline exists (`ls .github/workflows/ | grep -iE 'release|publish|dist'`). New artifact with no release pipeline: ask in plain text whether to add a release workflow now, defer it, or declare it internal (existing deployment covers it); users cannot download the artifact after merge. Pipeline exists or no new artifact: continue silently.
+5. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `code-review` before shipping." Do not block.
 
 ## Step 3: Merge the base branch (before tests)
 
@@ -73,13 +73,16 @@ Paste the real tail of the test output as evidence.
 
 ## Step 5: Review the diff
 
-Read the full diff and sanity-check it yourself:
+Read the full diff and sanity-check it yourself. Step 2 ships uncommitted changes too, so read the working tree as well as the committed diff:
 
 ```bash
 git diff <base>...HEAD
+git diff
+git diff --cached
+git ls-files --others --exclude-standard   # untracked files ship as well: read their contents, not just their names
 ```
 
-Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. For a deeper pass on a large or sensitive diff, suggest `code-review`.
+Look for debug leftovers (prints, commented-out blocks), stray files, secrets, and unrelated changes that crept in; the uncommitted and untracked files are exactly where those hide. Fix what is clearly wrong (these edits are reversible). Flag anything you are unsure about. Fixes you make during this review are themselves unreviewed: re-read your own fix hunks before preparing commands. For a deeper pass on a large or sensitive diff, suggest `code-review`.
 
 ## Step 6: Bump VERSION
 
@@ -125,7 +128,7 @@ You have merged, tested, reviewed, and bumped. Now assemble the commands. Do NOT
 - Conventional commits, subject line only, descriptive (name what the change does): `feat:`, `fix:`, `refactor:`, `docs:`, `chore:`, `test:`, `perf:`, `ci:`.
 - Add a body only when it carries real signal.
 
-**PR/MR content:** title is `<type>: <summary>`. Body states what changed and why, plus a short test plan.
+**PR content:** title is `<type>: <summary>`. Body states what changed and why, plus a short test plan.
 
 Output the block below (filled in) for the user. Do NOT execute any of it yourself. Prefix it clearly:
 
@@ -149,14 +152,7 @@ EOF
 )"
 ```
 
-GitLab (swap the last command):
-
-```bash
-# OUTPUT ONLY: do not execute; show this block to the user
-glab mr create --target-branch <base> --title "<type>: <summary>" --description "<summary and test plan>"
-```
-
-If a PR/MR already exists for this branch, output the update form instead (`gh pr edit` or `glab mr update`), not a second create. No remote configured: output only the grouped commit commands and omit the push and PR/MR lines.
+If a PR already exists for this branch, output the update form instead (`gh pr edit`), not a second create. No remote configured: output only the grouped commit commands and omit the push and PR lines.
 
 After the user ships, `deploy-watch` watches the live deploy and `document-release` updates any docs the release made stale.
 
