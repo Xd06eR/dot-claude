@@ -6,7 +6,7 @@ paths:
 
 # Python Architecture
 
-> This file extends [common/coding-style.md](../common/coding-style.md#file-organization) with Python package-structure conventions. FastAPI application structure lives in [fastapi.md](fastapi.md).
+> This file extends [common/architecture.md](../common/architecture.md) with Python package-structure conventions. FastAPI application structure lives in [fastapi.md](fastapi.md).
 
 ## Directory shape
 
@@ -29,15 +29,12 @@ pyproject.toml                # single project config root
 
 ## Module boundaries
 
-- When the project uses `__init__.py` re-exports: import a package only through its `__init__.py`, never deep-import a sibling package's internal module — package internals stay replaceable.
-- Import direction flows one way: `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
-- Circular imports are banned. When two modules need each other, extract the shared concept into a third module; a lazy in-function import signals a boundary problem.
-- Keep `__init__.py` to re-exports only, or keep it empty — pick one convention per project, never mix.
+- Import direction (the one-way rule per [common/architecture.md](../common/architecture.md)): `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
+- `__init__.py` carries re-exports only, or stays empty — pick one convention per project, never mix.
 
 ## Tests
 
 - Tests live in a parallel `tests/` tree mirroring `src/` (`tests/test_services/test_billing.py` for `src/myapp/services/billing.py`), not beside the source.
-- Feature-private helpers stay inside the package; promote to a shared module only after a second package needs them.
 
 ## Types
 

@@ -8,7 +8,7 @@ paths:
 
 # TypeScript/JavaScript Architecture
 
-> This file extends [common/coding-style.md](../common/coding-style.md#file-organization) with TypeScript/JavaScript module-structure conventions. React component architecture lives in [react/architecture.md](../react/architecture.md).
+> This file extends [common/architecture.md](../common/architecture.md) with TypeScript/JavaScript layout and conventions. React component architecture lives in [react/architecture.md](../react/architecture.md).
 
 ## Directory shape
 
@@ -33,15 +33,11 @@ src/
 
 ## Module boundaries
 
-- Import a feature only through its `index.ts` barrel — never deep-import a sibling feature's internal file.
-- Import direction flows one way: `app` → `features` → `shared`. Nothing imports upward; `shared/` imports nothing from `features/`.
-- Circular imports are banned. When two modules need each other, extract the shared concept into a third module both import.
-- Keep barrels to re-exports only — no logic in `index.ts`.
+- Import direction (the one-way rule per [common/architecture.md](../common/architecture.md)): `app` → `features` → `shared`; `shared/` imports nothing from `features/`.
 
 ## Colocation
 
 - Tests live beside the source (`foo.test.ts` next to `foo.ts`), not in a parallel `__tests__` tree, unless the project convention says otherwise.
-- Feature-private helpers stay inside the feature folder; promote to `shared/` only after a second feature needs them.
 
 ## Path aliases
 

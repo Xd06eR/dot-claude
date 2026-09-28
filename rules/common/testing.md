@@ -50,6 +50,8 @@ paths:
 
 ≥80% baseline for new code — coverage is a floor, not evidence. Language-specific testing rules may refine targets per layer.
 
+Test weight tracks the change: new behavior and logic carry the baseline and the TDD loop; reversible, low-impact changes that mirror existing implementation need no new tests. Broaden or repeat testing only when new changes, failures, or unresolved concerns justify it.
+
 ## Test-Driven Development
 
 Workflow: failing test (RED) → minimal implementation (GREEN) → verify coverage meets target.

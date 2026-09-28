@@ -33,5 +33,5 @@ describe('auth flow', () => {
 
 Use **Playwright** as the E2E testing framework for critical user flows.
 
-See `e2e-testing` skill for Playwright patterns, Page Object Model, and CI integration.
+See the `e2e-testing` skill for Playwright interaction rules and the flaky-test diagnosis loop.
 

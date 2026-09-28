@@ -127,7 +127,7 @@ Audit on every PR that touches env vars: would this string in the public bundle 
 
 - Never store sessions in `localStorage` — accessible to any XSS. Use httpOnly secure cookies.
 - Never trust client-set state to gate sensitive UI. Render-gating in JSX prevents display, not access — the API must enforce.
-- CSRF: cookie-based auth requires CSRF tokens; `SameSite=Strict`/`Lax` is defense in depth, not a substitute
+- CSRF: the base rule lives in [common/security.md](../common/security.md); `SameSite=Strict`/`Lax` is defense in depth, not a substitute
 - Use double-submit cookies or origin verification for form actions when not using framework defaults
 
 ## Content Security Policy (CSP)
