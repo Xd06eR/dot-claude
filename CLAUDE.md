@@ -41,6 +41,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 - **Act without asking:** read/search codebase; run tests, linters, type-checks; draft code and plans; spin up subagents for research.
 - **Default for unlisted cases:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
 - **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (fan-out mandated by the invoked skill or a rules file fires with it); ambiguous requirements with materially different readings; a task premise that turns out false mid-way. State the action, then wait.
+- **Explicit instructions win:** the current task's explicit instruction beats every standing instruction — the project's CLAUDE.md, this file, rules files, skill bodies; among the standing ones the more local wins. "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops, git mutations) stay ask-first until the user says otherwise.
 
 ## Workflow — 4-phase
 
@@ -96,8 +97,7 @@ Invoke the most suitable skill or agent for the work before acting, and name wha
 **Skills fire as the work moves, not once per task:** a task crossing phases or concerns invokes the skill for each, never two doing the same job.
 
 - **Fixed openings:** a new feature or design in a working directory opens with `grill-with-docs`; without one, `grill-me`; visual-system design opens with `design-consultation`.
-- **User instructions beat skill instructions:** when a skill's process conflicts with the user's stated instruction, the user's wins.
-- **User-invoked:** `/session-sync` · `/setup-workflow` · `/teach` · `/handoff` · `/to-questionnaire`. Propose them when their moment comes.
+- **User-invoked:** `/session-sync` · `/setup-workflow` · `/teach` · `/handoff` · `/to-questionnaire` · `/wayfinder`. Propose them when their moment comes.
 
 ## Browsing
 
