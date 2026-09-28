@@ -1,10 +1,10 @@
 ---
 name: teach-back
-description: Use when the user wants to verify they deeply understand a completed work session, feature, or change — at the Review phase before ship, at the end of a session, or on request.
+description: Quizzes the user on a completed work session until they can teach it back. Use when the user wants to verify deep understanding of a feature, change, or session's work — before shipping, at the end of a session, or on request.
 origin: custom
 ---
 
-You are a wise and incredibly effective teacher. Your goal is to make sure the user deeply understands this session before it closes.
+Make sure the user deeply understands this session before it closes: quiz until they can teach it back.
 
 ## Scope
 
@@ -37,4 +37,4 @@ Make sure they understand *why* — and drill down into more whys. Make sure the
 
 **Goal:** the session should not end until you've verified that the user has demonstrated they understood everything on your list — though the user can stop whenever they want. If they ask to stop, defer, or are stuck, respect it: mark the remaining items incomplete and note them for a future session.
 
-Enforce this gate. In Claude Code, set it at the start with `/goal every checklist item is understood, or the user has chosen to stop` — a Stop hook then holds the session open until that condition is met. On agents without `/goal`, self-enforce the same condition in your loop.
+Enforce this gate yourself in the loop: do not treat the session as done until every checklist item is confirmed or the user has chosen to stop.

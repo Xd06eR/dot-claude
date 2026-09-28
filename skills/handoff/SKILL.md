@@ -1,12 +1,18 @@
 ---
 name: handoff
-description: Compact the current conversation into a handoff document for another agent to continue the work or re-ground in the session.
+description: "Write a handoff document for a fresh agent: continue the work in a new or compacted session, or transfer what this session covered to another session or project."
 disable-model-invocation: true
 argument-hint: What will the next session be used for?
 origin: mattpocock
 ---
 
-Write a handoff document for a fresh agent. Save it to the working directory's `.scratch/` by default; if the user names a location, use that instead. Report the saved path.
+Write a handoff document for a fresh agent — yours in a new or compacted session, or another agent's, in this project or a different one.
+
+A handoff carries what this session did or covered. For state that lives in another project's own artifacts, point at those artifacts instead of summarizing them.
+
+Save it to the working directory's `.scratch/` by default; if the user names a location, use that instead. Report the saved path.
+
+For the compaction-machinery prompts (a custom compact instruction and a resume prompt), use `compact-pair`; this skill writes the state document.
 
 If the user passed arguments, treat them as the next session's focus and tailor the doc toward it.
 
@@ -14,28 +20,28 @@ If the user passed arguments, treat them as the next session's focus and tailor 
 
 The doc opens with a **read order**: the durable artifacts the next session re-grounds from, in order, each named for what it carries.
 
-Pick the floor by the receiver's job. Sections with nothing to report say so; the case may call for more.
+The shape is free. What is not free is the receiver's needs: pick the floor by the receiver's job and cover its list, in whatever sections serve. Task when the next session continues the work, context when it absorbs what this session covered. An empty "done" list is the signal you are writing a context handoff.
 
-**Task handoff** — the next session continues the work. Six sections:
+**Task handoff** — the next session continues the work. It needs:
 
-1. **Done:** what is complete, with the evidence (test output, commit, command result).
-2. **Not done:** what remains, stated honestly, including partial work.
-3. **Facts:** the established truths the next agent needs (decisions made, paths, ids, config values).
-4. **Assumptions:** what was assumed but never verified; the next agent verifies before building on these.
-5. **Next step:** the single action to resume with.
-6. **Pitfalls:** traps and dead ends already hit; what not to retry.
+- what is complete, with the evidence (test output, commit, command result)
+- what remains, stated honestly, including partial work
+- the established truths it cannot re-derive cheaply (decisions made, paths, ids, config values)
+- what was assumed but never verified — it verifies before building on those
+- the single action to resume with
+- the traps and dead ends already hit, so it does not retry them
 
-**Context handoff** — the next session absorbs what this session covered: understanding, not a work queue. Four sections:
+**Context handoff** — the next session absorbs what this session covered: understanding, not a work queue. It needs:
 
-1. **About:** this session's topic, why it mattered, what the user wanted from it.
-2. **Arc:** the significant threads in order and where each landed: a decision with its rationale, an exploration with its outcome.
-3. **State of play:** what is settled, open, or parked (state, not a to-do list).
-4. **Pitfalls:** traps and dead ends already hit; what not to retry.
+- this session's topic, why it mattered, what the user wanted from it
+- the significant threads in order and where each landed: a decision with its rationale, an exploration with its outcome
+- what is settled, open, or parked — state, not a to-do list
+- the traps and dead ends already hit, so it does not retry them
 
-Then a **suggested skills** section naming which skills the next agent should invoke, and for what.
+Then name any skills the next agent should invoke, and for what.
 
 ## Rules
 
 - Never duplicate content already captured in other artifacts (specs, plans, ADRs, commits, diffs): reference them by path.
 - Redact sensitive information (keys, passwords, personal data) before writing.
-- State the doc's lifecycle: what retires it (refresh or delete on a named event or condition), and warn that claims decay since it does not update itself.
+- A handoff is written for one reader, not kept: one that outlives the next session states what retires it (refresh or delete on a named event or condition); a one-shot says so, and the receiver deletes it after re-grounding. Claims decay either way — the doc does not update itself.

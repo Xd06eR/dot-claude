@@ -29,9 +29,16 @@ Session leakage is prose whose vantage is the authoring session rather than the 
 - **Merged-PR citations in changelogs and postmortems** — sanctioned evidence there; the ban is on a current-state doc adopting one PR's vantage.
 - **Genre slots** — a change-story or alternatives-considered section may narrate history ("the first cut shipped X", "rejected: ..."), and project voice may use "we"; the indexical stamps ("this cut", "v5 of this note") stay banned everywhere.
 
+## Workflow
+
+1. **Scope explicitly.** Name the surface before auditing; never touch `vendor/`, `node_modules/`, or archived notes.
+2. **Audit read-only first.** Run the battery, judge every hit semantically, and read the densest prose in scope without a pattern in hand. Report the findings before fixing.
+3. **Fix owner-first.** Generated text: fix the source or generator and regenerate, never the output. Before any deletion, enumerate the passage's propositions and check the overcorrection traps below. Model- or user-visible strings are behavior, not prose: change them only with owning behavior evidence; otherwise leave them and report the deferral.
+4. **Verify.** Re-run the battery: what remains should be only sanctioned keeps and quoted evidence. Confirm every remaining citation resolves at HEAD.
+
 ## The fix
 
-Never delete alone when a passage carries factual clauses: restate each surviving fact so it stands at HEAD, then delete the transcript around it. A passage carrying none (a bare audit code, control-flow narration) is deleted outright. Verify by re-running the battery: what remains should be only sanctioned keeps and quoted evidence.
+Never delete alone when a passage carries factual clauses: restate each surviving fact so it stands at HEAD, then delete the transcript around it. A passage carrying none (a bare audit code, control-flow narration) is deleted outright.
 
 ## Overcorrection traps
 
@@ -44,17 +51,24 @@ Restating goes wrong in four recorded ways:
 
 ## Probe battery
 
-Mechanize the first pass, then judge every hit semantically; the battery over-matches by design, and no battery catches everything, so also read the densest prose in scope without a pattern in hand:
+Mechanize the first pass with `rg --hidden` (dot-directories hold the harness itself and `.agents`-style notes; ripgrep skips them by default), then judge every hit semantically. The battery over-matches by design and under-matches by nature, so also read the densest prose in scope without a pattern in hand.
 
+Per class:
+
+```sh
+rg -n --hidden '\(decision \d|\(audit [A-Z]\d|design §|plan §|design ledger|\(B ruling|\bP-I\b|\bW\d\b|\bT\d\b'   # dead session citations — keep case-sensitive: -i turns phase labels into noise
+rg -n --hidden -i '\bthis PR\b|\bthis branch\b|\bthis stack\b|\blater PRs?\b|\bprevious commits?\b|\bthis commit\b'   # stack and PR vantage
+rg -n --hidden -i '\bused to\b|\bno longer\b|\bpreviously\b|\bthe old\b|\bwas renamed\b|\bwas moved\b'   # change narration
+rg -n --hidden -i '\bv1\b|this cut|\bcut \d|\btoday\b|\bfor now\b|roadmap'   # version stamps and hedged deferrals
+rg -n --hidden -i 'rejected in review|review round|reviewer confirmed|as of v\d'   # review choreography
+rg -n --hidden -i 'probably |should be enough|should suffice|it simply|is safe —|is safe --'   # hedge residue and reviewer-addressed justification
+rg -n --hidden '§\d'   # internal section citations — external standards are keeps
 ```
-rg -n '\(decision \d|\(audit [A-Z]\d|design §|plan §|\bT\d\b|\bW\d\b|\bP-I\b'   # session codes, case-sensitive: -i turns phase labels into noise
-rg -n -i 'used to |no longer|previously|the old |this PR|this branch|this commit|this stack|later PR|previous commit|was renamed|was moved|\bv1\b|this cut|\btoday\b|roadmap|for now|probably |should be enough|it simply|is safe —|rejected in review|review round|reviewer confirmed|as of v\d|§\d'
-```
 
-Two invocation rules: exclusions go last so a later include cannot re-admit them; a zero-hit pattern proves nothing until you have seen it match a known-positive string.
+Invocation rules: exclusions go last so a later include cannot re-admit them — exclude `vendor/`, `node_modules/`, any archived-notes directory, and this skill's own directory (it quotes leaked wording as calibration; judge its self-hits as evidence, never usage). A zero-hit pattern proves nothing until it matches a known positive, and a noisy pattern proves nothing until it rejects a near-miss negative: calibrate both before trusting a corpus result.
 
-Known false positives: instrumental "used to" ("the key used to sign requests" names use, not time); `v1` as a protocol or path segment; "this PR" inside process docs about the PR workflow; `§N` citing an external standard or a committed doc that owns its numbering.
+Known false positives: instrumental "used to" ("the key used to sign requests" names use, not time); `v1` as a protocol or path segment; "this PR" inside process docs about the PR workflow; `§N` citing an external standard or a committed doc that owns its numbering; runtime "today" and recorded timestamps (prompts and tests use natural time; recorded output keeps its voice); contrastive "actually" and noun "wait" (ordinary English, not hedging).
 
 ## Scope
 
-Applies to durable text: docs, comments, reports, commit messages. Conversation is exempt. CLAUDE.md's "Write for the class, not the occasion" owns the principle; this skill is the audit instrument. Quoted evidence and recorded output (error transcripts, fixtures) keep their original voice: fix the prose around them, never the quotes. When the leaking text is generated, fix the source or generator, not the output.
+Applies to durable text: docs, comments, reports, commit messages. Conversation is exempt. CLAUDE.md's "Write for the class, not the occasion" owns the principle; this skill is the audit instrument. Quoted evidence and recorded output (error transcripts, fixtures) keep their original voice: fix the prose around them, never the quotes.
