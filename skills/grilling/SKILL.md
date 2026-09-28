@@ -1,6 +1,6 @@
 ---
 name: grilling
-description: Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
+description: "The relentless-interview engine behind grill-me and grill-with-docs: interviews the user until shared understanding, mapping decisions as a design tree."
 origin: mattpocock
 ---
 

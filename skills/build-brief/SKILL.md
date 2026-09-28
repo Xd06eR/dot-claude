@@ -1,6 +1,6 @@
 ---
 name: build-brief
-description: Produce one comprehensive build brief per feature (a group of components) from the project's spec and plan docs. Use when the user asks to build a feature whose components have been planned.
+description: Produce one comprehensive build brief per feature (a group of components) from the project's spec and plan docs. Use when the user asks to build a planned feature that has no build brief yet.
 argument-hint: <feature ... | all>
 origin: custom + mattpocock
 ---
