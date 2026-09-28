@@ -37,7 +37,7 @@ login-ui: complete (1 parked)
 
 No brief, no campaign: the work is the settled design itself. If it cannot be built in one context, stop: it needs `plan-from-design` and a brief.
 
-Build it here: failing test first (`tdd`), minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`code-review` or a fresh reviewer), output the exact commit command for the user to run, and report any ruling you made — the `Ruling:` discipline applies at any size. If the build changed what a canonical design doc states, propose `bake-design` for the affected doc.
+Build it here: call the Skill tool with "tdd" and follow it: failing test first, minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`code-review` or a fresh reviewer), output the exact commit command for the user to run, and report any ruling you made — the `Ruling:` discipline applies at any size. If the build changed what a canonical design doc states, propose `bake-design` for the affected doc.
 
 ## Pre-flight scan
 
@@ -70,10 +70,11 @@ The dispatch prompt contains exactly:
 4. The Global constraints block, verbatim.
 5. The report-file path and the report contract (below).
 6. The no-subagents rule: the builder never dispatches subagents, above all never a reviewer. Review arrives from you after the report.
+7. The TDD requirement: call the Skill tool with "tdd" before writing the first test.
 
 Never paste prior components' history into a dispatch. Choose the model explicitly: the cheapest tier that can handle the work, with a mid-tier floor for builders working from a prose brief.
 
-Builder contract: implement at the seams in the brief per the `tdd` skill (failing test first); run lint + format + type-check + the covering tests regularly and the full suite once at the end; self-review the diff; claim a status only on fresh command output (`verification-before-completion`); if a file it is creating grows beyond the brief's intent, stop and report DONE_WITH_CONCERNS rather than splitting it unilaterally (its neighbors' Interfaces blocks point at that module); write the full report to the report file (what was built per component, tests and their output, TDD evidence RED/GREEN, files changed, self-review findings, concerns); return under 15 lines: **Status per component** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT · files changed · one-line test summary · concerns · report-file path.
+Builder contract: implement at the seams in the brief per the `tdd` skill (failing test first); run lint + format + type-check + the covering tests regularly and the full suite once at the end; self-review the diff; claim a status only on fresh command output (`verification-before-completion`); if a file it is creating grows beyond the brief's intent, or it is losing track of already-built components, stop and report DONE_WITH_CONCERNS rather than splitting it unilaterally (its neighbors' Interfaces blocks point at that module); write the full report to the report file (what was built per component, tests and their output, TDD evidence RED/GREEN, files changed, self-review findings, concerns); return under 15 lines: **Status per component** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT · files changed · one-line test summary · concerns · report-file path.
 
 ### 2. Handle the report
 

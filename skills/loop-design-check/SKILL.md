@@ -1,23 +1,10 @@
 ---
 name: loop-design-check
-description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop, or when reviewing a loop before it goes automatic. Covers the judgment layer only; the mechanism layer is the built-in /loop and /schedule plus rules/common/dispatch-protocol.md.
+description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (harness-run or app-side), or when reviewing a loop before it goes automatic. Not for a one-off task or a plain timer/poll. Covers the judgment layer only (goal, verifier, stop conditions), never the wiring.
 origin: ECC
 ---
 
 > **Premise.** An LLM is a feed-forward system: prompt in → tokens out, with no built-in "steer toward the goal" across turns. To make it *behave* like a goal-oriented system, you wrap a feedback loop around it. This skill helps you **write** that loop correctly and **review** it so it won't run away.
-
-## When to use / not
-
-**Use it when:**
-
-- You want to hand a repeating task to an agent that runs over and over (write→test, test→fix, fix→verify…).
-- You already have a loop and worry it spins, cheats, or runs a wrong answer to completion.
-
-**Don't use it for:**
-
-- A one-off task → just do it; don't wrap a loop around it.
-- A plain timer / poll → use the built-in `/loop`; no design needed.
-- *How to wire the loop architecture* (pipelines → DAGs, long-run recovery) → that's the mechanism layer; see the built-in `/loop` and `/schedule` plus `rules/common/dispatch-protocol.md`. **This skill only covers "is the goal right, and will it run away" — it does not re-explain mechanism.**
 
 ## Red-line premise: two levels of feedback
 
@@ -67,9 +54,9 @@ The whole loop rides on the comparator's "is it done yet?" **The comparator can 
 | Your task | Loop type (cybernetic) | How it stops |
 |---|---|---|
 | Has a clear "done" test (write to done / a batch of images processed) | **servo** (goal-gated closed loop) | stops on reaching the goal |
-| No endpoint, must keep maintaining a state (inventory alert / scheduled health check) | **regulator** (`/loop`-style thermostat) | never stops; acts only on change (dead-band suppresses noise) |
+| No endpoint, must keep maintaining a state (inventory alert / scheduled health check) | **regulator** (thermostat-style) | never stops; acts only on change (dead-band suppresses noise) |
 | Periodic sampling, stop on a condition (watch a PR until CI is green) | **regulator with an exit** | stops when the exit condition holds |
-| Must "ensure something happens on time" | wrap the above in `/schedule` | cron fires it |
+| Must "ensure something happens on time" | wrap the above in a scheduler | cron fires it |
 
 > Rule of thumb: clear "done" test → servo; must keep maintaining, no endpoint → regulator; must "happen on time" → wrap a regulator in schedule.
 

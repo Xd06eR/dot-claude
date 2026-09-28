@@ -1,34 +1,11 @@
 ---
 name: agent-architecture-audit
-description: Use when releasing an agent app, debugging wrapper regression or tool-call failures, or auditing autonomous loops. Audits the 12-layer agent stack for wrapper regression, memory pollution, tool discipline failures, hidden repair loops, and rendering corruption. Produces severity-ranked findings with code-first fixes.
+description: "Use when releasing an agent app or auditing why it degraded (works in the playground but breaks in the wrapper; fine yesterday, hallucinating today): wrapper regressions, memory pollution, tool-discipline failures, hidden repair loops, rendering corruption across the 12-layer agent stack. Returns severity-ranked findings with code-first fixes. For a live loop that is stuck, repeating, or burning tokens, use agent-introspection-debugging; for a loop's goal or verifier design, use loop-design-check."
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 origin: ECC
 ---
 
 A diagnostic workflow for agent systems that hide failures behind wrapper layers, stale memory, retry loops, or transport/rendering mutations.
-
-## When to Activate
-
-**MANDATORY for:**
-- Releasing any agent or LLM-powered application to production
-- Shipping features with tool calling, memory, or multi-step workflows
-- Agent behavior degrades after adding wrapper layers
-- User reports "the agent is getting worse" or "tools are flaky"
-- Same model works in playground but breaks inside your wrapper
-- Debugging agent behavior for more than 15 minutes without finding root cause
-
-**Especially critical when:**
-- You've added new prompt layers, tool definitions, or memory systems
-- Different agents in your system behave inconsistently
-- The model was fine yesterday but is hallucinating today
-- You suspect hidden repair/retry loops silently mutating responses
-
-**Do not use for:**
-- General code debugging — use `diagnosing-bugs`
-- Code review — use language-specific reviewer agents
-- Security scanning — use the `security-auditor` agent
-- Agent performance benchmarking
-- Writing new features — use the appropriate workflow skill
 
 ## The 12-Layer Stack
 

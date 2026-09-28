@@ -1,33 +1,10 @@
 ---
 name: agent-introspection-debugging
-description: Use when an agent loop is stuck, repeating, or degrading. Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports.
+description: "Self-debugging for a live agent failure: stuck or repeating, burning tokens, hitting loop limits, drifting from the task, or a state mismatch between expectation and reality. Returns a failure capture, a root-cause diagnosis, and an introspection report. For structural stack audits, use agent-architecture-audit."
 origin: ECC
 ---
 
-Use this skill when an agent run is failing repeatedly, consuming tokens without progress, looping on the same tools, or drifting away from the intended task.
-
 This is a workflow skill, not a hidden runtime. It teaches the agent to debug itself systematically before escalating to a human.
-
-## When to Activate
-
-- Maximum tool call / loop-limit failures
-- Repeated retries with no forward progress
-- Context growth or prompt drift that starts degrading output quality
-- File-system or environment state mismatch between expectation and reality
-- Tool failures that are likely recoverable with diagnosis and a smaller corrective action
-
-## Scope Boundaries
-
-Activate this skill for:
-- capturing failure state before retrying blindly
-- diagnosing common agent-specific failure patterns
-- applying contained recovery actions
-- producing a structured human-readable debug report
-
-Do not use this skill as the primary source for:
-- feature verification after code changes; use `verification-before-completion`
-- framework-specific debugging when a narrower skill already exists
-- runtime promises the current harness cannot enforce automatically
 
 ## Four-Phase Loop
 
@@ -135,7 +112,7 @@ Good pattern:
 
 ## Related skills
 
-- Use `verification-before-completion` after recovery if code was changed.
+- Call the Skill tool with "verification-before-completion" after recovery if code was changed.
 - Use `plan-review` when the issue is not technical failure but decision ambiguity.
 
 ## Output Standard

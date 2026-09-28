@@ -1,18 +1,11 @@
 ---
 name: inherit-legacy-style
-description: Onboard an AI coding agent onto a hand-written legacy project without style drift (the model imposing its pretrained mainstream idioms). Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved. Returns an enforceable .ai-style-rules.md codifying the codebase's implicit conventions. Language- and framework-agnostic; aligns meta-architecture only, not syntax.
+description: Onboard an AI coding agent onto a hand-written legacy project without style drift (the model imposing its pretrained mainstream idioms). Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved, or when AI-generated code is drifting from existing conventions. Returns an enforceable .ai-style-rules.md. Aligns meta-architecture only, not syntax.
 allowed-tools: Read, Glob, Grep, Bash, Edit, Write, AskUserQuestion
 origin: ECC
 ---
 
 Prevents AI code style drift in legacy projects by scanning the codebase for implicit conventions across 4 meta-architecture dimensions. Resolves conflicts with the user one at a time, and crystallizes the consensus into an enforceable `.ai-style-rules.md`. Fully language- and framework-agnostic.
-
-## When to Activate
-
-- User types `/inherit-legacy-style`
-- User mentions onboarding AI onto a hand-written legacy project
-- User is worried about AI-generated code "drifting" from existing project conventions
-- User wants to extract and codify their project's implicit coding rules
 
 ## Prerequisites
 
@@ -127,17 +120,3 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 - `init` — initialize a new CLAUDE.md with codebase documentation
 - `code-review` — multi-agent review of diffs for correctness and style issues
 - `code-simplifier` — review code for reuse and simplification opportunities
-
-## Examples
-
-1. **First-time onboarding**
-   - User: "Help me onboard AI to this older codebase without changing its style."
-   - Action: Run Branch A full-scan → measure scale → scan 4 dimensions → grill conflicts → generate `.ai-style-rules.md` → offer hook strength (soft/hard/none).
-
-2. **Incremental update after team changes**
-   - User: "We added a new module; keep existing style rules intact."
-   - Action: Run Branch B incremental sniff → compare Git deltas to recorded rules → grill any new conflicts → append evolution log without overwriting.
-
-3. **Enforcing DONTs via CLAUDE.md**
-   - User: "Make sure all new code stays consistent with the project's rules."
-   - Action: Soft hook installed → `.ai-style-rules.md` auto-loaded every session → every code-writing task opens with compliance declaration, reusing exemplar patterns and avoiding DONTs.

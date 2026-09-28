@@ -1,6 +1,6 @@
 ---
 name: session-sync
-description: "Sync work across sessions: §Start re-grounds from TODO.md; §End captures state into TODO.md and PROGRESS-LOG.md."
+description: "Sync sessions: §Start re-grounds from TODO.md; §End captures state to TODO.md and PROGRESS-LOG.md."
 disable-model-invocation: true
 argument-hint: <start | end>
 origin: custom
@@ -30,7 +30,7 @@ Read enough to echo state accurately, then wait.
 
 1. **Rewrite `TODO.md`'s "▶ Next-session resume" block** per the TODO.md format below. This block is the only part of `TODO.md` that gets rewritten.
 2. **Condense mechanically.** If `TODO.md` exceeds ~250 lines OR ~10 KB, fold still-relevant old material into the resume block now, not when someone notices. Line counts miss prose walls; the byte threshold is the backstop for that failure shape.
-3. **Verify capture before logging.** If the session produced design rulings, confirm each one landed in `OPEN-QUESTIONS.md`, an ADR, or a design doc. The log entry records the session; it is not the capture net for rulings. Then propose `design-audit` `full` on the transcript: completeness, consistency's said-vs-written, and soundness on rulings still unbaked; state the spend (how many agents, reading what) and wait for the call; skip the proposal when a bake already ran `full` this session. Soundness findings land in the entry itself, not only in the report.
+3. **Verify capture before logging.** If the session produced design rulings, confirm each one landed in `OPEN-QUESTIONS.md`, an ADR, or a design doc. The log entry records the session; it is not the capture net for rulings. Then propose `design-audit` `full` on the transcript: completeness, consistency's said-vs-written, and soundness on rulings still unbaked; state the spend (how many agents, reading what) and wait for the call; on acceptance, call the Skill tool with "design-audit" and run the three checks; skip the proposal when a bake already ran `full` this session. Soundness findings land in the entry itself, not only in the report.
 4. **Append to `PROGRESS-LOG.md`**, one dated entry: what was decided and why. Record the number or constraint that killed each alternative, rejected proposals with their reasons, and corrections the user made mid-discussion. The outcome lives in the state docs; the reasoning lives here.
 5. **Condense mechanically.** If `PROGRESS-LOG.md` exceeds ~750 lines OR ~75 KB, delete the oldest whole entries down under ~500 lines / ~50 KB, so an ordinary session's appends don't re-trigger the trim. Confirm the outgoing entries are committed first — deletion hands the verbatim to git history, which is the archive; the file is the recent window. No archive file, no marker line.
 6. **Cross-check consistency.** `TODO.md` against `OPEN-QUESTIONS.md` and the two INDEXes — no gaps, statuses consistent: each feature row names its current phase action (bake / plan / review-the-plan / build / review), a `#NN` reference resolves to a live register entry (bake retires it), and the INDEXes carry no feature the task table lacks, nor the reverse.
