@@ -48,7 +48,7 @@ Empty states get special weight: they are features and need warmth, a primary ac
 **Open-question triggers:**
 - any feature whose loading, empty, error, success, or partial state is unspecified
 - "what does the user see while this loads, when it is empty, when it fails" unanswered
-- state the concrete default that gets shipped by omission (unspecified empty state means the engineer ships "No items found.")
+- state the concrete default that gets shipped by omission
 
 ### User journey and emotional arc
 
@@ -93,14 +93,12 @@ First classify the surface by the visitor's win, then hold it to the matching ru
 
 **Universal rules the plan must satisfy:**
 - define CSS variables for the color system
-- no default font stacks (Inter, Roboto, Arial, system-ui)
-- one job per section
+- no default font stacks (Inter, Roboto, Arial, system-ui, -apple-system)
 - "if deleting 30% of the copy improves it, keep deleting"
 - cards earn their existence
 - never body text under 16px or contrast under 4.5:1 on body
 - never placeholder-as-only-label
 - preserve visited versus unvisited link color
-- never float a heading equidistant between two sections
 
 **Landing rules:**
 - first viewport reads as one composition (a poster, not a dashboard)
@@ -119,7 +117,7 @@ First classify the surface by the visitor's win, then hold it to the matching ru
 - section headings that name the area ("Plan status", "Selected KPIs")
 
 **Read rules:**
-- measure 65-75ch, one reading column, headings closer to what follows than to what precedes
+- measure 65-75ch, one reading column
 - wayfinding is a feature: where am I, what is next, where do I search
 - a docs index is Read, not Persuade: no hero, no CTA theater
 
@@ -167,7 +165,6 @@ First classify the surface by the visitor's win, then hold it to the matching ru
 - colored left-border on cards
 - generic hero copy ("Welcome to X", "Unlock the power of...", "Your all-in-one solution for...")
 - cookie-cutter section rhythm where every section is the same height
-- system-ui or -apple-system as the primary display or body font, the "I gave up on typography" signal
 
 **Open-question triggers:**
 - any "clean, modern UI", "cards with icons", "dashboard with widgets", or "hero section" left generic (what makes this THIS product, not every template?)
@@ -193,7 +190,7 @@ First classify the surface by the visitor's win, then hold it to the matching ru
 **What to probe:**
 - Does the plan specify each viewport with an intentional layout change, not just "stacked on mobile"?
 
-Mobile is the same rules at higher stakes: scarce real estate, no hover, affordances that stay visible, touch targets at least 44px, ruthless prioritization of what is needed in a hurry. Accessibility has to be written into the plan or it will not exist: keyboard navigation patterns, ARIA landmarks, focus order, screen-reader behavior, color contrast (at least 4.5:1 on body text), and touch-target sizes.
+Mobile is the same rules at higher stakes: scarce real estate, no hover, affordances that stay visible, touch targets at least 44px, ruthless prioritization of what is needed in a hurry. Accessibility has to be written into the plan or it will not exist: keyboard navigation patterns, ARIA landmarks, focus order, screen-reader behavior, color contrast, and touch-target sizes.
 
 **Red flags:**
 - "responsive" asserted with no per-viewport intent

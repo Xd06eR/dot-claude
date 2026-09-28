@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: Review a plan, spec, or PRD before build through four independent lenses dispatched as parallel agents, plus a security pass when the plan touches a security surface, merging everything into one severity-ranked report that surfaces only the genuine taste calls for the user.
+description: Review a plan, spec, or PRD before build. Returns one severity-ranked report surfacing only the genuine taste calls.
 argument-hint: "[lenses: all | ceo | design | devex | eng]"
 allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
@@ -150,7 +150,7 @@ Lenses: CEO, Design, DevEx, Eng[, Security]   Overall verdict: <verdict>
 
 Skip the "Needs your decision" section when there are none.
 
-One more section when the lenses produced non-finding output: `### From the lenses` carries eng's "NOT in scope" and "What already exists" lists and design's follow-up recommendations. Skip it when empty.
+One more section when the lenses produced non-finding output: `### From the lenses` carries eng's "NOT in scope" and "What already exists" lists, design's follow-up recommendations, and devex's post-build DX verification follow-up. Skip it when empty.
 
 ## Step 6: Apply changes on request
 

@@ -12,12 +12,8 @@ Taste instincts that shape every finding (internalized, not a checklist):
 - **Inversion:** for every "how does this win?" also ask "what would make it fail?"
 - **Focus as subtraction:** the primary value-add is deciding what NOT to do. Do fewer things, better.
 - **Proxy skepticism:** is the metric or feature still serving users, or has it become self-referential?
-- **Speed calibration:** roughly 70% of the information is enough to decide a reversible call.
 - **Leverage obsession:** find the input where small effort creates outsized output. Tooling is the ultimate leverage.
-- **Temporal depth:** think in multi-year arcs. Apply regret minimization to major bets.
-- **Subtraction in design:** as little as possible. If a UI element does not earn its pixels, cut it.
 - **Design for trust:** every interface decision either builds or erodes user trust.
-- **Edge-case paranoia:** empty states, 47-character names, zero results, first-time vs power user are features, not afterthoughts.
 
 ## Scope posture
 
@@ -30,7 +26,7 @@ Where the plan's intended ambition is ambiguous, emit the posture choice as an o
 - **Hold scope:** the scope is right. Make it bulletproof. Do not silently reduce or expand.
 - **Reduction:** the plan is overbuilt. Find the minimum viable version that ships the core outcome and cut the rest.
 
-Context defaults for inferring posture: greenfield feature leans expansion; enhancement of an existing system leans selective; bug fix, hotfix, or refactor leans hold; a plan touching more than 15 files leans reduction (a posture prior — the 8-file complexity smell in Ambition and scope calibration is a separate bar, applied to the plan itself).
+Context defaults for inferring posture: greenfield feature leans expansion; enhancement of an existing system leans selective; bug fix, hotfix, or refactor leans hold; a plan touching more than 15 files leans reduction (a posture prior; the 8-file complexity smell itself lives in the eng lens).
 
 An explicit "go big" or "cathedral" signal means expansion; "hold scope but tempt me" or "cherry-pick" means selective.
 
@@ -84,13 +80,11 @@ Produces the "dream-state delta" finding.
 - In expansion, what is the version that delivers roughly 10x the value for 2x the effort, and what would the best engineer with perfect taste build (start from what the user would feel, not from architecture)?
 - What 5+ adjacent 30-minute touches would make the feature sing?
 - In hold or reduction, what is the minimum set of changes that achieves the stated goal, and what can be a follow-up PR?
-- Does the plan touch more than 8 files or add more than 2 new classes or services (a complexity smell to challenge)?
 - For every scope item, is the value worth the effort (return on effort), scored in both human-team and AI-compressed time?
 
 **Red flags:**
 - gold-plating with no user payoff
 - a shortcut chosen only because human time was assumed scarce
-- more than 8 files or 2 new services without justification
 - separable work bundled as "must ship together"
 
 **Open-question triggers:**
@@ -104,7 +98,7 @@ Each accepted expansion or cut is the user's opt-in, never a silent scope change
 
 **What to probe:**
 - Which implementation-time decisions should be resolved now rather than "figured out later"?
-- Hour 1 foundations (what must the implementer know?), hours 2-3 core logic (what ambiguities will they hit?), hours 4-5 integration (what will surprise them?), hour 6-plus polish and tests (what will they wish they had planned for?). These are human-team hours; AI compresses them, but the decisions are identical.
+- Hour 1 foundations (what must the implementer know?), hours 2-3 core logic (what ambiguities will they hit?), hours 4-5 integration (what will surprise them?), hour 6-plus polish and tests (what will they wish they had planned for?).
 
 **Red flags:** Load-bearing ambiguities deferred to implementation; "we'll figure it out" on decisions that shape the foundation.
 
@@ -123,7 +117,7 @@ Each accepted expansion or cut is the user's opt-in, never a silent scope change
 
 ### Retrospective and recurring-problem smell
 
-**What to probe:**
+**What to probe (repo-visible evidence only — this reviewer has no git history: INDEX.md review marks, CHANGELOG churn, ADR counts, repeated fix notes in docs):**
 - Has this area been through prior review cycles, refactors, or reverts?
 - Does the plan re-touch previously problematic code?
 
@@ -131,7 +125,7 @@ Recurring problem areas are architectural smells, not isolated bugs, and deserve
 
 **Red flags:** The same area breaking repeatedly; the plan patches a symptom in code that has churned before.
 
-**Open-question triggers:** Plan re-touches a churned area without addressing the underlying architectural smell.
+**Open-question triggers:** Plan re-touches a churned area without addressing the underlying architectural smell; churn suspected but not confirmable from repo-visible evidence.
 
 ### Long-term trajectory and tech debt
 
@@ -152,7 +146,7 @@ Recurring problem areas are architectural smells, not isolated bugs, and deserve
 
 **Ship** when the premise is the right problem, scope is calibrated to the moment (neither gold-plated nor shortcut), every data path and every failure mode is named with visible outcomes, security, observability, and rollback are treated as scope rather than afterthoughts, the reversibility of every one-way door is acknowledged, and every deferred item is written down. Zero silent failures.
 
-**Block** on any silent failure (an unrescued error the user never sees), an unmitigated high-likelihood and high-impact security finding, a one-way door taken without acknowledgment, a missing rollback path on a risky deploy, or a premise that chases a proxy instead of the real outcome. These are critical gaps.
+**Block** on any silent failure (an unrescued error the user never sees), a one-way door taken without acknowledgment, a missing rollback path on a risky deploy, or a premise that chases a proxy instead of the real outcome. These are critical gaps.
 
 **Needs user decision** (surface as open questions, do not settle them):
 - the scope posture when the plan's ambition level is ambiguous

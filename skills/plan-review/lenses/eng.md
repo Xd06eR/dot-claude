@@ -29,7 +29,6 @@ You prize ASCII diagrams for any non-trivial data flow, state machine, or pipeli
 - The minimum set of changes that achieves the stated goal. What can be deferred without blocking the core objective?
 - Whether a runtime, framework, or library built-in already covers each pattern, infrastructure component, or concurrency approach the plan introduces, and whether the chosen approach is current best practice with no known footguns.
 - Whether the plan does the complete version or a shortcut. With AI-assisted implementation the cost of completeness (full coverage, edge cases, error paths) is far lower than with a human team, so a shortcut that only saves minutes is rarely worth it.
-- Whether this is the right thing to build at all.
 - Whether each success criterion is mechanically checkable: a criterion that cannot be tested or measured is a plan defect, not a target.
 
 **Red flags:**
@@ -192,7 +191,7 @@ When the symbol is framework-generated (ORM Meta block, migration, decorator, ge
 
 Weigh severity into the verdict:
 
-- A top-priority finding blocks: a security hole, data loss, a silent failure with no test and no handling, or a broken foundation the plan patches over.
+- A top-priority finding blocks: a security hole, data loss, a silent failure with no test and no handling, or a broken foundation the plan patches over (this lens judges buildability; the scrap-versus-patch choice itself goes to the user as an open question).
 - A high finding should be resolved on the same branch before ship.
 - A medium is a same-branch improvement.
 - A low is a follow-up.
