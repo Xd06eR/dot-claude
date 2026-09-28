@@ -14,7 +14,7 @@ Post-ship documentation sweep. After a release lands (or a feature branch is abo
 Most updates are obvious and direct. Stop and ask in plain text only for:
 
 - Risky or subjective doc changes: narrative, philosophy, security model, section removal, large rewrites.
-- A VERSION bump decision (never bump silently).
+- VERSION drift: code changes on the branch but no version bump (route back to `ship`'s Step 6).
 - Cross-doc contradictions that are narrative, not factual.
 - Capturing newly-deferred work in TODOS.
 
@@ -28,11 +28,11 @@ Never stop for:
 - marking completed TODOs
 - fixing cross-doc factual mismatches
 
-Never do: overwrite or regenerate CHANGELOG entries (polish wording only), bump VERSION without asking, or use a Write tool on CHANGELOG.md (Edit with exact matches only).
+Never do: overwrite or regenerate CHANGELOG entries (polish wording only), bump VERSION (that is `ship`'s step), or use a Write tool on CHANGELOG.md (Edit with exact matches only).
 
 ## Step 1: Detect platform and base branch
 
-Same detection as `ship`. Detect the host from the remote:
+Detect the host from the remote:
 
 ```bash
 git remote get-url origin 2>/dev/null
@@ -157,22 +157,17 @@ Skip if no TODOS.md (or equivalent backlog file) exists.
 2. **Stale descriptions.** If a TODO references files or components that changed significantly, ask in plain text whether to update, complete, or leave it.
 3. **New deferred work.** Scan the diff for `TODO`, `FIXME`, `HACK`, `XXX` comments. For each one that represents meaningful deferred work (not a trivial inline note), ask in plain text whether to capture it in TODOS.
 
-## Step 10: VERSION bump question
+## Step 10: VERSION consistency check
 
-**Never bump VERSION without asking.**
+This skill never bumps VERSION; the bump decision is `ship`'s Step 6. What you do here is verify the shipped version and the docs agree:
 
 1. No VERSION file (or equivalent version source like `package.json` `.version`, `pyproject.toml`, `Cargo.toml`): skip silently.
-
-2. Check whether VERSION was already bumped on this branch:
+2. Check whether VERSION was bumped on this branch:
    ```bash
    git diff <base>...HEAD -- VERSION
    ```
-
-3. **Not bumped:** ask in plain text whether to bump PATCH (docs ship alongside code), MINOR (significant standalone release), or skip (docs-only changes rarely warrant a bump). Default recommendation: skip. Apply the chosen bump only after the user confirms.
-
-4. **Already bumped:** read the CHANGELOG entry for the current VERSION. Check whether the bump covers the full scope of this branch (are there significant changes not mentioned in the CHANGELOG entry?). If coverage is complete, say so. If significant changes are uncovered, ask in plain text whether to bump again or fold the new changes into the existing entry.
-
-Preserve the repo's existing VERSION format (segment count, `v` prefix). Sanity-check the new number is free in the repo's tag style: `git tag -l "<new>" "v<new>"` should return nothing.
+3. **Not bumped:** docs-only changes need no bump — continue. If the branch carries code changes that lack a version bump, stop and tell the user to re-run `ship`'s version step.
+4. **Already bumped:** read the CHANGELOG entry for the current VERSION. If significant branch changes are uncovered by it, ask in plain text whether to fold them into the existing entry or route back to `ship`.
 
 ## Step 11: Output the commit, push, and PR-body update
 
@@ -216,8 +211,6 @@ EOF
 
 If no PR exists yet, skip the body update with a note. If `gh pr edit` fails, warn and continue: the documentation changes are still in the commit.
 
-If a VERSION bump happened here after `ship` already created the PR, and the PR title carries a `v<X.Y.Z>` prefix that is now stale, include a title-update line in the block (`gh pr edit --title "v<new>: <summary>"`). Apply the repo's existing title convention; do not impose one.
-
 ## Step 12: Documentation health summary
 
 Print a scannable summary of every doc file's status:
@@ -252,7 +245,7 @@ If coverage is complete and no diagrams drifted, output: "Coverage: all shipped 
 
 - **Never run the commit, push, or PR-edit commands yourself.** Prepare and output them; the user runs them.
 - **Never clobber CHANGELOG entries.** Polish wording only, via Edit with exact matches.
-- **Never bump VERSION silently.** Always ask first.
+- **Never bump VERSION.** Drift or a missing bump routes back to `ship`'s Step 6 (Step 10).
 - **Read a file before editing it.**
 - **Be explicit about what changed.** Every edit gets a one-line summary naming the specific change.
 - **Coverage map informs, never generates.** Flag gaps in the PR body; do not auto-write missing doc pages. Suggest `document-generate` as the follow-up when gaps are significant.

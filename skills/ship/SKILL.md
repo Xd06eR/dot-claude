@@ -9,7 +9,7 @@ Take a finished, tested feature branch to a reviewable, mergeable state: merge t
 
 **Git safety rule (non-negotiable):** this skill never runs the commit, push, or PR-create commands, and never mutates a remote. It does the local, reversible prep itself (merge base, run tests, edit VERSION and CHANGELOG) and OUTPUTS the rest as a command block for the user to run by hand. The final terminal action is always the user's.
 
-Run the prep straight through without asking for trivial confirmations. Stop only for: being on the base branch, merge conflicts you cannot safely resolve, failing tests introduced by this branch, or a MINOR/MAJOR version call worth flagging.
+Run the prep straight through without asking for trivial confirmations. Stop only for: being on the base branch, merge conflicts you cannot safely resolve, failing tests introduced by this branch, or a VERSION bump decision (Step 6 proposes it and waits).
 
 ## Step 1: Detect platform and base branch
 
@@ -97,7 +97,7 @@ Find the version source and bump it. Bump relative to the **base branch** versio
    ```bash
    git show origin/<base>:VERSION 2>/dev/null   # or read the base package.json version
    ```
-3. Decide the level from the diff, then auto-apply it. PATCH silently. For MINOR or MAJOR, write it but flag it plainly ("Bumped MINOR (new X). Reply if you'd prefer PATCH or MAJOR and I'll rewrite"). The edit is reversible and the user reviews it before committing, so this does not block. Levels:
+3. Decide the level from the diff, then propose the bump in plain text and apply it only after the user confirms ("Proposing MINOR: 2.4.1 → 2.5.0 (new X). Confirm, or name another level."). Levels:
    - **PATCH:** bug fixes, small tweaks, config, refactors with no new surface.
    - **MINOR:** a new feature, route, module, or migration.
    - **MAJOR:** a breaking change or a deliberate milestone.
