@@ -1,17 +1,8 @@
 ---
 name: make-interfaces-feel-better
-description: Apply concrete design-engineering details that make interfaces feel polished. Use when reviewing or improving UI spacing, typography, borders, shadows, motion, hit areas, icons, text wrapping, and interaction states.
+description: "Apply the small design-engineering details that compound into a polished interface: spacing, radius, optical alignment, shadows, text wrapping, hit areas, and CSS-level interaction states. Use when the UI feels off, flat, generic, cramped, or unfinished, or when a frontend review needs concrete before/after recommendations. For motion-system work (motion/react, springs, tokens), use motion-ui."
 origin: ECC
 ---
-
-Use this skill for the small design-engineering details that compound into a more polished interface.
-
-## When to Use
-
-- The user says the UI feels off, flat, generic, cramped, jumpy, or unfinished.
-- You are building controls, cards, lists, dashboards, navigation, forms, or toolbars.
-- A component needs hover, active, focus, enter, exit, loading, or empty states.
-- A frontend review needs specific before/after recommendations.
 
 ## Core Principles
 
@@ -78,7 +69,7 @@ Good motion defaults:
 
 - Enter: combine opacity, small `translateY`, and optionally blur.
 - Exit: shorter and quieter than enter, usually 150ms.
-- Press: `scale(0.96)` for tactile buttons, with a way to disable it when the movement distracts.
+- Press: `scale(0.95)` for tactile buttons, with a way to disable it when the movement distracts.
 - Icon swaps: cross-fade with opacity, scale, and blur instead of instant visibility toggles.
 
 ### Transition Scope
@@ -97,7 +88,7 @@ Use `will-change` only for first-frame stutter on compositor-friendly properties
 
 ### Hit Areas
 
-Interactive controls should have at least a 40x40px hit area, ideally 44x44px where the layout allows it. Expand with a pseudo-element when the visible icon is smaller, but do not let expanded hit areas overlap.
+Interactive controls should have at least a 44x44px hit area. Expand with a pseudo-element when the visible icon is smaller, but do not let expanded hit areas overlap.
 
 ## Review Output
 

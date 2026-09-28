@@ -1,54 +1,22 @@
 ---
 name: search-first
-description: Use when about to write custom code for a problem that may have existing solutions. Research-before-coding workflow. Search for existing tools, libraries, and patterns before writing custom code.
+description: "Use when about to write custom code for a problem that may have existing solutions: a new utility, helper, or abstraction, or adding a dependency or integration. Search repo, registries, GitHub, MCP, and skills before building."
 origin: ECC
 ---
 
-Systematizes the "search for existing solutions before implementing" workflow.
+Systematizes the "search for existing solutions before implementing" workflow. Trivial checks run inline through the channel table; non-trivial functionality dispatches a research subagent.
 
-## Trigger
+## Channels and preflight
 
-Use this skill when:
+Check only the channels relevant to the task and project. State honestly which channels were searched and which were unavailable — an unavailable channel is not "nothing found".
 
-- Starting a new feature that likely has existing solutions
-- Adding a dependency or integration
-- The user asks "add X functionality" and you're about to write code
-- Before creating a new utility, helper, or abstraction
-
-## Workflow
-
-```
-┌─────────────────────────────────────────────┐
-│  0. TOOL AVAILABILITY PREFLIGHT             │
-│     Check search channels before relying on │
-│     them; report skipped channels honestly  │
-├─────────────────────────────────────────────┤
-│  1. NEED ANALYSIS                           │
-│     Define what functionality is needed     │
-│     Identify language/framework constraints │
-├─────────────────────────────────────────────┤
-│  2. PARALLEL SEARCH (researcher agent)      │
-│     ┌──────────┐ ┌──────────┐ ┌──────────┐  │
-│     │  npm /   │ │  MCP /   │ │  GitHub /│  │
-│     │  PyPI    │ │  Skills  │ │  Web     │  │
-│     └──────────┘ └──────────┘ └──────────┘  │
-├─────────────────────────────────────────────┤
-│  3. EVALUATE                                │
-│     Rate candidate fit: strong, partial,    │
-│     or weak, per axis: functionality,       │
-│     maint, community, docs, license, deps   │
-├─────────────────────────────────────────────┤
-│  4. DECIDE                                  │
-│     ┌─────────┐  ┌──────────┐  ┌─────────┐  │
-│     │  Adopt  │  │  Extend  │  │  Build  │  │
-│     │ as-is   │  │  /Wrap   │  │  Custom │  │
-│     └─────────┘  └──────────┘  └─────────┘  │
-├─────────────────────────────────────────────┤
-│  5. IMPLEMENT                               │
-│     Install package / Configure MCP /       │
-│     Write minimal custom code               │
-└─────────────────────────────────────────────┘
-```
+| Channel | Check | If missing |
+|---------|-------|------------|
+| Repository search | `rg --files` and targeted `rg` queries | State that only visible files were inspected |
+| Package registry | `npm --version`, `python -m pip --version`, or project package manager | Use web/docs search and avoid claiming registry coverage |
+| GitHub CLI | `gh auth status` | Use public web or local git history only |
+| MCP/docs tools | Available tool list or local MCP config | Fall back to official docs/web search |
+| Skills directory | `ls ~/.claude/skills ~/.codex/skills` where applicable | Say no local skill catalog was available |
 
 ## Decision matrix
 
@@ -59,104 +27,9 @@ Use this skill when:
 | Multiple weak matches | **Compose** — combine 2-3 small packages |
 | Nothing suitable found | **Build** — write custom, but informed by research |
 
-## How to use
+## Full search (non-trivial functionality)
 
-### Step 0: Tool availability preflight
-
-This is agent guidance, not an executable setup script. Check only the channels that are relevant to the task and project in front of you.
-
-| Channel | Check | If missing |
-|---------|-------|------------|
-| Repository search | `rg --files` and targeted `rg` queries | State that only visible files were inspected |
-| Package registry | `npm --version`, `python -m pip --version`, or project package manager | Use web/docs search and avoid claiming registry coverage |
-| GitHub CLI | `gh auth status` | Use public web or local git history only |
-| MCP/docs tools | Available tool list or local MCP config | Fall back to official docs/web search |
-| Skills directory | `ls ~/.claude/skills ~/.codex/skills` where applicable | Say no local skill catalog was available |
-
-### Quick mode (inline)
-
-Before writing a utility or adding functionality, mentally run through:
-
-0. Does this already exist in the repo? → `rg` through relevant modules/tests first
-1. Is this a common problem? → Search npm/PyPI
-2. Is there an MCP for this? → Check `~/.claude/settings.json` and search
-3. Is there a skill for this? → Check `~/.claude/skills/`
-4. Is there a GitHub implementation/template? → Run GitHub code search for maintained OSS before writing net-new code
-
-### Full mode (agent)
-
-For non-trivial functionality, launch the researcher agent:
-
-```
-Agent(subagent_type="general-purpose", prompt="
-  Research existing tools for: [DESCRIPTION]
-  Language/framework: [LANG]
-  Constraints: [ANY]
-
-  Search: npm/PyPI, MCP servers, Claude Code skills, GitHub
-  Return: Structured comparison with recommendation
-")
-```
-
-Older Claude Code docs may call this `Task(...)`; use the current agent/subagent tool name exposed by the active harness.
-
-## Search shortcuts by category
-
-### Development tooling
-
-- Linting → `eslint`, `ruff`, `textlint`, `markdownlint`
-- Formatting → `prettier`, `black`, `gofmt`
-- Testing → `jest`, `pytest`, `go test`
-- Pre-commit → `husky`, `lint-staged`, `pre-commit`
-
-### AI/LLM integration
-
-- Claude SDK → Context7 for latest docs
-- Prompt management → Check MCP servers
-- Document processing → `unstructured`, `pdfplumber`, `mammoth`
-
-### Data & APIs
-
-- HTTP clients → `httpx` (Python), `ky`/`undici` (Node)
-- Validation → `zod` (TS), `pydantic` (Python)
-- Database → Check for MCP servers first
-
-### Content & publishing
-
-- Markdown processing → `remark`, `unified`, `markdown-it`
-- Image optimization → `sharp`, `imagemin`
-
-## Examples
-
-### Example 1: "Add dead link checking"
-
-```
-Need: Check markdown files for broken links
-Search: npm "markdown dead link checker"
-Found: textlint-rule-no-dead-link (fit: strong)
-Action: ADOPT — npm install textlint-rule-no-dead-link
-Result: Zero custom code, battle-tested solution
-```
-
-### Example 2: "Add HTTP client wrapper"
-
-```
-Need: Resilient HTTP client with retries and timeout handling
-Search: npm "http client retry", PyPI "httpx retry"
-Found: got (Node) with retry plugin, httpx (Python) with built-in retry
-Action: ADOPT — use got/httpx directly with retry config
-Result: Zero custom code, production-proven libraries
-```
-
-### Example 3: "Add config file linter"
-
-```
-Need: Validate project config files against a schema
-Search: npm "config linter schema", "json schema validator cli"
-Found: ajv-cli (fit: strong)
-Action: ADOPT + EXTEND — install ajv-cli, write project-specific schema
-Result: 1 package + 1 schema file, no custom validation logic
-```
+Dispatch a research subagent (per `~/.claude/rules/common/dispatch-protocol.md`) naming the need, the language/framework, the constraints, and the channels from the table. Returns: a structured comparison with a recommendation.
 
 ## Anti-patterns
 
