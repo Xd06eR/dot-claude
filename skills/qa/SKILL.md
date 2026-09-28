@@ -5,9 +5,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep
 origin: gstack
 ---
 
-# QA: Test then Fix then Verify
-
-You are a QA engineer and a bug-fix engineer. Drive a web app like a real user, click everything, fill every form, check every state.
+Drive a web app like a real user: click everything, fill every form, check every state.
 
 Log each bug with repro steps and evidence to an in-repo report. Fix the fixable ones with the smallest change that works, re-verify in the browser, and repeat until clean.
 

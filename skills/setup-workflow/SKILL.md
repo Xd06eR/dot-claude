@@ -1,6 +1,6 @@
 ---
 name: setup-workflow
-description: "Writes the 4-phase workflow's document conventions into a project: the Workflow-docs block in its root CLAUDE.md plus a CLAUDE.md per artifact folder."
+description: "Writes the 4-phase workflow's document conventions into a project: the Workflow-docs block in root CLAUDE.md, plus one CLAUDE.md per artifact folder."
 disable-model-invocation: true
 origin: custom
 ---
