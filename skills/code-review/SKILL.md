@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Comprehensive code review of a PR or diff using specialized agents, with cross-agent dedup and severity normalization. Run before merging a PR.
+description: Comprehensive code review of a diff or PR. Run when a diff needs an independent pass before it ships. Returns deduplicated, severity-ranked findings.
 argument-hint: "[aspects: all | code | tests | errors | types | spec | simplify]"
 origin: pr-review-toolkit + mattpocock + code-review plugin
 ---

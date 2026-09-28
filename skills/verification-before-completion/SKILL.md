@@ -23,13 +23,9 @@ If you haven't run the verification command in this message, you cannot claim it
 ```
 BEFORE claiming any status or expressing satisfaction:
 
-1. IDENTIFY: What command proves this claim?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
-   - If NO: State actual status with evidence
-   - If YES: State claim WITH evidence
-5. ONLY THEN: Make the claim
+1. IDENTIFY: what command proves this claim?
+2. RUN it fresh and READ the full output (exit code, failure count)
+3. ONLY THEN: make the claim WITH the evidence
 
 Skip any step = lying, not verifying
 ```
@@ -46,28 +42,19 @@ Skip any step = lying, not verifying
 | Agent completed | VCS diff shows changes | Agent reports "success" |
 | Requirements met | Line-by-line checklist | Tests passing |
 
-## Red Flags - STOP
+## Rationalizations and red flags
 
-- Using "should", "probably", "seems to"
-- Expressing satisfaction before verification ("Great!", "Perfect!", "Done!", etc.)
-- About to commit/push/PR without verification
-- Trusting agent success reports
-- Relying on partial verification
-- Thinking "just this once"
-- Tired and wanting work over
-- **ANY wording implying success without having run verification**
-
-## Rationalization Prevention
-
-| Excuse | Reality |
+| Excuse / flag | Reality |
 |--------|---------|
-| "Should work now" | RUN the verification |
+| "Should work now" / "seems to" / "probably" | RUN the verification |
+| Satisfaction before verification ("Great!", "Perfect!", "Done!") | Evidence first, satisfaction after |
+| Commit/push/PR without verification | Verify first, always |
 | "I'm confident" | Confidence ≠ evidence |
 | "Just this once" | No exceptions |
 | "Linter passed" | Linter ≠ compiler |
 | "Agent said success" | Verify independently |
-| "I'm tired" | Exhaustion ≠ excuse |
 | "Partial check is enough" | Partial proves nothing |
+| "I'm tired" | Exhaustion ≠ excuse |
 | "Different words so rule doesn't apply" | Spirit over letter |
 
 ## Key Patterns
