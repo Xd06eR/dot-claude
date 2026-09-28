@@ -1,6 +1,6 @@
 ---
 name: redesign-existing-projects
-description: Upgrades existing websites and apps to premium quality. Audits current design, identifies generic AI patterns, and applies high-end design standards without breaking functionality. Works with any CSS framework or vanilla CSS. Use when an existing site or app looks generic or dated and must be upgraded in place.
+description: "Upgrades existing websites and apps to premium quality in place: audits the current design, removes generic AI patterns, and applies high-end design standards without breaking functionality or migrating the stack. Use when an existing site or app looks generic or dated. For new marketing UI designed from a brief, use design-taste-frontend."
 origin: taste-skill
 ---
 
@@ -11,6 +11,8 @@ When applied to an existing project, follow this sequence:
 1. **Scan** — Read the codebase. Identify the framework, styling method (Tailwind, vanilla CSS, styled-components, etc.), and current design patterns.
 2. **Diagnose** — Run through the audit below. List every generic pattern, weak point, and missing state you find.
 3. **Fix** — Apply targeted upgrades working with the existing stack. Do not rewrite from scratch. Improve what's there.
+
+Mode and preservation calls (preserve vs overhaul, what never changes silently) per `~/.claude/skills/design-taste-frontend/references/redesign-protocol.md`.
 
 ## Design Audit
 
@@ -62,7 +64,7 @@ Check for these problems and fix them:
 ### Interactivity and States
 
 - **No hover states on buttons.** Add background shift, slight scale, or translate on hover.
-- **No active/pressed feedback.** Add a subtle `scale(0.98)` or `translateY(1px)` on press to simulate a physical click.
+- **No active/pressed feedback.** Add a subtle `scale(0.95)` or `translateY(1px)` on press to simulate a physical click.
 - **Instant transitions with zero duration.** Add smooth transitions (200-300ms) to all interactive elements.
 - **Missing focus ring.** Ensure visible focus indicators for keyboard navigation. This is an accessibility requirement, not optional.
 - **No loading states.** Replace generic circular spinners with skeleton loaders that match the layout shape.
@@ -102,7 +104,7 @@ Check for these problems and fix them:
 
 ### Iconography
 
-- **Lucide or Feather icons exclusively.** These are the "default" AI icon choice. Use Phosphor, Heroicons, or a custom set for differentiation.
+- **Lucide or Feather icons exclusively.** These are the "default" AI icon choice. Use Phosphor / HugeIcons / Radix / Tabler for differentiation; Lucide on explicit request only.
 - **Rocketship for "Launch", shield for "Security".** Replace cliche metaphors with less obvious icons (bolt, fingerprint, spark, vault).
 - **Inconsistent stroke widths across icons.** Audit all icons and standardize to one stroke weight.
 - **Missing favicon.** Always include a branded favicon.

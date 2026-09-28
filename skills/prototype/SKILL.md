@@ -1,6 +1,6 @@
 ---
 name: prototype
-description: Build a throwaway prototype to answer a design question before committing to it. Use when the user wants to sanity-check a state model or business logic (returns a single shareable HTML demo a non-developer can drive) or to explore what a UI should look like (returns several radically different throwaway variations on one route).
+description: Build a throwaway prototype to answer a design question before committing to it — nothing here ships. Use to sanity-check a state model, business logic, or interaction in a shareable HTML demo a non-developer can drive. For choosing between real UI directions, use design-variants.
 origin: mattpocock
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: design-variants
-description: "Design-phase visual exploration: turn a screen or component brief into several deliberately-different variants on one side-by-side comparison page you open in a browser. Use when a UI's visual direction is unsettled and you want to see real, contrasting options before committing to one."
+description: "Design-phase visual exploration: turn a screen or component brief into several deliberately-different variants on one side-by-side comparison page. Use when a UI's visual direction is unsettled and you want real, contrasting options to choose from before committing — the winner gets built. For a throwaway experiment that ships nothing, use prototype. To skip exploration and ship marketing UI straight from the brief, use design-taste-frontend."
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Agent
 origin: gstack
 ---

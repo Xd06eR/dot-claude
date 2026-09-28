@@ -1,10 +1,9 @@
 ---
 name: design-taste-frontend
-description: Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships interfaces that do not look templated. Real design systems when applicable, audit-first on redesigns, strict pre-flight check. Use when building or restyling landing pages, portfolios, or marketing-grade UI that must not look AI-templated.
+description: "Anti-slop frontend skill that designs marketing-grade UI straight from the brief: infers the direction and ships the interface without a design-doc artifact. Use when building landing pages, portfolios, or marketing UI that must not look templated. Not for dashboards, data tables, or multi-step product UI. For an existing dated site, use redesign-existing-projects; for a settled direction, use design-build; for a from-scratch visual system, use design-consultation."
 origin: taste-skill
 ---
 
-> Landing pages, portfolios, and redesigns. Not dashboards, not data tables, not multi-step product UI.
 > Every rule is **contextual**. None of it fires automatically. First read the brief, then pull only what fits.
 
 This file holds the entry discipline (brief inference, dials), the scope, the reference routing, and the mandatory pre-flight gate. The rule bodies live in `references/` - pull the file matching the task at hand:
