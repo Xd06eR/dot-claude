@@ -9,7 +9,7 @@
 # Residual, accepted: shell glob/metachar forms (cat *.env,
 # ~/.ss[h]/id_rsa) expand in the shell after the hook sees raw text.
 INPUT=$(cat)
-SECRET_PATTERNS=( '[ =/"'"'"'\\]\.env' '\.ssh' '\.aws' '\.config[\\/]gh' )
+SECRET_PATTERNS=( '[ =/"'"'"'\\]\.env' '\.ssh' '\.aws' '\.config[\\/]gh' '\.credentials' )
 for p in "${SECRET_PATTERNS[@]}"; do
   if echo "$INPUT" | grep -qiE "$p"; then
     echo "BLOCKED: command matches secret-path '$p'. Reading credential files is denied." >&2

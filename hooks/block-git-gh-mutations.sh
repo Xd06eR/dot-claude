@@ -7,8 +7,11 @@
 # String literals inside a command match too (echo "git push") — rare, accepted.
 # Accident guardrail, not a security boundary.
 # Residuals, accepted: quoting/flag-order bypasses (git "commit" -m x,
-# git -P commit), an incomplete gh verb set, and script-authoring false
-# positives (heredocs containing git push).
+# git -P commit), an incomplete gh verb set (open: gh auth login/logout/
+# refresh, gh ssh-key/gpg-key add/delete, gh label/extension/project
+# mutations), prose-only git mutations (rebase, merge, cherry-pick, tag,
+# stash push, update-ref), and script-authoring false positives
+# (heredocs containing git push).
 # gh api graphql -f stays blocked though a query {} is a read:
 # a mutation {} document needs the block more than the read needs the pass.
 INPUT=$(cat)
