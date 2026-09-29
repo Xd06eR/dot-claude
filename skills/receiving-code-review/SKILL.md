@@ -1,6 +1,6 @@
 ---
 name: receiving-code-review
-description: Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation
+description: "Evaluate code review feedback before implementing it: verify against the codebase, ask before assuming; technical correctness over social comfort. Use when receiving code review feedback, especially when it seems unclear or technically questionable."
 origin: superpowers
 ---
 
