@@ -52,7 +52,6 @@ function getErrorMessage(error: unknown): string {
 - Type callback props explicitly
 - Do not use `React.FC` unless there is a specific reason to do so
 
-
 ### JavaScript files
 
 - In `.js` and `.jsx` files, use JSDoc when types improve clarity and a TypeScript migration is not practical

@@ -86,12 +86,12 @@ See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for
 
 ## State
 
-- State location (local → lift → Context → external store): see [react/architecture.md](../react/architecture.md#state-location-decision-tree)
-- Compute during render instead of storing derivable state (principle per [web/architecture.md](../web/architecture.md))
+- State location (local → lift → Context → external store): see [architecture.md](./architecture.md#state-location-decision-tree)
+- Compute during render instead of storing derivable state (the principle lives in [web/architecture.md](../web/architecture.md))
 
 ## Class components
 
-Forbidden in new code (one exception: error boundaries, per [react/architecture.md](../react/architecture.md#suspense--error-boundaries)). Convert legacy class components to function components when touching them for non-trivial changes.
+Forbidden in new code (one exception: error boundaries, per [architecture.md](./architecture.md#suspense--error-boundaries)). Convert legacy class components to function components when touching them for non-trivial changes.
 
 ## File layout per component
 
