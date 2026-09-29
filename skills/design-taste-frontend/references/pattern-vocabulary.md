@@ -2,7 +2,7 @@
 
 Part of `design-taste-frontend`. Dial variables referenced here are defined in SKILL.md §1.
 
-This is a vocabulary, not a library. The agent should KNOW these pattern names to communicate about them, design with them in mind, and reach for them when the design read calls for them. **Implementations and code sketches live in the Block Library ([block-library-contract.md](block-library-contract.md)), which is populated iteratively.**
+This is a vocabulary. The agent should KNOW these pattern names to communicate about them, design with them in mind, and reach for them when the design read calls for them.
 
 ## Hero Paradigms
 * **Asymmetric Split Hero** - Text on one side, asset on the other, generous white space.

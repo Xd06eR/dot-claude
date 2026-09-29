@@ -17,8 +17,6 @@ This file holds the entry discipline (brief inference, dials), the scope, the re
 | Forbidden AI-tell patterns + the em-dash ban | [references/ai-tells.md](references/ai-tells.md) |
 | Pattern-name vocabulary (hero paradigms, grids, cards, scroll animations, galleries, typography, micro-interactions) | [references/pattern-vocabulary.md](references/pattern-vocabulary.md) |
 | Redesign mode (audit-first, preservation rules, modernisation levers) | [references/redesign-protocol.md](references/redesign-protocol.md) |
-| Block Library contract (how blocks get added) | [references/block-library-contract.md](references/block-library-contract.md) |
-
 ---
 
 ## 0. BRIEF INFERENCE (Read the Room Before Anything Else)
