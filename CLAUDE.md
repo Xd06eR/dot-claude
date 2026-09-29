@@ -50,6 +50,7 @@ You drive every phase and iterate within it before moving on. The user steers.
 1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
    - **Decompose into deep modules:** break into independent, low-coupling components and design for replaceability. A deep module has a narrow interface hiding rich implementation. Shallow modules are easy to build but hard to manage; agents lose track of them on large projects.
    - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture meant to be replaced later. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
+   - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions, made in this phase; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
    - **Interrogate ambiguity:** identify unclear spec parts, list open questions, and propose multiple interpretations before proceeding; never guess.
    - **Surface blind spots:** beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see; resolve each before planning.
    - **Verifiable goals:** transform tasks into verifiable goals with specifically stated completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
@@ -59,6 +60,7 @@ You drive every phase and iterate within it before moving on. The user steers.
 3. **Build:** turn the settled design into working code. **One concern per change, tight diffs.** Catch scope creep → stop and slice smaller.
    - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
    - **TDD red-green-refactor:** refactoring only while green; ship a working version before polishing.
+   - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
    - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
    - **Subagents carry residue work:** dispatch only when the content is residue (per `~/.claude/rules/common/dispatch-protocol.md`); each implements one feature with lint + format + type-check + tests, verifies before returning; you integrate.
 4. **Review:** check the diff against the success criteria; show evidence (test output, return value). Can't verify → don't ship.
@@ -101,7 +103,7 @@ Invoke the most suitable skill or agent for the work before acting, and name wha
 
 ## Browsing
 
-WebFetch/WebSearch for general web browsing and page scraping; `npx lighthouse` via Bash for performance and a11y audits.
+WebFetch/WebSearch for browsing and scraping; `npx lighthouse` via Bash for performance and a11y audits.
 
 The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser driving) and `chrome-devtools-mcp` (debugging, live inspection, full audits) fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (effective next session) instead of silently substituting weaker tooling.
 
@@ -119,6 +121,6 @@ The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser dri
 ## Security
 
 - Never commit secrets, API keys, or credentials.
-- Never access sensitive directories, credential stores, or secret files (`~/.ssh`, `~/.aws`, `~/.config/gh`, `**/.env*`).
+- Never access sensitive directories, credential stores, or secret files.
 
 @RTK.md
