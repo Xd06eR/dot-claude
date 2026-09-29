@@ -77,6 +77,10 @@ Banned patterns:
 
 Do not default to dark mode automatically. Choose the visual direction the product actually wants.
 
+### Flow states
+
+- Every async user flow ships all its states: loading, empty, error with retry, and visible success feedback.
+
 ### Component checklist
 
 - [ ] Does it avoid looking like a default Tailwind or shadcn template?

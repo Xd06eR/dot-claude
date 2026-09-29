@@ -65,6 +65,7 @@ The list itself is a check: out-of-order, missing, extra, or wrong-granularity s
 - **Bug fixes go to the root cause:** grep every caller of the code you are about to change; fix the shared cause once. Patching only the ticketed path leaves sibling callers broken.
 - **Ship the minimal version and challenge the rest:** minimal in scope, never simpler-but-worse; the design axes follow CLAUDE.md (How to work with me). On a complex request, deliver the minimal version and state what was skipped and when to add it ("Did X; Y covers it. Need full X? Say so."); never stall on an answer you can default.
 - **Deletion over addition:** when two fixes are otherwise equal, take the one that removes code.
+- **Delete over compat:** an internal refactor deletes the superseded path outright: no compat layers, deprecated shims, or double-write bridges for internal callers. Compatibility of external contracts (public APIs, migrations, persisted formats) is a separate, explicit decision.
 - **The ladder never cuts:** trust-boundary input validation, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested.
 
 ## Research & reuse

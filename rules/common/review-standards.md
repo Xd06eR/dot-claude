@@ -59,6 +59,7 @@ paths:
 **Before declaring work ready for review:**
 
 - Automated checks pass (tests, lint, type-check)
+- Automated checks genuinely green; a failure unrelated to the change is reported with evidence and its impact, never waved through as pre-existing
 - Merge conflicts resolved
 - Branch up to date with target
 - Diff is small and single-concern (~100 lines reasonable, ~1000 too large); refactor separated from behavior change
