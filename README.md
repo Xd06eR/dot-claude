@@ -13,7 +13,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `hooks/` | Lifecycle hooks (git/gh mutation + secret-path guards) |
 | `rules/` | Instruction rule modules |
 | `.claude/rules/` | Harness-only rule modules (project-scope: load only when working in this repo) |
-| `skills/` | Skill modules, 53 (see Skill Sources) |
+| `skills/` | Skill modules, 54 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -45,10 +45,10 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 
 | Source | Count | Components |
 |--------|-------|------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 14 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, resolving-merge-conflicts, teach, to-questionnaire, wizard, writing-for-agents; agent `spec-reviewer` |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 15 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, resolving-merge-conflicts, teach, to-questionnaire, wayfinder, wizard, writing-for-agents; agent `spec-reviewer` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
 | [ECC](https://github.com/affaan-m/ECC) | 10 skills + 1 agent | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agent `database-reviewer` |
-| [gstack](https://github.com/garrytan/gstack) | 11 skills + 2 agents | ship, qa, diagram, deploy-watch, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` (upstream-orphaned: gstack no longer ships agents, kept deliberately) |
+| [gstack](https://github.com/garrytan/gstack) | 11 skills + 2 agents | ship, qa, diagram, deploy-watch, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` (no upstream: gstack ships skills only, so these are maintained locally) |
 | superpowers (plugin, extracted) | 2 | receiving-code-review, verification-before-completion |
 | [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |
 | Custom | 7 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back |
@@ -74,7 +74,7 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 |------|---------|
 | `rtk hook claude` | Token-optimized CLI proxy. Requires RTK on `PATH`; see `RTK.md`. |
 | `~/.claude/hooks/block-git-gh-mutations.sh` | Enforces CLAUDE.md's Git section mechanically: blocks `git` commit/push and destructive ops plus `gh` writes, so all mutations stay user-run. |
-| `~/.claude/hooks/block-secret-paths.sh` | Closes the Bash bypass of the Read-deny: blocks commands touching `.env`, `~/.ssh`, `~/.aws`, `~/.config/gh` (see Security below). |
+| `~/.claude/hooks/block-secret-paths.sh` | Closes the Bash bypass of the Read-deny: blocks commands touching `.env`, `~/.ssh`, `~/.aws`, `~/.config/gh`, `.credentials` (see Security below). |
 
 ## Quick Reference
 
