@@ -44,7 +44,7 @@ Type routes resolution:
 
 1. Load the map (the low-res view), then one entry: the user-named one, else the first frontier entry.
 2. Resolve it per its Type. Never more than one entry per session (research excepted). Call the Skill tool with "open-questions" and write rulings as you go.
-3. Append the entry's line to Decisions so far; graduate any fog the ruling made phrasable into fresh entries; strike what graduated from Not yet specified. A ruling that exposes an entry as beyond the destination rules it out of scope (one line in Out of scope; the entry closes per `open-questions`' drop path).
+3. Append the entry's line to Decisions so far; graduate any fog the ruling made phrasable into fresh entries; strike what graduated from Not yet specified. A ruling that exposes an entry as beyond the destination rules it out of scope (one line in Out of scope; the entry drops per `bake-design`'s Drop path: deleted from the register, no ADR, one PROGRESS-LOG line).
 4. Stop. Report what resolved, what graduated, what is now takeable.
 
 ## Map cleared

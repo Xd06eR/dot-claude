@@ -4,7 +4,7 @@
 Reads a .mmd path (arg 1), writes .excalidraw JSON to stdout.
 Dependency-free: standard library only.
 
-ponytail: regex extraction of the common flowchart forms only
+Scope: regex extraction of the common flowchart forms only
 (A[Label], A(Label), A{Label}, A[(db)], and --> --- ==> -.-> edges with an
 optional |label|). Subgraphs, class/style directives, and non-flowchart
 diagram types are ignored. Upgrade path when a richer scene is needed:
@@ -86,7 +86,7 @@ def parse(src):
 def layer_of(nodes, edges):
     """Longest-path layering from source nodes (in-degree 0).
 
-    ponytail: naive layering, capped iterations. Cyclic graphs settle at
+    Ceiling: naive layering, capped iterations. Cyclic graphs settle at
     whatever the cap produces; the user drags boxes to refine.
     """
     succ = {n: [] for n in nodes}
