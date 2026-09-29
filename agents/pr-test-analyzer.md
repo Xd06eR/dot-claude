@@ -58,6 +58,7 @@ Structure your analysis as:
    - **[SEVERITY]** [file:line of the untested code or over-coupled test]: [gap: what behavior is uncovered, or how the test is over-coupled] — [recommendation: the test to add, or how to rewrite the test]
 3. **Test quality issues** (if any): tests brittle or overfit to implementation, using the same per-finding line.
 4. **Positive observations:** what's well-tested and follows best practices.
+5. **Not covered:** what you did not examine (files, layers, or axes out of scope).
 
 Report nothing below LOW: trivial nice-to-have gaps are noise, not findings.
 

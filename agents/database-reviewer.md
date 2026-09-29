@@ -89,7 +89,7 @@ One finding per issue, grouped by severity (CRITICAL first, then HIGH, MEDIUM, L
 
 - **[SEVERITY]** [file:line]: [the database defect or anti-pattern] — [concrete fix, with SQL where applicable]
 
-Close with the Review Checklist above, each item marked pass/fail/not-applicable.
+Close with the Review Checklist above, each item marked pass/fail/not-applicable, then state what you did NOT cover.
 
 ## Reference
 

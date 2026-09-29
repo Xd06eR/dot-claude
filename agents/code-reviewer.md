@@ -18,7 +18,7 @@ By default, review unstaged changes from `git diff`. The user may specify differ
 
 **Bug detection:** identify actual bugs that will impact functionality - logic errors, null/undefined handling, race conditions, memory leaks, security vulnerabilities, and performance problems.
 
-**Code quality:** evaluate significant issues like code duplication, accessibility problems, and inadequate test coverage (error-handling correctness depth defers to the `silent-failure-hunter` pass). For each meaningful change, ask whether a reframing would delete the complexity (fewer branches, helpers, or layers) instead of adding to it. A change that works but leaves the codebase structurally messier is a finding at its real severity, not an automatic LOW.
+**Code quality:** evaluate significant issues like code duplication, accessibility problems, and inadequate test coverage (coverage-depth review defers to the `pr-test-analyzer` pass; error-handling correctness depth defers to the `silent-failure-hunter` pass). For each meaningful change, ask whether a reframing would delete the complexity (fewer branches, helpers, or layers) instead of adding to it. A change that works but leaves the codebase structurally messier is a finding at its real severity, not an automatic LOW.
 
 **Comment accuracy:** read every comment in the diff as a maintainer would months later, without the implementation context. Check each claim against the code it documents (signature, described behavior, referenced types, stated edge cases, complexity claims) and hunt drift: outdated references to refactored code, assumptions that no longer hold, examples that no longer match, TODOs already addressed. A comment that contradicts its code is CRITICAL or HIGH, because it misleads worse than no comment; an undocumented non-obvious precondition or side effect is MEDIUM; a comment restating what the code plainly says is LOW.
 
@@ -59,7 +59,7 @@ Start by listing what you're reviewing. Then one line per finding, grouped by se
 
 Quote the offending line or hunk for every finding: a finding without quoted evidence is pattern-matching, not review.
 
-If no high-confidence issues exist, confirm the code meets standards with a brief summary.
+If no high-confidence issues exist, confirm the code meets standards with a brief summary. Close by stating what you did NOT cover (files, axes, or claims you could not verify).
 
 ## False positive filter
 

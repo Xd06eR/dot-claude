@@ -54,7 +54,7 @@ The four axis ratings measure type quality; weaker axes emit higher-severity con
 
 ## Output format
 
-Provide your analysis in this structure:
+Provide your analysis in this structure, and close with what you did NOT cover:
 
 ```
 ## Type: [TypeName]
