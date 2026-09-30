@@ -15,6 +15,8 @@ How to update the harness (`~/.claude`) without breaking it.
 1. **Backup:** copy the file next to itself before editing — `foo.md.bak`, never `foo.bak.md` (a `.md` backup in an auto-loaded dir loads as a live module). Skip only for typo/one-line edits; when in doubt, back up.
 2. **Verify loading when scoping changes** with headless probes: a context check (`claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""`, unscoped answers yes) and a load check (rerun with tools enabled, reading a matching file first: scoped answers no before the read, yes after; project-scope answers yes in its own project and no elsewhere). A failed probe stops the batch; report before proceeding.
 3. **Prune only with coverage:** before pruning any doc, audit that every load-bearing item lives elsewhere (or move it first); `.bak`-park the pruned file. Batch-remove `.bak` files only when the rework that produced them is complete (ask-first).
+4. **Per-edit gate:** edits to durable files go one at a time: exact text and reasoning stated before each Edit call, never batched.
+5. **Edit tool only:** durable files change via the Edit tool, never scripts.
 
 Print the diff of changed files in your reply when the batch closes.
 
@@ -39,6 +41,7 @@ Print the diff of changed files in your reply when the batch closes.
 - **Verify built-ins via the live list:** filesystem search cannot verify built-in skills; check the session's available-skills list before claiming stale or missing.
 - **Format:** edited durable files pass CLAUDE.md's Doc content and structure rules before the batch closes.
 - **Batch verification:** scan removed diff lines for silently lost content (backticks, acronyms, named items) and confirm every word-count delta is intentional; byte-diff per [dispatch-protocol.md](../../rules/common/dispatch-protocol.md) §3.
+- **Review lenses:** every proposed edit, extraction, adoption, or review passes these before proposal — the element names its consumer (nothing decorative survives); cut what a strong model would do unprompted; the text reads correctly for a different session or project with the same class of need; the wording is synthesized from meaning, never lifted from the source; the established precise term wins over a sentence of explanation; a fact lives in one home per doc and per topic; state docs are rewritten to current truth, logs are appended; a rejection or absence earns a record only when re-proposal is a real risk. Full text lives in CLAUDE.md (Doc content and structure, How to work with me); the extraction judgments (layer check, tone is pressure) live in Extraction and curation below.
 
 ## Size budget
 
