@@ -1,6 +1,6 @@
 ---
 name: inherit-legacy-style
-description: Onboard an AI coding agent onto a hand-written legacy project without style drift (the model imposing its pretrained mainstream idioms). Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved, or when AI-generated code is drifting from existing conventions. Returns an enforceable .ai-style-rules.md. Aligns meta-architecture only, not syntax.
+description: Onboard an AI coding agent onto a hand-written legacy project without style drift. Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved, or when AI-generated code is drifting from existing conventions. Returns an enforceable .ai-style-rules.md. Aligns meta-architecture only, not syntax.
 allowed-tools: Read, Glob, Grep, Bash, Edit, Write, AskUserQuestion
 origin: ECC
 ---

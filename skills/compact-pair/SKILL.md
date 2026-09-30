@@ -1,6 +1,6 @@
 ---
 name: compact-pair
-description: "Produce the pre-compact prompt pair: a custom /compact instruction (a short Keep list) and a post-compact resume prompt. Use when the user is about to compact the session."
+description: "Produce the pre-compact prompt pair: a custom /compact instruction and a post-compact resume prompt. Use when the user is about to compact the session."
 argument-hint: What will the next session be used for?
 origin: custom
 ---

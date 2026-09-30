@@ -1,6 +1,6 @@
 ---
 name: teach-back
-description: Quizzes the user on a completed work session until they can teach it back. Use when the user wants to verify deep understanding of a feature, change, or session's work — before shipping, at the end of a session, or on request.
+description: Quizzes the user on a completed work session until they can teach it back. Use when the user wants to verify deep understanding of a feature, change, or session's work — before shipping or at the end of a session.
 origin: custom
 ---
 

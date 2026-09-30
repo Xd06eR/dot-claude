@@ -1,6 +1,6 @@
 ---
 name: trim-session-leakage
-description: Audit durable text for prose whose vantage is the authoring session rather than the reader at HEAD — dead session citations, change narration, review choreography, reviewer-addressed justification, control-flow narration, hedge residue. Use when reviewing or canonizing docs, comments, or reports. Returns restate-at-HEAD fixes, not bare deletions.
+description: Audit durable text for prose whose vantage is the authoring session rather than the reader at HEAD. Use when reviewing or canonizing docs, comments, or reports. Returns restate-at-HEAD fixes, not bare deletions.
 origin: deepseek-harness
 ---
 

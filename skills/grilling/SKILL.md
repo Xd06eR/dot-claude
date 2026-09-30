@@ -1,6 +1,6 @@
 ---
 name: grilling
-description: "The relentless-interview engine behind grill-me and grill-with-docs: interviews the user until shared understanding, mapping decisions as a design tree."
+description: "The relentless-interview engine behind grill-me and grill-with-docs: runs until shared understanding, mapping decisions as a design tree."
 origin: mattpocock
 ---
 

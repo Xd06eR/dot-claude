@@ -1,6 +1,6 @@
 ---
 name: redesign-existing-projects
-description: "Upgrades existing websites and apps to premium quality in place: audits the current design, removes generic AI patterns, and applies high-end design standards without breaking functionality or migrating the stack. Use when an existing site or app looks generic or dated. For new marketing UI designed from a brief, use design-taste-frontend."
+description: "Upgrades existing websites and apps to premium quality in place: audits the current design and removes generic AI patterns without breaking functionality or migrating the stack. Use when an existing site or app looks generic or dated. For new marketing UI designed from a brief, use design-taste-frontend."
 origin: taste-skill
 ---
 
