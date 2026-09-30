@@ -48,11 +48,10 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 You drive every phase and iterate within it before moving on. The user steers.
 
 1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
-   - **Decompose into deep modules:** break into independent, low-coupling components and design for replaceability. A deep module has a narrow interface hiding rich implementation. Shallow modules are easy to build but hard to manage; agents lose track of them on large projects.
+   - **Decompose into deep modules:** break into independent, low-coupling components (narrow interfaces hiding rich implementations) and design for replaceability; shallow modules are easy to build but hard to manage, and agents lose track of them on large projects.
    - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture meant to be replaced later. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
    - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions, made in this phase; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
-   - **Interrogate ambiguity:** identify unclear spec parts, list open questions, and propose multiple interpretations before proceeding; never guess.
-   - **Surface blind spots:** beyond stated ambiguity, list unstated assumptions, missing requirements, and failure modes the user may not see; resolve each before planning.
+   - **Interrogate ambiguity and blind spots:** identify unclear spec parts, unstated assumptions, missing requirements, and failure modes; list open questions with multiple interpretations and resolve each before planning; never guess.
    - **Verifiable goals:** transform tasks into verifiable goals with specifically stated completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
 2. **Plan:** turn the design into per-component specs and executable plans. Use Plan Mode; exit only when every step has a check and no design decision is left to the implementer.
    - **Distill, never invent:** every plan decision traces to the design; a gap is flagged, never filled by the planner.
