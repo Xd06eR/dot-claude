@@ -2,7 +2,7 @@
 
 Part of `design-taste-frontend`. Dial variables referenced here are defined in SKILL.md §1.
 
-This skill handles **greenfield builds AND redesigns**. Misclassifying the mode is the single biggest source of bad redesign output.
+Existing-site work splits into two modes — preserve or overhaul. Misclassifying the mode is the single biggest source of bad redesign output.
 
 ## 11.A Detect the Mode (first action)
 * **Greenfield** - no existing site, or full overhaul approved. Dial baseline from SKILL.md §1.
