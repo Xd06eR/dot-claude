@@ -55,7 +55,7 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **TDD red-green-refactor:** refactoring only while green; ship a working version before polishing.
    - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
    - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
-   - **Subagents carry residue work:** dispatch only when the content is residue (per `~/.claude/rules/common/dispatch-protocol.md`); each implements one feature with lint + format + type-check + tests, verifies before returning; you integrate.
+   - **Subagents carry residue work:** dispatch only when the content is residue (per `~/.claude/rules/common/dispatch-protocol.md`); you integrate.
 4. **Review:** check the diff against the success criteria; show evidence (test output, return value). Can't verify → don't ship.
    - **Done means all of:** every acceptance criterion checked with evidence produced now; none silently waived or redefined mid-task; no known regression. "Should work" or shallow evidence ("it compiles") is not done.
    - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
