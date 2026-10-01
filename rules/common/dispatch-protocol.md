@@ -12,15 +12,14 @@ Parallel fan-out gates on independence (no shared state, no sequential dependenc
 
 The agent that writes code must itself have read the code it changes; editing from a subagent's summary produces confident wrong patches. Do not dispatch a one-call read; dispatch overhead must be smaller than the work.
 
-**Long merge and bulk work:** route it to fresh subagents with detailed prompts — a saturated main context degrades merge quality. High-sensitivity verification runs first in main context, with fresh-context confirmation per section 5.
+**Long merge and bulk work:** route it to fresh subagents with detailed prompts — a saturated main context degrades merge quality. High-sensitivity verification runs first in main context, with fresh-context confirmation per §5.
 
 ## 2. Escalation levers
 
-When a subtask fails, three levers, cheapest first:
+When a subtask fails, or [judgment-rubrics.md](judgment-rubrics.md) §1 rules it beyond the current context up front, the levers, cheapest first:
 
-1. **Fresh retry context.** Always available: retry in a new context carrying the full failure trace, never in the context that failed.
-2. **Reasoning effort.** Low for mechanical sweeps, high for debugging and final review.
-3. **A different model tier.** Lower tiers for mechanical work, higher tiers for hard reasoning and judgment.
+1. **Fresh context.** Always available: retry a failure in a new context carrying the full failure trace, never in the context that failed; an up-front escalation starts in a fresh context with the full brief.
+2. **A different model tier.** Lower tiers for mechanical work, higher tiers for hard reasoning and judgment.
 
 ## 3. Dispatch triad and report contract
 
@@ -49,7 +48,7 @@ Report contract, binding on every subagent:
 
 ## 4. Attempts, escalation, and stopping
 
-- **Diagnose before retrying.** An input error (wrong path, stale premise, missing context) is not a capability ceiling: fix it and rerun. Every retry must change something — the input, a section 2 lever, or the method itself; two failed methods on one subtask means switch strategy or ask the user (signals in [judgment-rubrics.md](judgment-rubrics.md) rubrics 1 and 3).
+- **Retries change something:** every retry changes the input, a §2 lever, or the method; two failed methods on one subtask means switch strategy or ask the user (signals in [judgment-rubrics.md](judgment-rubrics.md) §1 and §3).
 - **De-escalate:** once a hard subtask is solved, write the recipe (exact steps, diff pattern, or checklist) and hand batch application to a minimal-effort dispatch.
 
 ## 5. No self-verification
