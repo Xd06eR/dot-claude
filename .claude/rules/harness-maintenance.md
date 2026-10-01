@@ -50,7 +50,7 @@ Any single unscoped rules file beyond ~8 KB, or the unscoped (always-loaded) set
 ## CLAUDE.md and instruction docs
 
 - CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md, never restate it; CLAUDE.md may restate a rules detail when it must stand self-contained (it ships alone to other agents). CLAUDE.md targets under 200 lines.
-- The CLAUDE.md catalog (the fixed openings and the user-invoked set) is routing-only: no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
+- The CLAUDE.md catalog (the fixed openings) is routing-only: no restated descriptions, no situational enumeration. Inventory lives in README § Skill Sources; discovery comes from the session injection. Load-bearing parentheticals are allowed when they carry execution structure (sub-dispatch breakdowns, required paths) or tool connectors that have no frontmatter of their own.
 - The four-paths route model (docs axis × plan axis) lives in README § The four paths; read it before editing the Workflow section or a workflow skill's description: the descriptions are what execute those routes.
 
 ## Rules

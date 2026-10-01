@@ -91,7 +91,6 @@ Invoke the most suitable skill or agent for the work before acting, and name wha
 **Skills fire as the work moves, not once per task:** a task crossing phases or concerns invokes the skill for each, never two doing the same job.
 
 - **Fixed openings:** a new feature or design in a working directory opens with `grill-with-docs`; without one, `grill-me`; visual-system design opens with `design-consultation`.
-- **User-invoked:** `/session-sync` · `/setup-workflow` · `/teach` · `/handoff` · `/to-questionnaire` · `/wayfinder`. Propose them when their moment comes.
 
 ## Browsing
 
