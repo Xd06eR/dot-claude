@@ -34,7 +34,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 - **Act without asking:** read/search codebase; run tests, linters, type-checks; draft code and plans; spin up subagents for research.
 - **Default for unlisted cases:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
-- **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (fan-out mandated by the invoked skill or a rules file fires with it); ambiguous requirements with materially different readings; a task premise that turns out false mid-way. State the action, then wait.
+- **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (fan-out mandated by the invoked skill or a rules file fires with it); ambiguous requirements with materially different readings; pure preference calls; a task premise that turns out false mid-way. State the action, then wait.
 - **Explicit instructions win:** the current task's explicit instruction beats every standing instruction — the project's CLAUDE.md, this file, rules files, skill bodies; among the standing ones the more local wins. "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops, git mutations) stay ask-first until the user says otherwise.
 
 ## Workflow — 4-phase
@@ -57,9 +57,11 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
    - **Subagents carry residue work:** dispatch only when the content is residue (per `~/.claude/rules/common/dispatch-protocol.md`); each implements one feature with lint + format + type-check + tests, verifies before returning; you integrate.
 4. **Review:** check the diff against the success criteria; show evidence (test output, return value). Can't verify → don't ship.
+   - **Done means all of:** every acceptance criterion checked with evidence produced now; none silently waived or redefined mid-task; no known regression. "Should work" or shallow evidence ("it compiles") is not done.
    - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
    - **Never accept your own work:** the acceptance call is yours; its evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
    - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
+   - **Ship floor:** no debug leftovers; the first realistic failure mode handled or declared out of scope; stale comments/docs updated.
 
 The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy.
 

@@ -1,6 +1,6 @@
 # Dispatch Protocol
 
-How the main agent delegates work to subagents: what to dispatch, how results come back, and what to change when attempts fail.
+How the main agent delegates work to subagents: what to dispatch, when to escalate, how results come back, and what to change when attempts fail.
 
 ## 1. Working set in, residue out
 
@@ -14,9 +14,16 @@ The agent that writes code must itself have read the code it changes; editing fr
 
 **Long merge and bulk work:** route it to fresh subagents with detailed prompts — a saturated main context degrades merge quality. High-sensitivity verification runs first in main context, with fresh-context confirmation per §5.
 
-## 2. Escalation levers
+## 2. When to escalate, and the levers
 
-When a subtask fails, or [judgment-rubrics.md](judgment-rubrics.md) §1 rules it beyond the current context up front, the levers, cheapest first:
+Escalate when a subtask fails, or up front when ANY of:
+
+- **Unverifiable judgment:** no mechanical check can settle the call (architecture, API shape)
+- **Context capacity:** correct reasoning needs more interdependent code than you can trace
+- **Error cost:** security-critical design or crypto decisions
+- **Self-review ban:** the subtask is to review or veto work produced by the current context
+
+The levers, cheapest first:
 
 1. **Fresh context.** Always available: retry a failure in a new context carrying the full failure trace, never in the context that failed; an up-front escalation starts in a fresh context with the full brief.
 2. **A different model tier.** Lower tiers for mechanical work, higher tiers for hard reasoning and judgment.
@@ -48,7 +55,8 @@ Report contract, binding on every subagent:
 
 ## 4. Attempts, escalation, and stopping
 
-- **Retries change something:** every retry changes the input, a §2 lever, or the method; two failed methods on one subtask means switch strategy or ask the user (signals in [judgment-rubrics.md](judgment-rubrics.md) §1 and §3).
+- **Retries change something:** every retry changes the input, a §2 lever, or the method; two failed methods on one subtask means switch strategy or ask the user.
+- **Wrong direction:** switch strategy when a fix creates a new failure elsewhere, twice in a row, or the test passes only after disabling or mocking the system under test.
 - **De-escalate:** once a hard subtask is solved, write the recipe (exact steps, diff pattern, or checklist) and hand batch application to a minimal-effort dispatch.
 
 ## 5. No self-verification
