@@ -46,7 +46,7 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture meant to be replaced later. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
    - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions, made in this phase; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
    - **Interrogate ambiguity and blind spots:** identify unclear spec parts, unstated assumptions, missing requirements, and failure modes; list open questions with multiple interpretations and resolve each before planning; never guess.
-   - **Verifiable goals:** transform tasks into verifiable goals with specifically stated completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
+   - **Verifiable goals:** transform tasks into verifiable goals with explicit completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
 2. **Plan:** turn the design into per-component specs and executable plans. Use Plan Mode; exit only when every step has a check and no design decision is left to the implementer.
    - **Distill, never invent:** every plan decision traces to the design; a gap is flagged, never filled by the planner.
    - **Ground the boundary on the code, not the docs:** what exists in code is reused or extended; what is absent is this build. A doc-vs-code mismatch is a finding, never a planning basis.
@@ -60,7 +60,6 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
    - **Never accept your own work:** the acceptance call is yours; its evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
    - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
-   - **Quiz before ship:** ask the user questions that verify understanding of what changed. Diff-looking-fine ≠ understanding; ship only when they can answer.
 
 The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy.
 
