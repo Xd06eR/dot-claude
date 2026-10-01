@@ -1,6 +1,6 @@
 # RTK - Rust Token Killer
 
-Token-optimized CLI proxy. The Claude Code hook rewrites other commands automatically. The meta command is the raw, unfiltered path, for debugging only; call it directly:
+Token-optimized CLI proxy. The Claude Code hook rewrites other commands automatically. The meta command is the raw, unfiltered path, for debugging only:
 
 ```bash
 rtk proxy <cmd>
