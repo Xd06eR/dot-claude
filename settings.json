@@ -125,7 +125,12 @@
       "ListMcpResourcesTool",
       "ReadMcpResourceTool",
       "ReadMcpResourceDirTool",
-      "ReportFindings"
+      "ReportFindings",
+      "PushNotification",
+      "RemoteTrigger",
+      "AskUserQuestion",
+      "EnterPlanMode",
+      "ExitPlanMode"
     ],
     "disableBypassPermissionsMode": "disable"
   },

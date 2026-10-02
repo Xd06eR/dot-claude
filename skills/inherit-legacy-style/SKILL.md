@@ -1,7 +1,6 @@
 ---
 name: inherit-legacy-style
 description: Onboard an AI coding agent onto a hand-written legacy project without style drift. Use when starting work in an unfamiliar or legacy codebase whose conventions must be preserved, or when AI-generated code is drifting from existing conventions. Returns an enforceable .ai-style-rules.md. Aligns meta-architecture only, not syntax.
-allowed-tools: Read, Glob, Grep, Bash, Edit, Write, AskUserQuestion
 origin: ECC
 ---
 
@@ -72,7 +71,7 @@ Suspend until the user answers, then proceed to the next conflict. Never stack q
 
 **6. Install the persistent hook**
 
-Ask the user for enforcement strength (use `AskUserQuestion`):
+Ask the user for enforcement strength (use a structured picker if your harness has one, e.g. `AskUserQuestion`, otherwise ask in chat):
 
 | Option | Mechanism |
 |---|---|

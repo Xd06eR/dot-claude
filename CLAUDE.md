@@ -47,7 +47,7 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions, made in this phase; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
    - **Interrogate ambiguity and blind spots:** identify unclear spec parts, unstated assumptions, missing requirements, and failure modes; list open questions with multiple interpretations and resolve each before planning; never guess.
    - **Verifiable goals:** transform tasks into verifiable goals with explicit completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
-2. **Plan:** turn the design into an executable plan. Use Plan Mode; exit only when every step has a check and no design decision is left to the implementer.
+2. **Plan:** turn the design into an executable plan. It is complete only when every step has a check and no design decision is left to the implementer.
    - **Distill, never invent:** every plan decision traces to the design; a gap is flagged, never filled by the planner.
    - **Ground the boundary on the code, not the docs:** what exists in code is reused or extended; what is absent is this build. A doc-vs-code mismatch is a finding, never a planning basis.
 3. **Build:** turn the settled design into working code. **One concern per change, tight diffs.** Catch scope creep → stop and slice smaller.
