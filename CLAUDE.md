@@ -35,7 +35,7 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 - **Act without asking:** read/search codebase; run tests, linters, type-checks; draft code and plans; spin up subagents for research.
 - **Default for unlisted cases:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
 - **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (fan-out mandated by the invoked skill or a rules file fires with it); ambiguous requirements with materially different readings; pure preference calls; a task premise that turns out false mid-way. State the action, then wait.
-- **Explicit instructions win:** the current task's explicit instruction beats every standing instruction — the project's CLAUDE.md, this file, rules files, skill bodies; among the standing ones the more local wins. "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops, git mutations) stay ask-first until the user says otherwise.
+- **Explicit instructions win:** the current task's explicit instruction beats every standing instruction (the project's CLAUDE.md, this file, rules files, skill bodies); among the standing ones the more local wins. "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops) stay ask-first until the user says otherwise.
 
 ## Workflow — 4-phase
 
@@ -47,7 +47,7 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions, made in this phase; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
    - **Interrogate ambiguity and blind spots:** identify unclear spec parts, unstated assumptions, missing requirements, and failure modes; list open questions with multiple interpretations and resolve each before planning; never guess.
    - **Verifiable goals:** transform tasks into verifiable goals with explicit completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
-2. **Plan:** turn the design into per-component specs and executable plans. Use Plan Mode; exit only when every step has a check and no design decision is left to the implementer.
+2. **Plan:** turn the design into an executable plan. Use Plan Mode; exit only when every step has a check and no design decision is left to the implementer.
    - **Distill, never invent:** every plan decision traces to the design; a gap is flagged, never filled by the planner.
    - **Ground the boundary on the code, not the docs:** what exists in code is reused or extended; what is absent is this build. A doc-vs-code mismatch is a finding, never a planning basis.
 3. **Build:** turn the settled design into working code. **One concern per change, tight diffs.** Catch scope creep → stop and slice smaller.
@@ -63,11 +63,9 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
    - **Ship floor:** no debug leftovers; the first realistic failure mode handled or declared out of scope; stale comments/docs updated.
 
-The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy.
+The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy. A project adopts the document set by running `/setup-workflow` once.
 
 Any skill exploring a codebase area or producing domain-facing text reads `CONTEXT.md` for the mental model and uses its vocabulary, and respects ADRs in the area; absence is silent, and the writer skills create lazily.
-
-A project adopts this workflow's document set by running `/setup-workflow` once.
 
 ## Doc content and structure
 
