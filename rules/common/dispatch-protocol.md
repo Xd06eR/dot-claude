@@ -44,7 +44,7 @@ Parallel fan-out gates on independence (no shared state, no sequential dependenc
 
 **Dispatch is the main agent's alone:** the independence gate, the declared budget, and the report contract all attach at the dispatch point; a nested dispatch replaces first-hand reports with a summary of summaries, and a subagent that picks its own reviewer grades its own work.
 
-**Long merge and bulk work:** route it to fresh subagents: a saturated main context degrades merge quality. High-sensitivity verification runs first in main context, with fresh-context confirmation per §4.
+**Long merge and bulk work:** route it to fresh subagents (a saturated main context degrades merge quality). High-sensitivity verification runs first in main context, with fresh-context confirmation per §4.
 
 ## 3. When attempts struggle
 
