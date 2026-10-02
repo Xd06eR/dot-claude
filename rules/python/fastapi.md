@@ -2,9 +2,13 @@
 paths:
   - "**/app/**/*.py"
   - "**/fastapi/**/*.py"
+  - "**/entrypoints/**/*.py"
+  - "**/routers/**/*.py"
   - "**/*_api.py"
   - "**/app/**/*.pyi"
   - "**/fastapi/**/*.pyi"
+  - "**/entrypoints/**/*.pyi"
+  - "**/routers/**/*.pyi"
   - "**/*_api.pyi"
 ---
 
@@ -57,7 +61,6 @@ Do not create `SessionLocal()` or long-lived clients inside route handlers.
 - Keep CORS origins environment-specific.
 - Do not combine credentialed CORS with wildcard origins, methods, or headers.
 - Validate JWT expiry, issuer, audience, and algorithm.
-- Rate-limit auth and mutation endpoints.
 - Redact credentials, cookies, authorization headers, and tokens from logs.
 
 ## Testing

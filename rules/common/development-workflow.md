@@ -65,29 +65,15 @@ The list itself is a check: out-of-order, missing, extra, or wrong-granularity s
 - **Bug fixes go to the root cause:** grep every caller of the code you are about to change; fix the shared cause once. Patching only the ticketed path leaves sibling callers broken.
 - **Ship the minimal version and challenge the rest:** minimal in scope, never simpler-but-worse; the design axes follow CLAUDE.md (How to work with me). On a complex request, deliver the minimal version and state what was skipped and when to add it ("Did X; Y covers it. Need full X? Say so."); never stall on an answer you can default.
 - **Deletion over addition:** when two fixes are otherwise equal, take the one that removes code.
-- **Delete over compat:** an internal refactor deletes the superseded path outright: no compat layers, deprecated shims, or double-write bridges for internal callers. Compatibility of external contracts (public APIs, migrations, persisted formats) is a separate, explicit decision.
+- **Delete over compat:** an internal refactor deletes the superseded path outright, with no compat layers, deprecated shims, or double-write bridges for internal callers. Compatibility of external contracts (public APIs, migrations, persisted formats) is a separate, explicit decision.
 - **The ladder never cuts:** trust-boundary input validation, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested.
 
 ## Research & reuse
 
-Mandatory once the reuse ladder above lands on a new capability or dependency:
-
-- **Exhaust installed dependencies:** never assume a library lacks a capability without checking its documentation and types; prefer what the project already has over new code or new packages.
-- **GitHub code search:** Run `gh search repos` and `gh search code` to find existing implementations, templates, and patterns before writing anything new.
-- **Library docs:** Use Context7 or vendor docs before implementing.
-- **Check package registries:** Search npm, PyPI, crates.io, and other registries before writing utility code. Prefer battle-tested libraries over hand-rolled solutions.
-- **Search for adaptable implementations:** Look for open-source projects that solve 80%+ of the problem and can be forked, ported, or wrapped.
-- **Evaluate skeleton/starter candidates in parallel:** when adopting one, dispatch parallel agents to score options on security, extensibility, and fitness for the target use case before cloning.
-- Prefer adopting or porting a proven approach over writing net-new code when it meets the requirement.
-- See `search-first` skill for structured research-before-coding workflow.
+Mandatory once the reuse ladder above lands on a new capability or dependency: call the Skill tool with "search-first".
 
 ## Pull request workflow
 
-When creating PRs, route through `ship`: it owns the readiness gates, the PR body, and the exact command set. In brief:
-
-1. Analyze full commit history (not just latest commit).
-2. Use `git diff [base-branch]...HEAD` to see all changes.
-3. Draft comprehensive PR summary.
-4. Include test plan with TODOs.
+When creating PRs, route through `ship`: it owns the readiness gates, the PR body, and the exact command set.
 
 > For the full development process (planning, TDD, code review) before git operations, see CLAUDE.md (Workflow — 4-phase section).

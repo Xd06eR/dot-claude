@@ -52,11 +52,11 @@ paths:
 - **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas; on a non-obvious design choice, one line on *why* it was made. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
 - **No context-free TODOs:** a shipped TODO/FIXME names the reason, the unblock or removal condition, and where it is tracked; anything else gets resolved or deleted.
 - **Simplicity:** plain over clever unless cleverness is load-bearing.
-- **Formatting:** the formatter owns code syntax. Atomicity still applies to comments, docstrings, and string literals; keep every token whole.
+- **Formatting:** the formatter owns code syntax.
 
 ## Immutability
 
-Prefer immutable patterns by default — create new objects rather than mutating shared state or inputs; local accumulators and hot paths may mutate.
+Prefer immutable patterns by default: create new objects rather than mutating shared state or inputs; local accumulators and hot paths may mutate.
 
 ## File organization
 
@@ -69,7 +69,7 @@ MANY SMALL FILES > FEW LARGE FILES:
 ## Error handling
 
 ALWAYS handle errors comprehensively:
-- Handle errors at the level that can act; propagate otherwise — don't catch what you can't recover from
+- Handle errors at the level that can act; propagate otherwise (don't catch what you can't recover from)
 - Provide user-friendly error messages in UI-facing code
 - Log detailed error context on the server side
 - Never silently swallow errors
@@ -94,20 +94,6 @@ Match the project's existing response shape. When it has none, return errors as 
 - Interfaces, types, and components: `PascalCase`
 - Constants: `UPPER_SNAKE_CASE`
 - Abbreviate in small scope, spell out cross-module
-
-## Code smells to avoid
-
-### Deep nesting
-
-Prefer early returns over deeply nested conditionals.
-
-### Magic numbers
-
-Use named constants for meaningful thresholds, delays, and limits.
-
-### Long functions
-
-Split large functions into focused pieces with clear responsibilities.
 
 ## Code quality checklist
 

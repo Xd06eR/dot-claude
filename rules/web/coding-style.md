@@ -15,7 +15,7 @@ paths:
 
 ## File organization
 
-By feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)):
+By feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)). The visual/marketing-site shape below; the feature-app tree lives in [typescript/architecture.md](../typescript/architecture.md), per-component packaging in [react/coding-style.md](../react/coding-style.md#file-layout-per-component):
 
 ```text
 src/
@@ -43,8 +43,6 @@ src/
     ├── typography.css
     └── global.css
 ```
-
-Per-component packaging (a folder per component) lives in [react/coding-style.md](../react/coding-style.md#file-layout-per-component).
 
 ## CSS custom properties
 
@@ -87,19 +85,7 @@ Avoid animating layout-bound properties:
 
 ## Semantic HTML first
 
-```html
-<header>
-  <nav aria-label="Main navigation">...</nav>
-</header>
-<main>
-  <section aria-labelledby="hero-heading">
-    <h1 id="hero-heading">...</h1>
-  </section>
-</main>
-<footer>...</footer>
-```
-
-Do not reach for generic wrapper `div` stacks when a semantic element exists.
+Do not reach for generic wrapper `div` stacks when a semantic element exists. Label navs and sections: `aria-label` on `nav`, `aria-labelledby` pointing at the section heading.
 
 ## Naming
 

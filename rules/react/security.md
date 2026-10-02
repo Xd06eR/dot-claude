@@ -56,12 +56,11 @@ function safeUrl(url: string): string | undefined {
   } catch {
     return undefined;
   }
-  return undefined;
 }
 <a href={safeUrl(user.website)}>Visit</a>
 ```
 
-React 19+ throws on `javascript:` URLs in `href`/`src`; validate schemes anyway — `data:` and other schemes, and non-React sinks, are not covered.
+React 19+ throws on `javascript:` URLs in `href`/`src`; validate schemes anyway: `data:` and other schemes, and non-React sinks, are not covered.
 
 ## `target="_blank"` without `rel`
 
@@ -83,18 +82,8 @@ Server Actions (`"use server"`) run with the same trust level as a public API en
 
 ```tsx
 "use server";
-import { z } from "zod";
-
-const Input = z.object({
-  email: z.email(),
-  age: z.number().int().min(0).max(120),
-});
-
 export async function updateUser(_state: unknown, formData: FormData) {
-  const parsed = Input.safeParse({
-    email: formData.get("email"),
-    age: Number(formData.get("age")),
-  });
+  const parsed = Input.safeParse({ email: formData.get("email"), age: Number(formData.get("age")) });
   if (!parsed.success) return { error: parsed.error.flatten() };
   // ...
 }
@@ -102,7 +91,6 @@ export async function updateUser(_state: unknown, formData: FormData) {
 
 - Authenticate inside the action — do not trust the client-side route gate
 - Authorize: confirm the current user has permission for the specific record they are mutating
-- Rate limit sensitive actions
 - Middleware is not authorization — re-check auth inside every Server Action and data-owning layout
 - Anything passed across the RSC boundary to a Client Component ships to the browser — pass IDs, not records with internal fields
 
@@ -138,12 +126,14 @@ Configure server-side — full nonce-based header block in [web/security.md](../
 - For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces — both Next.js and Remix support nonce injection
 - `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries — document the tradeoff
 
-## Prototype pollution via object spread
+## Prototype pollution
+
+Spreading untrusted JSON defines own properties (mass assignment: unexpected keys overwrite state). True prototype pollution needs a recursive-merge sink (`lodash.merge`, a deep `Object.assign`); audit those call sites hardest. Either way, parse before merging:
 
 ```tsx
 // WRONG: untrusted JSON spread directly into state
 const update = await req.json();
-setState({ ...state, ...update });    // attacker controls __proto__
+setState({ ...state, ...update });    // unexpected keys overwrite state
 
 // CORRECT: parse with a schema, or guard keys
 const Allowed = z.object({ name: z.string(), email: z.email() });

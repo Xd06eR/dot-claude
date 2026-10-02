@@ -16,7 +16,7 @@ paths:
 
 ## Logic extraction
 
-Extract shared logic into custom hooks first — they reuse behavior without imposing a file split. Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
+Extract shared logic into custom hooks first: they reuse behavior without imposing a file split. Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
 
 ## State location decision tree
 
@@ -28,7 +28,7 @@ Extract shared logic into custom hooks first — they reuse behavior without imp
 
 ## Server / Client Component boundary (RSC, Next.js App Router)
 
-- Server Components are the default — they run on the server, do not ship to the client, and can `await` directly
+- Server Components are the default: they run on the server, do not ship to the client, and can `await` directly
 - Client Components opt in with `"use client"` at the top of the file
 - Data flows down: a Server Component can render a Client Component and pass serializable props
 - A Client Component cannot import a Server Component, but it can receive one via `children` or named slots
@@ -97,7 +97,6 @@ For complex forms (multi-step, dynamic field arrays, cross-field validation), us
 
 - React Hook Form — minimal re-renders, uncontrolled-first
 - TanStack Form — typed, framework-agnostic
-- Final Form — when subscription-based re-renders matter
 
 ## Data fetching
 

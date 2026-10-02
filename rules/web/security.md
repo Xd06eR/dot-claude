@@ -42,10 +42,7 @@ Adjust origins to the project; do not cargo-cult this block unchanged.
 
 ## XSS prevention
 
-- Never inject unsanitized HTML
-- Avoid `innerHTML` unless sanitized first (React sinks per [react/security.md](../react/security.md))
-- Escape dynamic template values
-- Sanitize user HTML with a vetted sanitizer library when absolutely necessary
+Base rules per [common/security.md](../common/security.md); React sinks per [react/security.md](../react/security.md). Sanitize user HTML with a vetted sanitizer library when absolutely necessary.
 
 ## Third-party scripts
 
@@ -66,7 +63,5 @@ Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 ## Forms
 
-- CSRF protection on state-changing forms
-- Rate limiting on submission endpoints
 - Validate client and server side
 - Prefer honeypots or light anti-abuse controls over heavy-handed CAPTCHA defaults

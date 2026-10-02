@@ -118,11 +118,6 @@ For full design work, use the design skills: `design-consultation` (system from 
 3. Defer non-critical CSS or JS
 4. Dynamically import heavy libraries
 
-```js
-const gsapModule = await import('gsap');
-const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-```
-
 ### Image optimization
 
 - Explicit `width` and `height`

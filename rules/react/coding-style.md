@@ -50,29 +50,21 @@ export function UserCard({ user, onSelect }: Props) {
 - Use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point
 - Always destructure props in the parameter list — no `props.user` access inside the body
 - Type the return implicitly through JSX (`function Foo(): React.JSX.Element` only when the function returns conditionally and the union confuses inference)
+- No `React.FC` in new code
 
 ## JSX
 
 - Self-close tags with no children: `<img />`, `<UserCard user={u} />`
 - Use fragments `<>...</>` over wrapper `<div>` when no DOM element is needed
 - Conditional rendering: `{condition && <Foo />}` for booleans, ternary for either/or, early return for guard clauses
-- Never put logic inline in JSX when it spans multiple lines — extract to a const above the return or a function
-
-```tsx
-// Prefer
-const greeting = user.isAdmin ? "Welcome, admin" : `Hello ${user.name}`;
-return <h1>{greeting}</h1>;
-
-// Over
-return <h1>{user.isAdmin ? "Welcome, admin" : `Hello ${user.name}`}</h1>;
-```
+- Never put logic inline in JSX when it spans multiple lines: extract to a const above the return or a function
 
 ## Server / client boundary (Next.js App Router, RSC)
 
 - Server Components are the default (boundary model per [architecture.md](./architecture.md)); add `"use client"` only when the file uses state, effects, refs, browser APIs, or event handlers
 - Place the `"use client"` directive on line 1, before any imports
 - Never import a Client Component file from inside a `"use server"` action file
-- Never re-export server-only code through a client module — the bundler will silently include it
+- Never re-export server-only code through a client module (the bundler will silently include it)
 
 ## Imports
 

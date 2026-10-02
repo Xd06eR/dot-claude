@@ -6,6 +6,8 @@ paths:
   - "**/hooks/**/*.js"
   - "**/use-*.ts"
   - "**/use-*.tsx"
+  - "**/use[A-Z]*.ts"
+  - "**/use[A-Z]*.tsx"
 ---
 
 # React Hooks
@@ -14,12 +16,7 @@ paths:
 
 ## Rules of Hooks
 
-Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to error.
-
-1. Hooks only at the top level of a function component or another hook
-2. Never in loops, conditionals, nested functions, or after early returns
-3. Always called in the same order on every render
-4. Only inside React function components or custom hooks (functions starting with `use`)
+Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to error. Hooks only at the top level of components and custom hooks; the plugin enforces the rest.
 
 ## `useEffect` — when not to use
 
@@ -62,13 +59,6 @@ useEffect(() => {
 }, [url]);
 ```
 
-```tsx
-useEffect(() => {
-  const id = setInterval(tick, 1000);
-  return () => clearInterval(id);
-}, []);
-```
-
 Missing cleanup = race conditions when deps change, memory leaks on unmount.
 
 ## `useMemo` and `useCallback` — when worth it
@@ -93,17 +83,6 @@ Do NOT extract when:
 
 - It would have a single caller — inline it
 - The "hook" is just `useState` with a different name — adds indirection, no value
-
-```tsx
-export function useDebounce<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(id);
-  }, [value, delay]);
-  return debounced;
-}
-```
 
 ## `useState` patterns
 

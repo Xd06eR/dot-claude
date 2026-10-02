@@ -50,8 +50,6 @@ paths:
 
 **MANDATORY review triggers:**
 
-- After writing or modifying code
-- Before any commit to shared branches
 - When security-sensitive code is changed (auth, payments, user data)
 - When architectural changes are made
 - Before merging pull requests
@@ -108,14 +106,7 @@ Before marking code complete:
 
 ## Review workflow
 
-```
-1. Run git diff to understand changes
-2. Check security checklist first
-3. Review code quality checklist
-4. Run relevant tests
-5. Verify the new-code coverage baseline (per [testing.md](testing.md))
-6. Run `code-review` for the general pass; dispatch the relevant specialist agent for domain-specific review
-```
+Security checklist first, then the code-quality checklist. For the general pass, call the Skill tool with "code-review"; dispatch the relevant specialist agent for domain-specific review.
 
 ## Common issues to catch
 

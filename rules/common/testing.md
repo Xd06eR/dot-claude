@@ -78,21 +78,7 @@ A flaky test is a defect: fix the test, never mute it with retries.
 
 ## Test structure (AAA pattern)
 
-Prefer Arrange-Act-Assert structure for tests:
-
-```typescript
-test('calculates similarity correctly', () => {
-  // Arrange
-  const vector1 = [1, 0, 0]
-  const vector2 = [0, 1, 0]
-
-  // Act
-  const similarity = calculateCosineSimilarity(vector1, vector2)
-
-  // Assert
-  expect(similarity).toBe(0)
-})
-```
+Prefer Arrange-Act-Assert structure for tests.
 
 ### Test naming
 

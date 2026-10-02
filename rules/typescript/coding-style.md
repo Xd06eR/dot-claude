@@ -12,26 +12,11 @@ paths:
 
 ## Types and interfaces
 
-- Add parameter and return types to exported functions, shared utilities, and public class methods
-- Let TypeScript infer obvious local variable types
-- Extract repeated inline object shapes into named types or interfaces
-
 ### Interfaces vs. type aliases
 
 - Use `interface` for object shapes that may be extended or implemented
 - Use `type` for unions, intersections, tuples, mapped types, and utility types
 - Prefer string literal unions over `enum` unless `enum` is required for interoperability
-
-```typescript
-interface User {
-  id: string
-  email: string
-}
-type UserRole = 'admin' | 'member'
-type UserWithRole = User & {
-  role: UserRole
-}
-```
 
 ### Avoid `any`
 
@@ -45,12 +30,6 @@ function getErrorMessage(error: unknown): string {
   return 'Unexpected error'
 }
 ```
-
-### React props
-
-- Define component props with a named `interface` or `type`
-- Type callback props explicitly
-- Do not use `React.FC` unless there is a specific reason to do so
 
 ### JavaScript files
 

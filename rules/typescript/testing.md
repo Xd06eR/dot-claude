@@ -20,14 +20,7 @@ Measure coverage with `vitest run --coverage`.
 
 ## Test organization
 
-Use `describe` / `it` blocks for grouping; `.todo` stubs an unimplemented test:
-
-```typescript
-describe('auth flow', () => {
-  it('returns 401 for missing token', () => {})
-  it.todo('refreshes expired token')
-})
-```
+Use `describe` / `it` blocks for grouping; `it.todo` stubs an unimplemented test.
 
 ## E2E testing
 

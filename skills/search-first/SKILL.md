@@ -10,11 +10,13 @@ Systematizes the "search for existing solutions before implementing" workflow. T
 
 Check only the channels relevant to the task and project. State honestly which channels were searched and which were unavailable — an unavailable channel is not "nothing found".
 
+- **Installed dependencies first:** never assume a library lacks a capability without checking its documentation and types; prefer what the project already has.
+
 | Channel | Check | If missing |
 |---------|-------|------------|
 | Repository search | `rg --files` and targeted `rg` queries | State that only visible files were inspected |
 | Package registry | `npm --version`, `python -m pip --version`, or project package manager | Use web/docs search and avoid claiming registry coverage |
-| GitHub CLI | `gh auth status` | Use public web or local git history only |
+| GitHub CLI | `gh auth status`, then `gh search repos` / `gh search code` | Use public web or local git history only |
 | MCP/docs tools | Available tool list or local MCP config | Fall back to official docs/web search |
 | Skills directory | `ls ~/.claude/skills ~/.codex/skills` where applicable | Say no local skill catalog was available |
 
@@ -25,11 +27,11 @@ Check only the channels relevant to the task and project. State honestly which c
 | Exact match, well-maintained, MIT/Apache | **Adopt** — install and use directly |
 | Partial match, good foundation | **Extend** — install + write thin wrapper |
 | Multiple weak matches | **Compose** — combine 2-3 small packages |
-| Nothing suitable found | **Build** — write custom, but informed by research |
+| Nothing suitable found | **Build** — write custom or port a proven implementation, informed by research |
 
 ## Full search (non-trivial functionality)
 
-Dispatch a research subagent (per `~/.claude/rules/common/dispatch-protocol.md`) naming the need, the language/framework, the constraints, and the channels from the table. Returns: a structured comparison with a recommendation.
+Dispatch a research subagent (per `~/.claude/rules/common/dispatch-protocol.md`) naming the need, the language/framework, the constraints, and the channels from the table. Returns: a structured comparison with a recommendation. When the search surfaces skeleton or starter candidates, dispatch parallel agents to score them on security, extensibility, and fitness for the target use case before cloning.
 
 ## Anti-patterns
 

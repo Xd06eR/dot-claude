@@ -1,11 +1,9 @@
 ---
 paths:
-  - "**/*.test.tsx"
-  - "**/*.test.jsx"
-  - "**/*.spec.tsx"
-  - "**/*.spec.jsx"
   - "**/e2e/**/*.ts"
+  - "**/e2e/**/*.tsx"
   - "**/e2e/**/*.js"
+  - "**/e2e/**/*.jsx"
 ---
 
 # Web Testing Rules
@@ -47,17 +45,7 @@ paths:
 
 ## E2E shape
 
-```ts
-import { test, expect } from '@playwright/test';
-
-test('landing hero loads', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.locator('h1')).toBeVisible();
-});
-```
-
-- Avoid flaky timeout-based assertions
-- Prefer deterministic waits
+For Playwright E2E work, call the Skill tool with "e2e-testing": it owns locator discipline, wait rules, and the flaky-test diagnosis loop.
 
 ## Unit tests
 
