@@ -1,7 +1,6 @@
 ---
 name: design-consultation
 description: Define a project's visual system from scratch through an opinionated consultation. Use when a project has no design system yet and needs its visual foundation set before UI work begins. Returns one coherent system (aesthetic direction, typography, color, layout, spacing, motion) with rationale, captured in DESIGN.md.
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch
 origin: gstack
 ---
 

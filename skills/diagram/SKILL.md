@@ -1,7 +1,6 @@
 ---
 name: diagram
 description: "Use when the user asks for a diagram or hands over mermaid source: produce a diagram triplet — `.mmd` source, an editable `.excalidraw` file (flowcharts), and rendered SVG/PNG where mermaid-cli is installed."
-allowed-tools: Bash, Read, Write, Grep
 origin: gstack
 ---
 

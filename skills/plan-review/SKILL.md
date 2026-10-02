@@ -2,7 +2,6 @@
 name: plan-review
 description: Review a plan, spec, or PRD before build. Returns one severity-ranked report surfacing only the genuine taste calls.
 argument-hint: "[lenses: all | ceo | design | devex | eng]"
-allowed-tools: Read, Grep, Glob, Edit, Agent
 origin: gstack
 ---
 

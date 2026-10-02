@@ -1,7 +1,6 @@
 ---
 name: land-and-deploy
 description: Land and deploy a finished, reviewed, green branch. Gates the irreversible merge behind a readiness check and hands the merge, push, and any revert back as commands you run.
-allowed-tools: Bash, Read, Grep
 origin: gstack
 ---
 

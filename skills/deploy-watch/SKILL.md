@@ -1,7 +1,6 @@
 ---
 name: deploy-watch
 description: After a release goes out, watch the live target for a bounded window to confirm it is healthy. Returns a verdict (healthy, degraded, or rollback-recommended) with evidence, plus the exact rollback commands on failure, never run.
-allowed-tools: Bash, Read, Write, Grep
 origin: gstack
 ---
 

@@ -1,7 +1,6 @@
 ---
 name: ship
 description: Use when a feature or fix is complete, tested, and ready to leave the branch. Prepares the exact commit, push, and PR commands for you to run.
-allowed-tools: Bash, Read, Edit, Grep
 origin: gstack
 ---
 

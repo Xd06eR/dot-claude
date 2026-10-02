@@ -1,7 +1,6 @@
 ---
 name: document-generate
 description: Generate missing documentation by reading what the code actually does. Use when a codebase has behavior that is real but undocumented. Returns structured docs (README sections, API reference, architecture overviews, usage examples).
-allowed-tools: Bash, Read, Write, Edit, Grep, Glob
 origin: gstack
 ---
 
