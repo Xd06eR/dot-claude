@@ -4,7 +4,7 @@ How the main agent delegates work to subagents and manages attempts on its own w
 
 ## 1. When to dispatch
 
-The test: "will I reason from these exact contents later, or do I only need the answer?" Contents → read it yourself, however many files; answer → dispatch. What degrades a session is residue, not a large relevant working set. Never dispatch work smaller than the dispatch overhead (a one-call read).
+The test: "will I reason from these exact contents later, or do I only need the answer?" Contents → read it yourself; answer → dispatch. What degrades a session is residue, not a large relevant working set. Never dispatch work smaller than the dispatch overhead (a one-call read).
 
 The agent that writes code must itself have read the code it changes; editing from a subagent's summary produces confident wrong patches.
 
@@ -36,7 +36,7 @@ Report contract, binding on every subagent:
 - Return conclusions, decisions, findings, and `file:line` evidence in full: everything the main agent needs to act on and to judge the work, including the reasoning behind non-obvious calls. No size limit ever forces dropping substance.
 - Exclude only residue: raw file contents, full command transcripts, re-derivable bulk.
 - When substance runs long (30+ lines), write it to disk in full and return a faithful structured summary plus the path.
-- No silent file work: the main agent prepares the files a dispatch needs and owns the durable-file lifecycle; a subagent that creates, modifies, or deletes files (build dispatches included) lists every touched path with its operation in the report, and removes its temp files before returning.
+- The main agent prepares the files a dispatch needs and owns the durable-file lifecycle; a subagent that creates, modifies, or deletes files (build dispatches included) lists every touched path with its operation in the report, and removes its temp files before returning.
 - Never dispatches subagents; work that outgrows one context is returned as a split proposal.
 - Always state what was NOT covered.
 
