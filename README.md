@@ -26,7 +26,7 @@ CLAUDE.md's Workflow section carries the phase principles every session; this se
 
 ### The spine
 
-The pipeline in order: `/setup-workflow` once per project · `/session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa → ship → land-and-deploy → deploy-watch → document-release. Each step's trigger and mechanics live in its skill's description and body.
+The pipeline in order: `setup-workflow` once per project · `session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa → ship → land-and-deploy → deploy-watch → document-release. Each step's trigger and mechanics live in its skill's description and body.
 
 Free principle: the phases work without the artifacts. `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md`, `PROGRESS-LOG.md`, `docs/design/`, `docs/adr/`, `docs/plan/`, `docs/build/` are adopted per project as needed; nothing forces them.
 
@@ -58,13 +58,12 @@ Not updated from upstream: upstream changes are adoption candidates, gated per t
 
 ## Excluded Data
 
-All other paths are excluded by the allowlist pattern. Excluded data falls into five categories:
+All other paths are excluded by the allowlist pattern. Excluded data falls into four categories:
 
 1. **Runtime artifacts** — logs, caches, session transcripts, file history, environment snapshots, telemetry, etc.
 2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
 3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
-4. **Backup files** — `**/*.bak` is git-ignored so in-place backups made during harness edits (per `.claude/rules/harness-maintenance.md`) are never tracked.
-5. **Scratch working docs** — `.scratch/` holds one-time session working files; ignored by the allowlist's catch-all and never committed, and anything durable in them is canonized into the tracked files.
+4. **Scratch working docs** — `.scratch/` holds one-time session working files; ignored by the allowlist's catch-all and never committed, and anything durable in them is canonized into the tracked files.
 
 ## Hooks
 

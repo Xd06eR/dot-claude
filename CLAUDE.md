@@ -63,7 +63,7 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
    - **Ship floor:** no debug leftovers; the first realistic failure mode handled or declared out of scope; stale comments/docs updated.
 
-The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy. A project adopts the document set by running `/setup-workflow` once.
+The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy. A project adopts the document set by running `setup-workflow` once.
 
 Any skill exploring a codebase area or producing domain-facing text reads `CONTEXT.md` for the mental model and uses its vocabulary, and respects ADRs in the area; absence is silent, and the writer skills create lazily.
 
