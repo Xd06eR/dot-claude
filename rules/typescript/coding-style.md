@@ -10,21 +10,19 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md) with TypeScript/JavaScript specific content. Focus is on non-default project conventions; standard TS style is assumed.
 
-## Types and interfaces
-
-### Interfaces vs. type aliases
+## Interfaces vs. type aliases
 
 - Use `interface` for object shapes that may be extended or implemented
 - Use `type` for unions, intersections, tuples, mapped types, and utility types
 - Prefer string literal unions over `enum` unless `enum` is required for interoperability
 
-### Avoid `any`
+## Avoid `any`
 
 - Avoid `any` in application code
 - Use `unknown` for external or untrusted input, then narrow it safely
 - Use generics when a value's type depends on the caller
 
-### JavaScript files
+## JavaScript files
 
 - In `.js` and `.jsx` files, use JSDoc when types improve clarity and a TypeScript migration is not practical
 - Keep JSDoc aligned with runtime behavior

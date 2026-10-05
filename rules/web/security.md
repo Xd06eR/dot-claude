@@ -15,11 +15,7 @@ paths:
 
 ## Content Security Policy
 
-Always configure a production CSP.
-
-### Nonce-based CSP
-
-Use a per-request nonce for scripts instead of `'unsafe-inline'`.
+Always configure a production CSP with a per-request nonce for scripts instead of `'unsafe-inline'`:
 
 ```text
 Content-Security-Policy:

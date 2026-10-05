@@ -65,11 +65,9 @@ export function UserCard({ user, onSelect }: Props) {
 - Then third-party libs, then absolute project imports, then relative
 - Type-only imports: `import type { ReactNode } from "react"` — never mix runtime and type imports in one statement when ESLint's `consistent-type-imports` is configured
 
-## Hooks discipline
+## Hooks and state
 
 See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for one-line wrappers: inline the call instead.
-
-## State
 
 - State location (local → lift → Context → external store): see [architecture.md](./architecture.md#state-location-decision-tree)
 - Compute during render instead of storing derivable state

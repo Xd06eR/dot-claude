@@ -8,9 +8,8 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md) with Python specific content.
 
-## Standards
-
-- Use **type annotations** on all function signatures
+- Use **type annotations** on all function signatures.
+- Verification: `ruff check` → `ruff format` → `mypy` → `pytest`
 
 ## Immutability
 
@@ -24,7 +23,3 @@ class User:
     name: str
     email: str
 ```
-
-## Verification
-
-`ruff check` → `ruff format` → `mypy` → `pytest`

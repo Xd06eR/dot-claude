@@ -42,7 +42,7 @@ Every subscription, interval, listener, or in-flight request must clean up.
 
 Missing cleanup = race conditions when deps change, memory leaks on unmount.
 
-## `useState` patterns
+## `useState` and `useReducer`
 
 - Use `useReducer` once state transitions are conditional on the previous state or there are 3+ related values
 

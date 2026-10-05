@@ -61,6 +61,8 @@ Before ANY commit:
 - [ ] Dependencies vetted: audit run on add (`npm audit` / `pip-audit`), versions pinned, new packages checked for maintenance and provenance
 - [ ] SSRF guards on outbound fetches; path-traversal guards on file paths
 
+The `security-guidance` plugin auto-runs pattern warnings on edit and security review on diff and commit.
+
 ## Secret management
 
 - ALWAYS use environment variables or a secret manager
@@ -82,10 +84,6 @@ Assume prompt injection succeeds: anything in the context may be steering the mo
 - [ ] Token, spend, and recursion caps on every model call and agent loop
 - [ ] Model, provider, plugin, and dataset sources vetted and pinned; third-party artifacts integrity-checked (signing, file hashes) before load
 - [ ] Prompts and completions redacted before logging; no secrets, tokens, or PII in traces
-
-## Automated security
-
-The `security-guidance` plugin auto-runs pattern warnings on edit and security review on diff and commit.
 
 ## Security response protocol
 

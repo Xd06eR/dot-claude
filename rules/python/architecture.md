@@ -27,16 +27,11 @@ tests/                        # mirrors src/ structure
 pyproject.toml                # single project config root
 ```
 
+- Tests live in a parallel `tests/` tree mirroring `src/` (`tests/test_services/test_billing.py` for `src/myapp/services/billing.py`), not beside the source.
+
 ## Module boundaries
 
 - Import direction (the one-way rule per [common/architecture.md](../common/architecture.md)): `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
 - `__init__.py` carries re-exports only, or stays empty: pick one convention per project, never mix.
-
-## Tests
-
-- Tests live in a parallel `tests/` tree mirroring `src/` (`tests/test_services/test_billing.py` for `src/myapp/services/billing.py`), not beside the source.
-
-## Types
-
 - Ship `py.typed` in typed packages so downstream type-checkers read the annotations.
 - Keep `.pyi` stubs next to the module they describe; prefer inline annotations over stubs whenever the source is editable.

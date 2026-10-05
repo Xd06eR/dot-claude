@@ -14,9 +14,11 @@ paths:
 
 > React-specific architecture. For hook-specific rules see [hooks.md](./hooks.md).
 
-## Logic extraction
+## Component patterns
 
 Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
+
+For related controls (Tabs, Accordion, Menu), use compound components sharing state via Context.
 
 ## State location decision tree
 
@@ -62,10 +64,6 @@ Every Suspense boundary needs an Error Boundary above it. The pair covers pendin
 - Place Suspense boundaries close to where data is needed, not at the route root
 - Multiple narrower boundaries reveal loaded content progressively
 - Error Boundary must be a Class Component (React 19 has no functional equivalent) OR use a library wrapper such as `react-error-boundary`
-
-## Compound components
-
-For related controls (Tabs, Accordion, Menu), use compound components sharing state via Context.
 
 ## Refs and Forwarding (React 19+)
 

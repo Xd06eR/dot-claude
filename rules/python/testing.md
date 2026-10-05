@@ -8,13 +8,7 @@ paths:
 
 > This file extends [common/testing.md](../common/testing.md) with Python specific content.
 
-## Framework
-
-Use **pytest** as the testing framework.
-
-## Coverage
-
-Measure coverage with `pytest --cov=src` (pytest-cov).
+- Use **pytest** as the testing framework; measure coverage with `pytest --cov=src` (pytest-cov).
 
 ## Test organization
 
