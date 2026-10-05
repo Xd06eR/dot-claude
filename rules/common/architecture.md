@@ -53,7 +53,6 @@ paths:
 - Layer data models don't leak: transport, domain, persistence, and view models are separate types; validate and convert at the boundary, and share no mutable state across layers.
 - Circular imports are banned. When two modules need each other, extract the shared concept into a third module; a lazy or dynamic work-around import signals a boundary problem.
 - Entry files carry re-exports only, no logic.
-- Feature-private helpers stay inside the feature; promote to shared only after a second feature needs them.
 
 ## Concurrency and failure
 

@@ -52,9 +52,7 @@ paths:
 
 ## Task tracking
 
-Track multi-step work in a manual file; the list verifies you understood the task and enables steering.
-
-The list itself is a check: out-of-order, missing, extra, or wrong-granularity steps mean the task was misread — fix the understanding, not just the list.
+Track multi-step work in a manual file: out-of-order, missing, extra, or wrong-granularity steps mean the task was misread — fix the understanding, not just the list.
 
 ## Minimal implementation
 

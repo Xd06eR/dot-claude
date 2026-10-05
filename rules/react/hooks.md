@@ -28,17 +28,6 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 - Notifying parents of state changes: call the callback in the event handler
 - Initializing app-level singletons: call the function at module scope or in `main.tsx`
 
-```tsx
-// WRONG: effect for derived state
-const [fullName, setFullName] = useState("");
-useEffect(() => {
-  setFullName(`${first} ${last}`);
-}, [first, last]);
-
-// CORRECT: derive during render
-const fullName = `${first} ${last}`;
-```
-
 ## Dependency arrays
 
 - Always include every reactive value referenced inside the effect/callback
@@ -51,54 +40,11 @@ const fullName = `${first} ${last}`;
 
 Every subscription, interval, listener, or in-flight request must clean up.
 
-```tsx
-useEffect(() => {
-  const controller = new AbortController();
-  fetch(url, { signal: controller.signal }).then(handleResponse);
-  return () => controller.abort();
-}, [url]);
-```
-
 Missing cleanup = race conditions when deps change, memory leaks on unmount.
-
-## `useMemo` and `useCallback` — when worth it
-
-Default position: **do not memoize**. Add `useMemo` / `useCallback` only when:
-
-1. The value is passed to a `React.memo`-wrapped child as a prop, and identity matters
-2. The value is a dependency of another `useEffect` / `useMemo` / `useCallback`
-3. The computation is measurably expensive (profile before assuming)
-
-If the project enables the React Compiler, rely on it for memoization; keep `useMemo`/`useCallback` as manual escape hatches only.
-
-## Custom hooks
-
-Extract a custom hook when:
-
-- The same hook sequence (state + effect + computed) appears in 2+ components
-- The logic has a clear, nameable purpose (`useDebounce`, `useOnClickOutside`, `useLocalStorage`)
-- You want to test the logic independently of any component
-
-Do NOT extract when:
-
-- It would have a single caller — inline it
-- The "hook" is just `useState` with a different name — adds indirection, no value
 
 ## `useState` patterns
 
-- Functional updater when the new state depends on the old: `setCount(c => c + 1)` — required inside async or batched contexts
 - Use `useReducer` once state transitions are conditional on the previous state or there are 3+ related values
-
-## `useRef` patterns
-
-- DOM refs for imperative APIs (focus, scroll, third-party libs)
-- Mutable container that does not trigger re-render (timer ids, previous values, "is mounted" flags)
-- Never read or write `ref.current` during render — only inside effects or event handlers
-- `useImperativeHandle` only when exposing a child API to a parent ref (last-resort escape hatch)
-
-## `useSyncExternalStore`
-
-Use this hook to subscribe to any external store (browser API, third-party state lib, custom event emitter).
 
 ## React 19 additions
 

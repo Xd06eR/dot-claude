@@ -16,15 +16,11 @@ paths:
 
 ## Logic extraction
 
-Extract shared logic into custom hooks first: they reuse behavior without imposing a file split. Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
+Container/presentational (a data-owning wrapper over a pure props-in view) is one option where the boundary is real, not a default.
 
 ## State location decision tree
 
-1. Used by one component → `useState` inside it
-2. Used by parent + a few children → lift to nearest common ancestor, pass via props
-3. Used across distant branches → React Context **for low-frequency reads only** (theme, auth, locale)
-4. High-frequency updates shared across the tree → external store (Zustand, Jotai, Redux Toolkit)
-5. Server-derived data → server-state library (TanStack Query, SWR, or a Server Component fetch), not application state
+Local → lift to nearest common ancestor → Context for low-frequency reads only → external store for high-frequency sharing → server-derived data to a server-state library, never application state.
 
 ## Server / Client Component boundary (RSC, Next.js App Router)
 
@@ -67,53 +63,9 @@ Every Suspense boundary needs an Error Boundary above it. The pair covers pendin
 - Multiple narrower boundaries reveal loaded content progressively
 - Error Boundary must be a Class Component (React 19 has no functional equivalent) OR use a library wrapper such as `react-error-boundary`
 
-## Forms
-
-### Uncontrolled (React 19 + form actions)
-
-Prefer uncontrolled inputs with form actions when the form has a clear submit step. The browser owns the value. React reads it via `FormData` on submit.
-
-```tsx
-async function action(formData: FormData) {
-  "use server";
-  await saveUser({ name: String(formData.get("name")) });
-}
-
-export function UserForm() {
-  return (
-    <form action={action}>
-      <input name="name" required />
-      <button type="submit">Save</button>
-    </form>
-  );
-}
-```
-
-Use controlled inputs only when the value drives other UI, requires real-time validation, or formatting.
-
-### Form libraries
-
-For complex forms (multi-step, dynamic field arrays, cross-field validation), use a library:
-
-- React Hook Form — minimal re-renders, uncontrolled-first
-- TanStack Form — typed, framework-agnostic
-
-## Data fetching
-
-| Strategy | When |
-|---|---|
-| RSC fetch (`await` in Server Component) | Per-request data in Next.js App Router, no client-side cache needed |
-| TanStack Query | Client-side cache, mutations, optimistic updates, polling |
-| SWR | Lightweight cache + revalidation, simpler than TanStack Query |
-| `fetch` in `useEffect` | Avoid: race conditions; no cache, dedup, invalidation, retry, or Suspense integration. Acceptable only for one-off fire-and-forget |
-
 ## Compound components
 
 For related controls (Tabs, Accordion, Menu), use compound components sharing state via Context.
-
-## Portals
-
-Use `createPortal` for modals, tooltips, toast containers: anything that must escape the parent's `overflow: hidden` or `z-index` stacking context. Render to a stable DOM node mounted in `index.html`.
 
 ## Refs and Forwarding (React 19+)
 

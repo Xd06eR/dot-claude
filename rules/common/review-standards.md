@@ -48,15 +48,8 @@ paths:
 
 ## When to review
 
-**MANDATORY review triggers:**
-
-- When security-sensitive code is changed (auth, payments, user data)
-- When architectural changes are made
-- Before merging pull requests
-
 **Before declaring work ready for review:**
 
-- Automated checks pass (tests, lint, type-check)
 - A check failing for reasons outside the change is reported with evidence and its impact, never waved through as pre-existing
 - Merge conflicts resolved
 - Branch up to date with target

@@ -23,11 +23,8 @@ paths:
 
 ## Naming
 
-- Components: `PascalCase` for both the symbol and the file (`UserCard.tsx`, default export `UserCard`)
 - Custom hooks: `useCamelCase` for the symbol; the file follows the project's non-component convention (`use-debounce.ts` or `useDebounce.ts`), applied consistently
-- Context: `<Domain>Context` symbol, `<Domain>Provider` provider component, `use<Domain>` consumer hook
 - Event handlers: `handleClick`, `handleSubmit` inside the component; the prop that receives it is `onClick`, `onSubmit`
-- Boolean props: `isLoading`, `hasError`, `canSubmit` — never `loading` or `error` alone for booleans
 
 ## Component shape
 
@@ -48,15 +45,11 @@ export function UserCard({ user, onSelect }: Props) {
 
 - Prefer `type Props = {}` for closed component prop shapes
 - Use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point
-- Always destructure props in the parameter list: no `props.user` access inside the body
-- Type the return implicitly through JSX (`function Foo(): React.JSX.Element` only when the function returns conditionally and the union confuses inference)
-- No `React.FC` in new code
 
 ## JSX
 
 - Self-close tags with no children: `<img />`, `<UserCard user={u} />`
 - Use fragments `<>...</>` over wrapper `<div>` when no DOM element is needed
-- Conditional rendering: `{condition && <Foo />}` for booleans, ternary for either/or, early return for guard clauses
 - Never put logic inline in JSX when it spans multiple lines: extract to a const above the return or a function
 
 ## Server / client boundary (Next.js App Router, RSC)
@@ -79,7 +72,7 @@ See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for
 ## State
 
 - State location (local → lift → Context → external store): see [architecture.md](./architecture.md#state-location-decision-tree)
-- Compute during render instead of storing derivable state (the principle lives in [web/architecture.md](../web/architecture.md))
+- Compute during render instead of storing derivable state
 
 ## Class components
 

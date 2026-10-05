@@ -65,11 +65,3 @@ When tests fail:
 4. Use the `diagnosing-bugs` skill for root cause analysis on hard-to-debug failures
 
 A flaky test is a defect: fix the test, never mute it with retries.
-
-## Test structure (AAA pattern)
-
-Prefer Arrange-Act-Assert structure for tests.
-
-### Test naming
-
-Name the behavior under test: `test('returns empty array when no markets match query', ...)`.

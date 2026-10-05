@@ -49,8 +49,6 @@ paths:
 ## Language and prose
 
 - **US English spelling:** -ize/-or forms (`normalize`, `color`, `behavior`).
-- **Comments explain *why*, not *what*:** non-obvious intent, trade-offs, gotchas; on a non-obvious design choice, one line on *why* it was made. Docstrings on public APIs whose behavior isn't obvious from signature; skip obvious getters/setters.
-- **No context-free TODOs:** a shipped TODO/FIXME names the reason, the unblock or removal condition, and where it is tracked; anything else gets resolved or deleted.
 - **Simplicity:** plain over clever unless cleverness is load-bearing.
 - **Formatting:** the formatter owns code syntax.
 
@@ -90,7 +88,4 @@ Match the project's existing response shape. When it has none, return errors as 
 
 > Language-specific rules in `rules/<language>/coding-style.md` override these defaults.
 
-- Descriptive names; booleans prefer `is`, `has`, `should`, or `can` prefixes
-- Interfaces, types, and components: `PascalCase`
-- Constants: `UPPER_SNAKE_CASE`
 - Abbreviate in small scope, spell out cross-module
