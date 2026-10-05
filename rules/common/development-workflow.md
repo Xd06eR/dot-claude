@@ -46,9 +46,7 @@ paths:
 
 # Development Workflow
 
-> Workflow support that extends CLAUDE.md: task tracking, minimal implementation, pre-implementation research, and PR guidance.
-
-Research before coding. Planning, TDD, review follow CLAUDE.md's 4-phase workflow.
+> Workflow support that extends CLAUDE.md.
 
 - **Code navigation:** use LSP for definitions, references, and symbols; grep is for text patterns.
 

@@ -94,7 +94,3 @@ Match the project's existing response shape. When it has none, return errors as 
 - Interfaces, types, and components: `PascalCase`
 - Constants: `UPPER_SNAKE_CASE`
 - Abbreviate in small scope, spell out cross-module
-
-## Code quality checklist
-
-See [review-standards.md](review-standards.md#review-checklist) for the pre-complete checklist.

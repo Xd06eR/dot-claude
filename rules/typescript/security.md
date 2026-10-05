@@ -20,17 +20,9 @@ if (!apiKey) {
 }
 ```
 
-## Automated security
-
-Automated scanning via the `security-guidance` plugin — see [common/security.md](../common/security.md#automated-security).
-
 ## Supply chain security
 
 - Principle per [common/security.md](../common/security.md#mandatory-security-checks); npm mechanics below
 - Run `npm audit` (or `pnpm audit`) on add and in CI; trace flagged packages with `npm ls <package>`
 - Pin exact versions in `package.json` (no `^`/`~`) and commit the lockfile
 - Check the license before adding
-
-## Input validation
-
-Use Zod for schema-based validation at API boundaries — see [typescript/coding-style.md](./coding-style.md#input-validation) for patterns.

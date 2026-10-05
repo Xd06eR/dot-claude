@@ -54,17 +54,7 @@ Test weight tracks the change: new behavior and logic carry the baseline and the
 
 ## Test-Driven Development
 
-Workflow: failing test (RED) → minimal implementation (GREEN) → verify coverage meets target.
-
-See the `tdd` skill for the red → green loop and the house extras (seams, the tautological-test anti-pattern); refactoring lands at review.
-
-## Test types
-
-Three layers, use as needed:
-
-1. **Unit Tests** — Individual functions, utilities, components
-2. **Integration Tests** — API endpoints, database operations
-3. **E2E Tests** — Critical user flows (framework chosen per language)
+The red → green loop and the house extras (seams, the tautological-test anti-pattern) live in the `tdd` skill.
 
 ## Troubleshooting
 

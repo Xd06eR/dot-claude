@@ -52,7 +52,7 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Ground the boundary on the code, not the docs:** what exists in code is reused or extended; what is absent is this build. A doc-vs-code mismatch is a finding, never a planning basis.
 3. **Build:** turn the settled design into working code. **One concern per change, tight diffs.** Catch scope creep → stop and slice smaller.
    - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
-   - **TDD red-green-refactor:** refactoring only while green; ship a working version before polishing.
+   - **TDD:** the `tdd` skill owns the loop; ship a working version before polishing.
    - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
    - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
    - **Subagents carry residue work:** dispatch per `~/.claude/rules/common/dispatch-protocol.md`; you integrate.

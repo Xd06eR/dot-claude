@@ -51,9 +51,6 @@ test("submits the form", async () => {
 });
 ```
 
-- Always `await` `userEvent` calls — they are async
-- Call `userEvent.setup()` once at the top of each test, then reuse the returned `user`
-
 ## Async assertions
 
 - `findBy*` for async element appearance
@@ -124,7 +121,6 @@ test("useCounter increments", () => {
 });
 ```
 
-- Always wrap state-changing calls in `act`
 - Always test through the public hook API, not internal implementation
 
 ## Accessibility assertions
