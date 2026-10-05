@@ -51,6 +51,7 @@ paths:
 - **US English spelling:** -ize/-or forms (`normalize`, `color`, `behavior`).
 - **Simplicity:** plain over clever unless cleverness is load-bearing.
 - **Formatting:** the formatter owns code syntax.
+- **Naming:** abbreviate in small scope, spell out cross-module; language-specific rules in `rules/<language>/coding-style.md` override these defaults.
 
 ## Immutability
 
@@ -83,9 +84,3 @@ ALWAYS validate at system boundaries:
 ## API response format
 
 Match the project's existing response shape. When it has none, return errors as RFC 9457 problem details; whatever the shape, keep it consistent across endpoints.
-
-## Naming conventions
-
-> Language-specific rules in `rules/<language>/coding-style.md` override these defaults.
-
-- Abbreviate in small scope, spell out cross-module

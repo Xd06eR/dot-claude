@@ -66,8 +66,6 @@ For full design work, use the design skills: `design-consultation` (system from 
 | App page | < 300kb | < 50kb |
 | Microsite | < 80kb | < 15kb |
 
-### Font loading
-
 - Max two font families unless there is a clear exception
 
 ### Animation performance
