@@ -15,7 +15,7 @@ Use the `src/` layout; each package hides its internals behind a public entry po
 ```text
 src/
 └── myapp/
-    ├── __init__.py           # public API — the only import surface
+    ├── __init__.py           # public API: the only import surface
     ├── py.typed              # marks the package as typed
     ├── domain/               # business logic, no I/O imports
     ├── services/             # use-case orchestration
@@ -30,7 +30,7 @@ pyproject.toml                # single project config root
 ## Module boundaries
 
 - Import direction (the one-way rule per [common/architecture.md](../common/architecture.md)): `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
-- `__init__.py` carries re-exports only, or stays empty — pick one convention per project, never mix.
+- `__init__.py` carries re-exports only, or stays empty: pick one convention per project, never mix.
 
 ## Tests
 

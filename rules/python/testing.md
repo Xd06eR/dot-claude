@@ -28,4 +28,4 @@ def test_calculate_total():
     ...
 ```
 
-Register custom marks in `pyproject.toml` under `[tool.pytest.ini_options]` `markers = [...]` — unregistered marks warn on every run and fail under `--strict-markers`.
+Register custom marks in `pyproject.toml` under `[tool.pytest.ini_options]` `markers = [...]`: unregistered marks warn on every run and fail under `--strict-markers`.

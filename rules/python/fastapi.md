@@ -43,17 +43,17 @@ async def get_user(
 
 Do not create `SessionLocal()` or long-lived clients inside route handlers.
 
-- A dependency called twice in one request is cached per-request — share, don't re-resolve.
+- A dependency called twice in one request is cached per-request: share, don't re-resolve.
 
 ## Persistence
 
-- Rely on database constraints (unique indexes) and catch `IntegrityError` instead of application-level prechecks — check-then-insert races under concurrency.
-- Enforce deterministic ordering (`.order_by(...)`) on every offset/limit endpoint — unordered scans skip rows across pages.
+- Rely on database constraints (unique indexes) and catch `IntegrityError` instead of application-level prechecks: check-then-insert races under concurrency.
+- Enforce deterministic ordering (`.order_by(...)`) on every offset/limit endpoint: unordered scans skip rows across pages.
 
 ## Schemas
 
 - Never include passwords, password hashes, access tokens, refresh tokens, or internal auth state in response models.
-- Declare the response shape: return-type annotation when the handler returns the declared model, `response_model` when it returns something else (dict, ORM object) — `response_model` wins when both are present.
+- Declare the response shape: return-type annotation when the handler returns the declared model, `response_model` when it returns something else (dict, ORM object). `response_model` wins when both are present.
 - Use field constraints instead of hand-written validation when Pydantic can express the rule.
 
 ## Security
@@ -67,4 +67,4 @@ Do not create `SessionLocal()` or long-lived clients inside route handlers.
 
 - Override the exact dependency used by `Depends`.
 - Clear `app.dependency_overrides` after tests.
-- Use TestClient for sync test functions — it drives async apps from plain `def` tests; switch to `httpx.AsyncClient(transport=ASGITransport(app=app))` with `@pytest.mark.anyio` only when the test function itself must await.
+- Use TestClient for sync test functions: it drives async apps from plain `def` tests; switch to `httpx.AsyncClient(transport=ASGITransport(app=app))` with `@pytest.mark.anyio` only when the test function itself must await.

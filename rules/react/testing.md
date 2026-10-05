@@ -23,19 +23,19 @@ paths:
 - **Playwright Component Testing** — when component tests need a real browser engine (animation, layout, complex events)
 - **Cypress Component Testing** — alternative real-browser component runner
 
-Pick one component-testing approach per project — do not mix RTL and Playwright CT in the same repo.
+Pick one component-testing approach per project: do not mix RTL and Playwright CT in the same repo.
 
 ## Core principle
 
 Test what the user sees and does, not implementation details.
 
-- Query by accessible role first, then label, then text — fall back to `data-testid` only when nothing else fits
+- Query by accessible role first, then label, then text: fall back to `data-testid` only when nothing else fits
 - Never assert on internal state, props passed to children, or which hooks were called
 - `getBy*` throws when no match, `queryBy*` returns null (assert absence), `findBy*` returns a promise (async)
 
 ## User interaction
 
-Prefer `userEvent` over `fireEvent`. `userEvent` simulates real browser sequences (focus, keydown, beforeinput, input, keyup) — `fireEvent` dispatches a single synthetic event.
+Prefer `userEvent` over `fireEvent`. `userEvent` simulates real browser sequences (focus, keydown, beforeinput, input, keyup): `fireEvent` dispatches a single synthetic event.
 
 ```tsx
 import userEvent from "@testing-library/user-event";
@@ -55,7 +55,7 @@ test("submits the form", async () => {
 
 - `findBy*` for async element appearance
 - `waitFor` for async expectations on side effects or other matchers
-- Never `setTimeout` + assertion — flaky
+- Never `setTimeout` + assertion (flaky)
 
 ## Network mocking with MSW
 
@@ -86,7 +86,7 @@ Snapshots of rendered output are brittle, hard to review, and rubber-stamped by 
 - Pure data serialization (e.g., a transformer that produces a stable string)
 - Catching unintended regressions in non-visual output
 
-For component visual regression, use Playwright / Cypress / Percy screenshots — actual visual diffs, not DOM diffs.
+For component visual regression, use Playwright / Cypress / Percy screenshots: actual visual diffs, not DOM diffs.
 
 ## Test setup helpers
 
@@ -105,7 +105,7 @@ function renderWithProviders(ui: React.ReactElement) {
 }
 ```
 
-One QueryClient per test, created in the helper body — never module scope (cache bleeds across tests), never inside the wrapper component (resets on re-render). Export from `test-utils.tsx` and use everywhere.
+One QueryClient per test, created in the helper body: never module scope (cache bleeds across tests), never inside the wrapper component (resets on re-render). Export from `test-utils.tsx` and use everywhere.
 
 ## Custom hook testing
 
@@ -134,7 +134,7 @@ test("UserCard has no a11y violations", async () => {
 });
 ```
 
-Run axe assertions in component tests — catches missing labels and ARIA misuse. Color contrast is not checked at all in JSDOM (no layout engine, so axe disables the rule); it needs a browser pass.
+Run axe assertions in component tests: catches missing labels and ARIA misuse. Color contrast is not checked at all in JSDOM (no layout engine, so axe disables the rule); it needs a browser pass.
 
 ## When to reach for Playwright / Cypress
 
@@ -153,14 +153,14 @@ For those, use Playwright Component Testing or an E2E run (framework per [typesc
 |---|---|
 | Pure utility functions | ≥90% |
 | Custom hooks | ≥85% |
-| Components (presentational) | ≥80% — behavior, not lines |
-| Container components | ≥70% — golden paths + error states |
+| Components (presentational) | ≥80% (behavior, not lines) |
+| Container components | ≥70% (golden paths + error states) |
 | Pages (E2E covered separately) | Smoke test per route minimum |
 
 ## Anti-patterns
 
-- Asserting on `container.querySelector` — bypasses accessibility queries
-- Asserting on number of renders — implementation detail
-- Mocking React hooks (`jest.mock("react", ...)`) — refactor the component instead
-- Mocking child components by default — tests the integration, not the parent in isolation
-- Manual `act()` warnings ignored — they indicate real bugs
+- Asserting on `container.querySelector`: bypasses accessibility queries
+- Asserting on number of renders: implementation detail
+- Mocking React hooks (`jest.mock("react", ...)`): refactor the component instead
+- Mocking child components by default: tests the integration, not the parent in isolation
+- Manual `act()` warnings ignored: they indicate real bugs

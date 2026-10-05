@@ -11,7 +11,7 @@ paths:
 
 # Web Architecture, Design Quality, and Performance
 
-> Web-specific architecture, design-quality, and performance rules. Component patterns (compound components, container/presentational) live in [react/architecture.md](../react/architecture.md) — they are React-specific and load alongside this file on `.tsx`/`.jsx`.
+> Web-specific architecture, design-quality, and performance rules. Component patterns (compound components, container/presentational) live in [react/architecture.md](../react/architecture.md). They are React-specific and load alongside this file on `.tsx`/`.jsx`.
 
 ## State management
 

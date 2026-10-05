@@ -19,7 +19,7 @@ paths:
 - `.tsx` for any file containing JSX, even one-liner snippets
 - `.ts` for pure logic, custom hooks without JSX, type definitions, utilities
 - `.test.tsx` / `.test.ts` mirroring the source file
-- Use `.jsx` only when the project intentionally avoids TypeScript — flag every new untyped React file in review
+- Use `.jsx` only when the project intentionally avoids TypeScript: flag every new untyped React file in review
 
 ## Naming
 
@@ -48,7 +48,7 @@ export function UserCard({ user, onSelect }: Props) {
 
 - Prefer `type Props = {}` for closed component prop shapes
 - Use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point
-- Always destructure props in the parameter list — no `props.user` access inside the body
+- Always destructure props in the parameter list: no `props.user` access inside the body
 - Type the return implicitly through JSX (`function Foo(): React.JSX.Element` only when the function returns conditionally and the union confuses inference)
 - No `React.FC` in new code
 
@@ -74,7 +74,7 @@ export function UserCard({ user, onSelect }: Props) {
 
 ## Hooks discipline
 
-See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for one-line wrappers — inline the call instead.
+See [hooks.md](./hooks.md) for the full ruleset. Avoid creating ad-hoc hooks for one-line wrappers: inline the call instead.
 
 ## State
 

@@ -48,7 +48,7 @@ paths:
 
 ## Coverage target
 
-≥80% baseline for new code — coverage is a floor, not evidence. Language-specific testing rules may refine targets per layer.
+≥80% baseline for new code. Coverage is a floor, not evidence. Language-specific testing rules may refine targets per layer.
 
 Test weight tracks the change: new behavior and logic carry the baseline and the TDD loop; reversible, low-impact changes that mirror existing implementation need no new tests. Broaden or repeat testing only when new changes, failures, or unresolved concerns justify it.
 
@@ -59,7 +59,7 @@ The red → green loop and the house extras (seams, the tautological-test anti-p
 ## Troubleshooting
 
 When tests fail:
-1. Check test isolation — no shared mutable state between tests
+1. Check test isolation: no shared mutable state between tests
 2. Verify mocks match current interfaces
 3. Fix implementation, not tests (unless the test is wrong)
 4. Use the `diagnosing-bugs` skill for root cause analysis on hard-to-debug failures

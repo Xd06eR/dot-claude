@@ -89,10 +89,10 @@ export async function updateUser(_state: unknown, formData: FormData) {
 }
 ```
 
-- Authenticate inside the action — do not trust the client-side route gate
+- Authenticate inside the action: do not trust the client-side route gate
 - Authorize: confirm the current user has permission for the specific record they are mutating
-- Middleware is not authorization — re-check auth inside every Server Action and data-owning layout
-- Anything passed across the RSC boundary to a Client Component ships to the browser — pass IDs, not records with internal fields
+- Middleware is not authorization: re-check auth inside every Server Action and data-owning layout
+- Anything passed across the RSC boundary to a Client Component ships to the browser: pass IDs, not records with internal fields
 
 ## Secret exposure via env vars
 
@@ -113,18 +113,18 @@ Audit on every PR that touches env vars: would this string in the public bundle 
 
 ## Authentication / Authorization
 
-- Never store sessions in `localStorage` — accessible to any XSS. Use httpOnly secure cookies.
-- Never trust client-set state to gate sensitive UI. Render-gating in JSX prevents display, not access — the API must enforce.
+- Never store sessions in `localStorage`: accessible to any XSS. Use httpOnly secure cookies.
+- Never trust client-set state to gate sensitive UI. Render-gating in JSX prevents display, not access: the API must enforce.
 - CSRF: the base rule lives in [common/security.md](../common/security.md); `SameSite=Strict`/`Lax` is defense in depth, not a substitute
 - Use double-submit cookies or origin verification for form actions when not using framework defaults
 
 ## Content Security Policy (CSP)
 
-Configure server-side — full nonce-based header block in [web/security.md](../web/security.md#content-security-policy). React/SSR specifics:
+Configure server-side: full nonce-based header block in [web/security.md](../web/security.md#content-security-policy). React/SSR specifics:
 
 - Avoid `unsafe-inline` and `unsafe-eval` in `script-src`
-- For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces — both Next.js and Remix support nonce injection
-- `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries — document the tradeoff
+- For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces: both Next.js and Remix support nonce injection
+- `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff
 
 ## Prototype pollution
 
@@ -145,9 +145,9 @@ setState({ ...state, ...parsed });
 
 When using `renderToString` or `renderToPipeableStream`:
 
-- All values rendered inside JSX are escaped by React — safe
-- Values passed to `dangerouslySetInnerHTML` are NOT escaped — same rules as client
-- Manually constructed HTML wrappers around the React output must be escaped or sanitized — never concatenate user input into the surrounding HTML template
+- All values rendered inside JSX are escaped by React (safe)
+- Values passed to `dangerouslySetInnerHTML` are NOT escaped: same rules as client
+- Manually constructed HTML wrappers around the React output must be escaped or sanitized: never concatenate user input into the surrounding HTML template
 
 ## Third-party components
 

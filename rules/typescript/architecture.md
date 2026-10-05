@@ -18,7 +18,7 @@ Organize by feature; each feature folder hides its internals behind a public ent
 src/
 ├── features/
 │   ├── auth/
-│   │   ├── index.ts            # public API — the only import surface
+│   │   ├── index.ts            # public API: the only import surface
 │   │   ├── auth-service.ts
 │   │   ├── auth-service.test.ts
 │   │   └── types.ts

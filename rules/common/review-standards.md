@@ -62,7 +62,7 @@ paths:
 - Branch up to date with target
 - Diff is small and single-concern (~100 lines reasonable, ~1000 too large); refactor separated from behavior change
 
-**Review scale tracks automation scale:** N automated or looped changes need N reviewed diffs — a skim of the summary is not review. Spot-check the gate itself periodically by sampling its verdicts; gates drift.
+**Review scale tracks automation scale:** N automated or looped changes need N reviewed diffs. A skim of the summary is not review. Spot-check the gate itself periodically by sampling its verdicts; gates drift.
 
 ## Review checklist
 
@@ -102,7 +102,7 @@ Before marking code complete:
 
 **Calibrate the report:** one substantiated blocker outweighs a list of nits.
 
-**Half-built work:** deliberate half-built work the change leaves behind (a spike, harness, scaffold, phased feature, blast-radius buffer, or incidental cleanup) is not a defect — report only when it is accidental or the change half-repairs it.
+**Half-built work:** deliberate half-built work the change leaves behind (a spike, harness, scaffold, phased feature, blast-radius buffer, or incidental cleanup) is not a defect. Report only when it is accidental or the change half-repairs it.
 
 ## Review workflow
 

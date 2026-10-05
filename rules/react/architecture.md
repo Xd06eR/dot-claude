@@ -24,7 +24,7 @@ Extract shared logic into custom hooks first: they reuse behavior without imposi
 2. Used by parent + a few children → lift to nearest common ancestor, pass via props
 3. Used across distant branches → React Context **for low-frequency reads only** (theme, auth, locale)
 4. High-frequency updates shared across the tree → external store (Zustand, Jotai, Redux Toolkit)
-5. Server-derived data → server-state library (TanStack Query, SWR, or a Server Component fetch) — not application state
+5. Server-derived data → server-state library (TanStack Query, SWR, or a Server Component fetch), not application state
 
 ## Server / Client Component boundary (RSC, Next.js App Router)
 
@@ -48,7 +48,7 @@ export function UserClient({ user }: { user: User }) {
 }
 ```
 
-- Never import `"server-only"` packages (DB clients, secrets) from a Client Component file — wrap them in a Server Component or Server Action
+- Never import `"server-only"` packages (DB clients, secrets) from a Client Component file: wrap them in a Server Component or Server Action
 - Mark sensitive modules with `import "server-only"` so the bundler errors if a client file imports them
 
 ## Suspense + Error Boundaries
@@ -105,7 +105,7 @@ For complex forms (multi-step, dynamic field arrays, cross-field validation), us
 | RSC fetch (`await` in Server Component) | Per-request data in Next.js App Router, no client-side cache needed |
 | TanStack Query | Client-side cache, mutations, optimistic updates, polling |
 | SWR | Lightweight cache + revalidation, simpler than TanStack Query |
-| `fetch` in `useEffect` | Avoid — race conditions; no cache, dedup, invalidation, retry, or Suspense integration. Acceptable only for one-off fire-and-forget |
+| `fetch` in `useEffect` | Avoid: race conditions; no cache, dedup, invalidation, retry, or Suspense integration. Acceptable only for one-off fire-and-forget |
 
 ## Compound components
 
@@ -113,11 +113,11 @@ For related controls (Tabs, Accordion, Menu), use compound components sharing st
 
 ## Portals
 
-Use `createPortal` for modals, tooltips, toast containers — anything that must escape the parent's `overflow: hidden` or `z-index` stacking context. Render to a stable DOM node mounted in `index.html`.
+Use `createPortal` for modals, tooltips, toast containers: anything that must escape the parent's `overflow: hidden` or `z-index` stacking context. Render to a stable DOM node mounted in `index.html`.
 
 ## Refs and Forwarding (React 19+)
 
-React 19 lets function components accept `ref` as a regular prop — `forwardRef` is no longer required.
+React 19 lets function components accept `ref` as a regular prop. `forwardRef` is no longer required.
 
 ```tsx
 export function Input({ ref, ...rest }: { ref?: React.Ref<HTMLInputElement> } & InputProps) {
@@ -125,7 +125,7 @@ export function Input({ ref, ...rest }: { ref?: React.Ref<HTMLInputElement> } & 
 }
 ```
 
-Older codebases on React 18 still need `forwardRef` (slated for deprecation — prefer ref-as-prop when upgrading).
+Older codebases on React 18 still need `forwardRef` (slated for deprecation: prefer ref-as-prop when upgrading).
 
 ## Skill reference
 
