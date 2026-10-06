@@ -118,7 +118,7 @@ The [security.md](security.md) mandatory checks own this list (same scope, alway
 
 Hunt complexity only; correctness, security, and performance stay with their own passes. Working is not the bar: a change that leaves the codebase structurally messier (a layer it could do without, special-case branches bolted onto a shared flow, a file pushed past its healthy size) is a finding even when nothing is broken. For each change, first ask whether a reframing deletes the complexity instead of adding to it.
 
-- Dead code this change created, unused flexibility, speculative features - delete; pre-existing dead code is surfaced, and its removal is separate work (per CLAUDE.md's How to work with me)
+- Dead code this change created, unused flexibility, speculative features - delete; pre-existing dead code is surfaced, and its removal is separate work
 - Hand-rolled versions of what the standard library ships - use the stdlib function
 - Dependencies or code doing the platform's job - use the native feature
 - Abstractions with one implementation, configs nobody sets, layers with one caller - inline or remove
