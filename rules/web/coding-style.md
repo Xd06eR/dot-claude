@@ -83,10 +83,6 @@ Avoid animating layout-bound properties:
 - `border`
 - `font-size`
 
-## Semantic HTML first
-
-Do not reach for generic wrapper `div` stacks when a semantic element exists. Label navs and sections: `aria-label` on `nav`, `aria-labelledby` pointing at the section heading.
-
 ## Naming
 
 - CSS classes: kebab-case or utility classes

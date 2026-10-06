@@ -109,10 +109,7 @@ The [security.md](security.md) mandatory checks own this list (same scope, alway
 
 ### Performance
 
-- N+1 queries - use JOINs or batching
-- Missing pagination - add LIMIT to queries
-- Unbounded queries - add constraints
-- Missing caching - cache expensive operations
+- N+1 queries, unpaginated or unbounded queries, uncached expensive operations - batch, constrain, or cache in the change
 
 ### Over-engineering
 

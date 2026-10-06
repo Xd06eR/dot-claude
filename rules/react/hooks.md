@@ -22,25 +22,19 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 
 `useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries). It is **not** the right tool for:
 
-- Derived state: compute it during render
-- Transforming data for rendering: compute it during render
 - Resetting state when a prop changes: use a `key` on the parent or derive from props
 - Notifying parents of state changes: call the callback in the event handler
 - Initializing app-level singletons: call the function at module scope or in `main.tsx`
 
 ## Dependency arrays
 
-- Always include every reactive value referenced inside the effect/callback
-- Enable `react-hooks/exhaustive-deps` lint rule — never silence it without a comment explaining why
-- If the dep array grows unwieldy, the effect is doing too much: split it
+- Include every reactive value in the dep array; `exhaustive-deps` stays on error, never silenced without a comment; an unwieldy array means the effect does too much, split it
 - Stable identity for functions passed in deps: wrap in `useCallback` only when the function is itself a dependency of another hook or passed to a memoized child
 - Non-reactive "event" logic inside an effect (analytics, logging) belongs in `useEffectEvent`: it reads latest values without joining the dep array
 
 ## Cleanup
 
-Every subscription, interval, listener, or in-flight request must clean up.
-
-Missing cleanup = race conditions when deps change, memory leaks on unmount.
+Every subscription, interval, listener, or in-flight request must clean up: missing cleanup is races on dep change and leaks on unmount.
 
 ## `useState` and `useReducer`
 

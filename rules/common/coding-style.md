@@ -65,21 +65,9 @@ MANY SMALL FILES > FEW LARGE FILES:
 - Extract utilities from large modules
 - Organize by feature/domain, not by type
 
-## Error handling
+## Error handling and input validation
 
-ALWAYS handle errors comprehensively:
-- Handle errors at the level that can act; propagate otherwise (don't catch what you can't recover from)
-- Provide user-friendly error messages in UI-facing code
-- Log detailed error context on the server side
-- Never silently swallow errors
-
-## Input validation
-
-ALWAYS validate at system boundaries:
-- Validate all user input before processing
-- Use schema-based validation where available
-- Fail fast with clear error messages
-- Never trust external data (API responses, user input, file content)
+Handle errors at the level that can act; never swallow one silently; UI gets user-safe actionable messages, logs get the detail. Validate external data at the system boundary, with a schema where available; never trust it.
 
 ## API response format
 
