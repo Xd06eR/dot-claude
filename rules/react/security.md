@@ -39,9 +39,10 @@ Server Actions (`"use server"`) run with the same trust level as a public API en
 
 ## Content Security Policy (CSP)
 
-Configure server-side: full nonce-based header block in [web/security.md](../web/security.md#content-security-policy). React/SSR specifics:
+Configure server-side: full nonce-based header block in [web/security-config.md](../web/security-config.md#content-security-policy). React/SSR specifics:
 
 - For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces: both Next.js and Remix support nonce injection
+- Author-written inline scripts (theme bootstrap, pixels) must carry the per-request nonce: under `strict-dynamic` a nonce-less script is blocked even from `'self'`
 - `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff
 
 ## Prototype pollution
