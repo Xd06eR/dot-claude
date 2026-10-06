@@ -16,47 +16,11 @@ paths:
 
 ## XSS via `dangerouslySetInnerHTML`
 
-CRITICAL: treat every usage as a code review halt.
-
-Audit checklist for every `dangerouslySetInnerHTML` call:
-
-- Is the input always under our control? Document the source.
-- If user-derived: is it sanitized at the **same call site**? (Sanitization at the API boundary is acceptable only if every consumer is verified.)
-- Is the sanitizer config allowlisting tags, not denylisting?
+CRITICAL: every usage is a code review halt: input under our control (document the source); user-derived input sanitized at the same call site (API-boundary sanitization only when every consumer is verified); sanitizer allowlists tags, never denylists.
 
 ## Unsafe URL schemes
 
-```tsx
-// CRITICAL: javascript: URL injection
-<a href={user.website}>Visit</a>   // if user.website = "javascript:alert(1)"
-
-// CORRECT: validate scheme
-function safeUrl(url: string): string | undefined {
-  try {
-    const parsed = new URL(url);
-    if (["http:", "https:", "mailto:"].includes(parsed.protocol)) return url;
-  } catch {
-    return undefined;
-  }
-}
-<a href={safeUrl(user.website)}>Visit</a>
-```
-
-React 19+ throws on `javascript:` URLs in `href`/`src`; validate schemes anyway: `data:` and other schemes, and non-React sinks, are not covered.
-
-## `target="_blank"` without `rel`
-
-`<a target="_blank">` without `rel="noopener noreferrer"` lets the target page access `window.opener` and run navigation hijacks.
-
-```tsx
-// WRONG
-<a href={externalUrl} target="_blank">External</a>
-
-// CORRECT
-<a href={externalUrl} target="_blank" rel="noopener noreferrer">External</a>
-```
-
-Modern browsers default to `noopener` when `target="_blank"`, but do not rely on browser defaults — be explicit.
+Validate user-controlled URLs with a scheme allowlist (`http:`/`https:`/`mailto:`) via `new URL()` before `href`/`src`: `javascript:` injection executes on click. React 19 throws on `javascript:` URLs; validate anyway (`data:` and non-React sinks are not covered).
 
 ## Server Action input validation
 
@@ -67,19 +31,16 @@ Server Actions (`"use server"`) run with the same trust level as a public API en
 ## Secret exposure via env vars
 
 - React Router (framework) / Remix: `VITE_*` (Vite-built apps) is public; `process.env` is server-side only and reaches the client only via loader data.
-
-Audit on every PR that touches env vars: would this string in the public bundle be a problem?
+- Prefixed vars (`NEXT_PUBLIC_*`, `VITE_*`) ship to the client bundle; on every env-touching diff, ask whether the string is publish-safe.
 
 ## Authentication / Authorization
 
-- Never trust client-set state to gate sensitive UI. Render-gating in JSX prevents display, not access: the API must enforce.
-- Use double-submit cookies or origin verification for form actions when not using framework defaults
+- Render-gating in JSX hides UI, it does not restrict access: the API must enforce. Cookie-authenticated form actions without framework defaults need double-submit cookies or origin verification.
 
 ## Content Security Policy (CSP)
 
 Configure server-side: full nonce-based header block in [web/security.md](../web/security.md#content-security-policy). React/SSR specifics:
 
-- Avoid `unsafe-inline` and `unsafe-eval` in `script-src`
 - For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces: both Next.js and Remix support nonce injection
 - `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff
 
@@ -91,9 +52,7 @@ Spreading untrusted JSON defines own properties (mass assignment: unexpected key
 
 When using `renderToString` or `renderToPipeableStream`:
 
-- All values rendered inside JSX are escaped by React (safe)
-- Values passed to `dangerouslySetInnerHTML` are NOT escaped: same rules as client
-- Manually constructed HTML wrappers around the React output must be escaped or sanitized: never concatenate user input into the surrounding HTML template
+- JSX escapes rendered values; `dangerouslySetInnerHTML` output is not (client rules apply). Never concatenate user input into the HTML template around the React output.
 
 ## Third-party components
 

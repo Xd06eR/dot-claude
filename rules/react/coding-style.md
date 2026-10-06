@@ -16,15 +16,12 @@ paths:
 
 ## File extensions
 
-- `.tsx` for any file containing JSX, even one-liner snippets
-- `.ts` for pure logic, custom hooks without JSX, type definitions, utilities
-- `.test.tsx` / `.test.ts` mirroring the source file
-- Use `.jsx` only when the project intentionally avoids TypeScript: flag every new untyped React file in review
+- `.tsx` for anything containing JSX, `.ts` for pure logic; test files mirror the source extension
+- `.jsx` only when the project intentionally avoids TypeScript: flag every new untyped React file in review
 
 ## Naming
 
-- Custom hooks: `useCamelCase` for the symbol; the file follows the project's non-component convention (`use-debounce.ts` or `useDebounce.ts`), applied consistently
-- Event handlers: `handleClick`, `handleSubmit` inside the component; the prop that receives it is `onClick`, `onSubmit`
+- Custom hooks: `useCamelCase` for the symbol; the file follows the project's convention, applied consistently. Event handlers: `handleX` inside the component, `onX` for the receiving prop.
 
 ## Component shape
 
@@ -45,25 +42,6 @@ export function UserCard({ user, onSelect }: Props) {
 
 - Prefer `type Props = {}` for closed component prop shapes
 - Use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point
-
-## JSX
-
-- Self-close tags with no children: `<img />`, `<UserCard user={u} />`
-- Use fragments `<>...</>` over wrapper `<div>` when no DOM element is needed
-- Never put logic inline in JSX when it spans multiple lines: extract to a const above the return or a function
-
-## Server / client boundary (Next.js App Router, RSC)
-
-- Server Components are the default (boundary model per [architecture.md](./architecture.md)); add `"use client"` only when the file uses state, effects, refs, browser APIs, or event handlers
-- Place the `"use client"` directive on line 1, before any imports
-- Never import a Client Component file from inside a `"use server"` action file
-- Never re-export server-only code through a client module (the bundler will silently include it)
-
-## Imports
-
-- React imports first: `import { useState } from "react"`
-- Then third-party libs, then absolute project imports, then relative
-- Type-only imports: `import type { ReactNode } from "react"` — never mix runtime and type imports in one statement when ESLint's `consistent-type-imports` is configured
 
 ## Hooks and state
 

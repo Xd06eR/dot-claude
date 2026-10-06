@@ -39,7 +39,6 @@ Do not default to dark mode automatically. Choose the visual direction the produ
 ### Component checklist
 
 - [ ] Does it avoid looking like a default Tailwind or shadcn template?
-- [ ] Does it have intentional hover/focus/active states?
 - [ ] Does it use hierarchy rather than uniform emphasis?
 - [ ] Would this look believable in a real product screenshot?
 - [ ] If it supports both themes, do both light and dark feel intentional?
@@ -47,6 +46,8 @@ Do not default to dark mode automatically. Choose the visual direction the produ
 For full design work, use the design skills: `design-consultation` (system from scratch), `design-variants` (explore directions), `design-build` (production UI), `design-taste-frontend` (direction-inferred, taste-gated builds).
 
 ## Performance
+
+- Images and embeds reserve space (explicit dimensions or aspect-ratio); third-party scripts load deferred.
 
 ### Core Web Vitals targets
 
@@ -72,11 +73,3 @@ For full design work, use the design skills: `design-consultation` (system from 
 
 - Animate compositor-friendly properties only (allow/deny list: [coding-style.md](./coding-style.md#animation-only-properties))
 - Use `will-change` narrowly and remove it when done
-
-### Performance checklist
-
-- [ ] All images have explicit dimensions
-- [ ] No accidental render-blocking resources
-- [ ] No layout shifts from dynamic content
-- [ ] Motion stays on compositor-friendly properties
-- [ ] Third-party scripts load async/defer and only when needed

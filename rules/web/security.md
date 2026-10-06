@@ -15,7 +15,7 @@ paths:
 
 ## Content Security Policy
 
-Always configure a production CSP with a per-request nonce for scripts instead of `'unsafe-inline'`:
+Always configure a production CSP with a per-request nonce for scripts instead of `'unsafe-inline'`; `'unsafe-eval'` never appears in any directive:
 
 ```text
 Content-Security-Policy:

@@ -27,7 +27,7 @@ Local → lift to nearest common ancestor → Context for low-frequency reads on
 ## Server / Client Component boundary (RSC, Next.js App Router)
 
 - Server Components are the default: they run on the server, do not ship to the client, and can `await` directly
-- Client Components opt in with `"use client"` at the top of the file
+- Client Components opt in with `"use client"`, only when the file uses state, effects, refs, browser APIs, or event handlers
 - Data flows down: a Server Component can render a Client Component and pass serializable props
 - A Client Component cannot import a Server Component, but it can receive one via `children` or named slots
 
@@ -48,6 +48,7 @@ export function UserClient({ user }: { user: User }) {
 
 - Never import `"server-only"` packages (DB clients, secrets) from a Client Component file: wrap them in a Server Component or Server Action
 - Mark sensitive modules with `import "server-only"` so the bundler errors if a client file imports them
+- `"use client"` sits on line 1 before imports; a `"use server"` action file never imports a Client Component file; server-only code is never re-exported through a client module (the bundler silently includes it)
 
 ## Suspense + Error Boundaries
 
