@@ -45,7 +45,7 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 
 | Source | Count | Components |
 |--------|-------|------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 15 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, resolving-merge-conflicts, teach, to-questionnaire, wayfinder, wizard, writing-for-agents; agent `spec-reviewer` |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 14 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, teach, to-questionnaire, wayfinder, wizard, writing-for-agents; agent `spec-reviewer` |
 | [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
 | [ECC](https://github.com/affaan-m/ECC) | 10 skills + 1 agent | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agent `database-reviewer` |
 | [gstack](https://github.com/garrytan/gstack) | 11 skills + 2 agents | ship, qa, diagram, deploy-watch, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` (no upstream: gstack ships skills only, so these are maintained locally) |
