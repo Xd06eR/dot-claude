@@ -27,5 +27,9 @@
 !.claude/
 !.claude/**
 
+# Context files
+!docs/
+!docs/**
+
 # Backup files — never tracked
 **/*.bak
