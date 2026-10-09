@@ -2,7 +2,7 @@
 
 ## How to work with me
 
-I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, and spot-check output. You implement and own the acceptance call; I review selectively, never as the gate. Default to full-stack patterns; don't assume a narrow stack.
+I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, and spot-check output. You implement and own the acceptance call; I review selectively, never as the gate.
 
 - **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out; go deep when I ask why or a call is non-obvious. Depth beats brevity.
 - **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas). An example or template already carries its structure; never restate it as prose rules.
@@ -44,7 +44,7 @@ You drive every phase and iterate within it before moving on. The user steers.
 1. **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
    - **Decompose into deep modules:** break into independent, low-coupling components (narrow interfaces hiding rich implementations) and design for replaceability; shallow modules are easy to build but hard to manage, and agents lose track of them on large projects.
    - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture meant to be replaced later. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
-   - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions, made in this phase; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
+   - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
    - **Interrogate ambiguity and blind spots:** identify unclear spec parts, unstated assumptions, missing requirements, and failure modes; list open questions with multiple interpretations and resolve each before planning; never guess.
    - **Verifiable goals:** transform tasks into verifiable goals with explicit completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
 2. **Plan:** turn the design into an executable plan. It is complete only when every step has a check and no design decision is left to the implementer.
