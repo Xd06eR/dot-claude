@@ -26,15 +26,12 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 - Notifying parents of state changes: call the callback in the event handler
 - Initializing app-level singletons: call the function at module scope or in `main.tsx`
 
-## Dependency arrays
+## Dependency arrays and cleanup
 
 - Include every reactive value in the dep array; `exhaustive-deps` stays on error, never silenced without a comment; an unwieldy array means the effect does too much, split it
 - Stable identity for functions passed in deps: wrap in `useCallback` only when the function is itself a dependency of another hook or passed to a memoized child
 - Non-reactive "event" logic inside an effect (analytics, logging) belongs in `useEffectEvent`: it reads latest values without joining the dep array
-
-## Cleanup
-
-Every subscription, interval, listener, or in-flight request must clean up: missing cleanup is races on dep change and leaks on unmount.
+- Every subscription, interval, listener, or in-flight request must clean up: missing cleanup is races on dep change and leaks on unmount
 
 ## `useState` and `useReducer`
 
