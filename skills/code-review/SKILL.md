@@ -34,7 +34,7 @@ The invocation may name review aspects to run; unnamed, run all applicable.
 4. **Determine Applicable Reviews**
 
    Based on changes:
-   - **Always applicable:** code-reviewer (general quality, comments included)
+   - **Always applicable:** code-reviewer (general quality, comments included); its dispatch prompt names `~/.claude/skills/code-review/review-standards.md` as the checklist source
    - **If test files changed:** pr-test-analyzer
    - **If error handling changed:** silent-failure-hunter
    - **If types added/modified:** type-design-analyzer
@@ -93,7 +93,16 @@ Each finding-producing agent returns findings independently; without this step, 
 
 1. **Collect.** Gather every finding from every dispatched finding-producing agent. Each finding carries the contract: location (`file:line` or range) + severity (`CRITICAL` / `HIGH` / `MEDIUM` / `LOW`) + issue + fix.
 2. **Dedup.** Merge findings that target the same `file:line` (or overlapping line ranges) and the same issue. Each merged entry cites every contributing agent, e.g. `[code-reviewer, type-design-analyzer]`. Do not drop a finding only one agent produced; do not double-count identical findings from two agents.
-3. **Normalize.** All findings already carry `CRITICAL` / `HIGH` / `MEDIUM` / `LOW` (severity scale: read `~/.claude/rules/common/review-standards.md` if a definition is needed). Group by severity bucket.
+3. **Normalize.** Group by severity bucket using this scale:
+
+   | Level | Meaning | Action |
+   |-------|---------|--------|
+   | CRITICAL | Security vulnerability or data loss risk | **BLOCK** - Must fix before merge |
+   | HIGH | Bug or significant quality issue | **WARN** - Should fix before merge |
+   | MEDIUM | Maintainability concern | **INFO** - Consider fixing |
+   | LOW | Style or minor suggestion | **NOTE** - Optional |
+
+   Calibrate the report: one substantiated blocker outweighs a list of nits. Deliberate half-built work the change leaves behind (a spike, harness, scaffold, phased feature, blast-radius buffer, incidental cleanup) is not a defect; report it only when accidental or when the change half-repairs it.
 4. **Rank and output.** CRITICAL first, then HIGH, MEDIUM, LOW. Each entry: severity, location, issue, contributing agent(s), fix.
 5. **Per-agent tally.** Append a one-line count per dispatched finding-producing agent (pre-dedup count), so no agent's contribution is hidden by dedup.
 6. **Ship/block recommendation.** Block if any CRITICAL; otherwise ship. HIGH findings are ship-with-caution, not block.

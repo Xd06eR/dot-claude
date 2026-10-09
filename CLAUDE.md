@@ -56,7 +56,8 @@ You drive every phase and iterate within it before moving on. The user steers.
    - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
    - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
    - **Subagents carry residue work:** dispatch per `~/.claude/rules/common/dispatch-protocol.md`; you integrate.
-4. **Review:** check the diff against the success criteria; show evidence (test output, return value). Can't verify → don't ship.
+4. **Review:** check the diff against the success criteria; show evidence (test output, return value). The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
+   - **Ready for review means:** the diff is small (~100 lines reasonable, ~1000 too large) with refactor separated from behavior change; a failing check is reported with evidence and its impact, never waved through as pre-existing; N automated or looped changes need N reviewed diffs; spot-check the review gate itself periodically (gates drift).
    - **Done means all of:** every acceptance criterion checked with evidence produced now; none silently waived or redefined mid-task; no known regression. "Should work" or shallow evidence ("it compiles") is not done.
    - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
    - **Never accept your own work:** the acceptance call is yours; its evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
