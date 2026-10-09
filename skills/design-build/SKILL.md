@@ -1,6 +1,6 @@
 ---
 name: design-build
-description: Turn an approved design direction into production markup. Use when a settled direction (mockup image, written plan, DESIGN.md, or an agreed direction in conversation) needs to become real UI. Returns semantic, responsive, accessible HTML/CSS matched to the repo's framework, with design tokens, dark mode, and real content.
+description: Turn an approved design direction into production markup. Use when a settled direction (mockup image, written plan, DESIGN.md, or an agreed direction in conversation) needs to become real UI. Returns semantic, responsive, accessible HTML/CSS matched to the repo's framework.
 origin: gstack
 ---
 

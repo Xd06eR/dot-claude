@@ -1,6 +1,6 @@
 ---
 name: database-reviewer
-description: "PostgreSQL database review: query optimization, schema design, security/RLS, and performance. Dispatch when writing PostgreSQL queries or migrations, designing schemas, or troubleshooting database performance. Returns a severity-ordered review (indexes, data types, RLS policies, anti-patterns) with concrete fixes. Incorporates Supabase best practices."
+description: "PostgreSQL database review: query optimization, schema design, security/RLS, and performance. Dispatch when writing PostgreSQL queries or migrations, designing schemas, or troubleshooting database performance. Returns a severity-ordered review with concrete fixes."
 tools: Read, Grep, Glob, Bash
 origin: ECC
 ---
