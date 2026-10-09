@@ -30,7 +30,7 @@ Server Actions (`"use server"`) run with the same trust level as a public API en
 
 ## Secret exposure via env vars
 
-- React Router (framework) / Remix: `VITE_*` (Vite-built apps) is public; `process.env` is server-side only and reaches the client only via loader data.
+- React Router (framework) / Remix: `process.env` is server-side only and reaches the client only via loader data.
 - Prefixed vars (`NEXT_PUBLIC_*`, `VITE_*`) ship to the client bundle; on every env-touching diff, ask whether the string is publish-safe.
 
 ## Authentication / Authorization
@@ -41,8 +41,7 @@ Server Actions (`"use server"`) run with the same trust level as a public API en
 
 Configure server-side: full nonce-based header block in [web/security-config.md](../web/security-config.md#content-security-policy). React/SSR specifics:
 
-- For SSR with inline scripts (Next.js streaming, hydration data), use per-request nonces: both Next.js and Remix support nonce injection
-- Author-written inline scripts (theme bootstrap, pixels) must carry the per-request nonce: under `strict-dynamic` a nonce-less script is blocked even from `'self'`
+- All inline scripts in an SSR app (streaming/hydration payloads, theme bootstrap, pixels) need the per-request nonce; Next.js and Remix support nonce injection
 - `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff
 
 ## Prototype pollution
@@ -59,5 +58,4 @@ When using `renderToString` or `renderToPipeableStream`:
 
 - Dependency vetting per [common/security.md](../common/security.md#mandatory-security-checks); UI-library checks below
 - Check that the library does not internally use `dangerouslySetInnerHTML` on its input (e.g., rich text editors)
-- Review changelogs before major upgrades
 - Be wary of components that accept HTML strings as props

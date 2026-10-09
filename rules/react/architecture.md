@@ -54,14 +54,6 @@ export function UserClient({ user }: { user: User }) {
 
 Every Suspense boundary needs an Error Boundary above it. The pair covers pending and error states.
 
-```tsx
-<ErrorBoundary fallback={<ErrorView />}>
-  <Suspense fallback={<Skeleton />}>
-    <UserDetails id={id} />
-  </Suspense>
-</ErrorBoundary>
-```
-
 - Place Suspense boundaries close to where data is needed, not at the route root
 - Multiple narrower boundaries reveal loaded content progressively
 - Error Boundary must be a Class Component (React 19 has no functional equivalent) OR use a library wrapper such as `react-error-boundary`

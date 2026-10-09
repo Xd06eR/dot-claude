@@ -15,12 +15,10 @@ Base rules per [common/security.md](../common/security.md); React sinks per [rea
 
 ## Third-party scripts
 
-- Load asynchronously
 - Use SRI when serving from a CDN
 - Re-audit when adding or upgrading a third-party script
 - Prefer self-hosting for critical dependencies when practical
 
 ## Forms
 
-- Validate client and server side
 - Prefer honeypots or light anti-abuse controls over heavy-handed CAPTCHA defaults

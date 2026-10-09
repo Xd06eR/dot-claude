@@ -48,4 +48,4 @@ When the project targets React 19+, prefer these over hand-rolled equivalents.
 
 ## Lint configuration
 
-Use `eslint-plugin-react-hooks` v6+ flat config: `reactHooks.configs.flat.recommended` — it enables `rules-of-hooks` and `exhaustive-deps` plus the compiler-powered rules. Treat `exhaustive-deps` warnings as errors in CI for new code.
+Use `eslint-plugin-react-hooks` v6+ flat config: `reactHooks.configs.flat.recommended`. It enables `rules-of-hooks` and `exhaustive-deps` plus the compiler-powered rules. Treat `exhaustive-deps` warnings as errors in CI for new code.

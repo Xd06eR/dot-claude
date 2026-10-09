@@ -27,7 +27,7 @@ tests/                        # mirrors src/ structure
 pyproject.toml                # single project config root
 ```
 
-- Tests live in a parallel `tests/` tree mirroring `src/` (`tests/test_services/test_billing.py` for `src/myapp/services/billing.py`), not beside the source.
+- Tests live in a parallel `tests/` tree, not beside the source.
 
 ## Module boundaries
 

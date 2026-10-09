@@ -10,16 +10,4 @@ paths:
 
 - Use **type annotations** on all function signatures.
 - Verification: `ruff check` → `ruff format` → `mypy` → `pytest`
-
-## Immutability
-
-Principle per [common/coding-style.md](../common/coding-style.md) (Immutability); Python form:
-
-```python
-from dataclasses import dataclass
-
-@dataclass(frozen=True)
-class User:
-    name: str
-    email: str
-```
+- Immutability: use `@dataclass(frozen=True)` for value objects (principle per [common/coding-style.md](../common/coding-style.md)).

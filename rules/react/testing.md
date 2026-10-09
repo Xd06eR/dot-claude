@@ -25,17 +25,7 @@ Pick one component-testing approach per project: do not mix RTL and Playwright C
 
 ## Custom hook testing
 
-Use `renderHook` from RTL:
-
-```tsx
-import { renderHook, act } from "@testing-library/react";
-
-test("useCounter increments", () => {
-  const { result } = renderHook(() => useCounter());
-  act(() => result.current.increment());
-  expect(result.current.count).toBe(1);
-});
-```
+Use `renderHook` from RTL.
 
 - Always test through the public hook API, not internal implementation
 
@@ -68,5 +58,5 @@ For those, use Playwright Component Testing or an E2E run; see the `e2e-testing`
 
 - Asserting on `container.querySelector`: bypasses accessibility queries
 - Asserting on number of renders: implementation detail
-- Mocking child components by default: tests the integration, not the parent in isolation
+- Mocking child components by default: tests the parent in isolation, not the integration; render the real tree and mock at the network (MSW)
 - Manual `act()` warnings ignored: they indicate real bugs

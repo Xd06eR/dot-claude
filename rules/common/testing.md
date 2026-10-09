@@ -59,9 +59,7 @@ The red → green loop and the house extras (seams, the tautological-test anti-p
 ## Troubleshooting
 
 When tests fail:
-1. Check test isolation: no shared mutable state between tests
-2. Verify mocks match current interfaces
-3. Fix implementation, not tests (unless the test is wrong)
-4. Use the `diagnosing-bugs` skill for root cause analysis on hard-to-debug failures
+1. Fix implementation, not tests (unless the test is wrong)
+2. Use the `diagnosing-bugs` skill for root cause analysis on hard-to-debug failures
 
 A flaky test is a defect: fix the test, never mute it with retries.

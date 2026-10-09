@@ -61,8 +61,6 @@ Before ANY commit:
 - [ ] Dependencies vetted: audit run on add (`npm audit` / `pip-audit`), versions pinned, new packages checked for maintenance and provenance
 - [ ] SSRF guards on outbound fetches; path-traversal guards on file paths
 
-The `security-guidance` plugin auto-runs pattern warnings on edit and security review on diff and commit.
-
 ## Secret management
 
 - ALWAYS use environment variables or a secret manager

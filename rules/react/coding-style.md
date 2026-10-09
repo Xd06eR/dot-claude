@@ -25,21 +25,6 @@ paths:
 
 ## Component shape
 
-```tsx
-type Props = {
-  user: User;
-  onSelect: (id: string) => void;
-};
-
-export function UserCard({ user, onSelect }: Props) {
-  return (
-    <button type="button" onClick={() => onSelect(user.id)}>
-      {user.name}
-    </button>
-  );
-}
-```
-
 - Prefer `type Props = {}` for closed component prop shapes
 - Use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point
 

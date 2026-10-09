@@ -12,14 +12,6 @@ paths:
 
 ## Test organization
 
-Use `pytest.mark` for test categorization:
-
-```python
-import pytest
-
-@pytest.mark.unit
-def test_calculate_total():
-    ...
-```
+Use `pytest.mark` for test categorization.
 
 Register custom marks in `pyproject.toml` under `[tool.pytest.ini_options]` `markers = [...]`: unregistered marks warn on every run and fail under `--strict-markers`.

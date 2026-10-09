@@ -31,7 +31,7 @@ Content-Security-Policy:
 Adjust origins to the project; do not cargo-cult this block unchanged.
 
 - Every `<script>` tag, static or inline, must carry the nonce: with `strict-dynamic`, CSP3 browsers ignore host sources and `'unsafe-inline'`, so a nonce-less script is blocked even when its origin matches `'self'`
-- Browsers without CSP3 support (Safari <15.4, IE11, pre-2016 Chrome/Firefox) ignore `strict-dynamic` and enforce the host allowlist, so dynamically-loaded scripts get no coverage there unless their hosts are listed explicitly
+- The host allowlist alongside `strict-dynamic` serves pre-CSP3 browsers only; drop it if the baseline is CSP3-only
 
 ## HTTPS and headers
 

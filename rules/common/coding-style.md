@@ -60,9 +60,7 @@ Prefer immutable patterns by default: create new objects rather than mutating sh
 ## File organization
 
 MANY SMALL FILES > FEW LARGE FILES:
-- High cohesion, low coupling
 - 200-400 lines typical
-- Extract utilities from large modules
 - Organize by feature/domain, not by type
 
 ## Error handling and input validation
