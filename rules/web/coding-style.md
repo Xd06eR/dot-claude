@@ -13,36 +13,7 @@ paths:
 
 > This file extends [common/coding-style.md](../common/coding-style.md) with web-specific frontend content.
 
-## File organization
-
-By feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)). The visual/marketing-site shape below; the feature-app tree lives in [typescript/architecture.md](../typescript/architecture.md), per-component packaging in [react/coding-style.md](../react/coding-style.md#file-layout-per-component):
-
-```text
-src/
-├── components/
-│   ├── hero/
-│   │   ├── Hero.tsx
-│   │   ├── HeroVisual.tsx
-│   │   └── hero.css
-│   ├── data-table/
-│   │   ├── DataTable.tsx
-│   │   ├── DataTableRow.tsx
-│   │   └── data-table.css
-│   └── ui/
-│       ├── Button.tsx
-│       ├── SurfaceCard.tsx
-│       └── AnimatedText.tsx
-├── hooks/
-│   ├── useReducedMotion.ts
-│   └── useMediaQuery.ts
-├── lib/
-│   ├── animation.ts
-│   └── color.ts
-└── styles/
-    ├── tokens.css
-    ├── typography.css
-    └── global.css
-```
+- File organization: by feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)); the feature-app tree lives in [typescript/typescript.md](../typescript/typescript.md#architecture), per-component packaging in [react/coding-style.md](../react/coding-style.md#file-layout-per-component).
 
 ## CSS custom properties
 
