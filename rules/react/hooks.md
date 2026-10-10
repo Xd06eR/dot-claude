@@ -27,7 +27,6 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 ## Dependency arrays and cleanup
 
 - `exhaustive-deps` stays on error, never silenced without a comment; an unwieldy array means the effect does too much, split it
-- Non-reactive "event" logic inside an effect (analytics, logging) belongs in `useEffectEvent`: it reads latest values without joining the dep array
 
 ## `useState` and `useReducer`
 
@@ -35,7 +34,7 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 
 ## React 19 additions
 
-When the project targets React 19+, prefer `use()` (unwraps promises and contexts inline; conditionally callable, classified as an API not a hook), `useFormStatus()` / `useActionState()` (form submission state), `useOptimistic()`, and `useTransition()` over hand-rolled equivalents.
+When the project targets React 19+, prefer `use()` (unwraps promises and contexts inline; conditionally callable, classified as an API not a hook), `useOptimistic()`, and `useTransition()` over hand-rolled equivalents.
 
 ## Lint configuration
 
