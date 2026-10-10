@@ -20,11 +20,9 @@ paths:
 
 Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to error. Hooks only at the top level of components and custom hooks; the plugin enforces the rest.
 
-## `useEffect` — when not to use
+## `useEffect`
 
 `useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries). Not for: resetting on prop change (use a `key`), notifying parents (call the callback in the event handler), or app-level singleton init (module scope).
-
-## Dependency arrays and cleanup
 
 - `exhaustive-deps` stays on error, never silenced without a comment; an unwieldy array means the effect does too much, split it
 

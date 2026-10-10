@@ -20,11 +20,7 @@ paths:
 
 Pick one component-testing approach per project: do not mix RTL and Playwright CT in the same repo.
 
-## Custom hook testing
-
-Use `renderHook` from RTL.
-
-- Always test through the public hook API, not internal implementation
+- **Custom hooks:** test with `renderHook` from RTL through the public hook API, not internal implementation.
 
 ## Accessibility assertions
 

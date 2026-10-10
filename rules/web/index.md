@@ -32,9 +32,7 @@ Banned patterns:
 
 Do not default to dark mode automatically. Choose the visual direction the product actually wants.
 
-### Flow states
-
-- Every async user flow ships all its states: loading, empty, error with retry, and visible success feedback.
+- **Flow states:** every async user flow ships all its states: loading, empty, error with retry, and visible success feedback.
 
 ### Component checklist
 
@@ -59,8 +57,24 @@ For full design work, use the design skills: `design-consultation` (system from 
 
 ### Animation performance
 
-- Animate compositor-friendly properties only (allow/deny list: [below](#animation-only-properties))
+Animate compositor-friendly properties only:
+- `transform`
+- `opacity`
+- `clip-path`
+- `filter` (sparingly)
+
+Avoid animating layout-bound properties:
+- `width`
+- `height`
+- `top`
+- `left`
+- `margin`
+- `padding`
+- `border`
+- `font-size`
+
 - Use `will-change` narrowly and remove it when done
+- Animation timelines: camelCase with intent (`heroRevealTimeline`)
 
 ## Coding style
 
@@ -86,23 +100,3 @@ Define design tokens as variables. Do not hardcode palette, typography, or spaci
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 ```
-
-### Animation-only properties
-
-Prefer compositor-friendly motion:
-- `transform`
-- `opacity`
-- `clip-path`
-- `filter` (sparingly)
-
-Avoid animating layout-bound properties:
-- `width`
-- `height`
-- `top`
-- `left`
-- `margin`
-- `padding`
-- `border`
-- `font-size`
-
-- Animation timelines: camelCase with intent (`heroRevealTimeline`)

@@ -62,30 +62,15 @@ Inline single-file components are fine for trivial presentational pieces. For th
 
 CRITICAL: every usage is a code review halt: input under our control (document the source); user-derived input sanitized at the same call site (API-boundary sanitization only when every consumer is verified); sanitizer allowlists tags, never denylists.
 
-### Unsafe URL schemes
-
-Validate user-controlled URLs with a scheme allowlist (`http:`/`https:`/`mailto:`) via `new URL()` before `href`/`src`; React 19 throws on `javascript:` URLs, but `data:` and non-React sinks are not covered.
+- **Unsafe URL schemes:** validate user-controlled URLs with a scheme allowlist (`http:`/`https:`/`mailto:`) via `new URL()` before `href`/`src`; React 19 throws on `javascript:` URLs, but `data:` and non-React sinks are not covered.
+- **CSRF on form actions:** cookie-authenticated form actions without framework defaults need double-submit cookies or origin verification.
+- **Content Security Policy:** configure server-side (full nonce-based header block in [web/security-config.md](../web/security-config.md#content-security-policy)); `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff.
+- **SSR template injection:** with `renderToString`/`renderToPipeableStream`, JSX escapes rendered values; `dangerouslySetInnerHTML` output is not (client rules apply). Never concatenate user input into the HTML template around the React output.
 
 ### Secret exposure via env vars
 
 - React Router (framework) / Remix: `process.env` is server-side only and reaches the client only via loader data.
 - Prefixed vars (`NEXT_PUBLIC_*`, `VITE_*`) ship to the client bundle; on every env-touching diff, ask whether the string is publish-safe.
-
-### CSRF on form actions
-
-- Cookie-authenticated form actions without framework defaults need double-submit cookies or origin verification.
-
-### Content Security Policy (CSP)
-
-Configure server-side: full nonce-based header block in [web/security-config.md](../web/security-config.md#content-security-policy). React/SSR specifics:
-
-- `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff
-
-### SSR template injection
-
-When using `renderToString` or `renderToPipeableStream`:
-
-- JSX escapes rendered values; `dangerouslySetInnerHTML` output is not (client rules apply). Never concatenate user input into the HTML template around the React output.
 
 ### Third-party components
 
