@@ -6,6 +6,8 @@ paths:
   - "**/*.spec.jsx"
   - "**/*.test.ts"
   - "**/*.spec.ts"
+  - "**/*.test.js"
+  - "**/*.spec.js"
   - "**/__tests__/**/*.ts"
   - "**/__tests__/**/*.tsx"
   - "**/__tests__/**/*.js"

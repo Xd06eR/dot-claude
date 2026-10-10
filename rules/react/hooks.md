@@ -6,8 +6,10 @@ paths:
   - "**/hooks/**/*.js"
   - "**/use-*.ts"
   - "**/use-*.tsx"
+  - "**/use-*.js"
   - "**/use[A-Z]*.ts"
   - "**/use[A-Z]*.tsx"
+  - "**/use[A-Z]*.js"
 ---
 
 # React Hooks
@@ -20,7 +22,7 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 
 ## `useEffect` — when not to use
 
-`useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries). Not for: deriving values (compute during render), resetting on prop change (use a `key`), notifying parents (call the callback in the event handler), or app-level singleton init (module scope).
+`useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries). Not for: resetting on prop change (use a `key`), notifying parents (call the callback in the event handler), or app-level singleton init (module scope).
 
 ## Dependency arrays and cleanup
 
