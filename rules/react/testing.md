@@ -14,14 +14,9 @@ paths:
 
 # React Testing
 
-> This file extends [typescript/typescript.md](../typescript/typescript.md) and [common/testing.md](../common/testing.md) with React specific content.
+> This file extends [typescript/typescript.md](../typescript/typescript.md) and [common/common.md](../common/common.md) with React specific content.
 
 Pick one component-testing approach per project: do not mix RTL and Playwright CT in the same repo.
-
-## Network mocking with MSW
-
-- MSW v2: `http`/`HttpResponse` from `msw`, `setupServer` from `msw/node`
-- `onUnhandledRequest: "error"` fails loudly on unmocked requests — silent passes are worse than red.
 
 ## Custom hook testing
 

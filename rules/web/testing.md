@@ -8,7 +8,7 @@ paths:
 
 # Web Testing Rules
 
-> This file extends [common/testing.md](../common/testing.md) with web-specific testing content.
+> This file extends [common/common.md](../common/common.md) with web-specific testing content.
 
 ## Priority order
 
@@ -28,7 +28,7 @@ paths:
 
 ### 3. Performance
 
-- INP is field-only: verify via CrUX/RUM; TBT is the lab proxy (CWV targets: [architecture.md](architecture.md#core-web-vitals-targets))
+- INP is field-only: verify via CrUX/RUM; TBT is the lab proxy.
 
 ### 4. Cross-browser
 

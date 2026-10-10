@@ -11,7 +11,7 @@ paths:
 
 # Web Architecture, Design Quality, and Performance
 
-> Web-specific architecture, design-quality, and performance rules. Component patterns (compound components, container/presentational) live in [react/architecture.md](../react/architecture.md). They are React-specific and load alongside this file on `.tsx`/`.jsx`.
+> Web-specific architecture, design-quality, and performance rules. Component patterns (compound components, container/presentational) live in [react/react.md](../react/react.md#architecture). They are React-specific and load alongside this file on `.tsx`/`.jsx`.
 
 ## Design quality
 
@@ -46,18 +46,6 @@ Do not default to dark mode automatically. Choose the visual direction the produ
 For full design work, use the design skills: `design-consultation` (system from scratch), `design-variants` (explore directions), `design-build` (production UI), `design-taste-frontend` (direction-inferred, taste-gated builds).
 
 ## Performance
-
-- Images and embeds reserve space (explicit dimensions or aspect-ratio); third-party scripts load deferred.
-
-### Core Web Vitals targets
-
-| Metric | Target |
-|--------|--------|
-| LCP | < 2.5s |
-| INP | < 200ms |
-| CLS | < 0.1 |
-| FCP | < 1.5s |
-| TBT | < 200ms |
 
 ### Bundle budget
 
