@@ -21,7 +21,7 @@ paths:
 
 ## Naming
 
-- Custom hooks: `useCamelCase` for the symbol; the file follows the project's convention, applied consistently. Event handlers: `handleX` inside the component, `onX` for the receiving prop.
+- Hooks, event handlers, and files follow the project's naming convention, applied consistently.
 
 ## Component shape
 

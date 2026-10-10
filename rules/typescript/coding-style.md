@@ -12,9 +12,7 @@ paths:
 
 ## Interfaces vs. type aliases
 
-- Use `interface` for object shapes that may be extended or implemented
-- Use `type` for unions, intersections, tuples, mapped types, and utility types
-- Prefer string literal unions over `enum` unless `enum` is required for interoperability
+- `interface` for extensible object shapes; `type` for unions, intersections, tuples, mapped, and utility types; string literal unions over `enum` unless interop requires one
 
 ## Avoid `any`
 

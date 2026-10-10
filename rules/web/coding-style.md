@@ -85,5 +85,4 @@ Avoid animating layout-bound properties:
 
 ## Naming
 
-- CSS classes: kebab-case or utility classes
 - Animation timelines: camelCase with intent (`heroRevealTimeline`)
