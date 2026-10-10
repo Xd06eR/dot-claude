@@ -62,12 +62,6 @@ Every Suspense boundary needs an Error Boundary above it. The pair covers pendin
 
 React 19 lets function components accept `ref` as a regular prop. `forwardRef` is no longer required.
 
-```tsx
-export function Input({ ref, ...rest }: { ref?: React.Ref<HTMLInputElement> } & InputProps) {
-  return <input ref={ref} {...rest} />;
-}
-```
-
 Older codebases on React 18 still need `forwardRef` (slated for deprecation: prefer ref-as-prop when upgrading).
 
 ## Skill reference
