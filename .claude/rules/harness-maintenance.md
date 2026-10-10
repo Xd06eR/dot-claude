@@ -4,7 +4,7 @@ How to update the harness (`~/.claude`) without silently degrading it.
 
 ## Edit protocol
 
-1. **Verify loading when scoping changes:** two headless probes, a context check (`claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""`, unscoped answers yes) and a load check (rerun with tools enabled, reading a matching file first: scoped answers no before, yes after the read; project-scope answers yes in its own project and no elsewhere). A failed probe stops the batch; report before proceeding.
+1. **Verify loading when scoping changes:** two headless probes, a context check (`claude -p 'Is a rule titled "<TITLE>" in your context? yes/no' --tools ""`, unscoped answers yes) and a load check (rerun with tools enabled, reading a matching file first: scoped answers no before, yes after the read; project-scope answers yes in its own project and no elsewhere). A failed probe stops the batch; report before proceeding. Plain extension or filename patterns in a probe-verified family are exempt; probe only novel syntax shapes (character classes, braces, negation, path patterns).
 2. **Prune only with coverage:** before pruning any doc, audit that every load-bearing item lives elsewhere (or move it first), and that no inbound reference dangles.
 3. **Per-edit gate:** durable files change via the Edit tool only, one at a time, exact text and reasoning stated before each call.
 4. **settings.json:** never read or commit it wholesale (it can carry a live provider token).
