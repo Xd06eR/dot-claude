@@ -12,7 +12,7 @@ paths:
 
 # React Coding Style
 
-> This file extends [typescript/coding-style.md](../typescript/coding-style.md) and [common/coding-style.md](../common/coding-style.md) with React specific content.
+> This file extends [typescript/typescript.md](../typescript/typescript.md) and [common/coding-style.md](../common/coding-style.md) with React specific content.
 
 ## File extensions
 
@@ -49,4 +49,4 @@ components/UserCard/
   index.ts              # re-export only
 ```
 
-Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, see [web/coding-style.md](../web/coding-style.md#file-organization).
+Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, see [typescript/typescript.md](../typescript/typescript.md#architecture).

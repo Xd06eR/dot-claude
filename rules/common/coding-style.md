@@ -51,7 +51,7 @@ paths:
 - **US English spelling:** -ize/-or forms (`normalize`, `color`, `behavior`).
 - **Simplicity:** plain over clever unless cleverness is load-bearing.
 - **Formatting:** the formatter owns code syntax.
-- **Naming:** abbreviate in small scope, spell out cross-module; language-specific rules in `rules/<language>/coding-style.md` override these defaults.
+- **Naming:** abbreviate in small scope, spell out cross-module; the language-specific rules override these defaults.
 
 ## Immutability
 
