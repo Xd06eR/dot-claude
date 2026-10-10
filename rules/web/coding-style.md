@@ -11,9 +11,9 @@ paths:
 
 # Web Coding Style
 
-> This file extends [common/coding-style.md](../common/coding-style.md) with web-specific frontend content.
+> This file extends [common/common.md](../common/common.md) with web-specific frontend content.
 
-- File organization: by feature or page/route area, not by file type (principle per [common/coding-style.md](../common/coding-style.md)); the feature-app tree lives in [typescript/typescript.md](../typescript/typescript.md#architecture), per-component packaging in [react/coding-style.md](../react/coding-style.md#file-layout-per-component).
+- File organization: by feature or page/route area, not by file type (principle per [common/common.md](../common/common.md#coding-style)); the feature-app tree lives in [typescript/typescript.md](../typescript/typescript.md#architecture), per-component packaging in [react/react.md](../react/react.md#file-layout-per-component).
 
 ## CSS custom properties
 

@@ -4,7 +4,7 @@ description: "Playwright E2E rules: never wait on time, locate by data-testid, c
 origin: ECC
 ---
 
-E2E covers critical user flows; the unit and integration layers cover the rest. Test policy lives in `~/.claude/rules/common/testing.md` — including the flaky rule: a flaky test is a defect; fix the test, never mute it with retries or quarantine (`test.fixme` / `test.skip`). The sole sanctioned `test.skip` is the production guard under Critical flows.
+E2E covers critical user flows; the unit and integration layers cover the rest. Test policy lives in `~/.claude/rules/common/common.md` — including the flaky rule: a flaky test is a defect; fix the test, never mute it with retries or quarantine (`test.fixme` / `test.skip`). The sole sanctioned `test.skip` is the production guard under Critical flows.
 
 ## Rules
 
@@ -19,7 +19,7 @@ npx playwright test tests/<name>.spec.ts --repeat-each=10   # reproduce intermit
 npx playwright test tests/<name>.spec.ts --retries=3        # reveal tests that only pass on retry
 ```
 
-Then fix the test itself per `~/.claude/rules/common/testing.md`.
+Then fix the test itself per `~/.claude/rules/common/common.md`.
 
 ## Critical flows
 

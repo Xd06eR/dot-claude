@@ -8,7 +8,7 @@ paths:
 
 # Web Security Configuration
 
-> Response-header security (CSP, HTTPS headers) for server config files; extends [common/security.md](../common/security.md). Component and page-level web security lives in [security.md](security.md).
+> Response-header security (CSP, HTTPS headers) for server config files; extends [common/common.md](../common/common.md). Component and page-level web security lives in [security.md](security.md).
 
 ## Content Security Policy
 

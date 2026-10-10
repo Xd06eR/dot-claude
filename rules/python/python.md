@@ -28,7 +28,7 @@ pyproject.toml                # single project config root
 ```
 
 - Tests live in a parallel `tests/` tree, not beside the source.
-- Import direction (the one-way rule per [common/architecture.md](../common/architecture.md)): `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
+- Import direction (the one-way rule per [common/common.md](../common/common.md#architecture)): `entrypoints` → `services` → `domain`, and anything but `domain/` → `infrastructure`.
 - `__init__.py` carries re-exports only, or stays empty: pick one convention per project, never mix.
 - Ship `py.typed` in typed packages so downstream type-checkers read the annotations.
 - Keep `.pyi` stubs next to the module they describe; prefer inline annotations over stubs whenever the source is editable.
@@ -36,7 +36,7 @@ pyproject.toml                # single project config root
 ## Coding style
 
 - **Verification:** `ruff check` → `ruff format` → `mypy` → `pytest`
-- **Immutability:** use `@dataclass(frozen=True)` for value objects (principle per [common/coding-style.md](../common/coding-style.md)).
+- **Immutability:** use `@dataclass(frozen=True)` for value objects (principle per [common/common.md](../common/common.md#coding-style)).
 
 ## Security
 
