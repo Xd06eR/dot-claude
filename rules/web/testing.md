@@ -8,7 +8,7 @@ paths:
 
 # Web Testing Rules
 
-> This file extends [common/common.md](../common/common.md) with web-specific testing content.
+> This file extends [common/index.md](../common/index.md) with web-specific testing content.
 
 ## Priority order
 

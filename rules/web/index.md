@@ -11,7 +11,7 @@ paths:
 
 # Web Rules
 
-> Web extension of [common/common.md](../common/common.md): design quality, performance, and frontend coding style. Component patterns live in [react/react.md](../react/react.md#architecture) (React-specific, loading alongside this file on `.tsx`/`.jsx`); security in [security.md](security.md) and [security-config.md](security-config.md); testing in [testing.md](testing.md).
+> Web extension of [common/index.md](../common/index.md): design quality, performance, and frontend coding style. Component patterns live in [react/index.md](../react/index.md#architecture) (React-specific, loading alongside this file on `.tsx`/`.jsx`); security in [security.md](security.md) and [security-config.md](security-config.md); testing in [testing.md](testing.md).
 
 ## Design quality
 
@@ -64,7 +64,7 @@ For full design work, use the design skills: `design-consultation` (system from 
 
 ## Coding style
 
-- File organization: by feature or page/route area, not by file type (principle per [common/common.md](../common/common.md#coding-style)); the feature-app tree lives in [typescript/typescript.md](../typescript/typescript.md#architecture), per-component packaging in [react/react.md](../react/react.md#file-layout-per-component).
+- File organization: by feature or page/route area, not by file type (principle per [common/index.md](../common/index.md#coding-style)); the feature-app tree lives in [typescript/index.md](../typescript/index.md#architecture), per-component packaging in [react/index.md](../react/index.md#file-layout-per-component).
 
 ### CSS custom properties
 

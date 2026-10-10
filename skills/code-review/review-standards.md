@@ -6,14 +6,14 @@ Before marking code complete:
 
 - [ ] Code is readable and well-named
 - [ ] Functions are focused (<50 lines)
-- [ ] Files are cohesive (<800 lines; the typical target lives in `~/.claude/rules/common/common.md` § Coding style)
+- [ ] Files are cohesive (<800 lines; the typical target lives in `~/.claude/rules/common/index.md` § Coding style)
 - [ ] No deep nesting (>4 levels)
 - [ ] Errors are handled explicitly
 - [ ] No shared-state mutation (immutable patterns preferred)
 - [ ] No hardcoded thresholds, delays, or limits (use named constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
-- [ ] Test coverage meets the new-code baseline (per `~/.claude/rules/common/common.md`)
+- [ ] Test coverage meets the new-code baseline (per `~/.claude/rules/common/index.md`)
 
 ## Security review triggers
 
@@ -31,7 +31,7 @@ Before marking code complete:
 
 ### Security
 
-The mandatory checks in `~/.claude/rules/common/common.md` own this list.
+The mandatory checks in `~/.claude/rules/common/index.md` own this list.
 
 ### Performance
 

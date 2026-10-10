@@ -12,7 +12,7 @@ paths:
 
 # React Rules
 
-> React extension of [typescript/typescript.md](../typescript/typescript.md) and [common/common.md](../common/common.md). Hooks live in [hooks.md](hooks.md), component testing in [testing.md](testing.md), accessibility patterns in the `frontend-a11y` skill.
+> React extension of [typescript/index.md](../typescript/index.md) and [common/index.md](../common/index.md). Hooks live in [hooks.md](hooks.md), component testing in [testing.md](testing.md), accessibility patterns in the `frontend-a11y` skill.
 
 ## Architecture
 
@@ -61,7 +61,7 @@ components/UserCard/
   index.ts              # re-export only
 ```
 
-Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, see [typescript/typescript.md](../typescript/typescript.md#architecture).
+Inline single-file components are fine for trivial presentational pieces. For the wider src/ feature-tree convention, see [typescript/index.md](../typescript/index.md#architecture).
 
 ## Security
 
@@ -101,6 +101,6 @@ When using `renderToString` or `renderToPipeableStream`:
 
 ### Third-party components
 
-- Dependency vetting per [common/common.md](../common/common.md#mandatory-security-checks); UI-library checks below
+- Dependency vetting per [common/index.md](../common/index.md#mandatory-security-checks); UI-library checks below
 - Check that the library does not internally use `dangerouslySetInnerHTML` on its input (e.g., rich text editors)
 - Be wary of components that accept HTML strings as props

@@ -7,11 +7,11 @@ paths:
 
 # Web Security Rules
 
-> This file extends [common/common.md](../common/common.md) with web-specific security content. Header configuration (CSP, HTTPS) lives in [security-config.md](security-config.md).
+> This file extends [common/index.md](../common/index.md) with web-specific security content. Header configuration (CSP, HTTPS) lives in [security-config.md](security-config.md).
 
 ## XSS prevention
 
-Base rules per [common/common.md](../common/common.md); React sinks per [react/react.md](../react/react.md#security). Sanitize user HTML with a vetted sanitizer library when absolutely necessary.
+Base rules per [common/index.md](../common/index.md); React sinks per [react/index.md](../react/index.md#security). Sanitize user HTML with a vetted sanitizer library when absolutely necessary.
 
 ## Third-party scripts
 

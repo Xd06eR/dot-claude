@@ -14,7 +14,7 @@ paths:
 
 # React Testing
 
-> This file extends [typescript/typescript.md](../typescript/typescript.md) and [common/common.md](../common/common.md) with React specific content.
+> This file extends [typescript/index.md](../typescript/index.md) and [common/index.md](../common/index.md) with React specific content.
 
 Pick one component-testing approach per project: do not mix RTL and Playwright CT in the same repo.
 
