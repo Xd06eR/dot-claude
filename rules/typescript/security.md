@@ -16,3 +16,7 @@ paths:
 - Run `npm audit` (or `pnpm audit`) in CI; trace flagged packages with `npm ls <package>`
 - Pin exact versions in `package.json` (no `^`/`~`) and commit the lockfile
 - Check the license before adding
+
+## Prototype pollution
+
+Spreading untrusted JSON defines own properties (mass assignment: unexpected keys overwrite state). True prototype pollution needs a recursive-merge sink (`lodash.merge`, a deep `Object.assign`); audit those call sites hardest. Either way, parse before merging.

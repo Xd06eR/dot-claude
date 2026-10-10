@@ -44,10 +44,6 @@ Configure server-side: full nonce-based header block in [web/security-config.md]
 - All inline scripts in an SSR app (streaming/hydration payloads, theme bootstrap, pixels) need the per-request nonce; Next.js and Remix support nonce injection
 - `style-src 'unsafe-inline'` is often unavoidable for CSS-in-JS libraries: document the tradeoff
 
-## Prototype pollution
-
-Spreading untrusted JSON defines own properties (mass assignment: unexpected keys overwrite state). True prototype pollution needs a recursive-merge sink (`lodash.merge`, a deep `Object.assign`); audit those call sites hardest. Either way, parse before merging.
-
 ## SSR template injection
 
 When using `renderToString` or `renderToPipeableStream`:
