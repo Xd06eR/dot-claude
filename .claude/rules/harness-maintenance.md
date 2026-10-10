@@ -28,6 +28,7 @@ How to update the harness (`~/.claude`) without silently degrading it.
 
 - **Loading scope:** unscoped (loads every session of every project; only when true for every prompt); project-scope (lives in a project's `.claude/rules/` and loads only there); `paths:`-scoped (loads on matching files). Everything not universal takes one of the latter two.
 - **Scoped-frontmatter synchronization:** files sharing a glob block change it together or not at all; a taxonomy change sweeps every file carrying the block.
+- **File naming:** a folder's namespace-primary rule file is named `index.md` (the folder carries the namespace); specialist files with narrower globs keep their aspect names (`security.md`, `testing.md`).
 - **Lesson landing:** harness lessons follow the proposal gate in CLAUDE.md's Lesson capture section; the accepted rule lands in the owning harness file.
 
 ## Skills, commands, and agents
