@@ -13,7 +13,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `hooks/` | Lifecycle hooks (git/gh mutation + secret-path guards) |
 | `rules/` | Instruction rule modules |
 | `.claude/rules/` | Harness-only rule modules (project-scope: load only when working in this repo) |
-| `skills/` | Skill modules, 54 (see Skill Sources) |
+| `skills/` | Skill modules, 55 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
@@ -51,6 +51,7 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 | [gstack](https://github.com/garrytan/gstack) | 11 skills + 2 agents | ship, qa, diagram, deploy-watch, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review (+ its `lenses/`); agents `plan-reviewer`, `security-auditor` (no upstream: gstack ships skills only, so these are maintained locally) |
 | superpowers (plugin, extracted) | 2 | receiving-code-review, verification-before-completion |
 | [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |
+| [reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | 2 | api-security, llm-security |
 | Custom | 7 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back |
 | Compound | 6 skills + 5 agents | skills: plan-from-design (custom + mattpocock + superpowers), build-brief (custom + mattpocock), build-feature (custom + superpowers), tdd (mattpocock + superpowers), diagnosing-bugs (mattpocock + superpowers), code-review (pr-review-toolkit + mattpocock + code-review plugin); agents: code-reviewer (pr-review-toolkit + mattpocock), silent-failure-hunter (ECC + pr-review-toolkit), pr-test-analyzer, type-design-analyzer (both pr-review-toolkit), code-simplifier (pr-review-toolkit + code-simplifier plugin) |
 
