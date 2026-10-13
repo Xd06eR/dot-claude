@@ -1,6 +1,6 @@
 ---
 name: pr-test-analyzer
-description: Reviews a pull request for behavioral test coverage quality and completeness. Dispatch after a PR is created or updated with new logic, or as a final pre-merge check. Returns severity-ranked coverage gaps (file:line, gap, recommended test).
+description: Reviews a pull request for behavioral test coverage quality. Dispatch when a PR is created or updated with new logic. Returns severity-ranked coverage gaps.
 tools: Read, Grep, Glob, Bash
 part-of: code-review
 origin: pr-review-toolkit

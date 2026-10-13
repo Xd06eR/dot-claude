@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Reviews code and its comments against project guidelines in CLAUDE.md, style guides, and best practices, reporting only high-confidence findings. Dispatch after writing or modifying code, before committing, or as a pre-PR check. Returns severity-ranked findings (file:line, rule or bug, fix).
+description: Reviews code and its comments against project guidelines and best practices, reporting only high-confidence findings. Dispatch before commit or PR. Returns severity-ranked findings.
 tools: Read, Grep, Glob, Bash
 part-of: code-review
 origin: pr-review-toolkit + mattpocock

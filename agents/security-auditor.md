@@ -1,6 +1,6 @@
 ---
 name: security-auditor
-description: Adversarial, read-only security audit. Dispatch to audit a codebase, branch diff, or design/plan doc for vulnerabilities; threat-model a proposed design; or gate a ship. Returns severity-ranked findings (file:line, attack scenario, fix) plus a ship-or-block verdict. Never edits code; fixes are recommendations.
+description: Adversarial, read-only security audit. Dispatch to audit a codebase, branch diff, or design/plan doc, or to gate a ship. Returns severity-ranked findings plus a ship-or-block verdict.
 tools: Read, Grep, Glob, Bash
 origin: gstack
 ---

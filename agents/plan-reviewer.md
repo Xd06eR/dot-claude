@@ -1,6 +1,6 @@
 ---
 name: plan-reviewer
-description: Reviews a plan, spec, or PRD through ONE named lens file (ceo/design/devex/eng). Dispatch one instance per lens, typically in parallel; each returns an independent, severity-ranked report with a verdict. Use to gate a plan before build, or whenever a spec needs a specific review lens applied.
+description: Reviews a plan, spec, or PRD through ONE named lens file. Dispatch one per lens, in parallel; each returns an independent, severity-ranked report with a verdict. Use to gate a plan before build.
 tools: Read, Grep, Glob
 part-of: plan-review
 origin: gstack

@@ -1,6 +1,6 @@
 ---
 name: database-reviewer
-description: "PostgreSQL database review: query optimization, schema design, security/RLS, and performance. Dispatch when writing PostgreSQL queries or migrations, designing schemas, or troubleshooting database performance. Returns a severity-ordered review with concrete fixes."
+description: "PostgreSQL database review: queries, schema, security/RLS. Dispatch when writing or troubleshooting queries, schemas, or migrations. Returns severity-ranked findings."
 tools: Read, Grep, Glob, Bash
 origin: ECC
 ---
