@@ -1,6 +1,7 @@
 ---
 name: grill-me
-description: A relentless interview to sharpen a plan or design. Use when the user brings a new feature or design to think through and the session is outside a project working directory.
+description: A relentless interview to sharpen a plan or design.
+disable-model-invocation: true
 origin: mattpocock
 ---
 
