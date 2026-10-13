@@ -1,6 +1,6 @@
 ---
 name: design-audit
-description: "Audit design docs: consistency (do the docs contradict each other), completeness (did every decision reach a doc), and soundness (is the decision correct). Use before or after a bake, before compacting, or on request. Returns severity-ranked findings and a verdict."
+description: "Audit design docs: consistency (do the docs contradict each other), completeness (did every decision reach a doc), and soundness (is the decision correct). Use before or after a bake, or before compacting. Returns severity-ranked findings and a verdict."
 argument-hint: <consistency | completeness | soundness> [docs | full]
 origin: custom
 ---

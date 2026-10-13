@@ -1,6 +1,6 @@
 ---
 name: wayfinder
-description: Chart an effort too big to decide in one session as a staging map (destination, decisions index, fog, out-of-scope) whose sharp questions live as OPEN-QUESTIONS.md entries, then resolve them one entry per session until the way is clear and hand off to bake-design.
+description: Chart an effort too big to decide in one session as a staging map of open-questions entries, then resolve one entry per session until the way is clear and hand off to bake-design.
 disable-model-invocation: true
 argument-hint: "[new effort idea — omit to work the active map]"
 origin: mattpocock

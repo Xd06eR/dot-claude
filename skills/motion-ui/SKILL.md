@@ -1,6 +1,6 @@
 ---
 name: motion-ui
-description: Production-ready UI motion system for React/Next.js. Covers tokens, springs, runtime gating, accessibility, and SSR safety. Use when implementing animations, transitions, or motion patterns.
+description: UI motion system for React/Next.js. Covers tokens, springs, runtime gating, accessibility, and SSR safety. Use when implementing animations, transitions, or motion patterns.
 origin: ECC
 ---
 

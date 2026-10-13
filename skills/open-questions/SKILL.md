@@ -1,6 +1,6 @@
 ---
 name: open-questions
-description: Maintain the project's live register of open design questions and their rulings (OPEN-QUESTIONS.md). Use when a design discussion produces rulings, open questions, or rejected options; a decision significant enough to need its own frozen record goes to an ADR via domain-modeling.
+description: Maintain the project's live register of open design questions and their rulings (OPEN-QUESTIONS.md). Use when a design discussion produces rulings, open questions, or rejected options.
 origin: custom
 ---
 

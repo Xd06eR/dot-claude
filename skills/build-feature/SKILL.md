@@ -1,6 +1,6 @@
 ---
 name: build-feature
-description: Execute build briefs; with no feature named, build the settled design directly. Use when the user asks to build an approved design; never when "build" means the toolchain (compile, bundle, CI).
+description: Execute build briefs; with no feature named, build the settled design directly. Use when the user asks to build an approved design.
 argument-hint: "[feature ... | all — omit to build the settled design directly]"
 origin: custom + superpowers
 ---

@@ -1,6 +1,6 @@
 ---
 name: design-variants
-description: "Visual exploration: turn a screen or component brief into several deliberately-different variants on one side-by-side comparison page. Use when a UI's visual direction is unsettled and you want real, contrasting options to choose from before committing. For a throwaway experiment that ships nothing, use prototype. To skip exploration and ship marketing UI straight from the brief, use design-taste-frontend."
+description: "Visual exploration: turn a screen or component brief into several deliberately-different variants on one side-by-side comparison page. Use when a UI's visual direction is unsettled and the user wants real, contrasting options before committing. For throwaway experiments, use prototype; to ship marketing UI straight from the brief, use design-taste-frontend."
 origin: gstack
 ---
 
