@@ -83,7 +83,7 @@ git fetch origin && git checkout <base> && git merge --no-ff <branch> && git pus
 Then confirm the landing without mutating anything:
 
 - Poll PR state read-only until it reports `MERGED` (`gh pr view --json state,mergeCommit -q .state`). This naturally covers merge queues (state stays open until the queue clears) and concurrent merges. Poll roughly every 30s, cap around 30 min.
-- Capture the merge commit SHA (`gh pr view --json mergeCommit -q .mergeCommit.oid`). You need it for the deploy watch and any revert.
+- Capture the merge commit SHA (`gh pr view --json mergeCommit -q .mergeCommit.oid`). You need it for watching the deploy and any revert.
 - Timeout or no host CLI: ask the user in plain text to confirm the merge landed and to paste the merge SHA.
 
 Do not proceed to deploy until the merge is confirmed.

@@ -1,6 +1,6 @@
 ---
 name: database-migrations
-description: "Safe, reversible database schema changes for production: migration principles, the safety checklist, PostgreSQL patterns (concurrent indexes, expand-contract, batched backfills), ORM escape hatches, and zero-downtime strategy. Use when modifying database schemas, writing migrations, or planning zero-downtime deploys."
+description: "Safe, reversible database schema changes for production: the safety checklist, PostgreSQL patterns (concurrent indexes, expand-contract, batched backfills), and ORM escape hatches. Use when modifying database schemas, writing migrations, or planning zero-downtime deploys."
 origin: ECC
 ---
 
