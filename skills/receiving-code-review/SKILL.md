@@ -1,6 +1,6 @@
 ---
 name: receiving-code-review
-description: "Evaluate code review feedback before implementing it: verify against the codebase, ask before assuming; technical correctness over social comfort. Use when receiving code review feedback, especially when it seems unclear or technically questionable."
+description: Evaluate code review feedback before implementing it. Use when receiving code review feedback, especially when it seems unclear or technically questionable.
 origin: superpowers
 ---
 

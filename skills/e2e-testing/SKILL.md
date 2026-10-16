@@ -1,6 +1,6 @@
 ---
 name: e2e-testing
-description: "Playwright E2E rules: never wait on time, locate by data-testid, capture artifacts on failure only, and the flaky-test diagnosis loop. Use when setting up or debugging Playwright E2E test suites."
+description: "Playwright E2E rules: waiting, locators, failure artifacts, and the flaky-test diagnosis loop. Use when setting up or debugging Playwright E2E test suites."
 origin: ECC
 ---
 
