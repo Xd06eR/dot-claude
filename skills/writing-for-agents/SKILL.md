@@ -1,6 +1,6 @@
 ---
 name: writing-for-agents
-description: Writing documents for agents. Use when creating or editing the prose of skills, AGENTS.md, or CLAUDE.md — the levers that make an agent's process predictable. For scaffolding a new skill, benchmarking one with evals, or optimizing a description for triggering, use skill-creator.
+description: Writing documents for agents. Use when creating or editing the prose of skills, AGENTS.md, or CLAUDE.md. For scaffolding a new skill, benchmarking one with evals, or optimizing a description for triggering, use skill-creator.
 origin: mattpocock
 ---
 

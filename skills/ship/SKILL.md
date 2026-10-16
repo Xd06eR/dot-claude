@@ -1,6 +1,6 @@
 ---
 name: ship
-description: Use when a feature or fix is complete, tested, and ready to leave the branch. Prepares the exact commit, push, and PR commands for you to run.
+description: Use when a feature or fix is complete, tested, and ready to leave the branch. Prepares the exact commit, push, and PR commands for the user to run.
 origin: gstack
 ---
 
@@ -153,7 +153,7 @@ EOF
 
 If a PR already exists for this branch, output the update form instead (`gh pr edit`), not a second create. No remote configured: output only the grouped commit commands and omit the push and PR lines.
 
-After the user ships, `deploy-watch` watches the live deploy and `document-release` updates any docs the release made stale.
+After the user ships, `document-release` updates any docs the release made stale.
 
 ## Important rules
 
