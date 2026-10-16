@@ -1,6 +1,6 @@
 ---
 name: document-release
-description: "Use after a release lands: sweep the repo's docs and update everything the shipped change made stale. Returns the commit and PR-body update for the user to run. For net-new docs from scratch, use document-generate."
+description: "Use when a release has landed or is about to merge: sweep the repo's docs and update everything the shipped change made stale. Returns the commit and PR-body update for the user to run. For net-new docs from scratch, use document-generate."
 origin: gstack
 ---
 

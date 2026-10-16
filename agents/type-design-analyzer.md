@@ -1,6 +1,6 @@
 ---
 name: type-design-analyzer
-description: Analyzes type design for encapsulation and invariant strength. Dispatch when types are introduced or changed. Returns per-type ratings plus severity-ranked concerns.
+description: Analyze type design for encapsulation and invariant strength. Dispatch when types are introduced or changed. Returns per-type ratings plus severity-ranked concerns.
 tools: Read, Grep, Glob, Bash
 part-of: code-review
 origin: pr-review-toolkit

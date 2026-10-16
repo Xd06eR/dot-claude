@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Reviews code and its comments against project guidelines and best practices, reporting only high-confidence findings. Dispatch before commit or PR. Returns severity-ranked findings.
+description: Review code and its comments against project guidelines and best practices, reporting only high-confidence findings. Dispatch before commit or PR. Returns severity-ranked findings.
 tools: Read, Grep, Glob, Bash
 part-of: code-review
 origin: pr-review-toolkit + mattpocock

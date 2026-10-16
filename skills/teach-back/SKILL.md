@@ -1,6 +1,6 @@
 ---
 name: teach-back
-description: Verify the user deeply understands a session's work by having them teach it back. Probe first, fill gaps, then quiz against a checklist of the problem, solution, and broader context, advancing only on mastery.
+description: Verify the user deeply understands a session's work by having them teach it back. Probe first, fill gaps, then quiz against a checklist of the problem, solution, and broader context, advancing on mastery and marking unmastered items incomplete.
 disable-model-invocation: true
 origin: custom
 ---

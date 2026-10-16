@@ -1,6 +1,6 @@
 ---
 name: spec-reviewer
-description: Reviews a diff against its originating spec/PRD for fidelity — missing requirements, scope creep, wrong implementation. Dispatch when an originating spec, issue, or PRD exists. Returns severity-ranked findings; reports "no spec available" and exits when there is none.
+description: Review a diff against its originating spec/PRD for fidelity — missing requirements, scope creep, wrong implementation. Dispatch when an originating spec, issue, or PRD exists. Returns severity-ranked findings; reports "no spec available" and exits when there is none.
 tools: Read, Grep, Glob, Bash
 part-of: code-review
 origin: mattpocock
