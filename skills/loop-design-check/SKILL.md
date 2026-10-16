@@ -1,6 +1,6 @@
 ---
 name: loop-design-check
-description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (harness-run or app-side), or when reviewing a loop before it goes automatic. Not for a one-off task or a plain timer/poll. Covers the judgment layer only (goal, verifier, stop conditions), never the wiring.
+description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (harness-run or app-side), or before a loop goes automatic. Not for a one-off task or a plain timer/poll. Judgment layer only (goal, verifier, stop conditions), never the wiring.
 origin: ECC
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: agent-architecture-audit
-description: "Use when releasing an agent app or auditing why it degraded (works in the playground but breaks in the wrapper; fine yesterday, hallucinating today): wrapper regressions, memory pollution, tool-discipline failures, hidden repair loops, rendering corruption across the 12-layer agent stack. Returns severity-ranked findings with code-first fixes. For a live loop that is stuck, repeating, or burning tokens, use agent-introspection-debugging; for a loop's goal or verifier design, use loop-design-check."
+description: "Use when releasing an agent app or auditing why it degraded: wrapper regressions, memory pollution, tool-discipline failures, hidden repair loops, and rendering corruption across the 12-layer agent stack. Returns severity-ranked findings with code-first fixes. For live-loop failures, use agent-introspection-debugging; for a loop's goal or verifier design, use loop-design-check."
 origin: ECC
 ---
 

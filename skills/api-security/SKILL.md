@@ -1,6 +1,6 @@
 ---
 name: api-security
-description: Use for authorized security assessment of REST, GraphQL, or WebSocket APIs, including discovery, authentication, authorization, rate-limit, and CI/CD testing.
+description: Use for authorized security assessment of REST, GraphQL, or WebSocket APIs, including discovery, authentication, authorization, and rate limiting.
 origin: reverse-skill
 ---
 

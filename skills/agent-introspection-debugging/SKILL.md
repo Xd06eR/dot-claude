@@ -1,6 +1,6 @@
 ---
 name: agent-introspection-debugging
-description: "Self-debugging for a live agent failure: stuck or repeating, burning tokens, hitting loop limits, drifting from the task, or a state mismatch between expectation and reality. Returns a failure capture, a root-cause diagnosis, and an introspection report. For structural stack audits, use agent-architecture-audit."
+description: "Self-debugging for a live agent failure: stuck or repeating, burning tokens, hitting loop limits, drifting from the task, or wrong state assumptions. Returns a failure capture, root-cause diagnosis, and introspection report. For structural stack audits, use agent-architecture-audit."
 origin: ECC
 ---
 
