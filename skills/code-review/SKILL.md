@@ -1,11 +1,11 @@
 ---
 name: code-review
 description: Comprehensive code review of a diff or PR. Run when a diff needs an independent pass before it ships. Returns deduplicated, severity-ranked findings.
-argument-hint: "[aspects: all | code | tests | errors | types | spec | simplify]"
+argument-hint: "[fixed-point] [aspects: all | code | tests | errors | types | spec | simplify]"
 origin: pr-review-toolkit + mattpocock + code-review plugin
 ---
 
-The invocation may name review aspects to run; unnamed, run all applicable.
+The invocation may name a fixed point and review aspects; with no aspects named, run the default core defined in step 4.
 
 ## Review workflow
 
@@ -14,6 +14,7 @@ The invocation may name review aspects to run; unnamed, run all applicable.
    - Read `docs/build/implementation-notes.md` if it exists: build-phase deviations, tradeoffs, and parked findings inform where the review looks hardest
    - Read the invocation for named review aspects
    - If the user names a fixed point (commit, branch, tag), verify it resolves (`git rev-parse <point>`) and the diff is non-empty (`git diff <point>...HEAD`, three-dot) BEFORE dispatching any agent. Fail here, not inside the agents
+   - Capture the diff scope once: the exact diff command (or diff content) and, for a fixed-point review, the commit list from `git log <point>..HEAD --oneline`
    - Run the history probe in the main context, no dispatch: read the touched files' recent history (`git log`, `git blame` where the diff edits loaded areas) and prior merged-PR comments on them (`gh pr list --state merged`, `gh pr view --comments`). A change that contradicts or reintroduces a prior fix, or repeats something a prior review already flagged, is a finding like any other. Greenfield files and no prior PRs end the probe.
 
 2. **Available Review Aspects:**
@@ -24,26 +25,27 @@ The invocation may name review aspects to run; unnamed, run all applicable.
    - **code:** General code review for project guidelines, comments included
    - **spec:** Review fidelity to the originating spec/PRD (if one exists)
    - **simplify:** Simplify code for clarity and maintainability
-   - **all:** Run all applicable reviews (default)
+   - **all:** Run all applicable finding-producing reviews
 
 3. **Identify Changed Files**
-   - Run `git diff --name-only` to see modified files
+   - Derive the changed-file list from the captured diff scope
    - Check if PR already exists: `gh pr view`
    - Identify file types and what reviews apply
 
 4. **Determine Applicable Reviews**
 
-   Based on changes:
-   - **Always applicable:** code-reviewer (general quality, comments included); its dispatch prompt names `~/.claude/skills/code-review/review-standards.md` as the checklist source
-   - **If test files changed:** pr-test-analyzer
-   - **If error handling changed:** silent-failure-hunter
-   - **If types added/modified:** type-design-analyzer
-   - **If an originating spec/issue/PRD exists:** spec-reviewer. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
-   - **After passing review:** code-simplifier (polish and refine)
+   Select the requested aspects first: with none named, select `code`, `spec`, and `tests`; `all` selects every finding-producing aspect. Then apply these applicability checks:
+
+   - **code:** code-reviewer (general quality, comments included); always applicable. Its dispatch prompt names `~/.claude/skills/code-review/review-standards.md` as the checklist source
+   - **tests:** pr-test-analyzer when behavior or test files changed
+   - **errors:** silent-failure-hunter when error handling changed
+   - **types:** type-design-analyzer when types are added or modified
+   - **spec:** spec-reviewer when an originating spec/issue/PRD exists. Search order: issue references in commit messages → a path the user passed → a spec file matching the branch/feature under the project's spec/plan dirs. If none found, ask the user; if there is none, skip and note "no spec available" in the summary
+   - **simplify:** code-simplifier after passing review (polish and refine)
 
 5. **Launch Review Agents**
 
-   Launch sequentially by default: each report is complete before the next dispatch. Parallel on explicit request.
+   Issue all selected finding-producing agent dispatches in a single turn so they run in parallel. Each prompt carries the captured diff scope; spec-reviewer's prompt also carries the resolved spec path or fetched contents. Collect every report before aggregation.
 
 6. **Aggregate Results**
 
