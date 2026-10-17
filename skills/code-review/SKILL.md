@@ -34,7 +34,7 @@ The invocation may name a fixed point and review aspects; with no aspects named,
 
 4. **Determine Applicable Reviews**
 
-   Select the requested aspects first: with none named, select `code`, `spec`, and `tests`; `all` selects every finding-producing aspect. Then apply these applicability checks:
+   Select the requested finding aspects first: if none are named, select `code`, `spec`, and `tests` (so `simplify` alone still runs the default core); `all` selects every finding-producing aspect. Then apply these applicability checks:
 
    - **code:** code-reviewer (general quality, comments included); always applicable. Its dispatch prompt names `~/.claude/skills/code-review/review-standards.md` as the checklist source
    - **tests:** pr-test-analyzer when behavior or test files changed
@@ -112,7 +112,7 @@ Each finding-producing agent returns findings independently; without this step, 
 
 ## `code-simplifier` gating
 
-`code-simplifier` runs LAST, only after the finding-producing agents finish and the review passes (no CRITICAL and no HIGH), and only when the invocation names `simplify` (never under `all`). It applies simplifications in place; it does not produce findings.
+`code-simplifier` runs LAST, only after the selected finding-producing agents finish and the review passes (no CRITICAL and no HIGH), and only when the invocation names `simplify` (never under `all`). It applies simplifications in place; it does not produce findings.
 
 ## Ruled out (do not do)
 

@@ -64,5 +64,7 @@ Report nothing below LOW: trivial nice-to-have gaps are noise, not findings.
 
 ## Important considerations
 
+- Follow the project's testing standards when evaluating or recommending tests
+- Weigh each suggested test's cost against the regression it prevents
 - Avoid suggesting tests for trivial getters/setters unless they contain logic
 - Note when tests are testing implementation rather than behavior

@@ -118,4 +118,4 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 
 - `init` — initialize a new CLAUDE.md with codebase documentation
 - `code-review` — multi-agent review of diffs for correctness and style issues
-- `code-simplifier` — review code for reuse and simplification opportunities
+- `code-simplifier` — simplify recently modified code in place while preserving functionality

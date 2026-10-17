@@ -88,7 +88,9 @@ One finding per issue, grouped by severity (HIGH first, then MEDIUM, LOW). Each:
 
 ## Key principles
 
+- Prefer compile-time guarantees over runtime checks when feasible
 - Immutability often simplifies invariant maintenance
+- Weigh each recommendation's complexity, maintenance, performance, and breaking-change costs; follow the codebase's conventions and balance safety with usability
 
 ## Common anti-patterns to flag
 
