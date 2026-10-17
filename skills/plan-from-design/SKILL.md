@@ -92,10 +92,11 @@ A placeholder is filler that reads like a step but carries no decision — a hol
 Run this checklist yourself over the drafted files, not as a subagent dispatch:
 
 1. **Spec coverage:** skim each requirement in the source design. Can you point to the step that implements it? List any gaps; add the missing component or step.
-2. **Placeholder scan:** search the plan for the patterns above. Fix them.
+2. **Step scan:** every step must leave exactly one reasonable implementation action and no more: resolve placeholders, and remove detail the signature, tests, or project conventions already determine.
 3. **Type consistency:** do the names, signatures, and property types used by later components match what earlier components produce? A `clearLayers()` produced in one component but consumed as `clearFullLayers()` in another is a build-time failure.
 4. **Distill audit:** can every spec statement be traced to the canonical set? Coverage (1) catches what the plan lacks; this catches what the plan invents.
 5. **Criteria checkable:** every success criterion is a mechanical check, never "works" or "is good".
+6. **Failure-mode coverage:** for each realistic input class or failure mode the design implies, point to the step or test that covers it, or to an explicit out-of-scope decision.
 
 Fix issues inline. No re-review: fix and move on.
 

@@ -48,6 +48,7 @@ user-model → auth-api → login-ui
 
 - Goal: the HTTP auth API — the only session path.
 - Scope: session module, auth routes, middleware.
+- Out of scope: password reset and OAuth providers.
 - Depends on: user-model.
 - Interfaces — Consumes: `createUser`, `findByEmail`. Produces: `attachAuth(router): void`, `requireSession`, `AuthError`.
 - Build steps: <the component plan's checklist, verbatim>
@@ -64,6 +65,7 @@ What the skeleton cannot show:
 - Global constraints carry VERBATIM from the component plans' Global constraints blocks: they bind every build step and are the reviewers' attention lens, so exact values travel, not paraphrases.
 - Component map edges are blocking: a component starts only when its blockers are complete. Order foundation-first.
 - Interfaces copy verbatim from the component plans: the exact signatures a fresh-context builder needs from neighbors it cannot see.
+- Out of scope: copy the component spec's exclusions VERBATIM into its component section; omit the line only when the spec has no exclusions.
 - Build steps carry the plan's checklist in full: brief sections are read out of order.
 - Acceptance is checkable. The feature is done when every component's acceptance passes; state it explicitly.
 - The brief carries approved content forward and adds assembly (order, edges), never new decisions: anything the feature needs that no plan holds is flagged, not invented.
