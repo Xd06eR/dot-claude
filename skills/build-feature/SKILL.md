@@ -2,7 +2,7 @@
 name: build-feature
 description: Execute build briefs; with no feature named, build the settled design directly. Use when the user asks to build an approved design.
 argument-hint: "[feature ... | all — omit to build the settled design directly]"
-origin: custom + superpowers
+origin: custom + mattpocock + superpowers
 ---
 
 Execute build briefs: one fresh builder per feature, review in the main context, bounded fix loop, ledger that outlives the session.
@@ -52,6 +52,8 @@ Rule on each finding against the brief before execution begins; surface to the u
 
 Run the campaign without pausing between components, batches, or features, except at commit points. Four things stop you mid-build, and only these: an irreversible or destructive operation; a security-sensitive action; a side effect outside the repo (a merge, a push, a publish); a brief so broken that every path forward is a guess. Everything else you decide yourself and ledger as `Ruling: <what you decided> — <why> — <what it costs if wrong>`. At feature end you report every ruling to the user.
 
+When a ruling depends on content outside the brief, read the implicated spec or canonical design before deciding. The canonical design is binding; the brief is a derived execution view, never a new design authority.
+
 ## The build loop
 
 One builder builds the whole feature in the brief's dependency order: features are sized to fit one fresh context, and one context holding both producer and consumer kills the interface-mismatch failure class. Split only when the work outgrows one context: split at dependency-level boundaries (a batch is every component whose blockers are all complete), one fresh builder per batch, the fresh context re-reading exactly the Interfaces its batch consumes.
@@ -71,6 +73,8 @@ The dispatch prompt contains exactly:
 5. The report-file path and the report contract (below).
 6. The no-subagents rule: the builder never dispatches subagents, above all never a reviewer. Review arrives from you after the report.
 7. The TDD requirement: call the Skill tool with "tdd" before writing the first test.
+
+For a split batch, include pointers to any earlier parked findings in the areas the batch touches.
 
 Never paste prior components' history into a dispatch. Choose the model explicitly: the cheapest tier that can handle the work, with a mid-tier floor for builders working from a prose brief.
 

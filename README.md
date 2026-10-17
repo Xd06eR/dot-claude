@@ -53,7 +53,7 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 | [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |
 | [reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | 2 | api-security, llm-security |
 | Custom | 7 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back |
-| Compound | 6 skills + 5 agents | skills: plan-from-design (custom + mattpocock + superpowers), build-brief (custom + mattpocock), build-feature (custom + superpowers), tdd (mattpocock + superpowers), diagnosing-bugs (mattpocock + superpowers), code-review (pr-review-toolkit + mattpocock + code-review plugin); agents: code-reviewer (pr-review-toolkit + mattpocock), silent-failure-hunter (ECC + pr-review-toolkit), pr-test-analyzer, type-design-analyzer (both pr-review-toolkit), code-simplifier (pr-review-toolkit + code-simplifier plugin) |
+| Compound | 6 skills + 5 agents | skills: plan-from-design (custom + mattpocock + superpowers), build-brief (custom + mattpocock), build-feature (custom + mattpocock + superpowers), tdd (mattpocock + superpowers), diagnosing-bugs (mattpocock + superpowers), code-review (pr-review-toolkit + mattpocock + code-review plugin); agents: code-reviewer (pr-review-toolkit + mattpocock), silent-failure-hunter (ECC + pr-review-toolkit), pr-test-analyzer, type-design-analyzer (both pr-review-toolkit), code-simplifier (pr-review-toolkit + code-simplifier plugin) |
 
 Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in `.claude/rules/harness-maintenance.md`.
 
