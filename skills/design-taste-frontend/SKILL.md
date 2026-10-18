@@ -24,6 +24,7 @@ This file holds the entry discipline (brief inference, dials), the scope, the re
 Before touching code or tweaking dials, **infer what the user actually wants**. Most LLM design output is bad because the model jumps to a default aesthetic instead of reading the room.
 
 ### 0.A Read these signals first
+
 1. **Page kind** - landing (SaaS / consumer / agency / event), portfolio (dev / designer / creative studio), redesign (preserve vs overhaul), editorial / blog.
 2. **Vibe words** the user used - "minimalist", "calm", "Linear-style", "Awwwards", "brutalist", "premium consumer", "Apple-y", "playful", "serious B2B", "editorial", "agency-y", "glassy", "dark tech".
 3. **Reference signals** - URLs they linked, screenshots they pasted, products they named, brands they're competing with.
@@ -33,20 +34,30 @@ Before touching code or tweaking dials, **infer what the user actually wants**. 
 7. **Quiet constraints** - accessibility-first audiences, public-sector, regulated industries, trust-first commerce, kids' products. These constraints OVERRIDE aesthetic preference.
 
 ### 0.B Output a one-line "Design Read" before generating
+
 Before any code, state in one line: **"Reading this as: \<page kind> for \<audience>, with a \<vibe> language, leaning toward \<design system or aesthetic family>."**
 
 Example reads:
+
 - *"Reading this as: B2B SaaS landing for technical buyers, with a Linear-style minimalist language, leaning toward Tailwind utilities + Geist + restrained motion."*
 - *"Reading this as: solo designer portfolio for hiring managers, with an editorial / kinetic-type language, leaning toward native CSS + scroll-driven animation + custom typography."*
 - *"Reading this as: redesign of a public-sector service site, with a trust-first language, leaning toward GOV.UK Frontend or USWDS."*
 
 ### 0.C If the brief is ambiguous, ask one question, do not guess
+
 Ask exactly **one** clarifying question - never a multi-question dump - and only when the design read genuinely diverges. Example: *"Should this feel closer to Linear-clean or Awwwards-experimental?"*
 
 If you can confidently infer from context, **do not ask**. Just declare the design read and proceed.
 
 ### 0.D Anti-Default Discipline
+
 Do not default to: AI-purple gradients, centered hero over dark mesh, three equal feature cards, generic glassmorphism on everything, infinite-loop micro-animations everywhere, Inter + slate-900. These are the LLM defaults. Reach past them deliberately based on the design read. The three current AI-default clusters are named in [references/ai-tells.md](references/ai-tells.md).
+
+### 0.E Subject Idea and Page Argument
+
+In working notes, inventory details that belong to this subject rather than its category: name meaning, place, materials, constraints, rituals, numbers, and existing artifacts. Turn one into the organizing idea and carry it through every section, including pricing, FAQ, and footer. Swap in the nearest competitor's name; if the idea still works unchanged, it belongs to the category, not this subject.
+
+Before markup, list each section's claim and its proof, then write the full copy. A section with no claim is filler; a section the brief requires still delivers its complete content at real density.
 
 ---
 
@@ -61,6 +72,7 @@ After the design read, set three dials. Every layout, motion, and density decisi
 **Baseline:** `8 / 6 / 4`. Use these unless the design read overrides them. Do not ask the user to edit this file - overrides happen conversationally.
 
 ### 1.A Dial Inference (design read → dial values)
+
 | Signal | VARIANCE | MOTION | DENSITY |
 |---|---|---|---|
 | "minimalist / clean / calm / editorial / Linear-style" | 5-6 | 3-4 | 2-3 |
@@ -72,6 +84,7 @@ After the design read, set three dials. Every layout, motion, and density decisi
 | "redesign - overhaul" | +2 | +2 | match existing |
 
 ### 1.B Use-Case Presets
+
 | Use case | VARIANCE | MOTION | DENSITY |
 |---|---|---|---|
 | Landing (SaaS, mainstream) | 7 | 6 | 4 |
@@ -85,6 +98,7 @@ After the design read, set three dials. Every layout, motion, and density decisi
 | Redesign - overhaul | +2 | +2 | match |
 
 ### 1.C How the Dials Drive Output
+
 Use these (or user-overridden values) as global variables. Cross-references throughout the reference files refer to these exact variable names - never invent aliases like `LAYOUT_VARIANCE` or `ANIM_LEVEL`. Technical level definitions live in [references/motion-patterns.md](references/motion-patterns.md).
 
 ---
@@ -92,6 +106,7 @@ Use these (or user-overridden values) as global variables. Cross-references thro
 ## 13. OUT OF SCOPE
 
 This skill is NOT for:
+
 * Dashboards / dense product UI / admin panels (use Fluent, Carbon, Atlassian, or Polaris from [references/design-systems.md](references/design-systems.md)).
 * Data tables (use TanStack Table or AG Grid).
 * Multi-step forms / wizards (use Form-specific patterns; this skill won't make them better).
@@ -140,7 +155,7 @@ Run this matrix before outputting code. This is the last filter.
 - [ ] **Section-Layout-Repetition** check: no two sections share the same layout family (at least 4 different families across 8 sections)?
 - [ ] **Bento has rhythm AND exact cell count** (N items → N cells, no empty cells in middle or at end)?
 - [ ] **Long lists use the right UI component** (not default `<ul>` with `divide-y` for > 5 items - see design-directives §4.9 alternatives)?
-- [ ] **Real images used** (gen-tool first, then Picsum-seed, then explicit placeholder slots) - NO div-based fake screenshots, NO hand-rolled decorative SVGs, NO pure-text minimalism?
+- [ ] **Real images used** (project-owned first, then generated or honestly sourced imagery, then explicit placeholder slots) - NO div-based fake screenshots, NO hand-rolled decorative SVGs, NO pure-text minimalism?
 - [ ] **No pills/labels overlaid on images** (no `Plate · Brand`, no `Field notes - journal`)?
 - [ ] **No photo-credit captions as decoration** (`Field study no. 12 · Ines Caetano`)?
 - [ ] **No version footers** (`v1.4.2`, `Build 0048`) on marketing pages?
@@ -169,6 +184,7 @@ Run this matrix before outputting code. This is the last filter.
 - [ ] **Icons** from an allowed library only (Phosphor / HugeIcons / Radix / Tabler), no hand-rolled SVG paths?
 - [ ] **Motion** isolated in client-leaf components with `'use client'` at the top, memoized?
 - [ ] **No AI Tells** from [references/ai-tells.md](references/ai-tells.md) (Inter as default, AI-purple, three-equal cards, Jane Doe, Acme, "Quietly in use at")?
+- [ ] **Render inspection**: where browser automation is available, were 375, 768, and 1440px screenshots read back rather than inferred from code, visible issues fixed, and affected views re-captured? If unavailable, was the gap stated?
 - [ ] **Core Web Vitals** plausibly hit (LCP < 2.5s, INP < 200ms, CLS < 0.1)?
 - [ ] **One design system** per project (no Material + shadcn mixed)?
 

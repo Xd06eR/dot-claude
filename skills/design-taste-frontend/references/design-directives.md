@@ -5,6 +5,7 @@ Part of `design-taste-frontend`. Dial variables referenced here are defined in S
 LLMs default to clichés. Override these defaults proactively. Each rule has a context-aware override path.
 
 ## 4.1 Typography
+
 * **Display / Headlines:** Default `text-4xl md:text-6xl tracking-tighter leading-none`.
 * **Body / Paragraphs:** Default `text-base text-gray-600 leading-relaxed max-w-[65ch]`.
 * **Sans font choice:**
@@ -25,6 +26,7 @@ LLMs default to clichés. Override these defaults proactively. Each rule has a c
 * **ITALIC DESCENDER CLEARANCE (mandatory):** When italic is used in display type and the word contains a descender letter (`y g j p q`), `leading-[1]` or `leading-none` will clip the descender. Use `leading-[1.1]` minimum and add `pb-1` or `mb-1` reserve on the wrapping element. Audit every italic word in display headlines before shipping.
 
 ## 4.2 Color Calibration
+
 * Max 1 accent color. Saturation < 80% by default.
 * **THE LILA RULE:** The "AI Purple / Blue glow" aesthetic is discouraged as a default. No automatic purple button glows, no random neon gradients. Use neutral bases (Zinc / Slate / Stone) with high-contrast singular accents (Emerald, Electric Blue, Deep Rose, Burnt Orange, etc.).
 * **Override:** if the brand or brief explicitly asks for purple / violet / lila, embrace it. But execute with intent: consistent palette, harmonised neutrals, restrained gradients. Not generic AI gradient slop.
@@ -49,17 +51,21 @@ LLMs default to clichés. Override these defaults proactively. Each rule has a c
   * **Override:** the beige+brass+espresso palette is acceptable ONLY when the brand brief explicitly names those colors, or when the brand identity is genuinely vintage / artisan / warm-craft AND you can articulate why this specific palette fits this specific brand. Default-reaching for it because "this is a cookware brief" is banned.
 
 ## 4.3 Layout Diversification
+
 * **ANTI-CENTER BIAS:** Centered Hero / H1 sections are avoided when `DESIGN_VARIANCE > 4`. Force "Split Screen" (50/50), "Left-aligned content / right-aligned asset", "Asymmetric white-space", or scroll-pinned structures.
 * **Override:** centered hero is OK for editorial / manifesto / launch-announcement briefs where the message itself is the design.
 
 ## 4.4 Materiality, Shadows, Cards
+
 * Use cards ONLY when elevation communicates real hierarchy. Otherwise group with `border-t`, `divide-y`, or negative space.
 * When a shadow is used, tint it to the background hue. No pure-black drop shadows on light backgrounds.
 * For `VISUAL_DENSITY > 7`: generic card containers are banned. Data metrics breathe in plain layout.
 * **SHAPE CONSISTENCY LOCK (mandatory):** Pick ONE corner-radius scale for the page and stick to it. Options: all-sharp (radius 0), all-soft (radius 12-16px), all-pill (full radius for interactive). Mixed systems are allowed only when there is a documented rule (e.g. "buttons are full-pill, cards are 16px, inputs are 8px") and that rule is followed everywhere. Round buttons in a square layout, or square cards on a pill-button page, is broken design.
 
 ## 4.5 Interactive UI States
+
 LLMs default to "static successful state only." Always implement full cycles:
+
 * **Loading:** Skeletal loaders matching the final layout's shape. Avoid generic circular spinners.
 * **Empty States:** Beautifully composed; indicate how to populate.
 * **Error States:** Clear, inline (forms), or contextual (toasts only for transient).
@@ -70,6 +76,7 @@ LLMs default to "static successful state only." Always implement full cycles:
 * **FORM CONTRAST CHECK (mandatory, a11y):** Form inputs, placeholder text, focus rings, helper text, and error text all pass WCAG AA contrast against the section background. Light placeholders on a near-white form, white form on white page section, form labels grayer than 4.5:1 contrast → all banned. Audit every form before shipping.
 
 ## 4.6 Data & Form Patterns
+
 * Label ABOVE input. Helper text optional but present in markup. Error text BELOW input. Standard `gap-2` for input blocks.
 * No placeholder-as-label. Ever.
 
@@ -106,16 +113,21 @@ LLMs default to "static successful state only." Always implement full cycles:
 Landing pages and portfolios are **visual products**. Text-only pages with fake-screenshot divs are slop.
 
 **Priority order for visual assets:**
-1. **Image-generation tool first.** If ANY image-gen tool is available in the environment (`generate_image`, MCP image tool, IDE-integrated gen, OpenAI image tools, etc.) you MUST use it to create section-specific assets: hero photography, product shots, texture backgrounds, mood images. Generate at the right aspect ratio for the section. Do not skip this step because hand-rolled CSS feels faster.
-2. **Real web images second.** When no gen tool is available, use real photography sources. Acceptable defaults:
+
+1. **The project's own images.** Use real product shots, place, people, and work before generating or sourcing substitutes.
+2. **Image-generation tool.** If ANY image-gen tool is available in the environment (`generate_image`, MCP image tool, IDE-integrated gen, OpenAI image tools, etc.) you MUST use it to create section-specific assets: hero photography, product shots, texture backgrounds, mood images. Generate at the right aspect ratio for the section. Do not skip this step because hand-rolled CSS feels faster.
+3. **Real web images.** When no suitable owned or generated image is available, use real photography sources. Acceptable defaults:
    * `https://picsum.photos/seed/{descriptive-seed}/{w}/{h}` for placeholder photography (seed should describe the section, e.g. `marrow-cookware-kitchen`)
    * Actual stock or brand URLs when the brief provides them
-   * Open-license sources (Unsplash via direct URL, Pexels) if explicitly allowed
-3. **Last resort: tell the user.** If neither is possible, do NOT fill the page with hand-rolled SVG illustrations or div-based "fake screenshots." Instead, leave clearly-labeled placeholder slots (`<!-- TODO: hero product photo, 1600x1200 -->`) and at the end of the response say: *"This page needs real images at: \[list of placements\]. Please generate or provide them."*
+   * Open-license sources (Unsplash via direct URL, Pexels, open archives, and museums) with required credit
+4. **Last resort: tell the user.** If none of these options is available, do NOT fill the page with hand-rolled SVG illustrations or div-based "fake screenshots." Instead, leave clearly-labeled placeholder slots (`<!-- TODO: hero product photo, 1600x1200 -->`) and at the end of the response say: *"This page needs real images at: \[list of placements\]. Please generate or provide them."*
+
+**Sourced and generated imagery is illustrative, not documentary proof.** For a real subject, never present it as the client's own product, room, dish, person, team, or customers; label substitutions and list them for replacement.
 
 **Even minimalist sites need real images.** A pure-text page is not minimalism. It is incomplete work. Even an editorial Linear-style site needs at least 2-3 real images (hero, one product/lifestyle shot, one supporting image). Generate B&W minimalist photography if the brief is restrained; do not skip images entirely because the dial is low.
 
 **Real company logos for social proof.** When the brief calls for a "Trusted by / Used by / Customers" logo wall, do NOT default to plain text wordmarks (`<span>Acme Co</span>` styled in a row). Use real SVG logos:
+
 * **Source: Simple Icons** (`https://cdn.simpleicons.org/{slug}/ffffff` for any color, or `simple-icons` npm package). Covers most known brands.
 * **Alternative: devicon** for tech-stack logos (`@svgr/cli` or CDN).
 * **Make-up the brand name? Then make-up an SVG mark too.** Generate a simple monogram (one letter in a circle, two-letter ligature, abstract glyph) rendered as an inline `<svg>` matching the page style. Plain text wordmarks for invented brand names look generic.
@@ -123,6 +135,7 @@ Landing pages and portfolios are **visual products**. Text-only pages with fake-
 * **LOGO-ONLY rule (mandatory):** logo wall = logos and nothing else. Do NOT print industry / category labels below each logo (no `Vercel` + `hosting` underneath, no `Stripe` + `payments`, no `Cloudflare` + `infra`). The logo is the credibility, the label adds nothing the user does not already know. Optional: brand name as alt-text for screen readers, optional link to the brand's site. That is it.
 
 **Hand-rolled illustrations:**
+
 * SVG icons from libraries: fine (see stack-conventions.md §3.C).
 * Hand-rolled decorative SVGs (custom illustrations, logos, marks): **strongly discouraged**, never as default. Acceptable only when:
   - The brief explicitly calls for it ("draw me an SVG logo")
@@ -130,6 +143,7 @@ Landing pages and portfolios are **visual products**. Text-only pages with fake-
   - You're confident in the output quality
 
 **Div-based fake screenshots are banned.** A "hand-built product preview" rendered with `<div>` rectangles, fake task lists, fake dashboards, fake terminal windows is a Tell. If you need to show a product:
+
 * Use a real screenshot URL if one exists
 * Generate one via image tool
 * Use a real component preview (an actual mini-version of the UI inside the page)
@@ -139,12 +153,13 @@ Landing pages and portfolios are **visual products**. Text-only pages with fake-
 
 ## 4.9 Content Density
 
-Landing pages live on the **first impression**, not the full read. Cut ruthlessly.
+Landing pages live on the **first impression**, but thin content is not polish. Cut filler, not the information the visitor came for.
 
-* **Default content shape per section:** short headline (≤ 8 words) + short sub-paragraph (≤ 25 words) + one visual asset OR one CTA. Anything more must be justified by the section's job.
-* **No data-dump sections.** A 20-row publication table, a 30-row award list, a giant pricing matrix on a marketing page = wrong layout. Use:
-  - Top 3-5 highlights + "View full list" link
-  - Marquee / carousel for breadth
+* **Default content shape per persuasion section:** short headline (≤ 8 words) + short sub-paragraph (≤ 25 words) + one visual asset OR one CTA. Anything more must be justified by the section's job. This is not a cap on menus, schedules, lineups, room lists, prices, or other content the brief explicitly requires.
+* **No unstructured data-dump sections.** A 20-row publication table, a 30-row award list, or a giant pricing matrix needs structure, not automatic deletion. Use:
+  - Grouped chunks or a dedicated index when every entry is required
+  - Top 3-5 highlights + "View full list" link only when the full content is not part of the brief
+  - Marquee / carousel for breadth when individual entries do not need attention
   - Different page entirely if the data is the product
 * **Long lists need a different UI component, not a longer list.** Default `<ul>` with bullets / `divide-y` rows is the lazy choice. If you have > 5 items, reach for one of these instead:
   - 2-column split with grouped items
@@ -170,6 +185,7 @@ Landing pages live on the **first impression**, not the full read. Cut ruthlessl
   - Come from real data (brief, brand guidelines, public metrics) - fine
   - Are explicitly labeled as mock (`<!-- mock -->`, "example", "sample data") - fine
   - Are AI-invented spec aesthetics - banned. Don't fake engineering precision the brand doesn't claim.
+* **Proof is not sample detail.** Never invent customers, quotes, reviews, press logos, user counts, ratings, or business statistics and present them as real. If a requested proof section has no real material, make it plainly fictional and list it for replacement; never attach invented proof to real people or companies. Ordinary sample details that fill brief gaps are allowed, but list them for user confirmation.
 * **One copy register per page.** Don't mix technical mono ("47 tasks · 0.6 ctx-switches/day"), editorial prose, and marketing punch in the same composition unless the brand voice explicitly calls for it.
 
 ## 4.10 Quotes & Testimonials

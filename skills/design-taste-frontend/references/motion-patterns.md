@@ -19,21 +19,24 @@ These are tools, not defaults. Use them when the design read calls for them. **N
 
 ```tsx
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useId, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "motion/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function StickyStack({ cards }: { cards: React.ReactNode[] }) {
+export function StickyStack({ cards }: { cards: ReactNode[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const instanceId = useId().replace(/:/g, "");
+  const cardClass = `stack-card-${instanceId}`;
+  const innerClass = `stack-card-inner-${instanceId}`;
 
   useEffect(() => {
-    if (reduce || !ref.current) return;
+    if (reduce || !ref.current || cards.length <= 1) return;
     const ctx = gsap.context(() => {
-      const cardEls = gsap.utils.toArray<HTMLElement>(".stack-card");
+      const cardEls = gsap.utils.toArray<HTMLElement>(`.${cardClass}`);
       cardEls.forEach((card, i) => {
         if (i === cardEls.length - 1) return;
         ScrollTrigger.create({
@@ -43,8 +46,12 @@ export function StickyStack({ cards }: { cards: React.ReactNode[] }) {
           end: "top top",
           pin: true,
           pinSpacing: false,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         });
-        gsap.to(card, {
+        const inner = card.querySelector(`.${innerClass}`);
+        if (!inner) return;
+        gsap.to(inner, {
           scale: 0.92,
           opacity: 0.55,
           ease: "none",
@@ -53,21 +60,25 @@ export function StickyStack({ cards }: { cards: React.ReactNode[] }) {
             start: "top bottom",
             end: "top top",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         });
       });
     }, ref);
     return () => ctx.revert();
-  }, [reduce]);
+  }, [reduce, cards.length, cardClass, innerClass]);
 
   return (
     <div ref={ref} className="relative">
       {cards.map((card, i) => (
         <div
           key={i}
-          className="stack-card sticky top-0 min-h-[100dvh] flex items-center justify-center"
+          style={{ zIndex: i + 1 }}
+          className={`${cardClass} relative min-h-[100dvh] flex items-center justify-center`}
         >
-          {card}
+          <div className={`${innerClass} w-full flex items-center justify-center will-change-transform`}>
+            {card}
+          </div>
         </div>
       ))}
     </div>
@@ -75,37 +86,39 @@ export function StickyStack({ cards }: { cards: React.ReactNode[] }) {
 }
 ```
 
-Critical points: `start: "top top"`, `pin: true`, every card except the last is pinned, the scale/opacity transform is driven by the NEXT card's scroll trigger (so previous card shrinks as next one arrives).
+Critical points: `start: "top top"`, `pin: true`, every card except the last is pinned, the scale/opacity transform is driven by the NEXT card's scroll trigger (so previous card shrinks as next one arrives). Never combine CSS `position: sticky` with `pin: true` on the same element: the native sticky engine and ScrollTrigger's `position: fixed` fight at the hand-off (judder, snapping, coordinate drift). The pinned element must also not be the element being transformed - pin the outer card and animate an inner wrapper, or the scale tween throws off the pin measurements. Scope the card class per instance (`useId`) so two stacks on one page do not cross-select; stack with ascending `zIndex`. Under `prefers-reduced-motion` the component renders a plain list: no pin, no transforms, all content reachable.
 
 ### 5.B Horizontal-Pan - Canonical Skeleton
 
 ```tsx
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "motion/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function HorizontalPan({ children }: { children: React.ReactNode }) {
-  const wrap = useRef<HTMLDivElement>(null);
+export function HorizontalPan({ children }: { children: ReactNode }) {
+  const wrap = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
   useEffect(() => {
     if (reduce || !wrap.current || !track.current) return;
     const ctx = gsap.context(() => {
-      const distance = track.current!.scrollWidth - window.innerWidth;
+      const getDistance = () =>
+        Math.max(0, track.current!.scrollWidth - wrap.current!.clientWidth);
       gsap.to(track.current, {
-        x: -distance,
+        x: () => -getDistance(),
         ease: "none",
         scrollTrigger: {
           trigger: wrap.current,
           start: "top top",                              // pin starts when section top hits viewport top
-          end: () => `+=${distance}`,                    // scroll distance = track width minus viewport
+          end: () => `+=${getDistance()}`,               // scroll distance = track width minus viewport, recomputed on refresh
           pin: true,
           scrub: 1,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       });
@@ -114,8 +127,17 @@ export function HorizontalPan({ children }: { children: React.ReactNode }) {
   }, [reduce]);
 
   return (
-    <section ref={wrap} className="relative overflow-hidden">
-      <div ref={track} className="flex h-[100dvh] items-center">
+    <section
+      ref={wrap}
+      role="region"
+      aria-label="Horizontal content track"
+      tabIndex={reduce ? 0 : undefined}
+      className={`relative w-full ${reduce ? "overflow-x-auto scroll-smooth" : "overflow-hidden"}`}
+    >
+      <div
+        ref={track}
+        className={`flex h-[100dvh] w-max items-center ${reduce ? "snap-x snap-mandatory" : ""}`}
+      >
         {children}
       </div>
     </section>
@@ -123,7 +145,7 @@ export function HorizontalPan({ children }: { children: React.ReactNode }) {
 }
 ```
 
-Critical points: `start: "top top"`, `pin: true`, `end: "+=${distance}"` (scroll length = horizontal travel needed), `scrub: 1`. The wrapper is pinned, the inner track slides horizontally as the user scrolls vertically.
+Critical points: `start: "top top"`, `pin: true`, `end: "+=${getDistance()}"` (scroll length = horizontal travel needed), `scrub: 1`. The wrapper is pinned, the inner track slides horizontally as the user scrolls vertically. `x` and `end` must be function-based and paired with `invalidateOnRefresh: true`; a `distance` captured once never recomputes - after a resize it overshoots into blank space (or pans to nothing when the track fits). Keep `w-max` on the track and make each panel non-shrinking (`shrink-0` or an explicit width): without it, overflow compression collapses `scrollWidth` and the section pins without panning. Under `prefers-reduced-motion` keep every panel reachable: swap the wrapper to `overflow-x-auto` with snap points instead of leaving `overflow-hidden`.
 
 ### 5.C Scroll-Reveal Stagger - Canonical Skeleton (lighter alternative)
 
@@ -172,32 +194,38 @@ Use this for: feature lists, testimonial grids, logo walls, anything that just n
 ## 6. PERFORMANCE & ACCESSIBILITY GUARDRAILS
 
 ### 6.A Hardware Acceleration
+
 * Animate ONLY `transform` and `opacity`. Never animate `top`, `left`, `width`, `height`.
 * Use `will-change: transform` sparingly - only on elements that will actually animate.
 
 ### 6.B Reduced Motion (mandatory)
+
 * **Any motion above `MOTION_INTENSITY > 3` MUST honor `prefers-reduced-motion`.** This is non-negotiable.
 * In Motion: wrap with `useReducedMotion()` and degrade to static.
 * In CSS: gate animations behind `@media (prefers-reduced-motion: no-preference)` or provide an override block under `@media (prefers-reduced-motion: reduce)` that disables.
 * Infinite loops, parallax, scroll-hijack, and magnetic physics MUST collapse to static / instant under reduced motion.
 
 ### 6.C Dark Mode (mandatory for any consumer-facing page)
+
 * Design for **both modes from the start**. Never ship light-only or dark-only without explicit user instruction.
 * Use Tailwind `dark:` variant OR CSS variables for tokens. Pick one strategy per project.
 * **Do not prescribe specific dark-mode colors here.** The brief decides. Maintain visual hierarchy, brand identity, and WCAG AA contrast (AAA for body) across both modes.
 * Respect `prefers-color-scheme: dark`. Default to system preference unless the brand insists on one mode.
 
 ### 6.D Core Web Vitals Targets
+
 * **LCP** < 2.5s. Hero image must be `next/image priority` or preloaded.
 * **INP** < 200ms. Heavy work off main thread.
 * **CLS** < 0.1. Reserve space for images, fonts, embeds.
 * Run Lighthouse before declaring a page done.
 
 ### 6.E DOM Cost
+
 * Apply grain / noise filters EXCLUSIVELY to fixed, `pointer-events-none` pseudo-elements (e.g., `fixed inset-0 z-[60] pointer-events-none`). NEVER on scrolling containers - continuous GPU repaints destroy mobile FPS.
 * Be aware of bundle size. Motion is not tiny. Three.js is large. Lazy-load anything that's not above-the-fold.
 
 ### 6.F Z-Index Restraint
+
 NEVER spam arbitrary `z-50` or `z-10`. Use z-index strictly for systemic layer contexts (sticky navbars, modals, overlays, grain). Document the z-index scale in a project constants file.
 
 ---
@@ -205,17 +233,20 @@ NEVER spam arbitrary `z-50` or `z-10`. Use z-index strictly for systemic layer c
 ## 7. DIAL DEFINITIONS (Technical Reference)
 
 ### DESIGN_VARIANCE (Level 1-10)
+
 * **1-3 (Predictable):** Symmetrical CSS Grid (12-col, equal fr-units), equal paddings, centered alignment.
 * **4-7 (Offset):** `margin-top: -2rem` overlaps, varied image aspect ratios (4:3 next to 16:9), left-aligned headers over center-aligned data.
 * **8-10 (Asymmetric):** Masonry layouts, CSS Grid with fractional units (`grid-template-columns: 2fr 1fr 1fr`), massive empty zones (`padding-left: 20vw`).
 * **MOBILE OVERRIDE:** For levels 4-10, asymmetric layouts above `md:` MUST collapse to strict single-column (`w-full`, `px-4`, `py-8`) on viewports `< 768px`.
 
 ### MOTION_INTENSITY (Level 1-10)
+
 * **1-3 (Static):** No automatic animations. CSS `:hover` and `:active` states only. `prefers-reduced-motion` is the default mode anyway.
-* **4-7 (Fluid CSS):** `transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1)`. `animation-delay` cascades for load-ins. Focus on `transform` and `opacity`.
+* **4-7 (Fluid CSS):** Use `transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1)` (name the properties; never `transition: all`, which also animates layout properties off the GPU, see 6.A). `animation-delay` cascades for load-ins.
 * **8-10 (Advanced Choreography):** Complex scroll-triggered reveals, parallax, scroll-driven animation (CSS `animation-timeline` or GSAP ScrollTrigger). Use Motion hooks. **NEVER use `window.addEventListener('scroll')`** - it is a hard ban, not a "prefer-not." See §5.D for the allowed alternatives.
 
 ### VISUAL_DENSITY (Level 1-10)
+
 * **1-3 (Art Gallery):** Lots of white space. Huge section gaps (`py-32` to `py-48`). Expensive, clean.
 * **4-7 (Daily App):** Standard web app spacing (`py-16` to `py-24`).
 * **8-10 (Cockpit):** Tight paddings. No card boxes; 1px lines separate data. Mandatory: `font-mono` for all numbers.

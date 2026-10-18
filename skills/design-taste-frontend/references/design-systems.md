@@ -5,6 +5,7 @@ Part of `design-taste-frontend`. Dial variables referenced here are defined in S
 Once you have the design read (SKILL.md §0) and dials (SKILL.md §1), pick the right foundation. Do not invent CSS for things that have an official package. Do not pretend an aesthetic trend is an official system.
 
 ## 2.A When to reach for a real design system (use official packages)
+
 | Brief reads as… | Reach for | Why |
 |---|---|---|
 | Microsoft / enterprise SaaS / dashboards | `@fluentui/react-components` or `@fluentui/web-components` | Official Fluent UI, Microsoft tokens, accessibility done |
@@ -25,6 +26,7 @@ Once you have the design read (SKILL.md §0) and dials (SKILL.md §1), pick the 
 **One system per project.** Do not mix Fluent React with Carbon in the same tree. Do not import shadcn/ui components into a Material 3 app.
 
 ## 2.B When the brief is an aesthetic, not a system
+
 For these directions, there is **no single official package**. Build with native CSS + Tailwind + a maintained component library. Be honest in code comments about what is borrowed inspiration vs. official material.
 
 | Aesthetic | Honest implementation |
@@ -93,68 +95,81 @@ npm install bootstrap
 ## Appendix B - Canonical Sources (read these before reinventing)
 
 ### Material Web
+
 - https://github.com/material-components/material-web
 - https://material-web.dev/theming/material-theming/
 - https://m3.material.io/develop/web
 
 ### Fluent UI
+
 - https://fluent2.microsoft.design/get-started/develop
 - https://fluent2.microsoft.design/components/web/react/
 - https://github.com/microsoft/fluentui
 - https://learn.microsoft.com/en-us/fluent-ui/web-components/
 
 ### Carbon
+
 - https://carbondesignsystem.com/
 - https://github.com/carbon-design-system/carbon
 - https://carbondesignsystem.com/developing/react-tutorial/overview/
 - https://carbondesignsystem.com/developing/web-components-tutorial/overview/
 
 ### Shopify Polaris
+
 - https://shopify.dev/docs/api/app-home/web-components
 - https://github.com/Shopify/polaris-react
 - https://polaris-react.shopify.com/components
 
 ### Atlassian
+
 - https://atlassian.design/get-started/develop
 - https://atlassian.design/components/button/examples
 - https://atlaskit.atlassian.com/packages/design-system/button/example/disabled
 - https://atlassian.design/tokens/design-tokens
 
 ### Primer
+
 - https://primer.style/
 - https://github.com/primer/css
 - https://github.com/primer/brand
 
 ### GOV.UK
+
 - https://design-system.service.gov.uk/components/button/
 - https://design-system.service.gov.uk/styles/layout/
 - https://github.com/alphagov/govuk-frontend
 
 ### USWDS
+
 - https://designsystem.digital.gov/documentation/developers/
 - https://designsystem.digital.gov/components/button/
 - https://designsystem.digital.gov/components/card/
 - https://github.com/uswds/uswds
 
 ### Bootstrap
+
 - https://getbootstrap.com/docs/5.3/layout/grid/
 - https://getbootstrap.com/docs/5.3/components/card/
 
 ### Tailwind
+
 - https://tailwindcss.com/docs/dark-mode
 - https://tailwindcss.com/blog/tailwindcss-v4
 
 ### Radix
+
 - https://www.radix-ui.com/themes/docs/components/theme
 - https://www.radix-ui.com/themes/docs/components/card
 - https://github.com/radix-ui/themes
 
 ### shadcn/ui
+
 - https://ui.shadcn.com/docs
 - https://ui.shadcn.com/docs/components/card
 - https://github.com/shadcn-ui/ui
 
 ### Native CSS / W3C standards
+
 - https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/backdrop-filter
 - https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-color-scheme
 - https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion
@@ -163,6 +178,7 @@ npm install bootstrap
 - https://drafts.csswg.org/scroll-animations-1/
 
 ### Apple Liquid Glass (Apple platforms only)
+
 - https://developer.apple.com/design/human-interface-guidelines/materials
 - https://developer.apple.com/documentation/TechnologyOverviews/liquid-glass
 - https://developer.apple.com/documentation/TechnologyOverviews/adopting-liquid-glass
@@ -175,18 +191,22 @@ npm install bootstrap
 Do **not** treat random CSS snippets as official Apple Liquid Glass.
 
 ### What is official
+
 Apple documents Liquid Glass inside Apple's Human Interface Guidelines and Developer Documentation for **Apple platforms**. It is a dynamic material used across Apple platform UI. Apple's native implementation belongs to Apple platform APIs and system components, **not a public web CSS package**.
 
 Relevant official docs:
+
 - Apple Human Interface Guidelines → Materials
 - Apple Developer Documentation → Liquid Glass
 - Apple Developer Documentation → Adopting Liquid Glass
 - SwiftUI → Material
 
 ### What is NOT official
+
 There is no `liquid-glass.css` from Apple for normal websites.
 
 A web approximation can use:
+
 - `backdrop-filter`
 - transparent backgrounds
 - layered borders

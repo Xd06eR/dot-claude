@@ -55,6 +55,7 @@ Check for these problems and fix them:
 - **No overlap or depth.** Elements sit flat next to each other. Use negative margins to create layering and visual depth.
 - **Symmetrical vertical padding.** Top and bottom padding are always identical. Adjust optically — bottom padding often needs to be slightly larger.
 - **Dashboard always has a left sidebar.** Try top navigation, a floating command menu, or a collapsible panel instead.
+- **Desktop sidebar collapses to nothing.** For collapsible sidebars, keep expanded labels as the default and offer an opt-in icon rail around 56-72px wide, with one icon per destination. Keep the active item highlighted and replace group headings with thin dividers. Below the project's tablet breakpoint, use an off-canvas drawer instead of a rail.
 - **Missing whitespace.** Double the spacing. Let the design breathe. Dense layouts work for data dashboards, not for marketing pages.
 - **Buttons not bottom-aligned in card groups.** When cards have different content lengths, CTAs end up at random heights. Pin buttons to the bottom of each card so they form a clean horizontal line regardless of content above.
 - **Feature lists starting at different vertical positions.** In pricing tables or comparison cards, the list of features should start at the same Y position across all columns. Use consistent spacing above the list or fixed-height title/price blocks.
@@ -72,19 +73,20 @@ Check for these problems and fix them:
 - **No error states.** Add clear, inline error messages for forms. Do not use `window.alert()`.
 - **Dead links.** Buttons that link to `#`. Either link to real destinations or visually disable them.
 - **No indication of current page in navigation.** Style the active nav link differently so users know where they are.
+- **Icon-only navigation without names or usable targets.** Keep label text in the DOM, visually hidden in the rail, and show tooltips on hover and keyboard focus. Give rail items and the collapse/expand control targets of at least 44×44px. Use a button with an accessible name and `aria-expanded` for the control.
 - **Scroll jumping.** Anchor clicks jump instantly. Add `scroll-behavior: smooth`.
 - **Animations using `top`, `left`, `width`, `height`.** Switch to `transform` and `opacity` for GPU-accelerated, smooth animation.
 
 ### Content
 
 - **Generic names like "John Doe" or "Jane Smith".** Use diverse, realistic-sounding names.
-- **Fake round numbers like `99.99%`, `50%`, `$100.00`.** Use organic, messy data: `47.2%`, `$99.00`, `+1 (312) 847-1928`.
+- **Implausibly neat placeholder metrics like `99.99%`, `50%`, `$100.00`.** Use real product data or clearly labeled representative values; never present invented business statistics, ratings, or customer proof as real.
 - **Placeholder company names like "Acme Corp", "Nexus", "SmartFlow".** Invent contextual, believable brand names.
 - **AI copywriting cliches.** Never use "Elevate", "Seamless", "Unleash", "Next-Gen", "Game-changer", "Delve", "Tapestry", or "In the world of...". Write plain, specific language.
 - **Exclamation marks in success messages.** Remove them. Be confident, not loud.
 - **"Oops!" error messages.** Be direct: "Connection failed. Please try again."
 - **Passive voice.** Use active voice: "We couldn't save your changes" instead of "Mistakes were made."
-- **All blog post dates identical.** Randomize dates to appear real.
+- **All blog post dates identical.** Use actual publication dates, or clearly marked sample dates in mock content; do not randomize dates merely to appear real.
 - **Same avatar image for multiple users.** Use unique assets for every distinct person.
 - **Lorem Ipsum.** Never use placeholder latin text. Write real draft copy.
 - **Title Case On Every Header.** Use sentence case instead.
@@ -113,6 +115,7 @@ Check for these problems and fix them:
 ### Code Quality
 
 - **Div soup.** Use semantic HTML: `<nav>`, `<main>`, `<article>`, `<aside>`, `<section>`.
+- **Collapsed navigation is inert or hidden.** Keep the rail and collapse/expand control outside hidden or `inert` ancestors, exposed to assistive technology and operable by pointer and keyboard, with visible focus indicators. Suppress focus and interaction in inactive expanded sidebar content with `inert`, `hidden`, or `display: none`; use explicit tab-stop and interaction management if a visual transition keeps it rendered. `aria-hidden="true"` alone does not remove descendants from the tab order.
 - **Inline styles mixed with CSS classes.** Move all styling to the project's styling system.
 - **Hardcoded pixel widths.** Use relative units (`%`, `rem`, `em`, `max-width`) for flexible layouts.
 - **Missing alt text on images.** Describe image content for screen readers. Never leave `alt=""` or `alt="image"` on meaningful images.
