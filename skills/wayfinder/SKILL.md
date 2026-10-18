@@ -25,6 +25,8 @@ Work ruled out of scope returns only if the destination is redrawn, and then as 
 
 Sharp questions are ordinary `OPEN-QUESTIONS.md` entries (format per `open-questions`) carrying up to three extra fields: `**Effort:**` <this map's name> (required for map entries), `**Type:**` talk | prototype | research | task (default talk), `**Blocked by:**` #NN. The frontier is the effort's OPEN entries with no live `Blocked by`.
 
+When new entries reference each other, create them first, then wire `Blocked by` and other cross-references in a second pass using their assigned #NN ids; never use placeholder ids.
+
 Type routes resolution:
 
 - talk → call the Skill tool with "grilling"
@@ -37,7 +39,7 @@ Type routes resolution:
 1. Settle the Destination first: call the Skill tool with "grilling" and "domain-modeling". The destination fixes every entry's scope.
 2. Grill again, breadth-first: fan across the whole decision space, surfacing open decisions and the first takeable questions. If this surfaces no fog, stop: the effort fits one session — hand back to `grill-with-docs`.
 3. Write `WAYFINDING.md` (Destination, Notes, empty Decisions so far, fog in Not yet specified).
-4. Call the Skill tool with "open-questions", then create register entries for the questions already sharp, with Effort/Type/Blocked-by fields. Fire research entries as background agents now.
+4. Call the Skill tool with "open-questions", then create register entries for the questions already sharp, with Effort and Type fields. Fire research entries as background agents now.
 5. Stop. Charting is one session's work; it hand-resolves nothing.
 
 ## Work the map (invoked with an active map)
