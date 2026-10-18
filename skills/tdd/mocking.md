@@ -13,6 +13,12 @@ Don't mock:
 - Internal collaborators
 - Anything you control
 
+## Choosing doubles
+
+Before replacing a real method, learn its side effects. Mock the slow or external operation and keep the side effects the test depends on real; when unsure, run the test against the real implementation first.
+
+Make doubles specific and mirror the complete real response structure, not only the fields the current test reads. When arguments, call counts, or ordering are part of the boundary contract, assert them; do not assert a double's mere presence. When mock setup outgrows the test logic or the double keeps drifting from the real component, switch to an integration test with real components.
+
 ## Designing for mockability
 
 At system boundaries, design interfaces that are easy to mock:

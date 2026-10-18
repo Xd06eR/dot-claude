@@ -39,7 +39,7 @@ Treat the loop as a product. Once you have _a_ loop, **tighten** it:
 
 - Can I make it faster? (Cache setup, skip unrelated init, narrow the test scope.)
 - Can I make the signal sharper? (Assert on the specific symptom, not "didn't crash".)
-- Can I make it more deterministic? (Pin time, seed RNG, isolate filesystem, freeze network. Where the loop waits on async work, poll for the condition you assert on rather than sleeping a fixed delay.)
+- Can I make it more deterministic? (Pin time, seed RNG, isolate filesystem, freeze network. Where the loop waits on async work, poll fresh state for the condition you assert on, with a bounded timeout, rather than sleeping a fixed delay.)
 
 A 30-second flaky loop is barely better than no loop; a 2-second deterministic one is tight — a debugging superpower.
 
@@ -116,6 +116,8 @@ Tool preference:
 
 **Perf branch.** For performance regressions, logs are usually wrong. Instead: establish a baseline measurement (timing harness, `performance.now()`, profiler, query plan), then bisect. Measure first, fix second.
 
+Phase 4 is done when the probes confirm one hypothesis as the root cause. If they refute every hypothesis, return to Phase 3 with the new evidence; do not enter Phase 5 with an unconfirmed guess.
+
 ## Phase 5 — Fix + regression test
 
 Write the regression test **before the fix** — but only if there is a **correct seam** for it.
@@ -127,10 +129,12 @@ A correct seam is one where the test exercises the **real bug pattern** as it oc
 If a correct seam exists:
 
 1. Turn the minimised repro into a failing test at that seam.
-2. Watch it fail.
-3. Apply the fix.
+2. Watch it fail. If you forced the red by mutating code or a fixture, compare the mutated artifact against a pristine copy to prove the mutation landed before trusting the failure.
+3. Apply one fix at the confirmed root cause, not the symptom.
 4. Watch it pass.
 5. Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.
+
+If the fix fails, undo it and return to Phase 3 to re-rank the hypotheses with the new evidence; never stack another fix on top. Repeated failures or new symptoms appearing elsewhere after each fix are architecture signals: stop and discuss the design with the user before another attempt.
 
 When the bug was caused by invalid data, the fix alone leaves the door open — validate at every layer the data passes through (entry point, business logic, environment guard), and prove each layer by bypassing the one above it, so the bug becomes structurally impossible.
 

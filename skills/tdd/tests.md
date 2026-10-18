@@ -39,7 +39,7 @@ Red flags:
 
 - Mocking internal collaborators
 - Testing private methods
-- Asserting on call counts/order
+- Asserting a mock's presence, or call counts/order that are not part of the boundary contract
 - Test breaks when refactoring without behavior change
 - Test name describes HOW not WHAT
 - Verifying through external means instead of interface
@@ -75,3 +75,12 @@ test("calculateTotal sums line items", () => {
   expect(calculateTotal([{ price: 10 }, { price: 5 }])).toBe(15);
 });
 ```
+
+## Test quality gates
+
+- **Name the break first.** Before writing the test body, name the production change that should make the test fail and whether that change is a bug or an intentional decision. If only intentional decisions can fail the test, test the behavior that depends on the decision instead.
+- **Keep test-only code out of production.** Cleanup and helpers used only by tests belong in test utilities, not in production methods added solely for tests.
+
+## Mutation check
+
+Before finishing, mentally mutate each new behavior: wrong branch or argument, missing state change or side effect, empty or default return, and missing boundary validation. At least one test should fail for each realistic mutation; otherwise the behavior is unprotected or the test is tautological.

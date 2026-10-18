@@ -10,13 +10,13 @@ TDD is the red → green loop. This skill is the reference that makes that loop 
 
 Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification ("user can checkout with valid cart" tells you exactly what capability exists) and survives refactors because it doesn't care about internal structure.
 
-See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
+Read [tests.md](tests.md) when writing, changing, or reviewing tests, and [mocking.md](mocking.md) when adding, changing, or reviewing mocks.
 
 ## Seams — where tests go
 
 A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
 
-**Test only at pre-agreed seams.** Seams already settled by a plan, a brief, or the code's existing public interfaces stand as-is. Otherwise, write down the proposed seams and confirm them with the user before writing tests at them: "What's the public interface, and which seams should we test?" You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Test only at pre-agreed seams.** Seams already settled by a plan, a brief, or the code's existing public interfaces stand as-is. Otherwise, write down the proposed seams and confirm them with the user before writing tests at them: "What's the public interface, and which seams should we test?" Give each proposed seam a one-line note on what it catches and what it misses. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
 
 When the shape of that interface is itself in question (how deep the module is, where the seam belongs, what the interface should expose), call the Skill tool with "codebase-design" for the vocabulary. It is the shared source of the module, interface, depth, seam, adapter, leverage and locality terms, and it is a reference to consult, not a session to run.
 
