@@ -22,7 +22,7 @@ Check for an existing design system:
 ls DESIGN.md design-system.md 2>/dev/null || echo "NO_DESIGN_FILE"
 ```
 
-If one exists, read it and ask the user, in plain text, whether to **update** it, **start fresh**, or **cancel**. Wait for the answer.
+If one exists, read it and ask the user, in plain text, whether to **update** it, **start fresh**, or **cancel**. Wait for the answer. On **update**, carry the existing decisions in as constraints: ask what should change and preserve the rest.
 
 Gather product context from the codebase so you can pre-fill the next step instead of interrogating the user:
 
@@ -126,6 +126,8 @@ Then ask, in plain text, how to proceed:
 
 ### Design knowledge (informs proposals, never displayed as tables)
 
+**Calibration: the three predictable looks.** Unless the brief specifically calls for one, avoid the three compositions AI tools converge on: cream/serif/terracotta; near-black with neon glow; broadsheet hairlines with italic serif and tiny tracked mono. Ground the direction in these users' world, never the category stereotype or its obvious opposite.
+
 **Aesthetic directions:**
 
 - Brutally Minimal (type and whitespace, no decoration)
@@ -154,6 +156,7 @@ Then ask, in plain text, how to proceed:
 **Color approaches:**
 
 - restrained (1 accent + neutrals)
+- committed (one hue owns the page; neutrals derive from it)
 - balanced (primary + secondary, semantic colors)
 - expressive (color as a primary tool, bold palettes)
 
@@ -163,18 +166,20 @@ Then ask, in plain text, how to proceed:
 - intentional (subtle entrances, meaningful state changes)
 - expressive (full choreography, scroll-driven)
 
+**Mode per surface drives type.** Classify each surface before choosing faces: Persuade (marketing: the visitor decides and acts), Operate (app UI: they finish a task), Read (docs and articles: they understand something), Experience (portfolios, showcases: the work owns the viewport). A face that fits Persuade rarely fits Operate; hybrid products classify per section.
+
 **Fonts by role:**
 
-- Display/Hero: Satoshi, General Sans, Instrument Serif, Fraunces, Clash Grotesk, Cabinet Grotesk
+- Display/Hero: Satoshi, General Sans, Instrument Serif, Clash Grotesk, Cabinet Grotesk
 - Body: Instrument Sans, DM Sans, Source Sans 3, Geist, Plus Jakarta Sans, Outfit
 - Data/Tables: Geist (tabular-nums), DM Sans (tabular-nums), JetBrains Mono, IBM Plex Mono
 - Code: JetBrains Mono, Fira Code, Berkeley Mono, Geist Mono
 
 **Never recommend (blacklist):** Papyrus, Comic Sans, Lobster, Impact, Jokerman, Bleeding Cowboys, Permanent Marker, Bradley Hand, Brush Script, Hobo, Trajan, Raleway, Clash Display, Courier New (for body).
 
-**Never recommend as primary (overused), only if the user asks by name:** Inter, Roboto, Arial, Helvetica, Open Sans, Lato, Montserrat, Poppins, Space Grotesk.
+**Never recommend as the display voice (overused), only if the user asks by name:** Inter, Roboto, Arial, Helvetica, Open Sans, Lato, Montserrat, Poppins, Space Grotesk, Fraunces, Playfair Display, Cormorant, Lora, Crimson, Newsreader, Syne, IBM Plex Sans/Serif, DM Sans/DM Serif, Outfit, Plus Jakarta Sans, Instrument Sans, Geist. The ban is on the display voice: body and UI text on an Operate or Read surface may still use them.
 
-Space Grotesk earns its place here because every AI design tool converges on it as "the safe alternative to Inter." That is the convergence trap. Treat it like Inter.
+Space Grotesk earns its place here because every AI design tool converges on it as "the safe alternative to Inter," and the same convergence has swallowed the second tier (Fraunces, Geist, Instrument). That is the convergence trap. Treat them like Inter.
 
 **Anti-convergence:** across multiple generations in one project, vary fonts, palette, and aesthetic direction. Never propose the same choices twice without saying why. Convergence across generations is slop. Light vs dark is not one of the dials: it follows the use scene (who, where, lighting), fixed until that scene changes; a product supporting both themes ships one system twice: both themes carry the same brand (same faces, same aesthetic, palettes derived from the same tokens), never two independent designs.
 
@@ -241,18 +246,23 @@ Write `DESIGN.md` to the repo root:
 # Design System — [Project Name]
 
 ## Product Context
+
 - **What this is:** [1-2 sentences]
 - **Who it's for:** [target users]
 - **Space/industry:** [category, peers]
 - **Project type:** [web app / dashboard / marketing site / editorial / internal tool]
+- **Mode per surface:** [Persuade / Operate / Read / Experience, per page type]
 
 ## Aesthetic Direction
+
 - **Direction:** [name]
 - **Decoration level:** [minimal / intentional / expressive]
 - **Mood:** [how the product should feel, 1-2 sentences]
+- **Memorable thing:** [the one sentence from the forcing question]
 - **Reference sites:** [URLs, if research was done]
 
 ## Typography
+
 - **Display/Hero:** [font] — [rationale]
 - **Body:** [font] — [rationale]
 - **UI/Labels:** [font or "same as body"]
@@ -262,7 +272,8 @@ Write `DESIGN.md` to the repo root:
 - **Scale:** [modular scale with px/rem per level]
 
 ## Color
-- **Approach:** [restrained / balanced / expressive]
+
+- **Approach:** [restrained / committed / balanced / expressive]
 - **Primary:** [hex] — [what it represents, usage]
 - **Secondary:** [hex] — [usage]
 - **Neutrals:** [warm/cool grays, hex from lightest to darkest]
@@ -270,22 +281,32 @@ Write `DESIGN.md` to the repo root:
 - **Dark mode:** [strategy; redesign surfaces, reduce saturation 10-20%]
 
 ## Spacing
+
 - **Base unit:** [4px or 8px]
 - **Density:** [compact / comfortable / spacious]
 - **Scale:** 2xs(2) xs(4) sm(8) md(16) lg(24) xl(32) 2xl(48) 3xl(64)
 
 ## Layout
+
 - **Approach:** [grid-disciplined / creative-editorial / hybrid]
 - **Grid:** [columns per breakpoint]
 - **Max content width:** [value]
-- **Border radius:** [scale, e.g. sm:4px md:8px lg:12px full:9999px]
+- **Border radius:** [scale, e.g. sm:4px md:8px lg:12px full:9999px; nested inner radius = outer radius − gap]
 
 ## Motion
+
 - **Approach:** [minimal-functional / intentional / expressive]
 - **Easing:** enter(ease-out) exit(ease-in) move(ease-in-out)
 - **Duration:** micro(50-100ms) short(150-250ms) medium(250-400ms) long(400-700ms)
+- **The one authored moment:** [the single signature motion that serves the memorable thing]
+
+## Do's and Don'ts
+
+- Do: [3-5 specific, checkable rules]
+- Don't: [3-5 anti-patterns specific to this system, including the category's tempting defaults]
 
 ## Decisions Log
+
 | Decision | Rationale |
 |----------|-----------|
 | Initial design system created | Based on [product context / research] |
@@ -295,9 +316,11 @@ Then edit `CLAUDE.md` (create it if absent), appending:
 
 ```markdown
 ## Design System
+
 Always read DESIGN.md before making any visual or UI decisions.
 Font choices, colors, spacing, and aesthetic direction are defined there.
 Do not deviate without explicit user approval.
+When reviewing or QA-ing UI, flag code that does not match DESIGN.md.
 ```
 
 Finally, list every decision back to the user and flag any that used your defaults without their explicit confirmation, so they know exactly what is shipping. Ask, in plain text, whether to ship it, change something, or start over. Write the files once confirmed.

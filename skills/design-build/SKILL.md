@@ -79,10 +79,20 @@ Reach for a JS measurement library only if a specific effect genuinely needs it,
 **AI-slop blacklist (do not emit unless the direction explicitly shows it):**
 
 - Purple or blue gradients as a default
+- Cream-and-serif as the default palette
+- Gradient text
 - Generic three-column feature grids
+- Identical card grids, or cards nested inside cards
+- Eyebrow chips, kickers, or icon tiles above headings
+- Hero metric rows ("10k+ users") or stats bands
 - Center-everything layouts with no hierarchy
 - Decorative blobs, waves, or geometric filler
+- Glow edges, radial halos, or pulsing status dots
+- Uniform bubbly border-radius on everything
+- `system-ui` as the primary font
 - Stock-photo placeholder boxes
+- Logo-marquee "trusted by" strips
+- Generic hero copy ("Welcome to X", "Unlock the power of...")
 - Generic "Get Started" / "Learn More" CTAs
 - Rounded card plus drop shadow as the default component
 - Emoji used as UI iconography

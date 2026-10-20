@@ -54,7 +54,7 @@ C) "Name" — one-line visual description
 
 Draw on `DESIGN.md`, the brief, and anything the user approved earlier this session.
 
-**Anti-convergence rule (hard requirement):** each variant uses a different font family, a different color palette, and a different layout approach. If two read as siblings (same typographic feel, overlapping color temperature, comparable layout rhythm), one failed: replace it with a deliberately different direction.
+**Anti-convergence rule (hard requirement):** what varies depends on `DESIGN.md`. With one, its fonts and palette stay fixed and the variants differ in layout, composition, and decoration level; without one, each variant takes a different font family, color palette, and layout approach. Either way, if two read as siblings (same typographic feel, overlapping color temperature, comparable layout rhythm), one failed: replace it with a deliberately different direction.
 
 The test: if you could swap the headline text between two variants without noticing, they are too similar. They should feel like three different design teams, not one team on three coffee levels.
 
