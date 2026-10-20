@@ -1,7 +1,7 @@
 ---
 name: design-taste-frontend
 description: "Anti-slop frontend skill that designs marketing-grade UI straight from the brief: infers the direction and ships the interface without a design-doc artifact. Use when building landing pages, portfolios, or marketing UI that must not look templated. Not for dashboards, data tables, or multi-step product UI. For upgrading an existing site in place with no new visual direction, use redesign-existing-projects; for a settled direction, use design-build; for a from-scratch visual system, use design-consultation."
-origin: taste-skill
+origin: taste-skill + impeccable
 ---
 
 > Every rule is **contextual**. None of it fires automatically. First read the brief, then pull only what fits.
@@ -51,13 +51,19 @@ If you can confidently infer from context, **do not ask**. Just declare the desi
 
 ### 0.D Anti-Default Discipline
 
-Do not default to: AI-purple gradients, centered hero over dark mesh, three equal feature cards, generic glassmorphism on everything, infinite-loop micro-animations everywhere, Inter + slate-900. These are the LLM defaults. Reach past them deliberately based on the design read. The three current AI-default clusters are named in [references/ai-tells.md](references/ai-tells.md).
+Do not default to: AI-purple gradients, centered hero over dark mesh, three equal feature cards, generic glassmorphism on everything, infinite-loop micro-animations everywhere, Inter + slate-900. These are the LLM defaults. Reach past them deliberately based on the design read. The four current AI-default clusters are named in [references/ai-tells.md](references/ai-tells.md).
 
 ### 0.E Subject Idea and Page Argument
 
 In working notes, inventory details that belong to this subject rather than its category: name meaning, place, materials, constraints, rituals, numbers, and existing artifacts. Turn one into the organizing idea and carry it through every section, including pricing, FAQ, and footer. Swap in the nearest competitor's name; if the idea still works unchanged, it belongs to the category, not this subject.
 
 Before markup, list each section's claim and its proof, then write the full copy. A section with no claim is filler; a section the brief requires still delivers its complete content at real density.
+
+### 0.F The idea carries the page, never pictures it
+
+When the organizing idea is a world or an object (a facade, a book, a control panel), the page is built on it, but every part still works as a page: navigation reads as links, copy as set text, the primary action as plainly clickable, text readable against whatever sits behind it. A viewport painted whole as the object, with no working parts in it, is a picture of the idea, not its website. On editorial and blog surfaces the idea owns the frame (masthead, section openers, the way code and tables are set) and the reading column stays calm; it never replaces navigation the reader already knows.
+
+The primary action is the one this category's visitors came to take, in its working form (a store's add to cart, a clinic's open appointment slots, an airline's route-and-dates search). A decorative link pointing at the real action elsewhere does not count.
 
 ---
 

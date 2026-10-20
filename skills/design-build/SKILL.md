@@ -1,7 +1,7 @@
 ---
 name: design-build
 description: Turn an approved design direction into production markup. Use when a settled direction (mockup image, written plan, DESIGN.md, or an agreed direction in conversation) needs to become real UI. Returns semantic, responsive, accessible markup matched to the repo's framework.
-origin: gstack
+origin: gstack + impeccable
 ---
 
 Turn an approved design direction into production-quality front-end code. Read the direction (an approved mockup image, a written plan, or a description in the conversation), detect what the repo is built with, and generate semantic, responsive, accessible markup with real content.
@@ -126,6 +126,17 @@ Once the build is called done, polish with `make-interfaces-feel-better` and ver
 If no `DESIGN.md` exists, offer once, in plain text, to write one from the tokens you just used (colors, fonts, spacing, radii, shadows). If the user agrees, write `DESIGN.md` to the repo root so later design work stays consistent.
 
 Skip silently if one already exists or the user declines.
+
+## Operate surfaces: earned familiarity
+
+When the target surface is an Operate surface (app UI, dashboards, settings, data tables, tools: anywhere the user is in a task), product rules override brand-surface instincts. The bar is earned familiarity: a category-fluent user should trust the interface immediately, and the failure mode is not flatness but strangeness without purpose. The tool should disappear into the task.
+
+- **Typography:** one well-tuned family is often right; product UI does not need a display/body pairing. Use a fixed rem scale, not fluid clamp headings, and a tighter ratio (1.125-1.2 between steps). Prose measure still applies (65-75ch); data and compact UI can run denser, and tables at 120ch+ are fine.
+- **Color:** Restrained is the floor. Standardize a state-rich semantic vocabulary (hover, focus, active, disabled, selected, loading, error, warning, success, info); spend accent color on primary actions, current selection, and state indicators only, never decoration; a second neutral layer carries sidebars, toolbars, and panels.
+- **Components:** every interactive component ships default, hover, focus, active, disabled, loading, and error states. Skeletons for loading, not spinners in the middle of content; empty states that teach the interface, not "nothing here". Keep affordances consistent across the surface, and let overlays escape their container (`<dialog>`, the popover API, `position: fixed`, or a portal; an absolutely positioned dropdown inside an `overflow: hidden` ancestor gets clipped).
+- **Motion:** 150-250ms on most transitions, conveying state only (state change, feedback, loading, reveal). No orchestrated page-load sequences.
+- **Bans on Operate surfaces:** decorative motion, inconsistent component vocabulary across screens, display fonts in UI labels or data, reinvented standard affordances (custom scrollbars, non-standard modals), heavy color on inactive states, and modals as first thought (exhaust inline and progressive alternatives first).
+- **Permissions:** density is allowed; standard navigation patterns (top bar plus side nav, breadcrumbs, tabs, command palettes) are virtues; consistency over surprise, with delight saved for moments, not pages. System fonts and familiar sans defaults are legitimate here; the font blacklist's system-ui and display-voice items do not bind Operate body and UI text.
 
 ## Usability guardrails
 

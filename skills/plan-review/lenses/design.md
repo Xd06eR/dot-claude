@@ -143,7 +143,7 @@ First classify the surface by the visitor's win, then hold it to the matching ru
 - more space above a heading than below it (read the computed values)
 - light or dark comes from the use scene (who, where, under what light), never from the category
 
-**Calibration: the three looks.** AI-built interfaces land in one of three looks no matter the product: cream ground + high-contrast serif display + terracotta or signal-red accent; near-black + one neon accent + glowing edges; broadsheet hairlines + italic display serif + tiny tracked mono labels. Each is fine when the brief asks for it; if the brief left the look open and the plan landed in one anyway, it stopped looking. The test: could someone guess the look from the category alone?
+**Calibration: the four looks.** AI-built interfaces land in one of four looks no matter the product: cream ground + high-contrast serif display + terracotta or signal-red accent; near-black + one neon accent + glowing edges; broadsheet hairlines + italic display serif + tiny tracked mono labels; flat saturated ink with black boxes, hard offset shadows, and heavy condensed display type. Each is fine when the brief asks for it; if the brief left the look open and the plan landed in one anyway, it stopped looking. The test: could someone guess the look from the category alone?
 
 **Hard rejections (instant-fail if any apply):**
 - generic SaaS card grid as first impression

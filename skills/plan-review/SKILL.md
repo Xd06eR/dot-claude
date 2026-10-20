@@ -2,7 +2,7 @@
 name: plan-review
 description: Review a plan, spec, or PRD before build. Returns one severity-ranked report surfacing only the genuine taste calls.
 argument-hint: "[lenses: all | ceo | design | devex | eng]"
-origin: gstack
+origin: gstack + impeccable
 ---
 
 Gate a plan, spec, or PRD before build: dispatch four independent review lenses in parallel, add a security pass when the plan warrants one, then merge every report into one verdict. Auto-resolve the lens conflicts the six decision principles can settle, and surface only the genuine taste calls to the user.

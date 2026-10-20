@@ -1,7 +1,7 @@
 ---
 name: design-consultation
 description: Define or revise a project's visual system through an opinionated consultation. Use when a project has no design system yet and needs its visual foundation set before UI work begins, or when an existing design system needs revision. Returns one coherent system with rationale, captured in DESIGN.md.
-origin: gstack
+origin: gstack + impeccable
 ---
 
 Act as a senior product designer with strong opinions about typography, color, and visual systems.
@@ -22,7 +22,9 @@ Check for an existing design system:
 ls DESIGN.md design-system.md 2>/dev/null || echo "NO_DESIGN_FILE"
 ```
 
-If one exists, read it and ask the user, in plain text, whether to **update** it, **start fresh**, or **cancel**. Wait for the answer. On **update**, carry the existing decisions in as constraints: ask what should change and preserve the rest.
+If one exists, read it and ask the user, in plain text, whether to **update** it, **start fresh**, or **cancel**. Wait for the answer. On **update**, carry the existing decisions in as constraints: ask what should change and preserve the rest. Extending an established surface inherits its world; never turn a local addition into a new identity exercise, and never change the design file unless the user approves a durable system change. On **start fresh**, replace the visual world rather than polish the old one, preserving product truth, content, function, and explicit brand commitments; the old look is evidence of what the product is, not authority over what it becomes.
+
+No design file does not mean no visual authority. If the codebase already carries a coherent visual identity, offer to document that identity in `DESIGN.md` instead of inventing a replacement. If the identity is real but incomplete, preserve its confirmed assets and recognizable traits and expand the system with the user.
 
 Gather product context from the codebase so you can pre-fill the next step instead of interrogating the user:
 
@@ -42,6 +44,8 @@ Ask the user a single plain-text question that covers everything, pre-filling wh
 2. Project type: web app, dashboard, marketing site, editorial, internal tool, and so on.
 3. Whether to research what top products in the space are doing, or work from design knowledge alone.
 4. State explicitly: "This is a conversation, not a form. Drop into chat any time and we will talk it through."
+
+Tailor the ask to each surface's mode once the project type is known: Persuade asks who must act, what they should believe, and which real proof earns that belief; Operate asks the task, the information and states that matter, frequency, and constraints; Read asks the reader's question, the source material, and the wayfinding; Experience asks what leads and how exploration unfolds. Across all modes also learn what success looks like, what must remain untouched, and what would make a polished result feel wrong. Never ask for CSS values or canned aesthetic lanes; proposing those is your job.
 
 If the README gave you enough, confirm rather than ask: "From what I can see this is [X] for [Y] in the [Z] space, a [project type]. Right? And do you want me to research the space, or work from what I know?"
 
@@ -74,6 +78,8 @@ Summarize conversationally: "Here is the landscape. They converge on [patterns].
 **Graceful degradation:** browser tool present gives the richest research (screenshots plus search); web search alone is still good; neither available falls back to your built-in design knowledge, which always works. Say which mode you used.
 
 ## Step 4: The complete proposal (the core)
+
+**Derive the direction from the audience's world, not from the aesthetic catalog.** First name the product's unique mechanism in one sentence, the audience's real scene, and its cultural home. Then name the rut: the page this category always ships and its predictable opposite. Both stay out of the candidates; a brief that paints its own picture (a product name, a governing metaphor) adds its literal reading to the rut, so spend at most one candidate on it. Derive seven candidate worlds from what the audience knows by heart: its graphic and screen traditions, places, rituals, and artifacts, not only its physical objects. Two prompts widen the list: what would this product look like as a physical object, and what did its world look like before the web. Each candidate gets one line on why it resonates and one on how it looks (ground and main colors, type voices, the one signature that makes it recognizable). Near-duplicates count once; when more than three of the seven share one material family, the derivation stopped at the subject's most obvious artifact, so dig until the list spans at least three families. On Operate and Read surfaces, candidates never come from the tools the audience operates: a terminal or control panel handed to a working screen comes back as a costume. On Persuade and Experience surfaces those tools count toward the rut instead. A world never licenses its loaded symbols (hate or militarist emblems) as motifs. Build the proposal on the strongest candidate.
 
 Propose EVERYTHING as one coherent package, then let the user adjust. Present it as prose, not a table:
 
@@ -122,13 +128,17 @@ Then ask, in plain text, how to proceed:
 - (D) start over with a different direction
 - (E) skip the preview and write DESIGN.md
 
+If the user settles on one direction but admires something in a rejected one, transfer only the rejected direction's discipline (a palette's total commitment, a grid's density courage, a form's structural honesty), never its clothes: a lifted motif or component treatment is a costume note, and one world owns the page. Write the raise into the proposal as its own named line.
+
 **Optional second opinion.** Where your runtime can dispatch a fresh-context subagent, you may get one independent design direction to compare against yours before presenting. Keep your own draft out of its prompt. An anchored second opinion is manufactured consensus, so brief it only with the ask: "propose a design direction that would surprise, with specific font names and hex values, and 2 departures from category norms." Agreement is not a vote: present divergences as creative alternatives for the user to choose, never tally agreements as confidence. Name the voices that ran: a completed review, an unavailable subagent, or a declined pass is reported, never skipped silently.
 
 ### Design knowledge (informs proposals, never displayed as tables)
 
-**Calibration: the three predictable looks.** Unless the brief specifically calls for one, avoid the three compositions AI tools converge on: cream/serif/terracotta; near-black with neon glow; broadsheet hairlines with italic serif and tiny tracked mono. Ground the direction in these users' world, never the category stereotype or its obvious opposite.
+**Calibration: the four predictable looks.** Unless the brief specifically calls for one, avoid the four compositions AI tools converge on: cream/serif/terracotta; near-black with neon glow; broadsheet hairlines with italic serif and tiny tracked mono; flat saturated ink with black boxes, hard offset shadows, and heavy condensed display type. Ground the direction in these users' world, never the category stereotype or its obvious opposite.
 
-**Aesthetic directions:**
+Three guard rules. Energy is not the enemy of trust: a brief's negative constraints (no hype, no gamification) rule out those devices, not exuberance, and adjectives about the product's behavior (quiet support, calm coaching) do not dictate the surface's energy. A bookish, warm, or child-facing subject does not soften the calibration: that world spans the whole saturated spectrum, and cream plus serif for a book subject is the default wearing the subject's clothes. A brief-pinned world pins the world, not its softest rendition. The measured rendition prior compounds all three: warm, bookish, family, or child-facing subjects come out as cream grounds, serif display, and lamplight even when nothing pinned them, so treat that first palette as already spent and rework from the subject's saturated materials.
+
+**Aesthetic directions** (named-style vocabulary for describing a derived direction, never the candidate list):
 
 - Brutally Minimal (type and whitespace, no decoration)
 - Maximalist Chaos (dense, layered, Y2K)
@@ -166,7 +176,11 @@ Then ask, in plain text, how to proceed:
 - intentional (subtle entrances, meaningful state changes)
 - expressive (full choreography, scroll-driven)
 
-**Mode per surface drives type.** Classify each surface before choosing faces: Persuade (marketing: the visitor decides and acts), Operate (app UI: they finish a task), Read (docs and articles: they understand something), Experience (portfolios, showcases: the work owns the viewport). A face that fits Persuade rarely fits Operate; hybrid products classify per section.
+**Spacing base:** a 4px base usually provides the useful middle steps that an 8-only scale misses; prefer it when the system needs those steps.
+
+**Mode per surface drives type.** Classify each surface before choosing faces, and take the mode from the surface, not the product: a tool's landing page is still Persuade, a fashion house's documentation is still Read. Persuade (marketing: the visitor decides and acts), Operate (app UI: they finish a task), Read (docs and articles: they understand something), Experience (portfolios, showcases: the work owns the viewport). A face that fits Persuade rarely fits Operate; hybrid products classify per section.
+
+**What the mode permits the world to do.** On Persuade and Experience surfaces the world may own and structure the page: it can carry the page (a facade, a shutter, or a book the page is built on), but never becomes a picture of it, and wherever the world places a part, that part still works as a page. For Persuade, conversion lives inside the form's own vocabulary: the action is the one the category's visitors came to take, in its working form (an airline's route-and-dates search, a store's add to cart), and a decorative link pointing at it elsewhere does not count. For Experience, the work itself leads from the first viewport. On an Operate surface the world lends exactly four things: type, palette, density, and one signature move named concretely (service health drawn as a transit map). It never supplies the layout, the navigation model, or the controls, and a gray screen with one accent color is the category default without the category's polish, not restraint. On a Read surface the world owns the frame (masthead, navigation rail, ground, section openers, the way code and tables are set) while the reading column stays calm: a reading face, real contrast, a real measure, monospace for code and small labels only. The world never supplies the reading order or a navigation the reader has to learn.
 
 **Fonts by role:**
 
