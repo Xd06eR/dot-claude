@@ -41,19 +41,19 @@ Two axes, four routes. The docs axis picks the opening: `grill-me` keeps rulings
 
 ## Skill Sources
 
-Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream. Compound tags mark components merged from two or more sources.
+Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream. A `(+ source)` note marks content merged in from another source.
 
 | Source | Count | Components |
 |--------|-------|------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 13 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, teach, to-questionnaire, wayfinder, wizard; agent `spec-reviewer` |
-| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 1 | redesign-existing-projects |
-| [ECC](https://github.com/affaan-m/ECC) | 9 skills + 1 agent | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y, motion-ui, loop-design-check, inherit-legacy-style; agent `database-reviewer` |
-| [gstack](https://github.com/garrytan/gstack) | 6 skills + 2 agents | ship, qa, diagram, land-and-deploy, document-release, document-generate; agents `plan-reviewer`, `security-auditor` (no upstream: gstack ships skills only, so these are maintained locally) |
-| superpowers (plugin, extracted) | 2 | receiving-code-review, verification-before-completion |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 16 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, teach, to-questionnaire, wayfinder, wizard, tdd (+ superpowers), diagnosing-bugs (+ superpowers), writing-for-agents (+ superpowers); agent `spec-reviewer` |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend (+ impeccable), redesign-existing-projects (+ impeccable) |
+| [ECC](https://github.com/affaan-m/ECC) | 10 skills + 2 agents | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y (+ impeccable), make-interfaces-feel-better (+ impeccable), motion-ui (+ impeccable), loop-design-check, inherit-legacy-style; agents `database-reviewer`, `silent-failure-hunter` (+ pr-review-toolkit) |
+| [gstack](https://github.com/garrytan/gstack) | 10 skills + 2 agents | ship, qa, diagram, land-and-deploy, document-release, document-generate, design-build (+ impeccable), design-consultation (+ impeccable), design-variants (+ impeccable), plan-review (+ impeccable, + its `lenses/`); agents `plan-reviewer`, `security-auditor` (no upstream: gstack ships skills only, so these are maintained locally) |
+| [superpowers](https://github.com/obra/superpowers) | 2 | receiving-code-review, verification-before-completion |
+| [claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 1 skill + 4 agents | code-review (pr-review-toolkit + mattpocock + code-review plugin); agents `code-reviewer` (pr-review-toolkit + mattpocock), `pr-test-analyzer` (pr-review-toolkit), `type-design-analyzer` (pr-review-toolkit), `code-simplifier` (pr-review-toolkit + code-simplifier plugin) |
 | [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |
 | [reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | 2 | api-security, llm-security |
-| Custom | 7 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back |
-| Compound | 13 skills + 5 agents | skills: plan-from-design (custom + mattpocock + superpowers), build-brief (custom + mattpocock), build-feature (custom + mattpocock + superpowers), tdd (mattpocock + superpowers), diagnosing-bugs (mattpocock + superpowers), code-review (pr-review-toolkit + mattpocock + code-review plugin), writing-for-agents (mattpocock + superpowers), design-build (gstack + impeccable), design-consultation (gstack + impeccable), design-taste-frontend (taste-skill + impeccable), plan-review (gstack + impeccable, + its `lenses/`), design-variants (gstack + impeccable), make-interfaces-feel-better (ECC + impeccable); agents: code-reviewer (pr-review-toolkit + mattpocock), silent-failure-hunter (ECC + pr-review-toolkit), pr-test-analyzer, type-design-analyzer (both pr-review-toolkit), code-simplifier (pr-review-toolkit + code-simplifier plugin) |
+| Custom | 10 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back, plan-from-design (+ mattpocock + superpowers), build-brief (+ mattpocock), build-feature (+ mattpocock + superpowers) |
 
 Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in `.claude/rules/harness-maintenance.md`.
 

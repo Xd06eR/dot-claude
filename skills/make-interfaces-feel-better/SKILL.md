@@ -20,6 +20,10 @@ If padding is large, treat layers as separate surfaces instead of forcing the ma
 
 Geometric centering is not always visual centering. Icon buttons, play triangles, arrows, stars, and asymmetric icons often need a small offset. Fix the SVG when possible; otherwise adjust with a pixel-level margin or padding change.
 
+### Spacing Rhythm
+
+Create rhythm through deliberate contrast between tight and generous intervals: group by meaning with proximity before adding containers or decoration, and let hierarchy follow product priority. One spacing value repeated until everything has equal weight is not rhythm. Variation is not a goal by itself; repetition supports recognition, so break it only when content or priority changes.
+
 ### Shadows And Borders
 
 Use borders for separation and focus rings. Use layered shadows when a card, button, dropdown, or popover needs depth. Shadows should be transparent and subtle enough to work across backgrounds. Depth has an offset: a shadow carries a vertical offset plus soft blur, and a zero-offset colored halo is decoration, not depth. Declare elevation once, border or shadow: a 1px border under a wide soft shadow is the ghost card.
@@ -30,6 +34,15 @@ Use borders for separation and focus rings. Use layered shadows when a card, but
 - Use `text-wrap: pretty` on short-to-medium body text, captions, descriptions, and list items.
 - Avoid both on long prose, code, and preformatted content.
 - Use `font-variant-numeric: tabular-nums` for counters, timers, prices, tables, and other updating numbers.
+- Keep body copy in the 45-75ch measure, and tune line height inversely with the measure (wider lines need more leading).
+
+### Light On Dark Compensation
+
+Light text on a dark surface needs compensation on three perceptual axes: slightly more line height, a touch more tracking, and one step more weight when the face needs it.
+
+### Paragraph Rhythm
+
+Mark paragraph boundaries with spacing or with a first-line indent, not both; combining them double-marks the boundary.
 
 ### Font Smoothing
 
@@ -130,3 +143,7 @@ Include file paths and properties when they are not obvious from the snippets. O
 - Headings carry more space above than below.
 - Secondary text on colored surfaces is tinted, never gray.
 - Shadows carry an offset; no zero-offset halos, and no border-plus-shadow ghost cards.
+- Spacing rhythm contrasts tight and generous intervals; groups come from proximity before containers.
+- Light text on dark surfaces is compensated (line height, tracking, weight).
+- Paragraphs use spacing or indent, not both.
+- Body copy holds a 45-75ch measure.

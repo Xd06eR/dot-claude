@@ -63,11 +63,11 @@ Write the file to the Step 1 path. Build to this quality bar:
 
 - **Design tokens as CSS custom properties** (`--color-*`, `--space-*`, `--font-*`), from the spec and DESIGN.md. One source of truth, no scattered literals.
 - **Semantic HTML5:** `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`. Correct heading hierarchy (one `<h1>`, no skipped levels).
-- **Responsive by default:** a fluid layout that holds at 375, 768, 1024, and 1440px. Use intrinsic sizing (grid `auto-fit` with `minmax`, `fit-content`, flexbox) and container queries where a component's layout depends on its own width, not just the viewport.
+- **Responsive by default:** a fluid layout that holds at 375, 768, 1024, and 1440px. Use intrinsic sizing (grid `auto-fit` with `minmax`, `fit-content`, flexbox) and container queries where a component's layout depends on its own width, not just the viewport. Adaptation rethinks the experience for each context; it is not scaling pixels.
 - **Accessibility basics:** meaningful `alt` text, labeled form controls, ARIA only where native semantics fall short, visible `:focus-visible` states, and color contrast meeting WCAG AA.
 - **Dark mode** via `prefers-color-scheme`, driven by the token variables.
 - **Reduced motion:** gate any animation behind `prefers-reduced-motion: no-preference`.
-- **Real content** from the reference or plan. Never lorem ipsum, never "Your text here".
+- **Real content** from the reference or plan. Never lorem ipsum, never "Your text here". Controls name their action with a specific verb plus object (never Yes/No/OK/Submit); destructive actions name the object and the consequence, with undo preferred over confirmation; errors answer what failed, why when known, and how to recover; loading text never invents progress; placeholders are examples, not labels; link text makes sense out of context; each idea is said once.
 - Optional: `contenteditable` on headline and copy blocks so the user can tweak wording live in the preview (native reflow, no JS required).
 
 **Commitment checks:**

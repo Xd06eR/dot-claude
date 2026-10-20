@@ -170,11 +170,15 @@ Three guard rules. Energy is not the enemy of trust: a brief's negative constrai
 - balanced (primary + secondary, semantic colors)
 - expressive (color as a primary tool, bold palettes)
 
+**Color application:** build roles (canvas and elevated surfaces, primary and secondary text, action/focus/selection, borders, semantic states), never a bag of swatches. Rarity gives an accent force: spend it on action and state, not decoration. Tint neutrals only when the brand hue genuinely creates cohesion; neutral gray is valid. Derive ramps in OKLCH: vary lightness, reduce chroma near white and black, and prefer explicit colors over chains of translucent overlays (alpha makes contrast context-dependent). Dark mode is composed, not mechanically inverted.
+
 **Motion approaches:**
 
 - minimal-functional (only transitions that aid comprehension)
 - intentional (subtle entrances, meaningful state changes)
 - expressive (full choreography, scroll-driven)
+
+**Delight discipline:** when the system gets a personality moment, state the feeling in one sentence and choose the smallest system that delivers it (a response to a meaningful action, product-specific language, one recognizable material behavior). Candidate moments: effort worth acknowledging, waiting made informative, first-use orientation, error recovery with empathy, discovery with real utility. On Operate surfaces delight concentrates at meaningful moments (first use, completion, recovery); reliability carries the rest. Celebration intensity stays proportional to frequency and consequence, and the moment must be specific enough that a neighboring product could not use it unchanged. Never fake work or delay completion to stage a flourish.
 
 **Spacing base:** a 4px base usually provides the useful middle steps that an 8-only scale misses; prefer it when the system needs those steps.
 
@@ -188,6 +192,8 @@ Three guard rules. Energy is not the enemy of trust: a brief's negative constrai
 - Body: Instrument Sans, DM Sans, Source Sans 3, Geist, Plus Jakarta Sans, Outfit
 - Data/Tables: Geist (tabular-nums), DM Sans (tabular-nums), JetBrains Mono, IBM Plex Mono
 - Code: JetBrains Mono, Fira Code, Berkeley Mono, Geist Mono
+
+**Font loading:** load only the weights the system uses, with metric-compatible fallbacks.
 
 **Never recommend (blacklist):** Papyrus, Comic Sans, Lobster, Impact, Jokerman, Bleeding Cowboys, Permanent Marker, Bradley Hand, Brush Script, Hobo, Trajan, Raleway, Clash Display, Courier New (for body).
 

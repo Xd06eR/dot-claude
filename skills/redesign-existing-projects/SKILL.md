@@ -1,7 +1,7 @@
 ---
 name: redesign-existing-projects
 description: "Upgrade existing websites and apps in place: audit the current design and remove generic AI patterns without breaking functionality or migrating the stack. Use when an existing site or app looks generic or dated. For new marketing UI designed from a brief, use design-taste-frontend."
-origin: taste-skill
+origin: taste-skill + impeccable
 ---
 
 ## How This Works
@@ -9,8 +9,8 @@ origin: taste-skill
 When applied to an existing project, follow this sequence:
 
 1. **Scan** — Read the codebase. Identify the framework, styling method (Tailwind, vanilla CSS, styled-components, etc.), and current design patterns.
-2. **Diagnose** — Run through the audit below. List every generic pattern, weak point, and missing state you find.
-3. **Fix** — Apply targeted upgrades working with the existing stack. Do not rewrite from scratch. Improve what's there.
+2. **Diagnose** — Run through the audit below. List every generic pattern, weak point, and missing state you find. Classify each finding before fixing it: missing token (the system needs a reusable value), one-off implementation (an existing shared component should replace it), conceptual mismatch (the flow or hierarchy differs from comparable product areas), or local defect (simply incomplete or inconsistent). Fix the cause at the narrowest correct level.
+3. **Fix** — Apply targeted upgrades working with the existing stack. Do not rewrite from scratch. Improve what's there. Clear functional defects before cosmetic upgrades: broken or blocked tasks first, then missing states, then flow, hierarchy, and design-system drift, then visual and motion consistency, then cleanup. Do not perfect one corner while the rest sits below the same bar.
 
 Mode and preservation calls (preserve vs overhaul, what never changes silently) per `~/.claude/skills/design-taste-frontend/references/redesign-protocol.md`.
 
@@ -164,6 +164,14 @@ When upgrading a project, pull from these high-impact techniques to replace gene
 - **Grain and noise overlays.** A fixed, pointer-events-none overlay with subtle noise to break digital flatness.
 - **Colored, tinted shadows.** Shadows that carry the hue of the background rather than using generic black.
 
+## Scoped Intensity Requests
+
+When the ask targets intensity rather than the whole design ("make this section bolder", "make the page quieter"), scope is sovereign: touch only the named target and add no color, font, radius, shadow, or primitive the system does not already own. If the system genuinely cannot express the direction, name the exact addition and ask.
+
+**Bolder:** amplify what the system already owns, in its own vocabulary, up to the expressive level the neighboring sections already reach; the bolder version reads more like the same brand, not less. Commit, then clarify: make the one decisive move completely and quiet everything around it; if every element got louder, the section got flatter. Run the skeleton test: strip the copy and check whether the structure alone says what the section is and why it matters; if it only works once the words return, the boldness is in the text size, not the design.
+
+**Quieter:** quiet means refined, never generic (generic quiet is gray text on white, one sans at a uniform weight, and a grid of identical cards; restraint still needs a point of view). Prefer tinted grays over pure gray, never gray text on a colored surface (use a darker shade of that color or the foreground at reduced opacity), and reduce scale jumps for calm while keeping hierarchy intact.
+
 ## Fix Priority
 
 Apply changes in this order for maximum visual impact with minimum risk:
@@ -184,3 +192,4 @@ Apply changes in this order for maximum visual impact with minimum risk:
 - If the project uses Tailwind, check the version (v3 vs v4) before modifying config.
 - If the project has no framework, use vanilla CSS.
 - Keep changes reviewable and focused. Small, targeted improvements over big rewrites.
+- An in-place upgrade refines the incumbent world; it never smuggles in a replacement. If the concept itself is wrong, say so and recommend starting fresh with `design-consultation` instead of polishing a discarded look. Refinement preserves; redesign replaces; never split the difference.

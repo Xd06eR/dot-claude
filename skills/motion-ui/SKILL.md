@@ -1,7 +1,7 @@
 ---
 name: motion-ui
 description: UI motion system for React/Next.js. Covers tokens, springs, runtime gating, accessibility, and SSR safety. Use when implementing animations, transitions, or motion patterns.
-origin: ECC
+origin: ECC + impeccable
 ---
 
 Production-ready UI motion system for React / Next.js.
@@ -17,6 +17,17 @@ Motion must:
 * Preserve spatial continuity
 
 If it does none → remove it. On low-end devices, prefer responsiveness over smoothness.
+
+---
+
+## Ambition (when the brief asks for extraordinary)
+
+"Extraordinary" is surface-specific. On functional UI the wow is how it feels: a dialog morphing from its trigger via View Transitions, a table rendering 100k rows at 60fps, streaming validation that feels instant. On performance-critical UI it is invisible but felt: the interface never hesitates. On marketing surfaces it can be sensory. The technique serves the experience, never the reverse.
+
+- **Propose before building.** Extraordinary effects have the highest misfire cost: offer 2-3 directions with trade-offs (browser support, performance cost, complexity) written inside each option, and build only the one the user picks.
+- **Progressive enhancement is non-negotiable.** Every technique degrades gracefully (`@supports`, feature detection, a WebGL2 fallback); the experience without the enhancement is still good.
+- **One extraordinary moment per surface.** Focus creates impact; excess creates noise.
+- **The removal test.** Take the effect away; if nobody notices, it was not extraordinary. Verify timing, easing, and smoothness in the browser, never from code, and never use technical ambition to mask weak design fundamentals.
 
 ---
 
