@@ -16,7 +16,6 @@
     "chrome-devtools-mcp@claude-plugins-official": false,
     "claude-md-management@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
-    "impeccable@impeccable": false,
     "playwright@claude-plugins-official": false,
     "pyright-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
@@ -33,15 +32,6 @@
     "DO_NOT_TRACK": "1",
     "ENABLE_CODE_SECURITY_REVIEW": "0",
     "ENABLE_TOOL_SEARCH": "false"
-  },
-  "extraKnownMarketplaces": {
-    "impeccable": {
-      "autoUpdate": false,
-      "source": {
-        "repo": "pbakaus/impeccable",
-        "source": "github"
-      }
-    }
   },
   "hooks": {
     "PostToolUse": [],

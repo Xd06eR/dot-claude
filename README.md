@@ -18,7 +18,7 @@ Private backup of global agent configuration: system instructions, agent definit
 | `.gitignore` | Allowlist configuration |
 | `README.md` | This document |
 
-Plugin activation state (`enabledPlugins`) and marketplace sources (`extraKnownMarketplaces`) are serialized in `settings.json`. No separate plugin artifacts are tracked (`plugins/` is a rebuildable multi-GB cache).
+Plugin activation state (`enabledPlugins`) is serialized in `settings.json`. No separate plugin artifacts are tracked (`plugins/` is a rebuildable multi-GB cache).
 
 ## The Workflow
 
@@ -103,12 +103,11 @@ The `PreToolUse` Bash hook requires RTK on `PATH`; usage and the command set liv
 
 ### Restore plugins
 
-Plugin artifacts are excluded. `settings.json` contains both `extraKnownMarketplaces` and `enabledPlugins`: Claude Code reads these on startup and installs the enabled plugins automatically. No manual install step required.
+Plugin artifacts are excluded. `settings.json` contains `enabledPlugins`: Claude Code reads it on startup and installs the enabled plugins automatically. No manual install step required.
 
 If auto-install fails, the commands below mirror the enabled set in `settings.json` (`claude-plugins-official` is built in):
 
 ```bash
-claude plugin marketplace add pbakaus/impeccable
 claude plugin install claude-md-management@claude-plugins-official
 claude plugin install context7@claude-plugins-official
 claude plugin install pyright-lsp@claude-plugins-official
