@@ -1,7 +1,7 @@
 ---
 name: design-variants
 description: "Visual exploration: turn a screen or component brief into several deliberately-different variants on one side-by-side comparison page. Use when a UI's visual direction is unsettled and the user wants real, contrasting options before committing. For throwaway experiments, use prototype; to ship marketing UI straight from the brief, use design-taste-frontend."
-origin: gstack
+origin: gstack + impeccable
 ---
 
 Visual brainstorming, not a review. Generate several deliberately-different design directions as self-contained HTML mockups. Put them side by side on one comparison page the user opens in a browser, collect structured feedback, and iterate on the favorite until a direction is locked.
@@ -28,17 +28,19 @@ ls src/ app/ pages/ components/ 2>/dev/null | head -30
 
 If `DESIGN.md` exists, follow it as the default visual system and say so: you will not diverge from it unless the user asks you to.
 
+**Identity lock.** Before proposing concepts, write one sentence recording the identity that is actually on screen or in code: dominant surface and accent colors (real values, not "warm"), the font pairing, layout topology, surface treatment, and voice tone. A missing DESIGN.md is never an excuse: read the identity off CSS custom properties, computed styles, and sibling components. Every variant must read as this same brand side by side: variation within identity, not selection between identities, unless the user's current ask explicitly departs from it ("redesign this", "something completely different"). A stale critique or an old note is not authorization, and unsure means default: a wrong default costs three on-brand variants with similar feel (recoverable); a wrong departure costs three off-brand ones (unrecoverable).
+
 The brief covers five dimensions. Fill what you can infer; ask for the rest:
 
 1. **Who:** the audience, their expertise level.
 2. **Job to be done:** what the user is trying to accomplish on this screen.
 3. **What exists:** components, pages, and patterns already in the codebase.
 4. **User flow:** how users arrive here and where they go next.
-5. **Edge cases:** long names, zero results, error states, mobile, first-time versus power user.
+5. **Edge cases:** long names, zero results, error states, mobile, first-time versus power user; realistic minimum, typical, and maximum content ranges.
 
 For the "I don't like how THIS looks" case, capture the current design as a reference. Where a browser-automation capability is available (for example a Playwright or Chrome DevTools MCP tool), screenshot the running page. Otherwise ask the user to paste a screenshot or describe what is wrong. Feed that in as the thing to improve on.
 
-Ask the gaps as one plain-text question, and include: how many variants (default 3, up to about 6 for an important screen). Two rounds of context-gathering at most, then proceed with stated assumptions.
+Ask the gaps as one plain-text question, and include: how many variants (default 3, up to about 6 for an important screen) and what would make the result feel wrong even if it looked polished. Two rounds of context-gathering at most, then proceed with stated assumptions.
 
 ## Step 2: Propose the concepts
 
@@ -54,9 +56,11 @@ C) "Name" — one-line visual description
 
 Draw on `DESIGN.md`, the brief, and anything the user approved earlier this session.
 
-**Anti-convergence rule (hard requirement):** what varies depends on `DESIGN.md`. With one, its fonts and palette stay fixed and the variants differ in layout, composition, and decoration level; without one, each variant takes a different font family, color palette, and layout approach. Either way, if two read as siblings (same typographic feel, overlapping color temperature, comparable layout rhythm), one failed: replace it with a deliberately different direction.
+**Anti-convergence rule (hard requirement):** what varies depends on the identity lock. Inside the identity, fonts and palette stay fixed and each variant commits to a different primary axis: hierarchy (which element commands the eye), layout topology (stacked / side-by-side / grid / asymmetric / overlay), typographic system (pairing logic, scale ratio, case and weight, within the available faces), color strategy (which existing palette role carries the surface, existing tokens only), density, or structural decomposition (merge, split, progressive disclosure). On an explicit departure, each variant anchors to a different aesthetic direction with its own font family, palette, and layout approach, named in one concrete sentence with a real-world referent. A variant that merely simplifies another into a tidier version of itself adds no choice to the round.
 
-The test: if you could swap the headline text between two variants without noticing, they are too similar. They should feel like three different design teams, not one team on three coffee levels.
+**Squint test, three passes before generating.** Family pass: label each concept with a concrete family; shared or interchangeable labels mean rework. Sentence pass: write the three one-line descriptions side by side; two that rhyme mean rework. When a primary axis is color, the trio must not share theme plus dominant hue: three color worlds, not three shades. The headline-swap test still stands: if you could swap the headline text between two variants without noticing, they are too similar. They should feel like three different design teams, not one team on three coffee levels.
+
+Three is the number for a reason: one option invites rubber-stamping, and the spread between three surfaces the composition worth committing to.
 
 Present the concepts, then proceed to generate immediately. Flag for redirection in the same message and do not block: "Generating these now; reply if you want different directions or a different count and I'll adjust before showing the board."
 
@@ -90,6 +94,7 @@ Write each variant to `$OUT/variant-a.html`, `variant-b.html`, and so on.
 - Follow conventions (logo top-left, nav where expected) unless the direction has a real reason not to.
 - Kill noise: cut filler words, avoid clutter, group related things.
 - Mobile-safe: touch targets at least 44px, layout holds at narrow widths.
+- Mode legible with no caption: a visitor's job (act, work, understand, explore) reads from the render alone; a mockup whose mode cannot be read back is art direction without a surface.
 
 After generation, report which variants succeeded and which failed, with the reason for any failure. Never silently drop a failed variant.
 
@@ -163,7 +168,7 @@ If the feedback says "none of these," treat it as a new concept round: go back t
 
 ## Step 6: Lock the direction and hand off
 
-When the user approves, restate the winning direction plainly: which variant, the font, palette, and layout choices that defined it, and the path to its HTML file. That description is the handoff artifact.
+When the user approves, restate the winning direction as a compact direction block: the thesis (the one idea the surface owns and the category-default arrangement it refuses), the palette and component language specific enough to recognize with all content removed, what the visitor understands, believes, and does, the first viewport's exact composition and where the primary action sits, and the signature interaction. Include the path to its HTML file. That block is the handoff artifact; if any line reads like a mood, the direction is not locked yet.
 
 Then offer next steps in plain text:
 
