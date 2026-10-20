@@ -136,7 +136,9 @@ Verify the render against the floor in the same batched look, not as separate sc
 - **Copy:** controls name their action; errors name the problem and the recovery.
 - **Coverage:** every brief requirement present and findable within seconds.
 
-**Capture validity:** settle or disable entrance motion before capturing (an element hidden by animation timing reads as missing and gets fixed into a regression), capture full-page from the document top, and open every capture once to confirm it shows what its name claims. Self-check rounds cap at two, fixes batched between them; deeper iteration belongs to the Step 6 loop with the user. Report the result at its actual scope: a build with open material findings is never announced as done.
+Before comparing against the direction, inventory the render's salient elements in your own words; a review anchored on the plan inherits whatever the plan dropped. Then judge three axes that never lapse: TYPE (the lettering's character, weight, and contrast against the chosen faces; a face of a different character is a miss however the layout matches), MATERIAL (flat CSS or clean vector standing in for textured, dimensional, or photographic material is a miss regardless of placement; faked physicality such as CSS bevels and embossing is the most reliable mark of machine-made design), and GROUND (the page field's value and temperature; drift toward warm cream on light grounds or blue-black slate on dark is the rendition prior, so hunt it).
+
+**Capture validity:** settle or disable entrance motion before capturing (an element hidden by animation timing reads as missing and gets fixed into a regression), capture full-page from the document top, and open every capture once to confirm it shows what its name claims. A check run against a malformed capture binds nothing: recapture first, never review around it. Self-check rounds cap at two, fixes batched between them; deeper iteration belongs to the Step 6 loop with the user. Report the result at its actual scope: a build with open material findings is never announced as done.
 
 Where no such capability exists, say so and rely on the user's browser.
 
@@ -146,6 +148,8 @@ Where no such capability exists, say so and rely on the user's browser.
 2. Ask, in plain text: "What should change? Say 'done' when it's right."
 3. On "done", "ship it", or "looks good", exit to Step 7.
 4. Otherwise apply the feedback with **surgical Edit changes** to the file, not a full rewrite (the user may have made live `contenteditable` tweaks worth keeping). Summarize the change in a line or two, re-screenshot if that capability is available, and loop.
+
+Verify fixes against fresh captures, never against your own narration of what changed: a claimed fix you cannot see in the recapture is unresolved. Each re-check scores the listed fixes (resolved / partial / unresolved) rather than opening a new defect hunt. Calibrate against the direction and the floor, never against the effort visible in the build.
 
 After about ten rounds without "done", ask once, in plain text, whether to keep iterating or call it.
 

@@ -343,6 +343,8 @@ Do not deviate without explicit user approval.
 When reviewing or QA-ing UI, flag code that does not match DESIGN.md.
 ```
 
+Authoring craft for `DESIGN.md` itself: lead with the description and pin the exact value in parentheses ("Gently curved edges (8px radius)"); say where and why each token is used, not only what it is; use decisive language where the decision is firm, and one to three Named Rules per section (`**The [Name] Rule.**` plus a one-sentence doctrine) where a rule deserves to be cited. Document only what is actually used: do not extract every token, do not invent components nothing implements, and never define the same value twice. Two canonization guards: never record a value to legitimize a defect, and when documenting an existing identity, never canonize a blacklisted element the code carries as a system rule; record it as a defect to fix, not a rule to inherit.
+
 Finally, list every decision back to the user and flag any that used your defaults without their explicit confirmation, so they know exactly what is shipping. Ask, in plain text, whether to ship it, change something, or start over. Write the files once confirmed.
 
 If the session produced screen-level mockups or page layouts, suggest finalizing the system into production markup with `design-build`; to explore concrete UI variants first, suggest `design-variants`.

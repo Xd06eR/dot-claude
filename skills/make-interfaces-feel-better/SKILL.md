@@ -117,7 +117,9 @@ On a colored surface, secondary text is tinted from that surface's hue or set as
 
 ## Review Output
 
-When reviewing a UI polish pass, report concrete changes in before/after rows:
+When reviewing a UI polish pass, lead with the specificity verdict: could an unrelated product use this UI unchanged? If yes, say so; polish that leaves the surface category-interchangeable is not finished. For an interaction-heavy surface, walk the primary action as two or three personas the interface actually serves (an impatient power user, a confused first-timer, an accessibility-dependent user) and report what broke for each specifically, never generic concerns. If any planned check could not run (no way to see the render, a tool missing), the report's first line names what was skipped and why: a silently degraded review is a failed review.
+
+Report concrete changes in before/after rows:
 
 | Principle | Before | After |
 | --- | --- | --- |
