@@ -15,7 +15,7 @@ Most updates are obvious and direct. Stop and ask in plain text only for:
 - Risky or subjective doc changes: narrative, philosophy, security model, section removal, large rewrites.
 - VERSION drift: code changes on the branch but no version bump (route back to `ship`'s Step 6).
 - Cross-doc contradictions that are narrative, not factual.
-- Capturing newly-deferred work in TODOS.
+- Capturing newly-deferred work in the backlog file.
 
 Never stop for:
 
@@ -146,13 +146,13 @@ After auditing each file individually, do a cross-doc pass:
 4. **Discoverability:** every doc file should be reachable from README.md or CLAUDE.md. If ARCHITECTURE.md exists but neither entry-point links to it, flag it.
 5. Auto-fix clear factual inconsistencies (a version mismatch). Ask in plain text for narrative contradictions.
 
-## Step 9: TODOS cleanup
+## Step 9: Backlog cleanup
 
-Skip if no TODOS.md (or equivalent backlog file) exists.
+Skip if no `TODO.md` (or equivalent backlog file) exists.
 
 1. **Completed items not yet marked.** Cross-reference open TODOs against the diff. If one is clearly completed by the changes, move it to the Completed section with a version and date. Be conservative: only mark items with clear evidence in the diff.
 2. **Stale descriptions.** If a TODO references files or components that changed significantly, ask in plain text whether to update, complete, or leave it.
-3. **New deferred work.** Scan the diff for `TODO`, `FIXME`, `HACK`, `XXX` comments. For each one that represents meaningful deferred work (not a trivial inline note), ask in plain text whether to capture it in TODOS.
+3. **New deferred work.** Scan the diff for `TODO`, `FIXME`, `HACK`, `XXX` comments. For each one that represents meaningful deferred work (not a trivial inline note), ask in plain text whether to capture it in the backlog.
 
 ## Step 10: VERSION consistency check
 
@@ -220,7 +220,7 @@ Documentation health:
   ARCHITECTURE.md <status> (<details>)
   CONTRIBUTING.md <status> (<details>)
   CHANGELOG.md    <status> (<details>)
-  TODOS.md        <status> (<details>)
+  TODO.md         <status> (<details>)
   VERSION         <status> (<details>)
 ```
 
