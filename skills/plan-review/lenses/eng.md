@@ -133,6 +133,7 @@ The value bar for any proposed test: name the observable behavior or contract it
 - A smoke check standing in for behavior coverage.
 - Tests deferred to a follow-up rather than written alongside the feature code.
 - A regression (existing behavior the change breaks, uncovered by the current suite) with no regression test. A regression test is mandatory, not a judgment call, and is the highest-priority test because it proves something broke.
+- A test whose only purpose is keeping test-only code alive (an export, global, or wrapper no production caller uses), or production code whose only callers are tests.
 
 **Open-question triggers:**
 - The plan names features but not the tests that cover their branches and flows.

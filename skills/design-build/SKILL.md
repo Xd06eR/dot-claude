@@ -135,6 +135,8 @@ Verify the render against the floor in the same batched look, not as separate sc
 - **Browser surfaces:** text selection, caret, scrollbars, focus rings, and underline offset themed from the palette; the parts you did not draw still ship with browser defaults that belong to no design system.
 - **Copy:** controls name their action; errors name the problem and the recovery.
 - **Coverage:** every brief requirement present and findable within seconds.
+- **First glance:** name the first three elements the eye lands on in the capture and check them against the intended hierarchy; a mismatch means the hierarchy is lying.
+- **System counts:** count distinct font families and non-gray colors across the render; more than three families or more than a dozen non-gray colors is a system-consistency finding, not a style choice.
 
 Before comparing against the direction, inventory the render's salient elements in your own words; a review anchored on the plan inherits whatever the plan dropped. Then judge three axes that never lapse: TYPE (the lettering's character, weight, and contrast against the chosen faces; a face of a different character is a miss however the layout matches), MATERIAL (flat CSS or clean vector standing in for textured, dimensional, or photographic material is a miss regardless of placement; faked physicality such as CSS bevels and embossing is the most reliable mark of machine-made design), and GROUND (the page field's value and temperature; drift toward warm cream on light grounds or blue-black slate on dark is the rendition prior, so hunt it).
 

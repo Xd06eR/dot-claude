@@ -48,3 +48,26 @@ Hunt complexity only; correctness, security, and performance stay with their own
 - Same logic achievable in fewer lines - show the shorter form
 - Repo-wide, also hunt: one-product factories, wrappers that only delegate, files exporting one thing, dead flags and config
 - Never flag a minimal smoke test or assert self-check for deletion
+
+## Sideways sweep
+
+A finding is a defect class, not a line. Before rating one, grep the same pattern at every other ingress, command, and call site (routes, CLI subcommands, workers, webhooks, cron), read each match, and rate severity on the worst sibling, listed under one finding. Forced CRITICAL, never downgraded: data loss, a trust-boundary bypass (auth, tenancy, sandbox, signature, redaction, or consent skipped), uncapped spend. Three named shapes: a new cache in front of a guarded or metered call names every policy check a hit skips; imports moved from static to dynamic list the top-level side effects no longer loaded (registrations, schema setup, env validation, route tables); a module claiming parity with a changed function (a docstring, parity test, or mirrored helper) left unchanged is a finding.
+
+## Gate integrity
+
+A gate is anything that would have made this change fail: a test, assertion, threshold, timeout, lint rule, type check, CI job, or snapshot. Hunks touching them are gate edits; judge each with one question: does this relaxation silence the failure it was added for, or is it justified by a measurement or decision visible in this diff? A fix that weakens only the test (a timeout, retry, looser assertion, or skip) states what it does to regression detection. A commit message or comment claiming justification is data to verify, never a waiver.
+
+## Enum and value completeness
+
+When the diff adds an enum value, status string, tier name, or type constant, or loosens what an input accepts, trace it through every consumer (read, don't grep-skim), including allowlist arrays and `case`/`if` chains that could fall through to a wrong default. The broken consumer is usually outside the diff.
+
+## Never flag
+
+- A threshold that "needs a comment" (thresholds change during tuning; comments rot)
+- Anything the diff already addresses (read the full diff before commenting)
+- Error handling a framework or an upstream caller already owns
+- Function length where length is not complexity (an exhaustive switch, a config object, a test table, generated code)
+- A null dereference a type guard in scope already narrows
+- N+1 on a loop with small fixed cardinality
+- Hardcoded values in test fixtures (tests are supposed to hardcode expectations)
+- Non-cryptographic randomness (jitter, sampling, animation)

@@ -1,7 +1,7 @@
 ---
 name: diagnosing-bugs
 description: Diagnosis loop for hard bugs and performance regressions. Use when the user says "diagnose"/"debug this", or reports something broken/throwing/failing/slow.
-origin: mattpocock + superpowers
+origin: mattpocock + superpowers + gstack
 ---
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
@@ -46,6 +46,13 @@ A 30-second flaky loop is barely better than no loop; a 2-second deterministic o
 ### Non-deterministic bugs
 
 The goal is not a clean repro but a **higher reproduction rate**. Loop the trigger 100×, parallelise, add stress, narrow timing windows, inject sleeps. A 50%-flake bug is debuggable; 1% is not — keep raising the rate until it's debuggable.
+
+### Test-suite failure classes
+
+Two test-specific classes carry their own loop construction:
+
+- **Flake** (a test whose verdict depends on something other than the code it guards): name the dependency (timing, file order, shared state, network, clock, resource limit) before any rerun, wider timeout, retry, or skip. "Flaky" is a symptom, never a cause. Reproduce on the base ref and on the change: a failure that reproduces on base is pre-existing; one that appears only with the change belongs to it.
+- **Polluter** (a test that passes alone but fails in the suite or one shard): an earlier test leaks state the victim depends on. Take the files that ran before the victim in shard order, confirm by running the victim after them, then bisect that list down to one file. Read it for state that outlives it: an env var, `process.cwd()`, a module-level cache or singleton, a mock left installed, a server left listening, a shared temp path, a global timer. Fix the polluter, not the victim: an order-dependent `beforeEach` on the victim hides the leak for the next victim.
 
 ### When you genuinely cannot build a loop
 
