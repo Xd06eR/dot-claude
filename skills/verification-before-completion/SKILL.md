@@ -25,7 +25,8 @@ BEFORE claiming any status or expressing satisfaction:
 
 1. IDENTIFY: what command proves this claim?
 2. RUN it fresh and READ the full output (exit code, failure count)
-3. ONLY THEN: make the claim WITH the evidence
+3. VERIFY the output confirms the claim; if not, state the actual status with evidence
+4. ONLY THEN: make the claim WITH the evidence
 
 Skip any step = lying, not verifying
 ```

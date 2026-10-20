@@ -1,7 +1,7 @@
 ---
 name: writing-for-agents
 description: Writing documents for agents. Use when creating or editing the prose of skills, AGENTS.md, or CLAUDE.md. For scaffolding a new skill, benchmarking one with evals, or optimizing a description for triggering, use skill-creator.
-origin: mattpocock
+origin: mattpocock + superpowers
 ---
 
 Reference for writing any document an agent consumes — a skill, an `AGENTS.md` / `CLAUDE.md`, a doc reached by a pointer. The packaging differs; the writing does not: the same levers make each one predictable — the agent taking the same _process_ every run, not producing the same output.
@@ -73,6 +73,24 @@ Hunt for opportunities to refactor with leading words. A triad spelled out at th
 You win twice: fewer tokens, and a sharper hook for the agent to hang its thinking on. Assume every document is carrying restatements that leading words retire — go find them.
 
 **Negation** is the failure mode beside this lever: steering by prohibition drags the forbidden behaviour into context and makes it _more_ available, not less. _Don't think of an elephant_, and the elephant is all there is; the negation is a weak modifier the strongly-activated concept overruns, so the ban half-reads as an instruction to do the thing. Prompt the **positive** — state the target behaviour ("write one-line comments") so the banned one is never spoken. A prohibition earns its place only as a hard guardrail you cannot phrase positively; even then, pair it with the positive target so attention lands on what to do.
+
+## Match the form to the failure
+
+Before writing a rule, classify the failure it answers; the form that bulletproofs one failure type backfires on another:
+
+| Baseline failure | Right form | Wrong form |
+|---|---|---|
+| Skips a rule under pressure (knows better, does it anyway) | Prohibition + rationalization table + red flags | Soft guidance ("prefer...", "consider...") |
+| Complies, but the output has the wrong shape (bloated, buried verdict, restated spec) | Positive recipe or contract: state what the output IS, its parts in order | Prohibition list ("don't restate", "never narrate") |
+| Omits a required element from something already produced | Structural: a REQUIRED field or slot in the template being filled | Prose reminders near the template |
+| Behavior should depend on a condition | Conditional keyed to an observable predicate ("if the brief exists, reference it") | Unconditional rule + exemption clauses |
+
+Prohibitions backfire on shaping problems in particular: under a competing incentive the agent negotiates with "don't X", and in wording tests the prohibition arm produced more of the unwanted content than even the no-guidance control.
+
+Two clause rules for whichever form you pick:
+
+- **No nuance clauses.** "Don't X unless it matters" reopens the negotiation the rule was meant to close. Express a real exception as its own conditional on an observable predicate.
+- **Exemption clauses don't scope.** "This limit doesn't apply to code blocks" still suppresses code blocks; the mention activates the rule against the exempt case. If part of the output must be exempt, restructure so the rule can't reach it.
 
 ## Pruning
 
