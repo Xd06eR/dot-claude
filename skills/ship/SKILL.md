@@ -32,12 +32,15 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
 
 1. `git branch --show-current`. If it equals `<base>` or the default branch, **abort**: "You're on the base branch. Ship from a feature branch."
 2. `git status` (never `-uall`). Uncommitted changes are included. No need to ask.
-3. Understand the changeset:
+3. Fetch the base (skip when no remote is configured) and understand the changeset:
    ```bash
-   git diff <base>...HEAD --stat
-   git log <base>..HEAD --oneline
+   git fetch origin <base>
+   git diff <cmp>...HEAD --stat
+   git log <cmp>..HEAD --oneline
    ```
-4. **Distribution pipeline check.** If the diff introduces a new standalone artifact (a CLI binary, library package, or tool — a `cmd/` directory, `main.go`, `bin/` entry point, or new package manifest), not a web service with existing deployment, verify a release pipeline exists (`ls .github/workflows/ | grep -iE 'release|publish|dist'`). New artifact with no release pipeline: ask in plain text whether to add a release workflow now, defer it, or declare it internal (existing deployment covers it); users cannot download the artifact after merge. Pipeline exists or no new artifact: continue silently.
+
+   `<cmp>` is `origin/<base>` when the fetch ran, else the local `<base>`; later comparisons use it.
+4. **Distribution pipeline check.** If the diff introduces a new standalone artifact (a CLI binary, library package, or tool — a `cmd/` directory, `main.go`, a `bin/` entry point, a new package manifest, or a newly declared binary/export in an existing manifest; a new manifest with no distributable declaration does not gate), not a web service with existing deployment, verify a release pipeline exists (`ls .github/workflows/ | grep -iE 'release|publish|dist'`). New artifact with no release pipeline: ask in plain text whether to add a release workflow now, defer it, or declare it internal (existing deployment covers it); users cannot download the artifact after merge. Pipeline exists or no new artifact: continue silently.
 5. If the diff is large (roughly 200+ lines), suggest once: "Large diff, consider running `code-review` before shipping." Do not block.
 
 ## Step 3: Merge the base branch (before tests)
@@ -45,7 +48,7 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
 Merge base into the feature branch so tests run against the merged state:
 
 ```bash
-git fetch origin <base> && git merge origin/<base> --no-edit
+git merge <cmp> --no-edit
 ```
 
 - No remote configured (`git remote` returns nothing) then skip this step and note it.
@@ -75,7 +78,7 @@ Paste the real tail of the test output as evidence.
 Read the full diff and sanity-check it yourself. Step 2 ships uncommitted changes too, so read the working tree as well as the committed diff:
 
 ```bash
-git diff <base>...HEAD
+git diff <cmp>...HEAD
 git diff
 git diff --cached
 git ls-files --others --exclude-standard   # untracked files ship as well: read their contents, not just their names
@@ -105,7 +108,7 @@ Find the version source and bump it. Bump relative to the **base branch** versio
 
 ## Step 7: Update CHANGELOG
 
-If `CHANGELOG.md` exists (or the repo clearly keeps one under another name), add an entry following the file's existing style. If the repo has none, skip this step and note it. Do not impose one. When the file is empty or brand-new, use Keep a Changelog:
+If `CHANGELOG.md` exists (or the repo clearly keeps one under another name), add an entry following the file's existing style. If the repo has none, skip this step and note it. Do not impose one. Derive the entry from the full branch commit list (`git log <cmp>..HEAD --oneline`), used as a checklist: every user-facing change gets a line; merges, version bumps, and fixes to work introduced earlier on this branch need none. If the branch already accumulated several unreleased entries, fold them into one unified entry for the new version. When the file is empty or brand-new, use Keep a Changelog:
 
 ```markdown
 ## [<new-version>] - <YYYY-MM-DD>

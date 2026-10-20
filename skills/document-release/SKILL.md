@@ -58,14 +58,12 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
    git diff <base>...HEAD --name-only
    ```
 
-3. Discover all doc files in the repo (POSIX find; widen or add extensions if the repo uses `.rst`, `.adoc`, or a deeper `docs/` tree):
+3. Discover all doc files in the repo — tracked and untracked, no depth cap:
    ```bash
-   find . -maxdepth 2 -name "*.md" \
-     -not -path "./.git/*" \
-     -not -path "./node_modules/*" \
-     -not -path "./vendor/*" \
-     | sort
+   git ls-files --cached --others --exclude-standard -- '*.md' '*.mdx' '*.rst' '*.adoc' | grep -vE '^(node_modules|vendor)/' | sort
    ```
+
+   Follow any docs-framework config to its declared roots. Edit generated docs' authored sources, never the generated output; report needed regeneration instead.
 
 4. Classify the changes into: **new features**, **changed behavior**, **removed functionality**, **infrastructure**. This drives the audit in Step 4.
 
@@ -133,10 +131,10 @@ For each item classified "Ask user" in Step 4, ask in plain text. State the file
    - **1 point**: answers "What changed?" (names the feature or fix).
    - **1 point**: answers "Why should I care?" (user impact, pain removed).
    - **1 point**: answers "How do I use it?" (command, flag, link to docs).
-   - **Entries scoring below 2 need a rewrite. Entries scoring 3 are gold.**
-4. Rewrite low-scoring entries to lead with what the user can now **do**, not implementation details. "You can now..." rather than "Refactored the...". Move internal or contributor-only changes to a `### For contributors` subsection.
+   - **Entries scoring 3 are gold.**
+4. A low score means attention, not replacement: polish wording in place to lead with what the user can now **do** ("You can now..." rather than "Refactored the..."), report missing facts or user impact to the user, and flag misplaced internal or contributor-only details for the author instead of moving them. Never delete, reorder, replace, or regenerate an entry; a larger rewrite is reported as deferred author work, never applied.
 5. Use Edit with exact `old_string` matches. Never use Write on CHANGELOG.md.
-6. Auto-fix minor wording adjustments. If a rewrite would alter meaning, ask in plain text first.
+6. Auto-fix minor wording adjustments; anything beyond wording is reported to the user, not applied.
 
 ## Step 8: Cross-doc consistency and discoverability
 
@@ -173,6 +171,8 @@ This skill never bumps VERSION; the bump decision is `ship`'s Step 6. What you d
 You have audited, edited, polished, and (if approved) bumped. Now assemble the commands.
 
 **Do NOT execute the commit/push/PR block below — output it for the user to run.** The `git status` precheck is read-only and fine to run yourself.
+
+Scan the docs you edited for leaked credentials before handing off, exactly as `document-generate`'s commit step does; a live-format hit (not an obvious `EXAMPLE` placeholder) must be removed before the block is output.
 
 First check whether any doc files were modified:
 
