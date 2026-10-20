@@ -70,32 +70,49 @@ Write the file to the Step 1 path. Build to this quality bar:
 - **Real content** from the reference or plan. Never lorem ipsum, never "Your text here".
 - Optional: `contenteditable` on headline and copy blocks so the user can tweak wording live in the preview (native reflow, no JS required).
 
+**Commitment checks:**
+
+- **Commit every atom:** nav, buttons, inputs, and links are rebuilt in the direction's vocabulary; a stock component inside a committed form is a lapse. Land the first build fully committed; later passes make it clear and effective, never dilute it. When the direction names a technique (canvas, view transitions, generative motion), build the technique itself, not a static imitation.
+- **The first viewport is a thesis, not a header:** demonstrate the mechanism immediately, at the scale it has in life. The memory test: if someone left after one viewport, what would they describe an hour later? If the honest answer is a mood, the concept has not committed.
+- **Prove, don't claim:** show the subject doing its job; demonstration data is design material, authored at full fidelity and labeled synthetic, while commercial claims (prices, customer counts, benchmarks) stay uninventable.
+- **Author the assets, never substitute chrome:** gradients, glass, generic icon tiles, or many-vertex clip-paths standing in for an authored asset are the gap wearing chrome.
+- **Pace the scroll like a studio:** vary density, scale, and quiet inside one grammar; a dense passage earns a quiet one, and the page ends anchored by a real close.
+
 **Layout without a JS engine.** Modern CSS covers what a text-layout library used to. Text reflows on its own.
 
 `text-wrap: balance` tightens headings and `pretty` improves body copy; `fit-content` shrinkwraps chat-style bubbles; `shape-outside` flows text around obstacles; container queries handle self-sizing components.
 
 Reach for a JS measurement library only if a specific effect genuinely needs it, and never add one silently.
 
-**AI-slop blacklist (do not emit unless the direction explicitly shows it):**
+**AI-slop blacklist (the category's defaults, not bans: the direction's own words can earn any of them back; when one slips through anyway, rewrite the element, never soften it):**
 
 - Purple or blue gradients as a default
 - Cream-and-serif as the default palette
 - Gradient text
 - Generic three-column feature grids
 - Identical card grids, or cards nested inside cards
-- Eyebrow chips, kickers, or icon tiles above headings
+- Eyebrow chips, kickers, or icon tiles above headings (the one absolute ban: no direction earns it back; the heading carries its own weight)
 - Hero metric rows ("10k+ users") or stats bands
+- Sparklines, progress rings, or rounded-card-plus-drop-shadow standing in for content
 - Center-everything layouts with no hierarchy
-- Decorative blobs, waves, or geometric filler
+- Decorative blobs, waves, geometric filler, or stripes and grid-paper backgrounds with no real canvas under them
 - Glow edges, radial halos, or pulsing status dots
+- Glass or blur as decoration rather than a specific effect
+- Hard offset shadows (`box-shadow: 4px 4px 0`) outside a genuinely neobrutalist direction
+- Colored side-stripe borders above 1px on cards, list items, callouts, or alerts
 - Uniform bubbly border-radius on everything
-- `system-ui` as the primary font
+- `system-ui` as the primary font, or a system display face as the display voice of an own-world page (source and self-host a face; the closest installed font is a failure, not a fallback)
+- Monospace as a "technical" costume rather than for code, data, or measurement
+- Section numbers (01 / 02 / 03) unless the sequence itself carries information
+- Modals by reflex, for tasks needing neither interruption nor protected focus
+- Light or dark picked by category instead of the use scene
+- Geometric masks approximating organic contours (derive an alpha matte from the actual image, or author a cut-out)
+- Sketch-style SVG scenes imitating illustration; real illustration or none (SVG doing geometry: diagrams, crisp vector shapes, animated linework, stays first-class)
 - Stock-photo placeholder boxes
 - Logo-marquee "trusted by" strips
 - Generic hero copy ("Welcome to X", "Unlock the power of...")
 - Generic "Get Started" / "Learn More" CTAs
-- Rounded card plus drop shadow as the default component
-- Emoji used as UI iconography
+- Emoji or unicode glyphs standing in for an icon system (icons are drawn: a real library or authored SVG, one consistent stroke and weight)
 - Boilerplate testimonial sections
 - The left-text, right-image hero cliché
 
@@ -107,6 +124,19 @@ Give the user a way to see it:
 - **Framework component:** render it in the repo's own dev server (`npm run dev` or the project's script) on a throwaway route.
 
 Where a browser automation capability is available (a Playwright or Chrome DevTools MCP, for example), screenshot the page at 375, 768, and 1440px and read the images back to check for text overflow, layout collapse, and broken responsiveness. Fix issues before handing it over.
+
+Verify the render against the floor in the same batched look, not as separate screenshot trips:
+
+- **Contrast:** body and placeholder text at least 4.5:1, large text at least 3:1; secondary text on colored surfaces tinted from that hue, never gray.
+- **Depth:** shadows carry an offset plus soft blur; a zero-offset colored halo is decoration.
+- **Spacing:** tight groups, generous separation, more space above a heading than below it (read the computed values).
+- **Type:** body measure 65-75ch, display max 6rem, tracking floor -0.04em; run the real copy at every breakpoint and fix what overflows.
+- **States:** hover, disabled, loading, error, empty, and keyboard focus all present.
+- **Browser surfaces:** text selection, caret, scrollbars, focus rings, and underline offset themed from the palette; the parts you did not draw still ship with browser defaults that belong to no design system.
+- **Copy:** controls name their action; errors name the problem and the recovery.
+- **Coverage:** every brief requirement present and findable within seconds.
+
+**Capture validity:** settle or disable entrance motion before capturing (an element hidden by animation timing reads as missing and gets fixed into a regression), capture full-page from the document top, and open every capture once to confirm it shows what its name claims. Self-check rounds cap at two, fixes batched between them; deeper iteration belongs to the Step 6 loop with the user. Report the result at its actual scope: a build with open material findings is never announced as done.
 
 Where no such capability exists, say so and rely on the user's browser.
 
@@ -157,3 +187,4 @@ Krug's rules, applied while building, not just while designing:
 - **Surgical edits in refinement.** Edit the file in place; do not regenerate it and lose the user's live tweaks.
 - **Stay inside the working repo.** Write only the output file and an optional `DESIGN.md`. No state, metrics, or files elsewhere.
 - **One page per invocation.** For a multi-page design, run the skill once per page.
+- **No strategy text in shipped artifacts.** Direction contracts, briefs, and design reasoning never leak into implementation source or browser-delivered output: no HTML or JSX comments, hidden DOM, `data-*` attributes, serialized props, RSC payloads, or JSON-LD carrying them.

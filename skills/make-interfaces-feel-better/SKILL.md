@@ -1,7 +1,7 @@
 ---
 name: make-interfaces-feel-better
 description: "Apply the small design-engineering details that compound into a polished interface: spacing, radius, optical alignment, shadows, text wrapping, hit areas, and CSS-level interaction states. Use when the UI feels off, flat, generic, cramped, or unfinished, or when a frontend review needs concrete before/after recommendations. For motion-system work (motion/react, springs, tokens), use motion-ui."
-origin: ECC
+origin: ECC + impeccable
 ---
 
 ## Core Principles
@@ -22,7 +22,7 @@ Geometric centering is not always visual centering. Icon buttons, play triangles
 
 ### Shadows And Borders
 
-Use borders for separation and focus rings. Use layered shadows when a card, button, dropdown, or popover needs depth. Shadows should be transparent and subtle enough to work across backgrounds.
+Use borders for separation and focus rings. Use layered shadows when a card, button, dropdown, or popover needs depth. Shadows should be transparent and subtle enough to work across backgrounds. Depth has an offset: a shadow carries a vertical offset plus soft blur, and a zero-offset colored halo is decoration, not depth. Declare elevation once, border or shadow: a 1px border under a wide soft shadow is the ghost card.
 
 ### Text Wrapping
 
@@ -90,6 +90,18 @@ Use `will-change` only for first-frame stutter on compositor-friendly properties
 
 Interactive controls should have at least a 44x44px hit area. Expand with a pseudo-element when the visible icon is smaller, but do not let expanded hit areas overlap.
 
+### Browser Surfaces
+
+Theme the parts the browser draws for you: text selection color, the caret, scrollbars, focus rings, and underline offset all ship with browser defaults that belong to no design system. Theme them from the palette; this is the cheapest signal that a page was designed rather than assembled.
+
+### Heading Spacing Rhythm
+
+A heading gets more space above than below: the gap above separates it from the previous block, the smaller gap below binds it to its content. Judge the computed values, not the stylesheet's intent.
+
+### Tinted Secondary Text
+
+On a colored surface, secondary text is tinted from that surface's hue or set as the foreground at reduced opacity, never neutral gray; gray on color reads as mud.
+
 ## Review Output
 
 When reviewing a UI polish pass, report concrete changes in before/after rows:
@@ -114,3 +126,7 @@ Include file paths and properties when they are not obvious from the snippets. O
 - Buttons have tactile active states without exaggerated motion.
 - `transition: all` and `will-change: all` are absent.
 - Small controls still have usable hit areas.
+- Browser surfaces (selection, caret, scrollbars, focus rings, underline offset) are themed from the palette.
+- Headings carry more space above than below.
+- Secondary text on colored surfaces is tinted, never gray.
+- Shadows carry an offset; no zero-offset halos, and no border-plus-shadow ghost cards.
