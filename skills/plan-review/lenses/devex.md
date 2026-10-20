@@ -58,6 +58,7 @@ Confirm the magical moment is actually designed and its delivery vehicle (hosted
 - Are the reliability contracts stated: latency, retries, rate limits, idempotency, offline behavior?
 - Is the interface progressively disclosed, so the simple case is production-ready and complexity arrives through the same API?
 - Does the shape match how the target developer thinks (a founder expects `tool.do(thing)`; a platform engineer expects `tool.configure(options).execute(thing)`)?
+- Agent ergonomics: non-interactive by default, structured output, layered `--help`, and errors an agent can act on without reading the source.
 
 **Red flags:**
 - names that need the docs open to guess
@@ -83,6 +84,8 @@ Confirm the magical moment is actually designed and its delivery vehicle (hosted
 - Trace three specific error paths in the plan or code and, for each, compare what the developer sees now against what they should see. Every error should carry problem, cause, and fix.
 - Calibrate against three tiers: conversational and first person with exact location and a suggested fix (Elm); an error code linking to a tutorial, with primary and secondary labels (Rust); structured JSON with type, code, message, param, and a doc URL (Stripe API).
 - Check the permission, sandbox, and safety model: what can go wrong, and how clear is the blast radius? Is there a verbose or debug mode? Do stack traces point at the developer's mistake or bury it under framework internals?
+
+When the surface's readers include agents (a CLI, MCP tool, skill, or agent-facing API), score each error path against the agent-ready contract: what (the operation and the actual values), fix (on the first or last line; safe and authorized, never bypassing a consent or sandbox boundary; a precise escalation to a human is a complete fix), recovery (retry, fix and retry, do X first, or ask a human; side effects stated; an unknown outcome is reconciled before retry; a retry bound), code (stable, with a doc anchor), context (versions, config in effect, env var names; never values), trace (unexpected failures only; a correlation id from remote services), redaction (no secret values anywhere), and channel (the surface's native failure signal: non-zero exit plus stderr for a CLI, status plus an RFC 9457 body for an API, a typed error for an SDK, isError for an MCP tool; a failure is never signalled as success). A leaked secret, a failure signalled as success, an unsafe fix, or a hang with no non-interactive alternative (such as `--yes`) is a critical finding.
 
 **Red flags:**
 - errors that name what failed but not why or how to fix it

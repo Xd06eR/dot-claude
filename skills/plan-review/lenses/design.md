@@ -90,10 +90,11 @@ Empty states get special weight: they are features and need warmth, a primary ac
 - Does the plan describe specific, intentional UI (name the typeface, weight, size, color, spacing scale, interaction pattern) or generic patterns?
 
 First classify the surface by the visitor's win, then hold it to the matching rules: MARKETING/LANDING (they decide and act), APP UI (they finish a task), READ (they understand something), EXPERIENCE (they are inside the work), or HYBRID (judge each section by its kind).
+The mode is what the visitor's win looks like on this surface, not what the product is: a dev tool's landing page is MARKETING/LANDING; a fashion house's docs are READ.
 
 **Universal rules the plan must satisfy:**
 - define CSS variables for the color system
-- no default font stacks (Inter, Roboto, Arial, system-ui, -apple-system)
+- no default font stacks (Inter, Roboto, Arial, system-ui, -apple-system); on an APP UI or READ surface, an explicitly assigned quiet sans (the DM Sans / Instrument Sans / IBM Plex Sans class) earns the body and UI text role
 - "if deleting 30% of the copy improves it, keep deleting"
 - cards earn their existence
 - never body text under 16px or contrast under 4.5:1 on body
@@ -210,6 +211,7 @@ Mobile is the same rules at higher stakes: scarce real estate, no hover, afforda
 - Surface every design ambiguity that will haunt implementation, each paired with the concrete bad thing that happens if it is deferred, which is the default the engineer will ship by accident.
 
 These are the decisions the plan silently hands to whoever builds it.
+An unresolved decision must cite an actual in-scope element: a page or section name, or another reviewer's suggestion, does not establish that a control exists, and no decision is invented for a hypothetical element.
 
 **Red flags:** genuine design choices left implicit; "we'll decide during build" applied to anything a user will feel; decisions whose default nobody actually chose.
 

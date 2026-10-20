@@ -45,6 +45,7 @@ Genuinely unrelated work (rewrites, multi-quarter migrations) is separate scope,
 - Is the plan the most direct path to the actual user or business outcome, or is it solving a proxy?
 - What happens if nothing ships: real pain or hypothetical?
 - Could a different framing yield a dramatically simpler or higher-impact solution?
+- For each artifact about the work the plan adds (a status report, audit matrix, or conformance check): who consumes it, what decision or delivered behavior changes because it exists, and when it retires? Manufacturing a consumer to pass the question is the pathology, not an answer. Product observability (dashboards, alerts, runbooks for the shipped system) is launch scope, never a process artifact.
 
 **Red flags:** Effort with no articulated outcome; a proxy metric standing in for user value; "nice to have" with no real pain if skipped; a premise the user cannot state in one sentence.
 

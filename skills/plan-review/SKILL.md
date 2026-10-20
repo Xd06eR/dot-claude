@@ -39,6 +39,7 @@ Every `plan-reviewer` prompt names exactly three things:
 - **The plan:** its absolute path, or the inline plan text if there is no file.
 - **One lens file, by path:** exactly one of `~/.claude/skills/plan-review/lenses/ceo.md`, `design.md`, `devex.md`, or `eng.md`.
 - **The report-contract reminder:** walk every dimension in the lens
+  - calibrate to the plan's depth: a strategy or scope plan gets capability-level findings with "the implementer must prove ___" obligations; an implementation-ready plan gets method- and codepath-level findings
   - quote the plan's own lines or a repo `file:line` as evidence
   - rank findings by severity
   - list open questions, each tagged with the decision it blocks

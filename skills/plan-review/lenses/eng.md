@@ -30,6 +30,9 @@ You prize ASCII diagrams for any non-trivial data flow, state machine, or pipeli
 - Whether a runtime, framework, or library built-in already covers each pattern, infrastructure component, or concurrency approach the plan introduces, and whether the chosen approach is current best practice with no known footguns.
 - Whether the plan does the complete version or a shortcut. With AI-assisted implementation the cost of completeness (full coverage, edge cases, error paths) is far lower than with a human team, so a shortcut that only saves minutes is rarely worth it.
 - Whether each success criterion is mechanically checkable: a criterion that cannot be tested or measured is a plan defect, not a target.
+- Every load-bearing claim the plan rests on carries cited evidence or is marked unverified, and the count of unverified premises is stated.
+- Every explicit ask in the request maps to a plan item or a named deferral; a silently dropped ask is a finding.
+- The plan's numbers (effort tables, ratios, counts) are re-counted, not credited as written.
 
 **Red flags:**
 - The plan touches more than about 8 files or introduces more than about 2 new classes or services. Treat that as a complexity smell and challenge whether the same goal needs fewer moving parts.
@@ -95,6 +98,8 @@ You prize ASCII diagrams for any non-trivial data flow, state machine, or pipeli
 - Whether each area is engineered enough: not fragile or hacky (under-engineered), not premature abstraction or unnecessary complexity (over-engineered).
 - Whether ASCII diagrams in touched files are still accurate after the change.
 
+A proposed extraction gets the shared-code rubric: at least two verified first-party callers (similar names or formatting do not establish equivalent behavior; generated or third-party copies do not qualify), reuse of an existing helper before a new one, and whole-change accounting (savings = removed - added, moved code counted on both sides, stated separately from totals including tests and integration).
+
 **Red flags:**
 - Repeated logic that should be one shared unit.
 - Silent error paths or swallowed failures.
@@ -121,6 +126,8 @@ You prize ASCII diagrams for any non-trivial data flow, state machine, or pipeli
 - Whether a unit test or an E2E/integration test is the right tool. Recommend E2E for user flows spanning three or more components, integration points where mocking hides real failures, and auth, payment, or data-destruction flows. Recommend an eval for LLM, prompt-template, system-instruction, or tool-definition changes.
 - Unit tests stay the tool for pure functions, side-effect-free helpers, single-function edge cases, and obscure non-customer-facing flows; do not escalate these to E2E.
 
+The value bar for any proposed test: name the observable behavior or contract it protects, the credible regression that fails it, why existing coverage does not already catch it (prefer extending an existing test), and whether it needs a production seam no caller needs (if so, test at the real boundary instead). A test that breaks under a behavior-preserving refactor asserts implementation: rewrite it at the owning boundary, unless exact output is the declared contract. Each proposed test carries a no_claim line: what green does not prove and which fixtures or mocks stand in for what. Translating a requirement into an assertion preserves exact counts and conditions; never weaken an exact count to a lower bound. Tests the plan makes obsolete are listed with one-line reasons; retiring one still needs the full justification at implementation time.
+
 **Red flags:**
 - A branch, user flow, or error state with no test. 100% coverage is the goal.
 - A smoke check standing in for behavior coverage.
@@ -139,6 +146,8 @@ You prize ASCII diagrams for any non-trivial data flow, state machine, or pipeli
 - For each such failure, whether a test covers it, whether error handling exists, and whether the user would see a clear error or a silent one.
 - Security-sensitive surfaces: auth, data access, external input, API boundaries.
 - Whether the cost of being wrong is kept low: reversible, flagged, staged.
+- For flows sharing mutable state across awaits: state the invariant, exercise both completion orders, and name the mechanism that prevents the violating schedule (a single favorable schedule or single-thread reasoning proves nothing); the regression test uses controlled pause and release points.
+- LLM or AI calls in the plan: malformed, empty, and hallucinated-invalid outputs and refusals are four distinct failure modes, each with its own handling.
 
 **Red flags:**
 - A failure mode with no test AND no error handling AND a silent outcome. This is a critical gap, flag it as such.
