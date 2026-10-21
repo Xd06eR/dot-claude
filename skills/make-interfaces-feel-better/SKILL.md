@@ -1,7 +1,7 @@
 ---
 name: make-interfaces-feel-better
 description: "Apply the small design-engineering details that compound into a polished interface: spacing, radius, optical alignment, shadows, text wrapping, hit areas, and CSS-level interaction states. Use when the UI feels off, flat, generic, cramped, or unfinished, or when a frontend review needs concrete before/after recommendations. For motion-system work (motion/react, springs, tokens), use motion-ui."
-origin: ECC + impeccable
+origin: ECC + impeccable + deepseek-harness
 ---
 
 ## Core Principles
@@ -115,6 +115,20 @@ A heading gets more space above than below: the gap above separates it from the 
 
 On a colored surface, secondary text is tinted from that surface's hue or set as the foreground at reduced opacity, never neutral gray; gray on color reads as mud.
 
+### Transient Surfaces
+
+- Host a toast above the surface that reports it: a toast owned by a panel unmounts with that panel, so an operation that closes its own surface (delete, submit-and-close) never announces. Report success and failure, never still-pending states.
+- A failed transient operation keeps the data visible: the row stays and the toast announces. Never blank content to show a transient error; in-place notices belong to surface-tied states (a query failure with its retry, field validation on the owning form).
+- One loading treatment per page or component: concurrent regions never flash separate styles (the skeleton-vs-spinner kind lives in `design-build`).
+- Every menu, popover, and tooltip dismisses on outside click and Escape, and flips or slides to stay inside the viewport, flipping only into a side that fits (clipping escapes are design-build's overlay rule).
+- An error notice never shifts the layout: reserve its space or overlay it.
+
+### Responsive Behavior
+
+- Gate hover effects behind `@media (hover: hover)`; viewport width is not a hover proxy. A tap must not leave hover residue (a stuck background, highlight, or revealed action).
+- Truncated content stays reachable in full elsewhere (a detail view, menu, or tooltip); never truncate errors or key information.
+- On touch devices, suppress auxiliary-only tooltips (action names, keyboard shortcuts); explanatory tooltips need tap-to-show.
+
 ## Review Output
 
 When reviewing a UI polish pass, lead with the specificity verdict: could an unrelated product use this UI unchanged? If yes, say so; polish that leaves the surface category-interchangeable is not finished. For an interaction-heavy surface, walk the primary action as two or three personas the interface actually serves (an impatient power user, a confused first-timer, an accessibility-dependent user) and report what broke for each specifically, never generic concerns. If any planned check could not run (no way to see the render, a tool missing), the report's first line names what was skipped and why: a silently degraded review is a failed review.
@@ -149,3 +163,10 @@ Include file paths and properties when they are not obvious from the snippets. O
 - Light text on dark surfaces is compensated (line height, tracking, weight).
 - Paragraphs use spacing or indent, not both.
 - Body copy holds a 45-75ch measure.
+- Toasts are hosted above their reporting surface and never report pending states.
+- Failed transient operations keep the data visible.
+- Each page or component uses one loading treatment.
+- Menus, popovers, and tooltips dismiss on outside click and Escape and stay inside the viewport.
+- Error notices never shift the layout.
+- Hover effects are gated behind `@media (hover: hover)` and leave no residue on touch.
+- Truncated content is reachable in full elsewhere; errors are never truncated.
