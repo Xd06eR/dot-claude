@@ -100,6 +100,8 @@ Before ANY commit:
 
 Assume prompt injection succeeds: anything in the context may be steering the model, so every security control is enforced outside it, in deterministic code. Model output is untrusted input, and so is everything interpolated into a prompt.
 
+For agent systems (tools, memory, orchestration), separate planning from execution so injected content cannot both decide and act, and give the agent a real kill switch: rollback for its actions and a halt it cannot bypass.
+
 - [ ] Completions validated against a schema before use; retries bounded; final failure rejects, never falls through to unvalidated output
 - [ ] Model output never reaches `eval`/`exec`, a shell, raw SQL, a file path, an outbound URL, or rendered HTML unvalidated; model-written code runs only in a sandbox
 - [ ] Model output treated as unverified claims; load-bearing facts cross-checked against authoritative sources before acting on them
