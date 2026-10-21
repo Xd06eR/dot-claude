@@ -1,7 +1,7 @@
 ---
 name: writing-for-agents
 description: Writing documents for agents. Use when creating or editing the prose of skills, AGENTS.md, CLAUDE.md, or model-facing tool definitions. For scaffolding a new skill, benchmarking one with evals, or optimizing a description for triggering, use skill-creator.
-origin: mattpocock + superpowers + deepseek-harness
+origin: mattpocock + superpowers + deepseek-harness + claude-plugins-official
 ---
 
 Reference for writing any document an agent consumes — a skill, an `AGENTS.md` / `CLAUDE.md`, a doc reached by a pointer. The packaging differs; the writing does not: the same levers make each one predictable — the agent taking the same _process_ every run, not producing the same output.
@@ -107,3 +107,6 @@ A model-facing tool definition (name, description, parameter schema) loads on ev
 - **Put parameter rules on the parameter.** Defaults, ranges, and when-to-set rules belong in that parameter's schema description; a tool description that varies with configuration usually means the varying part belongs to a parameter.
 - **Delete constraints the call result teaches.** A read of a missing file fails with an error that teaches the rule; restating it in the description is a cache (the environment-as-source-of-truth rule applied to runtime results).
 - **Bound the output and name the retrieval path.** Return concise results with identifiers or paths for fetching detail, carry only a bounded window of likely-needed adjacent context, and mark omissions and truncation explicitly.
+- **Carve the surface by context economics.** Every schema is tokens spent on every turn. Small surface (up to ~15 actions): one dedicated tool per action. Large surface (dozens on): expose a search tool returning matching actions with their schemas plus an execute-by-ID tool, and promote the few most-used actions to dedicated tools.
+- **Disambiguate siblings.** When two tools are similar, each description says when to use the other.
+- **Return what follow-up calls need.** A mutation returns the new object's identifier; an error names the call that resolves it, never a bare dead end.
