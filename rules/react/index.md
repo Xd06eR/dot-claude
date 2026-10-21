@@ -42,6 +42,7 @@ Every Suspense boundary needs an Error Boundary above it. The pair covers pendin
 - **Component shape:** prefer `type Props = {}` for closed component prop shapes; use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point.
 - **Refs:** React 19 passes `ref` as a regular prop (`forwardRef` not required); React 18 codebases keep `forwardRef` until upgraded.
 - **Hooks and state:** see [hooks.md](hooks.md) for the full ruleset; avoid creating ad-hoc hooks for one-line wrappers (inline the call instead); state location per the [decision tree](#state-location-decision-tree); compute during render instead of storing derivable state.
+- **Forms:** a plain submit form uses uncontrolled inputs with a form action; controlled inputs only when the value drives other UI, real-time validation, or formatting.
 - **Class components:** forbidden in new code (one exception: error boundaries, per [Suspense + Error Boundaries](#suspense--error-boundaries)). Convert legacy class components to function components when touching them for non-trivial changes.
 
 ### File layout per component
