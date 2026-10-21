@@ -1,7 +1,7 @@
 ---
 name: loop-design-check
 description: Design a goal-oriented agent loop, or review an existing one for the failure modes that make loops spin and burn tokens, Goodhart-game the verifier, or run a wrong answer to completion. Use when handing a repeating task to an autonomous agent loop (harness-run or app-side), or before a loop goes automatic. Not for a one-off task or a plain timer/poll. Judgment layer only (goal, verifier, stop conditions), never the wiring.
-origin: ECC
+origin: ECC + gstack
 ---
 
 > **Premise.** An LLM is a feed-forward system: prompt in → tokens out, with no built-in "steer toward the goal" across turns. To make it *behave* like a goal-oriented system, you wrap a feedback loop around it. This skill helps you **write** that loop correctly and **review** it so it won't run away.
@@ -46,6 +46,8 @@ The whole loop rides on the comparator's "is it done yet?" **The comparator can 
 3. **Has a failure fallback** — retry cap N + escalate to a human when exceeded.
 4. **Goal is layered.**
 5. **Prefer reconciliation over assertion for the done-criterion** — anchor to external fact (golden sample / upstream total / financial tie-out / platform back-office numbers) before your own assertions. "All tests pass" can be gamed (loosen asserts, fake mocks, swallow exceptions). "diff vs the reference < 0.01" can't.
+
+**Metered loops (each run costs money):** the bars and stop rules freeze at first spend; recalibrating after paid results arrive is a declared reset with a new written bar, never a quiet retune.
 
 > **Self-check:** read the goal to someone who doesn't know the domain — can they run one command and tell whether it's done? If not, it isn't decidable enough. Go back.
 
