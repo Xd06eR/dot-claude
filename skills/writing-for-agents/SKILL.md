@@ -1,7 +1,7 @@
 ---
 name: writing-for-agents
-description: Writing documents for agents. Use when creating or editing the prose of skills, AGENTS.md, or CLAUDE.md. For scaffolding a new skill, benchmarking one with evals, or optimizing a description for triggering, use skill-creator.
-origin: mattpocock + superpowers
+description: Writing documents for agents. Use when creating or editing the prose of skills, AGENTS.md, CLAUDE.md, or model-facing tool definitions. For scaffolding a new skill, benchmarking one with evals, or optimizing a description for triggering, use skill-creator.
+origin: mattpocock + superpowers + deepseek-harness
 ---
 
 Reference for writing any document an agent consumes — a skill, an `AGENTS.md` / `CLAUDE.md`, a doc reached by a pointer. The packaging differs; the writing does not: the same levers make each one predictable — the agent taking the same _process_ every run, not producing the same output.
@@ -98,3 +98,12 @@ Two clause rules for whichever form you pick:
 - The **environment** is a source of truth too — `package.json` scripts, config files, the directory layout, `--help` output — and a document that restates it is a **cache**: a copy of a lookup, earning its load only when the lookup is expensive. Cache what the agent cannot find by looking: the unwritten convention, the reason behind a choice, the gotcha no config confesses. Leave the one-file, one-command lookups to the environment, where they cannot go stale.
 - Check every line for **relevance**: does it still bear on what the document does? A line loses relevance by never bearing on the task (mere exposition, or a branch that should be disclosed) or by going stale as the behaviour or world it describes changes. Shorter documents are easier to keep relevant. Without a pruning discipline the default fate is **sediment**: stale layers that settle because adding feels safe and removing feels risky, until you must core down through them to find what is still live.
 - Hunt **no-ops** sentence by sentence: an instruction the model already obeys by default pays load to say nothing. The test — does it change behaviour versus the default? — is model-relative, not reader-relative: two people disagreeing about a no-op disagree about the default, and settle it by running the document, not by debate. When a sentence fails, delete the whole sentence rather than trim words from it. The test also grades leading words: a word too weak to beat the default (_be thorough_ when the agent is already thorough-ish) is a no-op, and the fix is a stronger word (_relentless_), not a different technique.
+
+## Tool definitions
+
+A model-facing tool definition (name, description, parameter schema) loads on every turn the tool is offered, so the always-loaded budget rules hit it hardest. The levers above apply as written; the form adds four rules. Measure a definition change by first-turn prompt tokens: a saving that causes more searches, repeated reads, or mistakes is a net loss.
+
+- **Describe behavior, not implementation.** State what the tool does and returns; omit internal mechanisms, enforcement details, and output markers the results themselves show.
+- **Put parameter rules on the parameter.** Defaults, ranges, and when-to-set rules belong in that parameter's schema description; a tool description that varies with configuration usually means the varying part belongs to a parameter.
+- **Delete constraints the call result teaches.** A read of a missing file fails with an error that teaches the rule; restating it in the description is a cache (the environment-as-source-of-truth rule applied to runtime results).
+- **Bound the output and name the retrieval path.** Return concise results with identifiers or paths for fetching detail, carry only a bounded window of likely-needed adjacent context, and mark omissions and truncation explicitly.
