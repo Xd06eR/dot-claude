@@ -233,7 +233,7 @@ export function useSafeMotion(fullY: number = 16) {
 |---|---|
 | Hover feedback | `whileHover` |
 | Tap / press feedback | `whileTap` |
-| Reveal on scroll | `whileInView` |
+| Reveal on scroll | `whileInView` with `viewport={{ once: true }}` (re-firing on scroll-back distracts) |
 | Scroll-linked value | `useScroll` + `useTransform` |
 | Conditional mount/unmount | `AnimatePresence` |
 | Small layout shifts (single element, < ~300px change) | `layout` prop |
@@ -252,6 +252,8 @@ export function useSafeMotion(fullY: number = 16) {
 ### AnimatePresence `mode`
 
 Always specify `mode` explicitly — the default (`"sync"`) runs enter and exit simultaneously, which causes visual overlap in most UI patterns.
+
+Define `exit` alongside `initial` and `animate` on every conditional child; an enter without an exit pops out abruptly.
 
 | `mode` | When to use |
 |---|---|
