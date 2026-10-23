@@ -51,12 +51,15 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
 
 1. `git branch --show-current`. If it equals `<base>` or the default, **abort**: "You're on the base branch. Run from a feature branch."
 
-2. Understand the changeset:
+2. Fetch the base (skip when no remote is configured) and understand the changeset:
    ```bash
-   git diff <base>...HEAD --stat
-   git log <base>..HEAD --oneline
-   git diff <base>...HEAD --name-only
+   git fetch origin <base>
+   git diff <cmp>...HEAD --stat
+   git log <cmp>..HEAD --oneline
+   git diff <cmp>...HEAD --name-only
    ```
+
+   `<cmp>` is `origin/<base>` when the fetch ran, else the local `<base>`; later comparisons use it.
 
 3. Discover all doc files in the repo (tracked and untracked, no depth cap):
    ```bash
@@ -161,7 +164,7 @@ This skill never bumps VERSION; the bump decision is `ship`'s Step 6. What you d
 1. No VERSION file (or equivalent version source like `package.json` `.version`, `pyproject.toml`, `Cargo.toml`): skip silently.
 2. Check whether VERSION was bumped on this branch:
    ```bash
-   git diff <base>...HEAD -- VERSION
+   git diff <cmp>...HEAD -- VERSION
    ```
 3. **Not bumped:** docs-only changes need no bump — continue. If the branch carries code changes that lack a version bump, stop and tell the user to re-run `ship`'s version step.
 4. **Already bumped:** read the CHANGELOG entry for the current VERSION. If significant branch changes are uncovered by it, ask in plain text whether to fold them into the existing entry or route back to `ship`.
