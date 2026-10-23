@@ -101,7 +101,7 @@ Two clause rules for whichever form you pick:
 
 ## Tool definitions
 
-A model-facing tool definition (name, description, parameter schema) loads on every turn the tool is offered, so the always-loaded budget rules hit it hardest. The levers above apply as written; the form adds four rules. Measure a definition change by first-turn prompt tokens: a saving that causes more searches, repeated reads, or mistakes is a net loss.
+A model-facing tool definition (name, description, parameter schema) loads on every turn the tool is offered, so the always-loaded budget rules hit it hardest. The levers above apply as written; the form adds its own rules. Measure a definition change by first-turn prompt tokens: a saving that causes more searches, repeated reads, or mistakes is a net loss.
 
 - **Describe behavior, not implementation.** State what the tool does and returns; omit internal mechanisms, enforcement details, and output markers the results themselves show.
 - **Put parameter rules on the parameter.** Defaults, ranges, and when-to-set rules belong in that parameter's schema description; a tool description that varies with configuration usually means the varying part belongs to a parameter.
