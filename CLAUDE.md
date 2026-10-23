@@ -85,7 +85,7 @@ How to write and review durable text, for any reader.
 
 ## Skill invocation
 
-Invoke the most suitable skill or agent for the work before acting, and name what you invoked and for what ("Using X to Y").
+Invoke the most suitable skill or agent for the work before acting.
 
 **Skills fire as the work moves, not once per task:** a task crossing phases or concerns invokes the skill for each, never two doing the same job.
 
