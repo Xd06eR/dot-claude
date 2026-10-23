@@ -2,7 +2,7 @@
 name: code-review
 description: Comprehensive code review of a diff or PR. Run when a diff needs an independent pass before it ships. Returns deduplicated, severity-ranked findings.
 argument-hint: "[fixed-point] [aspects: all | code | tests | errors | types | spec | simplify]"
-origin: pr-review-toolkit + mattpocock + code-review plugin
+origin: pr-review-toolkit + mattpocock + code-review plugin + gstack
 ---
 
 The invocation may name a fixed point and review aspects; with no aspects named, run the default core defined in step 4.
