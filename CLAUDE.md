@@ -101,7 +101,7 @@ The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser dri
 
 ## Git
 
-- **Never run `git commit`, `git push`, destructive ops, or `gh` mutations.** Output exact command(s) as text for the user to run manually, single-line (`\` continuations paste broken across shells). On Windows, one command per line (no `&&`).
+- **Never run `git commit`, `git push`, destructive ops, or `gh` mutations.** Output exact commands as text for the user to run manually, one per line: no chaining (`&&`), no `\` continuations (both paste broken across shells).
 - Stage files by name; never `git add -A` or `git add .` (sweeps secrets and scratch into commits).
 - One logical change per commit; conventional-commits subject line only (body on request), descriptive over terse.
 - Resolve merge conflicts per hunk; never blanket-take `--ours`/`--theirs`.
