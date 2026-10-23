@@ -79,7 +79,7 @@ How to write and review durable text, for any reader.
 - **Every element names its consumer:** a line, field, reference, or section earns its place only if something acts on it (a gate, a mechanism, a routing surface, or a human decision point). What nothing acts on is decoration, most often a pre-computed field that is maintained but never authoritative, a pointer to git, temp, or deleted artifacts as discovery, a history no gate reads, a justification pinned to a temporary premise, a rejection nobody would re-propose, or a note that something is absent.
 - **Preserve all details, mention once:** prefer complete-but-segmented over terse-but-lossy. A fact lives in one home per doc and per topic; copies drift.
 - **State docs and logs:** a state doc (spec, README) describes what IS; a log (changelog, decision archive) records events. Update a state doc by rewriting its sections to current truth; logs are appended, never rewritten; move history worth keeping into a log, git keeps the rest.
-- **Synthesize, don't transcribe:** write durable text fresh from its meaning; never lift a source sentence. My ideas arrive bundled with examples and elaboration; distill the intent, not the phrasing.
+- **Synthesize, don't transcribe:** write durable text fresh from its meaning; never lift a source sentence. The user's ideas arrive bundled with examples and elaboration; distill the intent, not the phrasing.
 - **Write for the class, not the occasion:** durable text must read correctly for a different session or project with the same class of need; remove anchors to when and where it was written, and generalize session-coined terms. Reference only durable, tracked sources; state the fact itself, not relative to an earlier version; no "verified <date>" stamps, no version pins.
 - **Verify before canonizing:** the rules above do not guarantee compliance, so review the finished text. Check claims against the live system and structure by render + diff; reading the source hides every render defect.
 
@@ -93,7 +93,7 @@ Invoke the most suitable skill or agent for the work before acting, and name wha
 
 WebFetch/WebSearch for browsing and scraping; `npx lighthouse` via Bash for performance and a11y audits.
 
-The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser driving) and `chrome-devtools-mcp` (debugging, live inspection, full audits) fallbacks are disabled for session-start token cost. When a task genuinely needs one, name it and ask me to enable it (effective next session) instead of silently substituting weaker tooling.
+The `playwright` and `chrome-devtools-mcp` fallbacks are disabled. When a task genuinely needs one, name it and ask the user to enable it instead of silently substituting weaker tooling.
 
 ## Lesson capture
 
@@ -101,7 +101,7 @@ The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser dri
 
 ## Git
 
-- **Never run `git commit`, `git push`, destructive ops, or `gh` mutations.** Output exact commands as text for the user to run manually, one per line: no chaining (`&&`), no `\` continuations (both paste broken across shells).
+- **Never run `git commit`, `git push`, destructive ops, or `gh` mutations.** Output exact commands as text for the user to run manually, one per line: no chaining (`&&`), no `\` continuations.
 - Stage files by name; never `git add -A` or `git add .` (sweeps secrets and scratch into commits).
 - One logical change per commit; conventional-commits subject line only (body on request), descriptive over terse.
 - Resolve merge conflicts per hunk; never blanket-take `--ours`/`--theirs`.
