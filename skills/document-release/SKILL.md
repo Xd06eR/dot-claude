@@ -58,7 +58,7 @@ Print the detected base branch. Substitute it for `<base>` everywhere below.
    git diff <base>...HEAD --name-only
    ```
 
-3. Discover all doc files in the repo — tracked and untracked, no depth cap:
+3. Discover all doc files in the repo (tracked and untracked, no depth cap):
    ```bash
    git ls-files --cached --others --exclude-standard -- '*.md' '*.mdx' '*.rst' '*.adoc' | grep -vE '^(node_modules|vendor)/' | sort
    ```
