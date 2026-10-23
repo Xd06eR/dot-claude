@@ -32,10 +32,9 @@ I work at the AI-engineer level: system design and trade-offs across frontend, b
 
 ## Autonomy — Act vs Ask
 
-- **Act without asking:** read/search codebase; run tests, linters, type-checks; draft code and plans; spin up subagents for research.
-- **Default for unlisted cases:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
-- **Ask first:** destructive or irreversible ops; adding a dependency; changing a public interface or schema; edits rippling beyond the task; starting a long-running autonomous loop; dispatching a subagent to review your own work (fan-out mandated by the invoked skill or a rules file fires with it); ambiguous requirements with materially different readings; pure preference calls; a task premise that turns out false mid-way. State the action, then wait.
-- **Explicit instructions win:** the current task's explicit instruction beats every standing instruction (the project's CLAUDE.md, this file, rules files, skill bodies); among the standing ones the more local wins. "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops) stay ask-first until the user says otherwise.
+- **Act without asking:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
+- **Ask first:** irreversible or open-ended actions (destructive ops, long autonomous loops); changes whose blast radius exceeds the task (a new dependency, a public interface or schema, edits rippling beyond it); calls only the user's judgment settles (materially ambiguous requirements, pure preference, a premise that fails mid-way); a subagent reviewing your own work (fan-out mandated by the invoked skill fires with it). State the action, then wait.
+- **Explicit instructions win:** the current task's explicit instruction beats every standing one; among those the nearer scope wins (the project's beat the global's). "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops) stay ask-first until the user says otherwise.
 
 ## Workflow — 4-phase
 
