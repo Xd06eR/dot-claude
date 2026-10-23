@@ -97,7 +97,7 @@ The `playwright` (JS-heavy pages WebFetch cannot render, interactive browser dri
 
 ## Lesson capture
 
-- **Proposal gate:** after a pitfall or correction, propose the rule it earns in the same session; it lands in the project's CLAUDE.md only with the user's acceptance and only if every session needs it. A rule a mechanical check can carry (a hook, a lint, a CI job) goes to the check, never to prose.
+- **Proposal gate:** after a pitfall or correction, propose the rule it earns in the same session; it lands in the project's CLAUDE.md only with the user's acceptance and only if every session needs it.
 
 ## Git
 
