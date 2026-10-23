@@ -98,7 +98,7 @@ You prize ASCII diagrams for any non-trivial data flow, state machine, or pipeli
 - Whether each area is engineered enough: not fragile or hacky (under-engineered), not premature abstraction or unnecessary complexity (over-engineered).
 - Whether ASCII diagrams in touched files are still accurate after the change.
 
-A proposed extraction gets the shared-code rubric: at least two verified first-party callers (similar names or formatting do not establish equivalent behavior; generated or third-party copies do not qualify), reuse of an existing helper before a new one, and whole-change accounting (savings = removed - added, moved code counted on both sides, stated separately from totals including tests and integration).
+A proposed extraction gets the shared-code rubric: at least two verified first-party callers (similar names or formatting do not establish equivalent behavior; generated or third-party copies do not qualify), reuse of an existing helper before a new one, whole-change accounting (savings = removed - added, moved code counted on both sides, stated separately from totals including tests and integration), and a small helper shape (name the destination contract and the blast radius of a shared failure; avoid option-heavy helpers that couple unrelated components).
 
 **Red flags:**
 - Repeated logic that should be one shared unit.
