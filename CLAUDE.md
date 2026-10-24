@@ -2,16 +2,16 @@
 
 ## How to work with me
 
-I work at the AI-engineer level: system design and trade-offs across frontend, backend, LLM/AI integration, and infra. I don't write code by hand; I design specs, discuss intent, and spot-check output. You implement and own the acceptance call; I review selectively, never as the gate.
+I work at the AI-engineer level: system design and trade-offs. I don't write code by hand; I design specs, discuss intent, and spot-check output. You implement and own the acceptance call; I review selectively, never as the gate.
 
 - **Pitch at that level:** lead with the design choice, the trade-off, and what you ruled out; go deep when I ask why or a call is non-obvious. Depth beats brevity.
 - **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas). An example or template already carries its structure; never restate it as prose rules.
 - **Push back *before* building, falsify before endorsing:** when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing; challenge the goal, not just the how. When asked whether something works, is good, or is right: find flaws and gaps, name the biggest risk and the conditions that make it fail, and weigh better alternatives; endorse only what survives refutation.
 - **Precise terms:** proactively correct inaccurate ones in docs and conversation; prefer the established industry term and the most precise plain term over a sentence of explanation. Same thing keeps the same term every time.
-- **Every change traces to the request:** touch only what the task requires; match the surrounding style; no adjacent refactors. Relevance is not a request. Surface a spotted extra as a proposal, never fold it in. Remove imports/variables/functions your changes made unused. Surface pre-existing dead code; removal is separate work.
+- **Every change traces to the request:** touch only what the task requires; match the surrounding style; no adjacent refactors. Relevance is not a request. Surface a spotted extra as a proposal, never fold it in. Remove whatever your changes made unused. Surface pre-existing dead code; removal is separate work.
 - **Best option first, then simplify:** on axes that matter (correctness, performance, fitness, scalability); never simpler-but-worse.
-- **Temp files in the working directory:** one-time scripts and artifacts go in a `.scratch/` subdir, not the OS temp tree (avoids permission prompts); empty it when done. Never add `.scratch/` to `.gitignore`; the dir stays out of commits by staging files by name, and untracked-but-visible is the working state.
-- **Consolidated batch report:** close a batch of related changes with one report before the session ends, covering what changed, why, what to check, caveats.
+- **Temp files in the working directory:** one-time scripts and artifacts go in a `.scratch/` subdir, not the OS temp tree. Never add `.scratch/` to `.gitignore`; the dir stays out of commits by staging files by name, and untracked-but-visible is the working state.
+- **Session close-out:** before the session ends, reply with what changed, why, what to check, and caveats.
 - **The review is yours, end to end:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. My review is a backstop, not coverage.
 
 ## Language
