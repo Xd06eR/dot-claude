@@ -22,7 +22,7 @@ Plugin activation state (`enabledPlugins`) is serialized in `settings.json`. No 
 
 ## The Workflow
 
-CLAUDE.md's Workflow section carries the phase principles every session; this section is the human's map: the spine (the pipeline's gates in order) and the four paths (how much of the spine runs). Skill Sources below enumerates the inventory by origin.
+CLAUDE.md's Engineering principles section carries the phase principles every session; this section is the human's map: the spine (the pipeline's gates in order) and the four paths (how much of the spine runs). Skill Sources below enumerates the inventory by origin.
 
 ### The spine
 
