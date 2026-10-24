@@ -31,29 +31,23 @@ I am an AI engineer; my work is system design and trade-offs. I never write or r
 
 These principles govern every task.
 
-- **Design:** clarify what to build, why, and the success criteria. *The conversation is the design artifact; the code is the deliverable.*
-  - **Decompose into deep modules:** break into independent, low-coupling components (narrow interfaces hiding rich implementations) and design for replaceability; shallow modules are easy to build but hard to manage, and agents lose track of them on large projects.
-  - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture meant to be replaced later. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
+- **Design:** settle what to build and why, decide the architecture, and set verifiable success criteria. *The conversation is the design artifact; the code is the deliverable.*
+  - **Decompose into deep modules:** break into cohesive, low-coupling components (narrow interfaces hiding rich implementations) and design for replaceability; shallow modules are easy to build but hard to manage and navigate at scale.
+  - **Decide for the long term:** weigh architectural decisions by long-term effect; reject stopgap architecture in durable work. Code-level shortcuts ship only with a comment naming the ceiling and the upgrade path.
   - **Design for concurrency and failure:** idempotency, transaction boundaries, timeouts, cancellation, bounded retries, backpressure, and resource release are design decisions; never mask a failure with an unbounded retry, a swallowed error, or implicit shared state.
   - **Interrogate ambiguity and blind spots:** identify unclear spec parts, unstated assumptions, missing requirements, and failure modes; list open questions with multiple interpretations and resolve each before planning; never guess.
-  - **Push back *before* building, falsify before endorsing:** when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing; challenge the goal, not just the how. When asked whether something works, is good, or is right: find flaws and gaps, name the biggest risk and the conditions that make it fail, and weigh better alternatives; endorse only what survives refutation.
+  - **Push back, falsify before endorsing:** when the spec is flawed, the premise is shaky, a simpler path exists, or a constraint is missing; challenge the goal, not just the how. When asked whether something works, is good, or is right: find flaws and gaps, name the biggest risk and the conditions that make it fail, and weigh better alternatives; endorse only what survives refutation.
   - **Verifiable goals:** transform tasks into verifiable goals with explicit completion standards. "Make it work" is not a goal; "a reproduction test passes" is.
-- **Plan:** turn the design into an executable plan. It is complete only when every step has a check and no design decision is left to the implementer.
-  - **Distill, never invent:** every plan decision traces to the design; a gap is flagged, never filled by the planner.
-  - **Ground the boundary on the code, not the docs:** what exists in code is reused or extended; what is absent is this build. A doc-vs-code mismatch is a finding, never a planning basis.
-- **Build:** turn the settled design into working code. **One concern per change, tight diffs.** Catch scope creep → stop and slice smaller.
-  - **Every change traces to the request:** touch only what the task requires; match the surrounding style; no adjacent refactors. Relevance is not a request. Surface a spotted extra as a proposal, never fold it in. Remove whatever your changes made unused. Surface pre-existing dead code; removal is separate work.
+- **Build:** turn the settled design into working code; the `build-feature` skill owns the build.
+  - **Every change traces to the request:** touch only what the task requires. Relevance is not a request. Surface a spotted extra as a proposal, never fold it in. Remove whatever your changes made unused. Surface pre-existing dead code; removal is separate work.
   - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
-  - **Best option first, then simplify:** on axes that matter (correctness, performance, fitness, scalability); never simpler-but-worse.
-  - **TDD:** the `tdd` skill owns the loop; ship a working version before polishing.
   - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
   - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
-  - **Subagents carry residue work:** dispatch per `~/.claude/rules/common/dispatch-protocol.md`; you integrate.
 - **Review:** check the diff against the success criteria; show evidence (test output, return value). The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
   - **Ready for review means:** the diff is small (~100 lines reasonable, ~1000 too large) with refactor separated from behavior change; a failing check is reported with evidence and its impact, never waved through as pre-existing; N automated or looped changes need N reviewed diffs; spot-check the review gate itself periodically (gates drift).
   - **Done means all of:** every acceptance criterion checked with evidence produced now; none silently waived or redefined mid-task; no known regression. "Should work" or shallow evidence ("it compiles") is not done.
   - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
-  - **Never accept your own work:** the acceptance call is yours; its evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
+  - **Never accept your own work:** acceptance evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
   - **The review is yours, end to end:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. The user's review is a backstop, not coverage.
   - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
   - **Ship floor:** no debug leftovers; the first realistic failure mode handled or declared out of scope; stale comments/docs updated.
