@@ -43,18 +43,12 @@ These principles govern every task.
   - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
   - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
   - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
-- **Review:** check the diff against the success criteria; show evidence (test output, return value). The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
+- **Review:** check the diff against the success criteria. The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
   - **Ready for review means:** the diff is small (~100 lines reasonable, ~1000 too large) with refactor separated from behavior change; a failing check is reported with evidence and its impact, never waved through as pre-existing; N automated or looped changes need N reviewed diffs; spot-check the review gate itself periodically (gates drift).
   - **Done means all of:** every acceptance criterion checked with evidence produced now; none silently waived or redefined mid-task; no known regression. "Should work" or shallow evidence ("it compiles") is not done.
   - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
-  - **Never accept your own work:** acceptance evidence comes from a fresh agent or the user, never the context that produced the work. High-risk judgment (irreversible ops, security, architecture, public interfaces) gets a second opinion from a fresh agent briefed from a different angle.
   - **The review is yours, end to end:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. The user's review is a backstop, not coverage.
   - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
-  - **Ship floor:** no debug leftovers; the first realistic failure mode handled or declared out of scope; stale comments/docs updated.
-
-The workflow's artifacts are adopted as needed: the phases work without them, and cross-session continuity is what they buy. A project adopts the document set by running `setup-workflow` once.
-
-Any skill exploring a codebase area or producing domain-facing text reads `CONTEXT.md` for the mental model and uses its vocabulary, and respects ADRs in the area; absence is silent, and the writer skills create lazily.
 
 ## Doc content and structure
 

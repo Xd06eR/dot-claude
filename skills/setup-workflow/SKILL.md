@@ -34,6 +34,8 @@ One feature's flow: rulings land in `OPEN-QUESTIONS.md` → bake into `docs/desi
 - `docs/adr/` — decision snapshots. [optional layer]
 - `docs/plan/` — specs + plans + `INDEX.md` (consumable).
 - `docs/build/` — briefs + ledger + `INDEX.md` + `implementation-notes.md` (consumable).
+
+Any skill exploring a codebase or producing domain-facing text reads `CONTEXT.md` (if it exists) for the mental model and uses its vocabulary, and respects ADRs in the area.
 ```
 
 When an optional layer is declined, append its named-decline line to the block:
@@ -58,6 +60,14 @@ Settled, user-approved design lives here. Determined-only: no open or provisiona
 Index the folder's docs in this file as they land: a `| Doc | Scope |` table, one row per doc.
 ```
 
+`docs/adr/CLAUDE.md` (only when chosen):
+
+```markdown
+# docs/adr/ — decision snapshots
+
+One frozen file per independently-reversible choice (a future session could reverse it without touching the others): what forced it, what was chosen, what lost. Frozen once written; supersession flips `Status` and writes a new ADR. Format, guardrail, and numbering per `~/.claude/skills/domain-modeling/ADR-FORMAT.md`; one index row per ADR in `README.md`.
+```
+
 `docs/plan/CLAUDE.md`:
 
 ```markdown
@@ -76,12 +86,4 @@ Consumable: the pairs and the feature's INDEX rows delete at the feature's Revie
 One `<feature>.md` brief per feature; build progress lives in `<feature>.ledger.md`; `INDEX.md` orders features by dependency; `implementation-notes.md` logs build-phase decisions and tradeoffs under `## <feature>` sections. Formats are owned by the writer skills (`build-brief`, `build-feature`); keep hand edits consistent with them.
 
 Consumable: the brief, the ledger, and the feature's INDEX row retire with its plan docs at Review-pass; the notes file deletes when no build is in flight.
-```
-
-`docs/adr/CLAUDE.md` (only when chosen):
-
-```markdown
-# docs/adr/ — decision snapshots
-
-One frozen file per independently-reversible choice (a future session could reverse it without touching the others): what forced it, what was chosen, what lost. Frozen once written; supersession flips `Status` and writes a new ADR. Format, guardrail, and numbering per `~/.claude/skills/domain-modeling/ADR-FORMAT.md`; one index row per ADR in `README.md`.
 ```
