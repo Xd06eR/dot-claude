@@ -46,6 +46,7 @@ psql -c "SELECT indexrelname, idx_scan, idx_tup_read FROM pg_stat_user_indexes O
 
 - RLS enabled on multi-tenant tables with `(SELECT auth.uid())` pattern
 - RLS policy columns indexed
+- **RLS verified by behavior** — policies tested by querying as a different user or role and confirming cross-tenant rows are blocked, not by reading the SQL alone
 - **Least privilege access** — no `GRANT ALL` to application users
 - Public schema permissions revoked
 
@@ -78,6 +79,7 @@ psql -c "SELECT indexrelname, idx_scan, idx_tup_read FROM pg_stat_user_indexes O
 - [ ] Proper data types (bigint, text, timestamptz, numeric)
 - [ ] RLS enabled on multi-tenant tables
 - [ ] RLS policies use `(SELECT auth.uid())` pattern
+- [ ] RLS verified by querying as a different user/role
 - [ ] Foreign keys have indexes
 - [ ] No N+1 query patterns
 - [ ] EXPLAIN ANALYZE run on complex queries

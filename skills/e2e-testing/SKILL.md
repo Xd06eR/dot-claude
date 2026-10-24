@@ -24,3 +24,5 @@ Then fix the test itself per `~/.claude/rules/common/index.md`.
 ## Critical flows
 
 A test touching real money, credentials, or production data is skipped there by default: `test.skip(process.env.NODE_ENV === 'production', 'Skip on production')`.
+
+Auth suites cover the failure paths, not just the happy path: wrong password repeated (lockout or throttle), password reset for a nonexistent email (response identical to a real one), verification link used twice, duplicate signup.

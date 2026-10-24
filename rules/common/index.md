@@ -111,7 +111,7 @@ For agent systems (tools, memory, orchestration), separate planning from executi
 - [ ] Tool permissions scoped to the task; irreversible, spending, credential-touching, or externally-communicating actions gated behind human confirmation
 - [ ] Retrieval enforces the caller's permissions inside the retrieval query (namespace or metadata filter), never by pruning results afterward or asking the model to withhold them
 - [ ] System prompts, tool schemas, and hidden context carry no secrets and no authorization logic; treat them all as disclosable
-- [ ] Token, spend, and recursion caps on every model call and agent loop
+- [ ] Token, spend, and recursion caps on every model call and agent loop; the paid provider account gets a dashboard hard cap and a 50% alert
 - [ ] Model, provider, plugin, and dataset sources vetted and pinned; third-party artifacts integrity-checked (signing, file hashes) before load
 - [ ] Prompts and completions redacted before logging; no secrets, tokens, or PII in traces
 

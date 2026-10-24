@@ -21,4 +21,4 @@ Base rules per [common/index.md](../common/index.md); React sinks per [react/ind
 
 ## Forms
 
-- Prefer honeypots or light anti-abuse controls over heavy-handed CAPTCHA defaults
+- Prefer honeypots or light anti-abuse controls over heavy-handed CAPTCHA defaults; signup, contact, and waitlist forms that spend real resources (email credits, account seats) get a Turnstile-class check

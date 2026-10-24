@@ -222,7 +222,7 @@ Classify what the app handles:
 - INTERNAL: logs, config
 - PUBLIC
 
-For each RESTRICTED class, note where it is stored and how it is protected. Gaps become findings or open questions.
+For each RESTRICTED class, note where it is stored and how it is protected. If the app collects RESTRICTED data, check the legal baseline too: a privacy policy ships, and a data map (what is collected, where it lives) is written down. Gaps become findings or open questions.
 
 ## False-positive filter and verification
 
@@ -239,7 +239,7 @@ A report with 3 real findings beats one with 3 real plus 12 theoretical: users s
 
 ### Discard classes (concrete exploit, or no finding)
 
-- DoS, rate-limiting, resource/memory/CPU exhaustion. Exception: uncapped LLM spend is financial risk, keep it.
+- DoS, rate-limiting, resource/memory/CPU exhaustion. Exceptions stay where the cost is financial: uncapped LLM spend, paid-API endpoints without rate limiting.
 - Missing hardening or absent best practice with no concrete vuln. Exception: unpinned third-party actions and missing workflow CODEOWNERS are concrete, keep them.
 - Files that are only tests or fixtures and not imported by real code.
 - Memory-safety issues in memory-safe languages (Rust, Go, Java, C#).
