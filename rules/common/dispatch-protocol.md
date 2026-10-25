@@ -48,7 +48,7 @@ Parallel fan-out gates on independence (no shared state, no sequential dependenc
 
 ## 3. When attempts struggle
 
-Every retry changes the input, a lever, or the method; two failed methods on one subtask means switch strategy or ask the user. The levers, cheapest first:
+Every retry changes the input, a lever, or the method; two failed methods on one subtask mean switch strategy or ask the user. The levers, cheapest first:
 
 1. **Fresh context.** Carry the full failure trace into a new context, never retry in the one that failed; an up-front escalation starts in a fresh context with the full brief.
 2. **A different model tier.** Lower tiers for mechanical work, higher tiers for hard reasoning and judgment.

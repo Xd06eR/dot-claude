@@ -134,4 +134,4 @@ graph LR
 
 ## Gate
 
-Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, advance the feature row in `TODO.md` to the chosen next step (review the plan when an independent pass is chosen, build when declined) and commit the advance and the new `docs/plan/` content. `build-brief` follows when review passes or is declined.
+Print the component list + dependency order for review, then iterate with the user on the artifacts: fix what reads wrong, settle the decisions likely to change. Propose `plan-review` when the plan warrants an independent pass; the choice is the user's. At the gate's close, when the project keeps a `TODO.md`, advance the feature row in it to the chosen next step (review the plan when an independent pass is chosen, build when declined), and commit the advance and the new `docs/plan/` content. `build-brief` follows when review passes or is declined.

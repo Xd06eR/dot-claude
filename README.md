@@ -28,11 +28,11 @@ CLAUDE.md's Engineering principles section carries the foundation principles eve
 
 The pipeline in order: `setup-workflow` once per project · `session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa → ship → land-and-deploy → document-release. Each step's trigger and mechanics live in its skill's description and body.
 
-Free principle: the phases work without the artifacts. `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md`, `PROGRESS-LOG.md`, `docs/design/`, `docs/adr/`, `docs/plan/`, `docs/build/` are adopted per project as needed; nothing forces them.
+**Artifacts are optional:** `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md`, `PROGRESS-LOG.md`, `docs/design/`, `docs/adr/`, `docs/plan/`, `docs/build/` are adopted per project as needed; nothing forces them.
 
 ### The four paths
 
-Two axes, four routes. The docs axis picks the opening: `grill-me` keeps rulings in the conversation (quick work, nothing to maintain), `grill-with-docs` captures them as they are made (a project worth maintaining). The route axis picks how much of the spine runs: a settled design that fits one context builds directly via `build-feature` with no feature named (it steps back to `plan-from-design` past one context); anything bigger, or any work meant to stay maintainable, runs the spine end to end. Planning always consumes a baked design, so a no-docs route bakes from the conversation first.
+Two axes, four paths. The docs axis picks the opening: `grill-me` keeps rulings in the conversation (quick work, nothing to maintain), `grill-with-docs` captures them as they are made (a project worth maintaining). The spine axis picks how much of the spine runs: a settled design that fits one context builds directly via `build-feature` with no feature named (it steps back to `plan-from-design` past one context); anything bigger, or any work meant to stay maintainable, runs the spine end to end. Planning always consumes a baked design, so a no-docs route bakes from the conversation first.
 
 | Opening | Build directly | Plan first |
 |---|---|---|

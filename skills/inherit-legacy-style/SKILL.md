@@ -13,7 +13,7 @@ Prevents AI code style drift by scanning an existing codebase for implicit conve
 
 ## Workflow
 
-### Step 0 — Auto-Detect Mode
+### Step 0 — Auto-detect mode
 
 Silently check for `.ai-style-rules.md` at the project root:
 
@@ -24,7 +24,7 @@ Silently check for `.ai-style-rules.md` at the project root:
 
 Announce the mode in one line and proceed — never ask the user to pick.
 
-### Branch A — First-time Full-Scan
+### Branch A — First-time full-scan
 
 **1. Measure scale, pick a scanning tier**
 
@@ -79,7 +79,7 @@ Ask the user for enforcement strength (use a structured picker if your harness h
 | **2** Hard hook | Soft hook + `PreToolUse[Write\|Edit\|MultiEdit]` Hook in `settings.json` |
 | **3** No hook | Keep the rules file; user references manually |
 
-### Branch B — Incremental Sniff
+### Branch B — Incremental sniff
 
 1. Read existing `.ai-style-rules.md`. If it has a commit fingerprint, `git diff <last_hash> HEAD --stat` to pinpoint delta
 2. Read recent Git changes (`git log -3 --stat` → inspect suspect files on demand)
@@ -87,17 +87,17 @@ Ask the user for enforcement strength (use a structured picker if your harness h
 4. Compare new code against recorded rules → conflicts go through Grilling Protocol
 5. Append evolution log at the end of `.ai-style-rules.md` (never overwrite old rules)
 
-### Per-Turn Enforcement
+### Per-turn enforcement
 
 When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writing task must open with a **compliance declaration** in the reasoning chain, naming the exemplar being followed and the DONTs being avoided.
 
-## Output Specification
+## Output specification
 
 - `.ai-style-rules.md` at project root (with commit fingerprint + scale tier in header)
 - Optionally `CLAUDE.md` with `@.ai-style-rules.md` reference
 - Evolution logs appended as `### [YYYY-MM-DD] Style Evolution Log` entries
 
-## Anti-Patterns
+## Anti-patterns
 
 - FAIL: Do NOT skip the scale measurement step — sampling a 30-file project "starves" it. Full-scanning a 5,000-file repo blows up.
 - FAIL: Do NOT stack multiple conflict questions at once — batched answers conflate distinct conflicts.
@@ -106,7 +106,7 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 - FAIL: Do NOT judge syntax or tech-stack quality — this skill aligns meta-architecture only
 - FAIL: Do NOT copy bugs from exemplar files — reuse structure, flag defects
 
-## Best Practices
+## Best practices
 
 - Announce the detected mode (first-time vs incremental) and scale tier in one line before scanning
 - For large projects, read `--stat` summaries first, then targeted `Read` on suspect files
