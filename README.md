@@ -109,7 +109,6 @@ If auto-install fails, the commands below mirror the enabled set in `settings.js
 
 ```bash
 claude plugin install claude-md-management@claude-plugins-official
-claude plugin install context7@claude-plugins-official
 claude plugin install pyright-lsp@claude-plugins-official
 claude plugin install security-guidance@claude-plugins-official
 claude plugin install skill-creator@claude-plugins-official
