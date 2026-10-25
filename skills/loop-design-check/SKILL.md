@@ -39,13 +39,12 @@ The whole loop rides on the comparator's "is it done yet?" **The comparator can 
 - Bad: Vague ("make it good," "write it sharper") → the comparator can't judge → either it never passes (stuck retrying) or it guesses (passes/blocks at random).
 - Good: Decidable ("all 96 unit tests green AND a change-list is produced," "module-02 fields filled, pytest passes, business logic untouched") → one check settles it; the loop converges cleanly.
 
-**Five-point goal framework:**
+**Four-point goal framework:**
 
 1. **Done-criterion is machine-verifiable.**
 2. **Boundary conditions defined alongside the done-criterion** ("what it must NOT do") — anti-Goodhart; missing boundaries = a license to cheat.
 3. **Has a failure fallback** — retry cap N + escalate to a human when exceeded.
-4. **Goal is layered.**
-5. **Prefer reconciliation over assertion for the done-criterion** — anchor to external fact (golden sample / upstream total / financial tie-out / platform back-office numbers) before your own assertions. "All tests pass" can be gamed (loosen asserts, fake mocks, swallow exceptions). "diff vs the reference < 0.01" can't.
+4. **Prefer reconciliation over assertion for the done-criterion** — anchor to external fact (golden sample / upstream total / financial tie-out / platform back-office numbers) before your own assertions. "All tests pass" can be gamed (loosen asserts, fake mocks, swallow exceptions). "diff vs the reference < 0.01" can't.
 
 **Metered loops (each run costs money):** the bars and stop rules freeze at first spend; recalibrating after paid results arrive is a declared reset with a new written bar, never a quiet retune.
 

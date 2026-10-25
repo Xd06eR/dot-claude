@@ -42,7 +42,6 @@ Avoid the signatures below unless the brief explicitly asks for them.
 * **NO div-based fake screenshots.** Never build a fake product UI out of `<div>` rectangles to simulate a screenshot. Use real images, generated images, or skip the preview.
 * **NO broken Unsplash links.** Use `https://picsum.photos/seed/{descriptive-string}/{w}/{h}`, or generated photo placeholders, or actual assets.
 * **shadcn/ui customization:** Allowed, but NEVER in default state. Customize radii, colors, shadows, typography to the project aesthetic.
-* **Production-Ready Cleanliness:** Code visually clean, memorable, meticulously refined.
 
 ## 9.F Production-Test Tells (banned outright)
 
