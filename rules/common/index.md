@@ -141,5 +141,5 @@ If security issue found:
 - **Deletion over addition:** when two fixes are otherwise equal, take the one that removes code.
 - **Delete over compat:** an internal refactor deletes the superseded path outright, with no compat layers, deprecated shims, or double-write bridges for internal callers. Compatibility of external contracts (public APIs, migrations, persisted formats) is a separate, explicit decision.
 - **The ladder never cuts:** trust-boundary input validation, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested.
-- **Research & reuse:** mandatory once the reuse ladder above lands on a new capability or dependency: call the Skill tool with "search-first".
+- **Research & reuse:** when the reuse ladder lands on a new capability or dependency, call the Skill tool with "search-first".
 - **Pull request workflow:** when creating PRs, route through `ship`: it owns the readiness gates, the PR body, and the exact command set.

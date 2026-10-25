@@ -22,7 +22,7 @@ Enforce `eslint-plugin-react-hooks` with `react-hooks/rules-of-hooks` set to err
 
 ## `useEffect`
 
-`useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries). Not for: resetting on prop change (use a `key`), notifying parents (call the callback in the event handler), or app-level singleton init (module scope).
+`useEffect` is for synchronizing with external systems (subscriptions, browser APIs, third-party libraries); not for resetting on prop change (use a `key`), notifying parents (call the callback in the event handler), or app-level singleton init (module scope).
 
 - `exhaustive-deps` stays on error, never silenced without a comment; an unwieldy array means the effect does too much, split it
 

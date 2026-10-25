@@ -90,7 +90,7 @@ Skip any step = lying, not verifying
 ❌ Trust agent report
 ```
 
-## When To Apply
+## When to apply
 
 **ALWAYS before:**
 - ANY variation of success/completion claims

@@ -17,7 +17,7 @@ The invocation may name a fixed point and review aspects; with no aspects named,
    - Capture the diff scope once: the exact diff command (or diff content) and, for a fixed-point review, the commit list from `git log <point>..HEAD --oneline`
    - Run the history probe in the main context, no dispatch: read the touched files' recent history (`git log`, `git blame` where the diff edits loaded areas) and prior merged-PR comments on them (`gh pr list --state merged`, `gh pr view --comments`). A change that contradicts or reintroduces a prior fix, or repeats something a prior review already flagged, is a finding like any other. Greenfield files and no prior PRs end the probe.
 
-2. **Available Review Aspects:**
+2. **Available Review Aspects**
 
    - **tests:** Review test coverage quality and completeness
    - **errors:** Check error handling for silent failures

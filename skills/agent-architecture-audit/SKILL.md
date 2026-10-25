@@ -221,7 +221,7 @@ Audits should produce structured reports following this shape:
 }
 ```
 
-## Related Skills
+## Related skills
 
 - `agent-introspection-debugging` — Debug agent runtime failures (loops, timeouts, state errors)
 - `security-auditor` agent — Security audit for code and configuration

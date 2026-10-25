@@ -37,8 +37,6 @@ When the shape of that interface is itself in question (how deep the module is, 
 
 ## Rationalizations
 
-The loop's enemies, answered:
-
 - **"I'll test after."** Tests written after pass immediately, which proves nothing: you never watched them fail, so you never proved they can catch the bug.
 - **"Too simple to test."** Simple code breaks. The test takes seconds.
 - **"I already manually tested it."** Manual verification leaves nothing re-runnable: the next change re-breaks the case with no test to catch it, and cases get skipped under pressure. A test runs the same way every time.
