@@ -34,7 +34,7 @@ Read enough to echo state accurately, then wait.
 4. **Append to `PROGRESS-LOG.md`**, one dated entry: what was decided and why. Record the number or constraint that killed each alternative, rejected proposals with their reasons, and corrections the user made mid-discussion. The outcome lives in the state docs; the reasoning lives here.
 5. **Condense mechanically.** If `PROGRESS-LOG.md` exceeds ~750 lines OR ~75 KB, delete the oldest whole entries down under ~500 lines / ~50 KB, so an ordinary session's appends don't re-trigger the trim. Confirm the outgoing entries are committed first — deletion hands the verbatim to git history, which is the archive; the file is the recent window. No archive file, no marker line.
 6. **Cross-check consistency.** `TODO.md` against `OPEN-QUESTIONS.md` and the two INDEXes — no gaps, statuses consistent: each feature row names its current phase action (bake / plan / review-the-plan / build / review), a `#NN` reference resolves to a live register entry (bake retires it), and the INDEXes carry no feature the task table lacks, nor the reverse.
-7. **Commit and push the captured docs.**
+7. **Output the exact commit and push commands for the captured docs; the user runs them.**
 8. **Confirm** the next session has everything it needs, and it is safe to compact or let the session die.
 
 ## TODO.md format
