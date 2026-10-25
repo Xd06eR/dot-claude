@@ -6,7 +6,7 @@ argument-hint: <start | end>
 origin: custom
 ---
 
-Bridge two sessions: §Start re-grounds at the beginning of one, §End captures state before one dies. This skill writes `TODO.md` and `PROGRESS-LOG.md`, with two exceptions — `bake-design` appends the bake session narrative to `PROGRESS-LOG.md` (it must land at bake time, not batched to session end) and writes the bake hand-off row to `TODO.md`.
+Bridge two sessions: §Start re-grounds at the beginning of one, §End captures state before one dies. This skill writes `TODO.md` and `PROGRESS-LOG.md`, shared with `bake-design`: it appends the bake session narrative to `PROGRESS-LOG.md` (it must land at bake time, not batched to session end) and writes the bake hand-off row to `TODO.md`.
 
 Run the section the argument names: `start` → §Start, `end` → §End; the rest of the message is context for that section. A missing or unclear argument runs §Start (read-only apart from the step-1 pull): a mistaken §End is the only irreversible failure here — it rewrites a real resume block into an empty one.
 

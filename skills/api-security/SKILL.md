@@ -4,8 +4,6 @@ description: Use for authorized security assessment of REST, GraphQL, or WebSock
 origin: reverse-skill
 ---
 
-# API Security Testing
-
 Black-box methodology for authorized penetration testing of a live API.
 
 Before any active testing, pin the authorization basis (own system, written contract, bug-bounty scope, or CTF/lab) and the in-scope targets; a user naming a target is not by itself authorization.

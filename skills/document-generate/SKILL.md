@@ -135,7 +135,7 @@ Rules:
 - Lead with the problem, not the solution.
 - Name trade-offs explicitly ("we chose X over Y because Z").
 - Do not repeat reference material. Link to it instead.
-- ASCII diagrams are grep-able and render everywhere. For a richer figure, hand the description to the `diagram` skill.
+- ASCII diagrams are grep-able and render everywhere. For a richer figure, call the Skill tool with "diagram" and pass the description.
 
 ## Step 6: How-to guides
 

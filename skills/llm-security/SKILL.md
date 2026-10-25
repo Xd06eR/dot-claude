@@ -4,8 +4,6 @@ description: Use for authorized security assessment of LLM applications and AI a
 origin: reverse-skill
 ---
 
-# LLM Security Testing
-
 Adversarial methodology for authorized security assessment of LLM/agent features. The threat model for agents is stolen control (tools, memory, downstream systems), not merely untrusted output.
 
 Before any active testing, pin the authorization basis (own system, written contract, bug-bounty scope, or CTF/lab) and the in-scope targets; a user naming a target is not by itself authorization.
