@@ -117,6 +117,16 @@ claude plugin install typescript-lsp@claude-plugins-official
 
 The list skips the disabled entries: their `false` flags are tracked in `settings.json` and restore as-is.
 
+### Restore MCP servers
+
+User-scope MCP registrations live in `~/.claude.json`, which is per-machine and untracked. One manual command after restore:
+
+```bash
+claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp
+```
+
+Register the plain URL as shown: the official context7 plugin's `?client=claude-code-plugin` URL is auth-gated (the plugin is disabled for this reason). Verify with `claude mcp list` (expect `Connected`).
+
 ## Security & credentials
 
 **Provider connection details (API key, base URL, model name) are local-only.** CC-Switch writes them into `settings.json` per machine; those hunks are never staged (genuine config changes are hunk-staged around them), so the tracked file carries no provider fields and a fresh clone starts clean. Keep the repo private; rotate on exposure.
