@@ -125,7 +125,7 @@ The list skips the disabled entries: their `false` flags are tracked in `setting
 **Adding a new credential:**
 
 1. Never commit it: it lives in a gitignored file or as a local-only `settings.json` hunk that never gets staged.
-2. If the agent must not read its file, block both paths: add a `Read(...)` rule to `permissions.deny`, and add a pattern to `SECRET_PATTERNS` in `hooks/block-secret-paths.sh` (that hook closes the bash bypass of the Read-deny).
+2. If the agent must not read its file, block both paths: add a `Read(...)` rule to `permissions.deny`, and add a pattern to `SECRET_PATTERNS` in `hooks/block-secret-paths.sh`.
 3. If it is a dangerous command (egress, install, remote access), add it to `permissions.ask`.
 4. Restart Claude Code so hook edits load.
 

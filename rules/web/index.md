@@ -30,7 +30,7 @@ Banned patterns:
 - Dashboard-by-numbers layouts with sidebar + cards + charts and no point of view
 - Default font stacks used without a deliberate reason
 
-Do not default to dark mode automatically. Choose the visual direction the product actually wants.
+Do not default to dark mode. Choose the visual direction the product actually wants.
 
 - **Flow states:** every async user flow ships all its states: loading, empty, error with retry, and visible success feedback.
 

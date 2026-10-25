@@ -19,7 +19,7 @@ Also read `OPEN-QUESTIONS.md` when present: non-empty flags the affected area as
 
 ## Decompose by component
 
-A component is the smallest unit that can be spec'd, planned, built, and acceptance-gated INDEPENDENTLY — high cohesion, low coupling.
+A component is the smallest unit that can be spec'd, planned, built, and acceptance-gated INDEPENDENTLY. It shares no state or internals with its neighbors.
 
 State the proposed components before writing.
 

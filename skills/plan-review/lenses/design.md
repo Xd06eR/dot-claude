@@ -211,7 +211,7 @@ Mobile is the same rules at higher stakes: scarce real estate, no hover, afforda
 - Surface every design ambiguity that will haunt implementation, each paired with the concrete bad thing that happens if it is deferred, which is the default the engineer will ship by accident.
 
 These are the decisions the plan silently hands to whoever builds it.
-An unresolved decision must cite an actual in-scope element: a page or section name, or another reviewer's suggestion, does not establish that a control exists, and no decision is invented for a hypothetical element.
+An unresolved decision must cite an actual in-scope element: a page or section name. A suggestion does not establish that a control exists, and no decision is invented for a hypothetical element.
 
 **Red flags:** genuine design choices left implicit; "we'll decide during build" applied to anything a user will feel; decisions whose default nobody actually chose.
 

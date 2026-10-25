@@ -33,7 +33,7 @@ A document is built from two content types — **steps** (the ordered actions th
 
 1. **In-file step** — the primary tier: what the agent does, in order.
 2. **In-file reference** — consulted on demand. Often a legitimately flat peer-set (every rule of a review on one rung) — a fine arrangement, not a smell.
-3. **Disclosed reference** — pushed out into a separate file, reached by a context pointer, loaded only when the pointer fires. Spans a sibling file in the same folder through fully external reference that lives anywhere and any document can point at.
+3. **Disclosed reference** — pushed out into a separate file, reached by a context pointer, loaded only when the pointer fires. Ranges from a sibling file in the same folder to a fully external reference that lives anywhere and any document can point at.
 
 Push too little down and the top bloats; push too much and you hide material the agent actually needs. That tension is the whole decision.
 

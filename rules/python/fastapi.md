@@ -14,7 +14,7 @@ paths:
 
 # FastAPI Rules
 
-Use these rules for FastAPI projects alongside the general Python rules.
+> This file extends [index.md](index.md) with FastAPI content.
 
 ## Structure
 

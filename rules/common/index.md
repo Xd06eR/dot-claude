@@ -134,7 +134,7 @@ If security issue found:
 
 - **Code navigation:** use LSP for definitions, references, and symbols; grep is for text patterns.
 - **Task tracking:** track multi-step work in a manual file: out-of-order, missing, extra, or wrong-granularity steps mean the task was misread. Fix the understanding, not just the list.
-- **Reuse ladder, in order:** an existing helper or pattern in the codebase, then stdlib, then a native platform feature, then an already-installed dependency; a new dependency only when the gap is real (never for what a few lines can do). One line when one line works; the minimum code that works only after that.
+- **Reuse ladder, in order:** an existing helper or pattern in the codebase, then stdlib, then a native platform feature, then an already-installed dependency; a new dependency only when the gap is real (never for what a few lines can do). One line when one line works; otherwise the minimum code that works.
 - **Minimality never shortens the reading:** trace the whole flow, every file the change touches, before choosing the minimal change; a small diff in the wrong place is a second bug.
 - **Bug fixes go to the root cause:** grep every caller of the code you are about to change; fix the shared cause once. Patching only the ticketed path leaves sibling callers broken.
 - **Ship the minimal version and challenge the rest:** on a complex request, deliver the minimal version and state what was skipped and when to add it ("Did X; Y covers it. Need full X? Say so."); never stall on an answer you can default.
