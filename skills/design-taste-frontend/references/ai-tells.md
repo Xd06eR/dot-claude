@@ -45,7 +45,7 @@ Avoid the signatures below unless the brief explicitly asks for them.
 
 ## 9.F Production-Test Tells (banned outright)
 
-These patterns came out of real LLM-generated landing-page tests. They are the signatures the model defaults to when it tries to "look designed." Treat them as hard bans unless the brief explicitly calls for one.
+These patterns are the signatures the model defaults to when it tries to "look designed." Treat them as hard bans unless the brief explicitly calls for one.
 
 **Hero & top-of-page**
 
@@ -108,9 +108,9 @@ These patterns came out of real LLM-generated landing-page tests. They are the s
 * **Scroll cues are banned.** `Scroll`, `↓ scroll`, `Scroll to explore`, `Scroll to walk through it`, animated mouse-wheel icons. If the user has not scrolled yet, they are looking at the hero. They know what scroll is. The bottom of the viewport does not need a label.
 * **ZERO decorative status dots by default.** A colored dot before nav items, before list rows, before badges, before status labels is a Tell. Only acceptable when conveying real semantic state (a live indicator on actual server status, a live availability flag) and limited to one per page section.
 
-## 9.G EM-DASH BAN (the single most-violated Tell)
+## 9.G EM-DASH BAN (the most-violated Tell)
 
-**Em-dash (`—`) is COMPLETELY banned.** It is the LLM's signature stylistic crutch and it is the #1 visual Tell in production tests. There is no "limited use" allowance, no "natural language frequency" allowance, no "in body copy is fine" allowance. None.
+**Em-dash (`—`) is COMPLETELY banned.** It is the LLM's signature stylistic crutch and its #1 visual tell. There is no "limited use" allowance, no "natural language frequency" allowance, no "in body copy is fine" allowance. None.
 
 * **Banned in headlines.** Use a period or a comma.
 * **Banned in eyebrows / labels / pills / button text / image captions / nav items.** Replace with line breaks, columns, or hairlines.
@@ -125,4 +125,4 @@ The ONLY permitted dash characters on the page are:
 
 If your output contains a single `—` or `–` anywhere visible to the user, the output fails the Pre-Flight Check and must be rewritten.
 
-This rule is non-negotiable. The agent has historically ignored em-dash limits when phrased as "use sparingly." The phrasing here is binary: zero em-dashes.
+This rule is non-negotiable. "Use sparingly" reads as permission; the phrasing here is binary: zero em-dashes.
