@@ -41,7 +41,7 @@ Two axes, four routes. The docs axis picks the opening: `grill-me` keeps rulings
 
 ## Skill Sources
 
-Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance; skills and agents are not updated from upstream. A `(+ source)` note marks content merged in from another source.
+Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance. A `(+ source)` note marks content merged in from another source.
 
 | Source | Count | Components |
 |--------|-------|------------|
