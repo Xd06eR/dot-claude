@@ -16,7 +16,7 @@ This file holds the entry discipline (brief inference, dials), the scope, the re
 | Motion patterns, canonical GSAP/Motion skeletons, perf + a11y guardrails, dial technical definitions | [references/motion-patterns.md](references/motion-patterns.md) |
 | Forbidden AI-tell patterns + the em-dash ban | [references/ai-tells.md](references/ai-tells.md) |
 | Pattern-name vocabulary (hero paradigms, grids, cards, scroll animations, galleries, typography, micro-interactions) | [references/pattern-vocabulary.md](references/pattern-vocabulary.md) |
-| Redesign mode (audit-first, preservation rules, modernisation levers) | [references/redesign-protocol.md](references/redesign-protocol.md) |
+| Redesign mode (audit-first, preservation rules, modernization levers) | [references/redesign-protocol.md](references/redesign-protocol.md) |
 ---
 
 ## 0. BRIEF INFERENCE (Read the Room Before Anything Else)

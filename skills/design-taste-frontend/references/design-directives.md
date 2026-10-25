@@ -29,9 +29,9 @@ LLMs default to clichés. Override these defaults proactively. Each rule has a c
 
 * Max 1 accent color. Saturation < 80% by default.
 * **THE LILA RULE:** The "AI Purple / Blue glow" aesthetic is discouraged as a default. No automatic purple button glows, no random neon gradients. Use neutral bases (Zinc / Slate / Stone) with high-contrast singular accents (Emerald, Electric Blue, Deep Rose, Burnt Orange, etc.).
-* **Override:** if the brand or brief explicitly asks for purple / violet / lila, embrace it. But execute with intent: consistent palette, harmonised neutrals, restrained gradients. Not generic AI gradient slop.
+* **Override:** if the brand or brief explicitly asks for purple / violet / lila, embrace it. But execute with intent: consistent palette, harmonized neutrals, restrained gradients. Not generic AI gradient slop.
 * **One palette per project.** Do not fluctuate between warm and cool grays within the same project.
-* **COLOR CONSISTENCY LOCK (mandatory):** Once an accent color is chosen for a page, it is used on the WHOLE page. A warm-grey site does not suddenly get a blue CTA in section 7. A rose-accented site does not get a teal status badge in the footer. Pick one accent, lock it, audit every component before shipping.
+* **COLOR CONSISTENCY LOCK (mandatory):** Once an accent color is chosen for a page, it is used on the WHOLE page. A warm-gray site does not suddenly get a blue CTA in section 7. A rose-accented site does not get a teal status badge in the footer. Pick one accent, lock it, audit every component before shipping.
 
 * **PREMIUM-CONSUMER PALETTE BAN (mandatory, second-most-recurring AI-tell):**
   * For premium-consumer briefs (cookware, wellness, artisan, luxury, heritage craft, DTC home goods, etc.) the LLM default is **warm beige/cream + brass/clay/oxblood/ochre + espresso/ink dark text**. Concretely banned hex families as default backgrounds and accents:
@@ -40,11 +40,11 @@ LLMs default to clichés. Override these defaults proactively. Each rule has a c
     - Text: `#1a1714`, `#1a1814`, `#1b1814` (all "espresso / warm near-black")
   * This palette is BANNED as the default reach for premium-consumer briefs. Every premium-consumer site you have ever shipped uses this exact palette. The brand becomes invisible.
   * **Default alternatives (rotate, do not reuse):**
-    - **Cold Luxury:** silver-grey + chrome + smoke (think Tesla, Apple Watch Hermes-without-the-leather)
+    - **Cold Luxury:** silver-gray + chrome + smoke (think Tesla, Apple Watch Hermes-without-the-leather)
     - **Forest:** deep green + bone + amber accent (think Filson, Patagonia premium)
     - **Black and Tan:** true off-black + warm tan, sharp contrast, no beige
     - **Cobalt + Cream:** saturated blue against a single neutral, no brass
-    - **Terracotta + Slate:** warm rust against cool grey, no brass
+    - **Terracotta + Slate:** warm rust against cool gray, no brass
     - **Olive + Brick + Paper:** muted olive plus brick-red accent
     - **Pure monochrome + single saturated pop:** off-white + off-black + one bright accent (electric blue, emerald, hot pink, etc.)
   * **Palette-rotation rule:** if the previous premium-consumer project you generated used the beige+brass family, this one MUST use a different family. Do not ship the same warm-craft palette twice in a row.
@@ -202,7 +202,7 @@ The page has ONE theme. Sections do not invert.
 
 * If the page is dark mode, ALL sections are dark mode. No light-mode-warm-paper section sandwiched between dark sections (or vice versa). The user must not feel they walked into a different website mid-scroll.
 * The exception: if the brief explicitly calls for a "Color Block Story" or "Theme Switch on Scroll" device AND that is a deliberate composition (one full theme switch with a strong transition, not random alternation), it is allowed once per page.
-* Default behaviour: pick light, dark, or auto (`prefers-color-scheme`) at the page level and lock it. Section-level background tints within the same theme family are fine (`bg-zinc-950` next to `bg-zinc-900`); flipping to `bg-amber-50` in the middle of a `bg-zinc-950` page is broken.
+* Default behavior: pick light, dark, or auto (`prefers-color-scheme`) at the page level and lock it. Section-level background tints within the same theme family are fine (`bg-zinc-950` next to `bg-zinc-900`); flipping to `bg-amber-50` in the middle of a `bg-zinc-950` page is broken.
 * When using a design system with built-in theming (Radix Themes, shadcn/ui with `<Theme>`), set the theme ONCE in `layout.tsx` or the page root. Do not let individual sections override.
 
 ## 4.12 Writing in Design (words as design material)

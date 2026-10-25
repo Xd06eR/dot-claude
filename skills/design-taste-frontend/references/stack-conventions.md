@@ -60,7 +60,7 @@ The brief and brand decide. This skill enforces only:
 
 * **Contrast** - WCAG AA minimum for body text, AAA target for hero copy.
 * **Hierarchy parity** - visual hierarchy that works in light must work in dark. If a CTA pops in light, it pops in dark.
-* **Brand fidelity** - primary brand color stays recognisable. Don't desaturate the brand into a dark mode.
+* **Brand fidelity** - primary brand color stays recognizable. Don't desaturate the brand into a dark mode.
 * **No pure `#000000` and no pure `#ffffff`** - use off-black (zinc-950, near-black warm gray) and off-white. Pure values kill depth.
 
 ### 8.C Default Mode

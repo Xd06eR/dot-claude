@@ -29,7 +29,7 @@ Identify and read the project guidance that governs the changed files, including
 On top of project guidelines, check the diff against this fixed set of Fowler code smells (_Refactoring_, ch.3). Two rules bind it:
 
 - **The repo overrides.** A documented project standard always wins; where it endorses something the baseline would flag, suppress the smell.
-- **Always a judgement call.** Each smell is a labelled heuristic, never a hard violation: score confidence accordingly. Skip anything tooling already enforces.
+- **Always a judgement call.** Each smell is a labeled heuristic, never a hard violation: score confidence accordingly. Skip anything tooling already enforces.
 
 - **Mysterious Name** — a name that doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.
 - **Duplicated Code** — the same logic shape appears in more than one hunk or file. → extract the shared shape, call it from both.
