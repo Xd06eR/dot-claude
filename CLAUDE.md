@@ -43,12 +43,11 @@ These principles govern every task.
   - **Build only what is asked (YAGNI):** minimum code that meets the request. No speculative features, single-use abstractions, unasked flexibility, or error handling for impossible scenarios.
   - **Slice big features vertically:** the smallest end-to-end tracer bullet ships first, then widens; never build every layer separately and integrate at the end.
   - **DRY on evidence, optimize on metrics:** apply DRY once 2+ real cases exist (premature DRY creates fragile abstractions); profile first, and optimize only where metrics prove the bottleneck is real.
-- **Review:** check the diff against the success criteria. The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
-  - **Ready for review means:** the diff is small (~100 lines reasonable, ~1000 too large) with refactor separated from behavior change; a failing check is reported with evidence and its impact, never waved through as pre-existing; N automated or looped changes need N reviewed diffs; spot-check the review gate itself periodically (gates drift).
-  - **Done means all of:** every acceptance criterion checked with evidence produced now; none silently waived or redefined mid-task; no known regression. "Should work" or shallow evidence ("it compiles") is not done.
-  - **Write for the next reviewer:** every output will be reviewed by another model; assume any omission, shortcut, or unjustified simplification gets caught, and write accordingly.
-  - **The review is yours, end to end:** read the actual diffs, files, and subagent deliverables before accepting, confirming, or finishing; a report about the work is not a review of it. The user's review is a backstop, not coverage.
-  - **Fix the whole, not just the flagged:** audit against its success criteria; close an edit batch with a pass for content that is unnecessary, below the file's own bar, or repeated.
+- **Review:** check the diff against every success criterion: none silently waived or redefined mid-task. The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
+  - **Ready for review means:** the diff is small or mechanical (~100 lines reasonable, ~1000 mixed lines too large) with refactor separated from behavior change; a failing check is reported with evidence and its impact, never waved through as pre-existing; N automated or looped changes need N reviewed diffs; spot-check the review gate itself periodically (gates drift).
+  - **Answer to the next reviewer:** every output faces a capable reviewer hunting omissions, shortcuts, and unjustified simplifications; each catch returns as your rework, so leave none of them in the work.
+  - **The review is yours, end to end:** read the work itself before you sign off; a report about the work is not a review of it.
+  - **Fix the whole, not just the flagged:** audit the whole against its success criteria and fix everything it surfaces, flagged or not; close an edit batch with the same pass.
 
 ## Doc content and structure
 
