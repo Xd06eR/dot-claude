@@ -1,12 +1,12 @@
 ---
 name: document-release
-description: "Use when a release has landed or is about to merge: sweep the repo's docs and update everything the shipped change made stale. Returns the commit and PR-body update for the user to run. For net-new docs from scratch, use document-generate."
+description: "Use when a release has landed or is about to merge: sweep the repo's docs and update everything the shipped change made stale. Commits the updates and edits the PR body. For net-new docs from scratch, use document-generate."
 origin: gstack
 ---
 
-Post-ship documentation sweep. After a release lands (or a feature branch is about to merge), every doc file in the repo should match what shipped. This skill reads the diff, audits each doc against it, fixes clear factual drift, polishes CHANGELOG voice, flags coverage gaps, and outputs the commit plus PR body update for the user to run.
+Post-ship documentation sweep. After a release lands (or a feature branch is about to merge), every doc file in the repo should match what shipped. This skill reads the diff, audits each doc against it, fixes clear factual drift, polishes CHANGELOG voice, flags coverage gaps, then commits the updates and edits the PR body.
 
-**Git safety rule (non-negotiable):** this skill never runs the commit, push, or PR-edit commands, and never mutates a remote. It does the local doc edits itself and OUTPUTS the rest as a command block. The final terminal action is always the user's.
+**Working rule (non-negotiable):** this skill does the local doc edits itself, then commits them, pushes the branch, and updates the PR body.
 
 **Scope:** edits stay inside the working repo's doc files. No metrics, state, telemetry, or config files written anywhere else.
 
@@ -169,13 +169,13 @@ This skill never bumps VERSION; the bump decision is `ship`'s Step 6. What you d
 3. **Not bumped:** docs-only changes need no bump — continue. If the branch carries code changes that lack a version bump, stop and tell the user to re-run `ship`'s version step.
 4. **Already bumped:** read the CHANGELOG entry for the current VERSION. If significant branch changes are uncovered by it, ask in plain text whether to fold them into the existing entry or route back to `ship`.
 
-## Step 11: Output the commit, push, and PR-body update
+## Step 11: Commit, push, and update the PR body
 
 You have audited, edited, and polished. Now assemble the commands.
 
-**Do NOT execute the commit/push/PR block below — output it for the user to run.** The `git status` precheck is read-only and fine to run yourself.
+The `git status` precheck is read-only; run it first.
 
-Scan the docs you edited for leaked credentials before handing off, exactly as `document-generate`'s commit step does; a live-format hit (not an obvious `EXAMPLE` placeholder) must be removed before the block is output.
+Scan the docs you edited for leaked credentials, exactly as `document-generate`'s commit step does; a live-format hit (not an obvious `EXAMPLE` placeholder) must be removed before committing.
 
 First check whether any doc files were modified:
 
@@ -185,7 +185,7 @@ git status
 
 If no documentation files were modified by any previous step, print "All documentation is up to date." and stop.
 
-Otherwise, output the block below. Stage files by name, never `git add -A` or `git add .`.
+Otherwise, run the block below. Stage files by name, never `git add -A` or `git add .`.
 
 - Group into a single docs commit unless the change is large enough to split logically.
 - Conventional commits, subject only, descriptive.
@@ -193,7 +193,6 @@ Otherwise, output the block below. Stage files by name, never `git add -A` or `g
 GitHub:
 
 ```bash
-# OUTPUT ONLY: do not execute; show this block to the user
 git add <modified doc files>
 git commit -m "docs: update documentation for <version or short scope>"
 git push
@@ -245,7 +244,7 @@ If coverage is complete and no diagrams drifted, output: "Coverage: all shipped 
 
 ## Important rules
 
-- **Never run the commit, push, or PR-edit commands yourself.** Prepare and output them; the user runs them.
+- **Commit, push, and update the PR body once the docs are updated.**
 - **Never clobber CHANGELOG entries.** Polish wording only, via Edit with exact matches.
 - **Never bump VERSION.** Drift or a missing bump routes back to `ship`'s Step 6 (Step 10).
 - **Read a file before editing it.**
@@ -255,4 +254,4 @@ If coverage is complete and no diagrams drifted, output: "Coverage: all shipped 
 - **Stay inside the working repo.** Write no state, metrics, or config files anywhere else.
 - **Voice: friendly, user-forward, not obscure.** Write like you're explaining to a smart person who hasn't seen the code.
 
-After this skill runs, the user has updated doc files, a polished CHANGELOG, a coverage map of any remaining gaps, and a ready-to-paste commit and PR-body block.
+After this skill runs, the repo has updated doc files, a polished CHANGELOG, a coverage map of any remaining gaps, and a pushed commit with an updated PR body.

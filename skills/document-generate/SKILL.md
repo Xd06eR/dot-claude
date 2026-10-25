@@ -8,7 +8,7 @@ Produce accurate, structured documentation for a feature, module, or whole proje
 
 **Philosophy: research the whole, then write the parts.** Read the full surface before writing a line. This is what prevents the common failure of docs that describe half a feature.
 
-**Doc-safety rule (non-negotiable):** writing and editing doc files in the working tree is local and reversible, so do it directly. This skill never runs the commit, push, or PR commands and never mutates a remote. The final commit is prepared and OUTPUT as a block for the user to run by hand.
+**Doc-safety rule (non-negotiable):** writing and editing doc files in the working tree is local and reversible, so do it directly. Then commit the docs, push the branch, and update the PR body when one exists.
 
 You organize output by the **Diataxis** quadrants, each serving a different reader:
 
@@ -247,31 +247,26 @@ Review each document against these gates. Fix every failure before handing off. 
 - [ ] Jargon glossed briefly on first use.
 - [ ] Active voice, concrete nouns, short sentences. "You can now..." over "The system provides...".
 
-## Step 10: Hand off the commit
+## Step 10: Commit the docs
 
-Docs are written and self-reviewed. Now scan for leaked secrets, then output the commit block. Do NOT execute any git command yourself.
+Docs are written and self-reviewed. Scan them for leaked secrets, then commit and push.
 
 Docs derived from source sometimes echo a real credential. Scan the files you created or edited. If a live-format secret shows up (and is not an obvious `EXAMPLE` placeholder), remove it before handing off:
 
 ```bash
-# Replace <new-doc-paths> with the files you wrote. Flag, do not commit past a hit.
+# Replace <new-doc-paths> with the files you wrote. On a hit, remove the secret before committing.
 grep -rEn '(AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----|gh[pousr]_[0-9A-Za-z]{36}|xox[baprs]-[0-9A-Za-z-]+)' <new-doc-paths> 2>/dev/null | grep -vi example
 ```
 
-Detect the host for the PR line: `git remote get-url origin` containing `github.com` then GitHub, else git-native (omit the PR line). Then prepare the block. Prefix it plainly for the user:
-
-> Run these to commit the docs. Review the staged files and message first. Nothing here has been executed.
-
-Do NOT execute any of it yourself:
+Detect the host for the PR line: `git remote get-url origin` containing `github.com` then GitHub, else git-native (omit the PR line). Then commit, push, and (on GitHub) edit the PR body:
 
 ```bash
-# OUTPUT ONLY: do not execute; show this block to the user
 git add <the doc files you created or edited>
 git commit -m "docs: document <scope> (reference, how-to, tutorial, explanation as applied)"
 git push
 ```
 
-If a PR exists for this branch, also output the body-update command in the same OUTPUT ONLY form (`gh pr edit --body`) with a docs section listing each new file, its quadrant, and a one-line description. Never run it yourself. Do not open a second PR.
+If a PR exists for this branch, also run `gh pr edit --body` with a docs section listing each new file, its quadrant, and a one-line description. Do not open a second PR.
 
 Then report:
 
@@ -293,5 +288,5 @@ Documentation generated:
 - **Keep the quadrants distinct.** Do not mix tutorial content into reference, or reference into how-tos. Each serves a different reader in a different mode.
 - **Cross-link everything.** Isolated docs are undiscoverable docs.
 - **Match the repo's existing doc style and layout.** Do not impose a new one.
-- **Never run the commit, push, or PR commands.** Prepare and output them. The user runs them. Stay inside the working repo: write no state, metrics, or config files anywhere else.
+- **Commit, push, and update the PR body once the docs are written.** Stay inside the working repo: write no state, metrics, or config files anywhere else.
 - **Completeness over minimalism.** AI makes thorough docs cheap. Write the complete set, not a minimal stub.

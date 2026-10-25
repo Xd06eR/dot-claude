@@ -22,7 +22,7 @@ Adapt paths to the detected layout; keep one line per artifact.
 ```markdown
 ## Workflow docs
 
-This project uses the 4-phase workflow (Design → Plan → Build → Review). **Retire a feature's consumables the moment its Review passes**: durable content flows home first (decisions → ADR, as-built deltas → design, criteria → tests), then deletion; output one commit command per deletion. Each artifact folder's CLAUDE.md states its conventions. Paths in this block override the defaults the workflow skills name.
+This project uses the 4-phase workflow (Design → Plan → Build → Review). **Retire a feature's consumables the moment its Review passes**: durable content flows home first (decisions → ADR, as-built deltas → design, criteria → tests), then deletion; one commit per deletion. Each artifact folder's CLAUDE.md states its conventions. Paths in this block override the defaults the workflow skills name.
 
 One feature's flow: rulings land in `OPEN-QUESTIONS.md` → bake into `docs/design/` → plan into `docs/plan/` → brief and build in `docs/build/` → Review passes → consumables retire. Status homes: structure and order → `docs/plan/INDEX.md`; briefed and built → `docs/build/INDEX.md`; current phase → the feature row in `TODO.md`; mid-build detail → the ledger; history → git.
 

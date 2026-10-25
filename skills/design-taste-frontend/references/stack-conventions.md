@@ -41,7 +41,7 @@ Discouraged by default in code, markup, and visible text. Replace symbols with i
 
 ## 3.F Dependency Verification (mandatory)
 
-Before importing ANY 3rd-party library, check `package.json`. If the package is missing, output the install command first. **Never** assume a library exists.
+Before importing ANY 3rd-party library, check `package.json`. If the package is missing, stop and ask before adding a dependency, naming the exact install command in the ask. **Never** assume a library exists.
 
 ---
 

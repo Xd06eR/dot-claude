@@ -1,12 +1,12 @@
 ---
 name: ship
-description: Use when a feature or fix is complete, tested, and ready to leave the branch. Prepares the exact commit, push, and PR commands for the user to run.
+description: Use when a feature or fix is complete, tested, and ready to leave the branch. Commits, pushes, and opens the PR.
 origin: gstack
 ---
 
-Take a finished, tested feature branch to a reviewable, mergeable state: merge the base branch, run tests, review the diff, bump VERSION, update CHANGELOG, then hand back the exact commit, push, and PR commands.
+Take a finished, tested feature branch to a reviewable, mergeable state: merge the base branch, run tests, review the diff, bump VERSION, update CHANGELOG, then commit, push, and open the PR.
 
-**Git safety rule (non-negotiable):** this skill never runs the commit, push, or PR-create commands, and never mutates a remote. It does the local, reversible prep itself (merge base, run tests, edit VERSION and CHANGELOG) and OUTPUTS the rest as a command block for the user to run by hand. The final terminal action is always the user's.
+**Git safety rule (non-negotiable):** do the local, reversible prep yourself (merge base, run tests, edit VERSION and CHANGELOG), then commit, push, and open the PR. Never force-push; never any destructive variant.
 
 Run the prep straight through without asking for trivial confirmations. Stop only for: being on the base branch, merge conflicts you cannot safely resolve, failing tests introduced by this branch, or a VERSION bump decision (Step 6 proposes it and waits).
 
@@ -119,9 +119,9 @@ If `CHANGELOG.md` exists (or the repo clearly keeps one under another name), add
 
 Group lines under Added, Changed, or Fixed as they apply. Keep entries concise and user-facing. Match the file's date convention. Do not fabricate a new one.
 
-## Step 8: Prepare the commit, push, and PR commands
+## Step 8: Commit, push, and open the PR
 
-You have merged, tested, reviewed, and bumped. Now assemble the commands. Do NOT execute anything in this step: output the block for the user to run.
+You have merged, tested, reviewed, and bumped. Now commit, push, and open the PR.
 
 **Commit grouping:** for a small change (under roughly 50 lines, few files), one commit. For a larger changeset, group into logical, independently-valid commits ordered so dependencies come first (infra and migrations, then models and services, then controllers and UI), with VERSION plus CHANGELOG in the final commit. Each commit is one coherent change, good for `git bisect`.
 
@@ -132,14 +132,11 @@ You have merged, tested, reviewed, and bumped. Now assemble the commands. Do NOT
 
 **PR content:** title is `<type>: <summary>`. Body states what changed and why, plus a short test plan.
 
-Output the block below (filled in) for the user. Do NOT execute any of it yourself. Prefix it clearly:
-
-> Run these to ship. Review the staged files and messages first. Nothing here has been executed.
+**Review gate (blocking):** present the grouped commits, their messages, and the PR title and body in plain text, and proceed only on an explicit `go`. Then run the block below (filled in).
 
 GitHub:
 
 ```bash
-# OUTPUT ONLY: do not execute; show this block to the user
 git add <files for this commit>
 git commit -m "<type>: <descriptive subject>"
 # ...additional grouped commits as needed...
@@ -154,15 +151,15 @@ EOF
 )"
 ```
 
-If a PR already exists for this branch, output the update form instead (`gh pr edit`), not a second create. No remote configured: output only the grouped commit commands and omit the push and PR lines.
+If a PR already exists for this branch, update it with `gh pr edit` instead of creating a second one. No remote configured: commit only; skip the push and PR.
 
-After the user ships, `document-release` updates any docs the release made stale.
+After the push, chain `document-release` to update any docs the release made stale.
 
 ## Important rules
 
-- **Never run the commit, push, or PR-create commands yourself.** Prepare and output them. The user runs them. This is the skill's core contract.
-- **Never force-push.** Output a plain push only.
+- **Commit, push, and open the PR only after the Step 8 review gate passes.**
+- **Never force-push.**
 - **Never skip tests.** If tests introduced by this branch fail, stop.
 - **Preserve the repo's VERSION format and CHANGELOG conventions.** Do not impose new ones.
 - **Stay inside the working repo.** Edit only VERSION and CHANGELOG (plus files you fixed during review). Write no state, metrics, or config files anywhere else.
-- The goal: after this skill runs, the user has a green test result, a bumped VERSION, a written CHANGELOG entry, and a ready-to-paste commit, push, and PR block.
+- The goal: after this skill runs, the branch is green, tested, VERSION bumped, CHANGELOG written, and the work is committed, pushed, and up as a PR.

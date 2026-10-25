@@ -8,9 +8,9 @@ Drive a web app like a real user: click everything, fill every form, check every
 
 Log each bug with repro steps and evidence to an in-repo report. Fix the fixable ones with the smallest change that works, re-verify in the browser, and repeat until clean.
 
-**Git safety rule (non-negotiable):** this skill applies fixes as working-tree edits and runs tests itself (both local and reversible). It never runs commit, push, or PR-create commands. It never mutates a remote.
+**Working rule (non-negotiable):** this skill applies fixes as working-tree edits and runs tests itself (both local and reversible).
 
-At the end it OUTPUTS the suggested commit commands for the user to run by hand. The final terminal action is always the user's.
+At the end it commits the verified fixes, one commit per issue.
 
 ## Browser capability (required)
 
@@ -55,7 +55,7 @@ Parse the request for these parameters. Apply the default when unstated.
 git status --porcelain
 ```
 
-If the tree is already dirty, note it and continue. Fixes are applied as new edits; nothing is committed by this skill.
+If the tree is already dirty, note it and continue. Fixes are applied as new edits on top of whatever was in progress.
 
 Create the output dir when you first write to it: `mkdir -p qa-reports/screenshots`.
 
@@ -180,7 +180,7 @@ For each fixable issue, in severity order:
 5. **Re-test:** the regression test (if any) now passes; navigate back to the affected page, screenshot the after-state, re-check console. Confirm the fix took effect and introduced no new error.
 6. **Classify:** **verified** (re-test confirms, no new errors), **best-effort** (applied but not fully verifiable, e.g. needs external state), or **reverted** (made things worse: edit the file back to its pre-fix state and mark the issue deferred).
 
-**Do not commit inside this loop.** Fixes accumulate as working-tree edits. The commit commands are output at the end.
+**Do not commit inside this loop.** Fixes accumulate as working-tree edits; commit them once the loop is done.
 
 **Self-regulation:** if two consecutive fixes cause regressions, or a fix requires editing a file unrelated to the finding, or the diff is growing well past the bugs it targets, or you are adding the same guard at multiple call sites, stop and reassess with the user rather than pressing on. Never modify CI configuration or weaken an existing test. Hand a bug you cannot reproduce or cannot fix cleanly to `diagnosing-bugs`.
 
@@ -206,16 +206,11 @@ When the report comes back clean, `ship` takes the branch out.
 
 If the repo keeps a backlog file (`TODO.md`, `TODOS.md`, or equivalent): add each deferred issue as an entry carrying its severity, category, and repro steps, following the file's existing format, and annotate any entry this run fixed ("Fixed by qa, <date>"). Skip silently if none exists.
 
-## Phase 9: Prepare the commit commands (OUTPUT ONLY)
+## Phase 9: Commit the fixes
 
-You have fixed and re-verified. Now assemble one commit per fix so each is atomic and bisectable.
-
-Do NOT execute any of it yourself. Show the block to the user, prefixed:
-
-> Run these to commit the QA fixes. Review the staged files and messages first; nothing here has been executed.
+You have fixed and re-verified. Commit the fixes, one per issue, so each is atomic and bisectable. Stage each fix's files and commit in severity order:
 
 ```bash
-# OUTPUT ONLY: do not execute; show this block to the user
 git add <files for ISSUE-001>
 git commit -m "fix(qa): <short description> (ISSUE-001)"
 # ...one add + commit per verified fix, in severity order...
@@ -234,6 +229,6 @@ git commit -m "fix(qa): <short description> (ISSUE-001)"
 5. **Test like a user during exploration.** Read source only in the fix phase.
 6. **Check console after every interaction.** Non-visual JS errors are still bugs.
 7. **Depth over breadth.** 5-10 well-evidenced issues beat 20 vague ones.
-8. **One commit per fix, output only.** This skill never commits, pushes, or mutates a remote. It hands you the commands.
+8. **One commit per fix.** Never bundle; `ship` takes the branch out.
 9. **Revert on regression.** If a fix makes things worse, discard the edit immediately and defer the issue.
 10. **Stay inside the working repo.** Report, screenshots, and baseline live under the output dir; write no state or metrics anywhere else.

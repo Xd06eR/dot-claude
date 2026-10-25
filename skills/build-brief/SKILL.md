@@ -87,4 +87,4 @@ Build features in dependency order.
 
 ## Gate
 
-Print each feature's component map + blocking edges for review, then quiz the user: does the granularity feel right (too coarse / too fine), are the blocking edges correct (each component gated only by what genuinely blocks it), should any components be merged or split. Iterate until the user approves, then output the exact commit command covering the new `docs/build/` content. Do not start the build; point them at `build-feature`.
+Print each feature's component map + blocking edges for review, then quiz the user: does the granularity feel right (too coarse / too fine), are the blocking edges correct (each component gated only by what genuinely blocks it), should any components be merged or split. Iterate until the user approves, then commit the new `docs/build/` content. Do not start the build; point them at `build-feature`.

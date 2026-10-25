@@ -117,7 +117,7 @@ Each finding-producing agent returns findings independently; without this step, 
 ## Ruled out (do not do)
 
 - Dispatch agents other than the six in step 4: `code-reviewer`, `pr-test-analyzer`, `silent-failure-hunter`, `type-design-analyzer`, `spec-reviewer`, `code-simplifier`.
-- Run `git commit`, `git push`, or any destructive op. Output commands for the user.
+- Run `git commit`, `git push`, or any destructive op.
 - Emit usage examples, agent descriptions, tips, workflow integration, or troubleshooting notes; CLAUDE.md routes usage.
 - Skip aggregation. The dedup and severity normalization are the point of this skill.
 - Auto-apply fixes from finding-producing agents. Only `code-simplifier` applies changes, and only after review passes.

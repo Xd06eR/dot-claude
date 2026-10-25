@@ -37,7 +37,7 @@ login-ui: complete (1 parked)
 
 No brief, no campaign: the work is the settled design itself. If it cannot be built in one context, stop: it needs `plan-from-design` and a brief.
 
-Build it here: call the Skill tool with "tdd" and follow it: failing test first, minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`code-review` or a fresh reviewer), output the exact commit command for the user to run, and report any ruling you made — the `Ruling:` discipline applies at any size. If the build changed what a canonical design doc states, propose `bake-design` for the affected doc.
+Build it here: call the Skill tool with "tdd" and follow it: failing test first, minimal code to pass; lint + type-check + the covering tests as you go and the full suite once at the end; surgical diffs. Review the diff (`code-review` or a fresh reviewer), commit, and report any ruling you made — the `Ruling:` discipline applies at any size. If the build changed what a canonical design doc states, propose `bake-design` for the affected doc.
 
 ## Pre-flight scan
 
@@ -50,7 +50,7 @@ Rule on each finding against the brief before execution begins; surface to the u
 
 ## Autonomy
 
-Run the campaign without pausing between components, batches, or features, except at commit points. Four things stop you mid-build, and only these: an irreversible or destructive operation; a security-sensitive action; a side effect outside the repo (a merge, a push, a publish); a brief so broken that every path forward is a guess. Everything else you decide yourself and ledger as `Ruling: <what you decided> — <why> — <what it costs if wrong>`. At feature end you report every ruling to the user.
+Run the campaign without pausing between components, batches, or features. Four things stop you mid-build, and only these: an irreversible or destructive operation; a security-sensitive action; a side effect outside the repo (a merge, a push, a publish); a brief so broken that every path forward is a guess. Everything else you decide yourself and ledger as `Ruling: <what you decided> — <why> — <what it costs if wrong>`. At feature end you report every ruling to the user.
 
 When a ruling depends on content outside the brief, read the implicated spec or canonical design before deciding. The canonical design is binding; the brief is a derived execution view, never a new design authority.
 
@@ -58,7 +58,7 @@ When a ruling depends on content outside the brief, read the implicated spec or 
 
 One builder builds the whole feature in the brief's dependency order: features are sized to fit one fresh context, and one context holding both producer and consumer kills the interface-mismatch failure class. Split only when the work outgrows one context: split at dependency-level boundaries (a batch is every component whose blockers are all complete), one fresh builder per batch, the fresh context re-reading exactly the Interfaces its batch consumes.
 
-**Commit cadence.** Builders never commit; the user runs every commit. Default to one commit at feature end: output the exact command (files staged by name) and wait. Commit early only when a split batch would touch lines still carrying uncommitted changes. Building several features: at each feature's end, output the commit command and wait before starting the next.
+**Commit cadence.** Builders never commit; you commit at the cadence points. Default to one commit at feature end: stage the changed files by name and commit. Commit early only when a split batch would touch lines still carrying uncommitted changes. Building several features: commit at each feature's end before starting the next.
 
 ### 1. Dispatch the builder
 
@@ -139,7 +139,7 @@ Review clean, or every open finding parked at the cap → ledger `<comp>: comple
 2. **Log** to `docs/build/implementation-notes.md` under the feature's `## <feature>` section: decisions, deviations and why (defaulting to the conservative option), tradeoffs, and open questions to confirm. Copy in each component's deferred minors and parked findings — the Review phase reads that file, not the ledger.
 3. **Update** `docs/build/INDEX.md` (the feature's Built → ☑) and advance the feature row in `TODO.md` to the review step.
 4. **Rulings I made:** collect every ledger line containing `Ruling:` into your final message, in the order made, each with its cost-if-wrong. The list is exhaustive: it is the only place decisions taken on the user's behalf reach them.
-5. **Stop.** After the last feature: if the build changed what a canonical design doc states, propose `bake-design` for the affected doc. Propose `code-review` when the build warrants an independent pass; the choice is the user's. A decline counts as the user's own pass: the Review phase is complete. Execute the Workflow-docs block's retirement lines now: durable content flows home, consumables retire, one commit command per deletion.
+5. **Stop.** After the last feature: if the build changed what a canonical design doc states, propose `bake-design` for the affected doc. Propose `code-review` when the build warrants an independent pass; the choice is the user's. A decline counts as the user's own pass: the Review phase is complete. Execute the Workflow-docs block's retirement lines now: durable content flows home, consumables retire, one commit per deletion.
 
 ## Rationalizations
 
