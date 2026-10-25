@@ -61,7 +61,7 @@ Inline single-file components are fine for trivial presentational pieces. For th
 
 ### XSS via `dangerouslySetInnerHTML`
 
-CRITICAL: every usage is a code review halt: input under our control (document the source); user-derived input sanitized at the same call site (API-boundary sanitization only when every consumer is verified); sanitizer allowlists tags, never denylists.
+CRITICAL: every usage is a code review halt: first-party input (document the source); user-derived input sanitized at the same call site (API-boundary sanitization only when every consumer is verified); sanitizer allowlists tags, never denylists.
 
 - **Unsafe URL schemes:** validate user-controlled URLs with a scheme allowlist (`http:`/`https:`/`mailto:`) via `new URL()` before `href`/`src`; React 19 throws on `javascript:` URLs, but `data:` and non-React sinks are not covered.
 - **CSRF on form actions:** cookie-authenticated form actions without framework defaults need double-submit cookies or origin verification.

@@ -106,7 +106,7 @@ Evidence passes feed the ranking:
 - **Multi-component systems: sweep every boundary first.** When the failure could live in any of several components (CI → build → signing, API → service → database), instrument each boundary and run the loop once before ranking — log what enters and exits each component, and verify that environment and config propagate across it. One run shows WHERE the chain breaks; rank hypotheses within the failing component.
 - **Shared-state undo (a control does nothing though every function it calls works).** Map each shared-store action's sets and side-effect resets first, then trace the handler's calls in order; a later call resetting what an earlier call set is the bug, and each function reads as correct in isolation. Add state watchers (effects, subscriptions) to the reset map: a watcher resetting what the handler set is the same bug.
 
-**Show the ranked list to the user before testing.** They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it — proceed with your ranking if the user is AFK.
+**Show the ranked list to the user before testing.** They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it — proceed with your ranking if the user doesn't respond.
 
 ## Phase 4 — Instrument
 

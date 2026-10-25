@@ -10,7 +10,7 @@ Log each bug with repro steps and evidence to an in-repo report. Fix the fixable
 
 **Git safety rule (non-negotiable):** this skill applies fixes as working-tree edits and runs tests itself (both local and reversible). It never runs commit, push, or PR-create commands. It never mutates a remote.
 
-At the end it OUTPUTS the suggested commit commands for you to run by hand. The final terminal action is always the user's.
+At the end it OUTPUTS the suggested commit commands for the user to run by hand. The final terminal action is always the user's.
 
 ## Browser capability (required)
 

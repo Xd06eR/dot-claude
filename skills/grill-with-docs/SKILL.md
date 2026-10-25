@@ -1,6 +1,6 @@
 ---
 name: grill-with-docs
-description: A relentless interview to sharpen a plan or design, creating docs (ADRs, glossary, open-questions entries) as we go.
+description: A relentless interview to sharpen a plan or design, creating docs (ADRs, glossary, open-questions entries) along the way.
 disable-model-invocation: true
 origin: mattpocock
 ---
