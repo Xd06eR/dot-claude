@@ -44,4 +44,4 @@ Then name any skills the next agent should invoke, and for what.
 
 - Never duplicate content already captured in other artifacts (specs, plans, ADRs, commits, diffs): reference them by path.
 - Redact sensitive information (keys, passwords, personal data) before writing.
-- A handoff is written for one reader, not kept: one that outlives the next session states what retires it (refresh or delete on a named event or condition); a one-shot says so, and the receiver deletes it after re-grounding. Claims decay either way — the doc does not update itself.
+- A handoff is written for one reader, not kept: one that outlives the next session states what retires it (refresh or delete on a named event or condition); a one-shot says so, and the receiver deletes it after re-grounding. Claims decay either way. The doc does not update itself.

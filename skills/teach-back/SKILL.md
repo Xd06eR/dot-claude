@@ -24,7 +24,7 @@ Keep a running markdown doc with a checklist of things the user should understan
 2. **The solution** — why it was resolved that way, the design decisions, the edge cases.
 3. **The broader context** — why this matters, and what the changes will impact.
 
-Make sure they understand *why* — and drill down into more whys. Make sure they understand *what* and *how* as well. Understanding the problem well is imperative.
+Make sure they understand *why*. Drill down into more whys. Make sure they understand *what* and *how* as well. Understanding the problem well is imperative.
 
 ## Loop
 

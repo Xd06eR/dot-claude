@@ -37,7 +37,7 @@ Type routes resolution:
 ## Chart the map (invoked with a new effort)
 
 1. Settle the Destination first: call the Skill tool with "grilling" and "domain-modeling". The destination fixes every entry's scope.
-2. Grill again, breadth-first: fan across the whole decision space, surfacing open decisions and the first takeable questions. If this surfaces no fog, stop: the effort fits one session — hand back to `grill-with-docs`.
+2. Grill again, breadth-first: fan across the whole decision space, surfacing open decisions and the first takeable questions. If this surfaces no fog, stop: the effort fits one session. Hand back to `grill-with-docs`.
 3. Write `WAYFINDING.md` (Destination, Notes, empty Decisions so far, fog in Not yet specified).
 4. Call the Skill tool with "open-questions", then create register entries for the questions already sharp, with Effort and Type fields. Fire research entries as subagents now.
 5. Stop. Charting is one session's work; it hand-resolves nothing.

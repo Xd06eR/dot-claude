@@ -42,7 +42,7 @@ When an optional layer is declined, append its named-decline line to the block:
 
 - `OPEN-QUESTIONS.md` is not adopted: rulings live in the conversation until bake.
 - `CONTEXT.md` is not adopted: no domain glossary is kept; use the vocabulary the code and docs already carry.
-- `TODO.md` is not adopted: no task queue is kept — pending work is derived from the current docs against `docs/plan/` and the code, planning works on the merged current design (not per bake), and resume after a break reads the ledger, the INDEXes, and git history.
+- `TODO.md` is not adopted: no task queue is kept. Pending work is derived from the current docs against `docs/plan/` and the code, planning works on the merged current design (not per bake), and resume after a break reads the ledger, the INDEXes, and git history.
 - `PROGRESS-LOG.md` is not adopted: no session log.
 - `docs/adr/` is not adopted: no decision snapshots are written; the why stays in the design discussion and git history.
 

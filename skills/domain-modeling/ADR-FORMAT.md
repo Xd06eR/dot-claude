@@ -35,7 +35,7 @@ The test: **if canonical would rewrite it later, the ADR must not have copied it
 **Consequences.** Blast radius, and what this constrains later. Absorbed minor rulings land here as one self-contained line each.
 ```
 
-The fuller sections are the standard, not the exception: canonical carries the spec and code carries the behavior, but neither carries the why — the rejected options and the forces behind the choice live only here. A trivial ADR may still collapse to Context + Decision.
+The fuller sections are the standard, not the exception: canonical carries the spec and code carries the behavior, but neither carries the why. The rejected options and the forces behind the choice live only here. A trivial ADR may still collapse to Context + Decision.
 
 ## Granularity
 

@@ -11,7 +11,7 @@ Produce one spec + implementation-plan pair per component, emitted as files `bui
 
 The invocation names the design-doc source and what to plan; the source defaults to `docs/design/`. When the folder carries a `| Doc | Scope |` index (its `CLAUDE.md`), pick the docs from it before reading wholesale.
 
-A named feature carves its sections out of the docs; everything else in them is standing context the plan must respect. When the work is the next thing baked, the project's `TODO.md` task table holds the row — `git show <commit> -- <docs>` on its bake commit bounds the newly baked design. A source doc that defines nothing to construct is flagged, not planned. No docs at the named or default location: stop and ask where they live.
+A named feature carves its sections out of the docs; everything else in them is standing context the plan must respect. When the work is the next thing baked, the project's `TODO.md` task table holds the row. `git show <commit> -- <docs>` on its bake commit bounds the newly baked design. A source doc that defines nothing to construct is flagged, not planned. No docs at the named or default location: stop and ask where they live.
 
 Ground the boundary on the code, not the docs: what exists in code is already built (reuse or extend); what is absent is this build. Grep the codebase for every contract the feature names, read the signatures the plan consumes from the code as built, and surface a doc-vs-code mismatch as a finding rather than planning against the doc's version.
 

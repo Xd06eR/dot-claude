@@ -6,7 +6,7 @@ origin: deepseek-harness
 
 Session leakage is prose whose vantage is the authoring session rather than the repository at HEAD: it cites artifacts only that session could see, narrates the change instead of the state, or argues with a reviewer who has left.
 
-**The one test:** could a reader at HEAD, with no access to the session transcript, PR thread, or uncommitted draft, resolve every reference and verify every claim? If no, the passage leaks. If yes, it is not leakage, however historical it sounds — but resolvability only clears the citation: on current-state surfaces (docs, READMEs, comments) a resolvable change story is still narration, and classes 2 and 3 restate it.
+**The one test:** could a reader at HEAD, with no access to the session transcript, PR thread, or uncommitted draft, resolve every reference and verify every claim? If no, the passage leaks. If yes, it is not leakage, however historical it sounds. Resolvability only clears the citation: on current-state surfaces (docs, READMEs, comments) a resolvable change story is still narration, and classes 2 and 3 restate it.
 
 ## Taxonomy
 

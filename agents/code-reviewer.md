@@ -18,7 +18,7 @@ Identify and read the project guidance that governs the changed files, including
 
 **Project guidelines compliance:** verify adherence to explicit project rules (typically in CLAUDE.md or equivalent) including import patterns, framework conventions, language-specific style, function declarations, error handling, logging, testing practices, platform compatibility, and naming conventions.
 
-**Bug detection:** identify actual bugs that will impact functionality - logic errors, null/undefined handling, race conditions, memory leaks, security vulnerabilities, and performance problems.
+**Bug detection:** identify actual bugs that will impact functionality, like logic errors, null/undefined handling, race conditions, memory leaks, security vulnerabilities, and performance problems.
 
 **Code quality:** evaluate significant issues like code duplication, accessibility problems, inadequate test coverage, and incorrect error handling. The `pr-test-analyzer` and `silent-failure-hunter` passes add dedicated depth when selected; their absence does not remove these checks. For each meaningful change, ask whether a reframing would delete the complexity (fewer branches, helpers, or layers) instead of adding to it. A change that works but leaves the codebase structurally messier is a finding at its real severity, not an automatic LOW.
 
@@ -72,7 +72,7 @@ Examples of false positives to drop before reporting:
 - Pre-existing issues
 - Something that looks like a bug but is not actually a bug
 - Pedantic nitpicks that a senior engineer wouldn't call out
-- Issues that a linter, typechecker, or compiler would catch (eg. missing or incorrect imports, type errors, broken tests, formatting issues, pedantic style issues like newlines). No need to run these build steps yourself -- it is safe to assume that they will be run separately as part of CI.
+- Issues that a linter, typechecker, or compiler would catch (eg. missing or incorrect imports, type errors, broken tests, formatting issues, pedantic style issues like newlines). No need to run these build steps yourself. It is safe to assume that they will be run separately as part of CI.
 - General code quality issues (eg. lack of test coverage, general security issues, poor documentation), unless explicitly required by project guidance
 - Issues that are called out in project guidance, but explicitly silenced in the code (eg. due to a lint ignore comment)
 - Changes in functionality that are likely intentional or are directly related to the broader change
