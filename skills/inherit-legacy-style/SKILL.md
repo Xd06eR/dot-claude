@@ -114,8 +114,8 @@ When `.ai-style-rules.md` is in context (loaded via CLAUDE.md), every code-writi
 - When in doubt about signal strength, lean toward asking
 - The CLAUDE.md soft hook (`@.ai-style-rules.md`) is usually sufficient. Use a hard hook only if the user wants mechanical enforcement.
 
-## Related Skills
+## Related components
 
-- `init` — initialize a new CLAUDE.md with codebase documentation
+- `init` (built-in command) — initialize a new CLAUDE.md with codebase documentation
 - `code-review` — multi-agent review of diffs for correctness and style issues
-- `code-simplifier` — simplify recently modified code in place while preserving functionality
+- `code-simplifier` (agent) — simplify recently modified code in place while preserving functionality
