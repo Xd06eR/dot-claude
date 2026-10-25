@@ -28,7 +28,11 @@ ls src/ app/ pages/ components/ 2>/dev/null | head -30
 
 If `DESIGN.md` exists, follow it as the default visual system and say so: you will not diverge from it unless the user asks you to.
 
-**Identity lock.** Before proposing concepts, write one sentence recording the identity that is actually on screen or in code: dominant surface and accent colors (real values, not "warm"), the font pairing, layout topology, surface treatment, and voice tone. A missing DESIGN.md is never an excuse: read the identity off CSS custom properties, computed styles, and sibling components. Every variant must read as this same brand side by side: variation within identity, not selection between identities, unless the user's current ask explicitly departs from it ("redesign this", "something completely different"). A stale critique or an old note is not authorization, and unsure means default: a wrong default costs three on-brand variants with similar feel (recoverable); a wrong departure costs three off-brand ones (unrecoverable).
+**Identity lock.** Before proposing concepts, write one sentence recording the identity that is actually on screen or in code: dominant surface and accent colors (real values, not "warm"), the font pairing, layout topology, surface treatment, and voice tone. A missing DESIGN.md is never an excuse: read the identity off CSS custom properties, computed styles, and sibling components.
+
+- Every variant must read as this same brand side by side: variation within identity, not selection between identities.
+- Departure needs the user's explicit current ask ("redesign this", "something completely different"); a stale critique or an old note is not authorization, and unsure means default.
+- The cost asymmetry: a wrong default costs three on-brand variants with similar feel (recoverable); a wrong departure costs three off-brand ones (unrecoverable).
 
 The brief covers five dimensions. Fill what you can infer; ask for the rest:
 

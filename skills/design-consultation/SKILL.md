@@ -79,7 +79,15 @@ Summarize conversationally: "Here is the landscape. They converge on [patterns].
 
 ## Step 4: The complete proposal (the core)
 
-**Derive the direction from the audience's world, not from the aesthetic catalog.** First name the product's unique mechanism in one sentence, the audience's real scene, and its cultural home. Then name the rut: the page this category always ships and its predictable opposite. Both stay out of the candidates; a brief that paints its own picture (a product name, a governing metaphor) adds its literal reading to the rut, so spend at most one candidate on it. Derive seven candidate worlds from what the audience knows by heart: its graphic and screen traditions, places, rituals, and artifacts, not only its physical objects. Two prompts widen the list: what would this product look like as a physical object, and what did its world look like before the web. Each candidate gets one line on why it resonates and one on how it looks (ground and main colors, type voices, the one signature that makes it recognizable). Near-duplicates count once; when more than three of the seven share one material family, the derivation stopped at the subject's most obvious artifact, so dig until the list spans at least three families. On Operate and Read surfaces, candidates never come from the tools the audience operates: a terminal or control panel handed to a working screen comes back as a costume. On Persuade and Experience surfaces those tools count toward the rut instead. A world never licenses its loaded symbols (hate or militarist emblems) as motifs. Build the proposal on the strongest candidate.
+**Derive the direction from the audience's world, not from the aesthetic catalog.**
+
+1. **Name the world:** the product's unique mechanism in one sentence, the audience's real scene, and its cultural home.
+2. **Name the rut:** the page this category always ships and its predictable opposite; both stay out of the candidates. A brief that paints its own picture (a product name, a governing metaphor) adds its literal reading to the rut, so spend at most one candidate on it.
+3. **Derive seven candidate worlds** from what the audience knows by heart: its graphic and screen traditions, places, rituals, and artifacts, not only its physical objects. Two prompts widen the list: what would this product look like as a physical object, and what did its world look like before the web.
+4. **Write two lines per candidate:** one on why it resonates and one on how it looks (ground and main colors, type voices, the one signature that makes it recognizable).
+5. **Check the spread:** near-duplicates count once; when more than three of the seven share one material family, the derivation stopped at the subject's most obvious artifact, so dig until the list spans at least three families.
+6. **Apply the surface rules:** on Operate and Read surfaces, candidates never come from the tools the audience operates (a terminal or control panel handed to a working screen comes back as a costume); on Persuade and Experience surfaces those tools count toward the rut instead. A world never licenses its loaded symbols (hate or militarist emblems) as motifs.
+7. **Build the proposal on the strongest candidate.**
 
 Propose EVERYTHING as one coherent package, then let the user adjust. Present it as prose, not a table:
 
