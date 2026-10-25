@@ -102,10 +102,11 @@ Ensure compliance with the project's error-handling requirements as stated in CL
 - **CRITICAL:** silent failure (empty catch, error converted to `null`/`[]` with no log), broad catch that can swallow unrelated errors, fallback to a mock or stub in production code.
 - **HIGH:** poor or generic error message, unjustified fallback, lost stack trace, missing async handling, log-and-forget.
 - **MEDIUM:** logged but missing context, wrong severity, could be more specific.
+- **LOW:** minor issues worth noting that fail no project bar.
 
 ## Output
 
-One finding per issue, grouped by severity (CRITICAL first, then HIGH, MEDIUM). Close with what you did NOT cover. The first line carries the finding; the indented lines carry the detail:
+One finding per issue, grouped by severity (CRITICAL first, then HIGH, MEDIUM, LOW). Close with what you did NOT cover. The first line carries the finding; the indented lines carry the detail:
 
 - **[SEVERITY]** [file:line]: [what is wrong] — [concrete recommendation]
   - Hidden errors: [the unrelated errors this site could swallow]

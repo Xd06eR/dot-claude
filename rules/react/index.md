@@ -39,7 +39,7 @@ Every Suspense boundary needs an Error Boundary above it. The pair covers pendin
 
 - **File extensions:** `.tsx` for anything containing JSX, `.ts` for pure logic; test files mirror the source extension. `.jsx` only when the project intentionally avoids TypeScript: flag every new untyped React file in review.
 - **Naming:** hooks, event handlers, and files follow the project's naming convention, applied consistently.
-- **Component shape:** prefer `type Props = {}` for closed component prop shapes; use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point.
+- **Component shape:** prefer `type Props = { ... }` for closed component prop shapes; use `interface` only when the prop type is extended via declaration merging or exported as a public API extension point.
 - **Refs:** React 19 passes `ref` as a regular prop (`forwardRef` not required); React 18 codebases keep `forwardRef` until upgraded.
 - **Hooks and state:** see [hooks.md](hooks.md) for the full ruleset; avoid creating ad-hoc hooks for one-line wrappers (inline the call instead); state location per the [decision tree](#state-location-decision-tree); compute during render instead of storing derivable state.
 - **Forms:** a plain submit form uses uncontrolled inputs with a form action; controlled inputs only when the value drives other UI, real-time validation, or formatting.

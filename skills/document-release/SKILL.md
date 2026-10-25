@@ -171,7 +171,7 @@ This skill never bumps VERSION; the bump decision is `ship`'s Step 6. What you d
 
 ## Step 11: Output the commit, push, and PR-body update
 
-You have audited, edited, polished, and (if approved) bumped. Now assemble the commands.
+You have audited, edited, and polished. Now assemble the commands.
 
 **Do NOT execute the commit/push/PR block below — output it for the user to run.** The `git status` precheck is read-only and fine to run yourself.
 

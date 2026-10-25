@@ -55,7 +55,7 @@ psql -c "SELECT indexrelname, idx_scan, idx_tup_read FROM pg_stat_user_indexes O
 - **Index foreign keys** — always, no exceptions
 - **Use partial indexes** — `WHERE deleted_at IS NULL` for soft deletes
 - **Covering indexes** — `INCLUDE (col)` to avoid table lookups
-- **SKIP LOCKED for queues** — 10x throughput for worker patterns
+- **SKIP LOCKED for queues** — concurrent workers never block each other
 - **Cursor pagination** — `WHERE id > $last` instead of `OFFSET`
 - **Batch inserts** — multi-row `INSERT` or `COPY`, never individual inserts in loops
 - **Short transactions** — never hold locks during external API calls
