@@ -8,7 +8,7 @@ A discipline for hard bugs. Skip phases only when explicitly justified.
 
 ## Redact
 
-This skill has you show commands, outputs and captured artifacts. **Redact every secret first** — write `<REDACTED>` in its place. Build loops against env vars, so the credential stays in the environment rather than in what you show. Captured artifacts carry auth headers: quote only the lines that carry the signal.
+This skill has you show commands, outputs and captured artifacts. **Redact every secret first**: write `<REDACTED>` in its place. Build loops against env vars, so the credential stays in the environment rather than in what you show. Captured artifacts carry auth headers: quote only the lines that carry the signal.
 
 If the redacted output is not enough to diagnose the bug, say so and ask the user.
 
@@ -45,7 +45,7 @@ A 30-second flaky loop is barely better than no loop; a 2-second deterministic o
 
 ### Non-deterministic bugs
 
-The goal is not a clean repro but a **higher reproduction rate**. Loop the trigger 100×, parallelise, add stress, narrow timing windows, inject sleeps. A 50%-flake bug is debuggable; 1% is not — keep raising the rate until it's debuggable.
+The goal is not a clean repro but a **higher reproduction rate**. Loop the trigger 100×, parallelise, add stress, narrow timing windows, inject sleeps. A 50%-flake bug is debuggable; 1% is not; keep raising the rate until it's debuggable.
 
 ### Test-suite failure classes
 
@@ -71,7 +71,7 @@ If you catch yourself reading code to build a theory before this command exists,
 
 ## Phase 2 — Reproduce + minimise
 
-Run the loop. Watch it go red — the bug appears.
+Run the loop. Watch it go red: the bug appears.
 
 Confirm:
 
@@ -81,11 +81,11 @@ Confirm:
 
 ### Minimise
 
-Once it's red, shrink the repro to the **smallest scenario that still goes red**. Cut inputs, callers, config, data, and steps **one at a time**, re-running the loop after each cut — keep only what's load-bearing for the failure.
+Once it's red, shrink the repro to the **smallest scenario that still goes red**. Cut inputs, callers, config, data, and steps **one at a time**, re-running the loop after each cut; keep only what's load-bearing for the failure.
 
 Why bother: a minimal repro shrinks the hypothesis space in Phase 3 (fewer moving parts left to suspect) and becomes the clean regression test in Phase 5.
 
-Done when **every remaining element is load-bearing** — removing any one of them makes the loop go green.
+Done when **every remaining element is load-bearing**: removing any one of them makes the loop go green.
 
 Do not proceed until you have reproduced **and** minimised.
 
@@ -97,16 +97,16 @@ Each hypothesis must be **falsifiable**: state the prediction it makes.
 
 > Format: "If <X> is the cause, then <changing Y> will make the bug disappear / <changing Z> will make it worse."
 
-If you cannot state the prediction, the hypothesis is a vibe — discard or sharpen it.
+If you cannot state the prediction, the hypothesis is a vibe: discard or sharpen it.
 
 Evidence passes feed the ranking:
 
-- **Check recent changes.** `git log` / `git diff` on the failing area, new dependencies, config and environment differences — they re-rank the list instantly.
-- **Diff against a working example.** Find the nearest code path that works and list every difference from the broken one, however small — each difference is a hypothesis candidate. If a reference implementation exists, read it completely; skimming guarantees a missed difference.
-- **Multi-component systems: sweep every boundary first.** When the failure could live in any of several components (CI → build → signing, API → service → database), instrument each boundary and run the loop once before ranking — log what enters and exits each component, and verify that environment and config propagate across it. One run shows WHERE the chain breaks; rank hypotheses within the failing component.
+- **Check recent changes.** `git log` / `git diff` on the failing area, new dependencies, config and environment differences; they re-rank the list instantly.
+- **Diff against a working example.** Find the nearest code path that works and list every difference from the broken one, however small; each difference is a hypothesis candidate. If a reference implementation exists, read it completely; skimming guarantees a missed difference.
+- **Multi-component systems: sweep every boundary first.** When the failure could live in any of several components (CI → build → signing, API → service → database), instrument each boundary and run the loop once before ranking: log what enters and exits each component, and verify that environment and config propagate across it. One run shows WHERE the chain breaks; rank hypotheses within the failing component.
 - **Shared-state undo (a control does nothing though every function it calls works).** Map each shared-store action's sets and side-effect resets first, then trace the handler's calls in order; a later call resetting what an earlier call set is the bug, and each function reads as correct in isolation. Add state watchers (effects, subscriptions) to the reset map: a watcher resetting what the handler set is the same bug.
 
-**Show the ranked list to the user before testing.** They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it — proceed with your ranking if the user doesn't respond.
+**Show the ranked list to the user before testing.** They often have domain knowledge that re-ranks instantly ("we just deployed a change to #3"), or know hypotheses they've already ruled out. Cheap checkpoint, big time saver. Don't block on it; proceed with your ranking if the user doesn't respond.
 
 ## Phase 4 — Instrument
 
@@ -144,7 +144,7 @@ If a correct seam exists:
 
 If the fix fails, undo it and return to Phase 3 to re-rank the hypotheses with the new evidence; never stack another fix on top. Repeated failures or new symptoms appearing elsewhere after each fix are architecture signals: stop and discuss the design with the user before another attempt.
 
-When the bug was caused by invalid data, the fix alone leaves the door open — validate at every layer the data passes through (entry point, business logic, environment guard), and prove each layer by bypassing the one above it, so the bug becomes structurally impossible.
+When the bug was caused by invalid data, the fix alone leaves the door open: validate at every layer the data passes through (entry point, business logic, environment guard), and prove each layer by bypassing the one above it, so the bug becomes structurally impossible.
 
 ## Phase 6 — Cleanup
 
@@ -154,4 +154,4 @@ Required before declaring done:
 - [ ] Regression test passes (or absence of seam is documented)
 - [ ] All `[DEBUG-...]` instrumentation removed (`grep` the prefix)
 - [ ] Throwaway prototypes deleted (or moved to a clearly-marked debug location)
-- [ ] The hypothesis that turned out correct is stated in the commit / PR message — so the next debugger learns
+- [ ] The hypothesis that turned out correct is stated in the commit / PR message, so the next debugger learns

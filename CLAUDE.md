@@ -53,8 +53,8 @@ These principles govern every task.
 
 How to write and review durable text, for any reader.
 
-- **Em-dash discipline:** default to none. Allow only a genuine break, an aside, or an appositive after a label; never a connector between two claims or two in one sentence.
-- **Markdown source discipline:** never break the render. A table row, link, code span, or heading stays on one source line; blank lines separate blocks, never split a list from its sub-items.
+- **Default to no em-dash:** allow only a genuine break, one aside pair (the text between the dashes reads as removable), or an appositive after a label; never a connector between two claims.
+- **Never break the render:** a table row, link, code span, or heading stays on one source line; blank lines separate blocks, never split a list from its sub-items.
 - **Match the style of what you edit:** the tighter the scope, the stricter the match. Copy the section's convention exactly (bullet form, label style, punctuation, tense); one voice per doc; small variation across docs is fine.
 - **Every element names its consumer:** an element earns its place only if something acts on it (a gate, a mechanism, a routing surface, or a human decision point). What nothing acts on is decoration. Hardest to spot: a pointer to git, temp, or deleted artifacts; a justification pinned to a temporary premise; a rejection nobody would re-propose.
 - **Mention once:** a fact lives in one home per doc and per topic; copies drift.
