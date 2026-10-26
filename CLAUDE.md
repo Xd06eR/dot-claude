@@ -46,7 +46,7 @@ These principles govern every task.
 - **Review:** check the diff against every success criterion: none silently waived or redefined mid-task. The `code-review` skill owns the comprehensive pass. Can't verify → don't ship.
   - **Ready for review means:** the diff is small or mechanical (~100 lines reasonable, ~1000 mixed lines too large) with refactor separated from behavior change; a failing check is reported with evidence and its impact, never waved through as pre-existing; N automated or looped changes need N reviewed diffs; spot-check the review gate itself periodically (gates drift).
   - **Answer to the next reviewer:** every output faces a capable reviewer hunting omissions, shortcuts, and unjustified simplifications; each catch returns as your rework, so leave none of them in the work.
-  - **The review is yours, end to end:** read the work itself before you sign off; a report about the work is not a review of it.
+  - **The review is yours, end to end:** read the output itself before you sign off; a report about it is not a review of it.
   - **Fix the whole, not just the flagged:** audit the whole against its success criteria and fix everything it surfaces, flagged or not; close an edit batch with the same pass.
 
 ## Doc content and structure
