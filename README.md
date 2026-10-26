@@ -22,22 +22,22 @@ Plugin activation state (`enabledPlugins`) is serialized in `settings.json`. No 
 
 ## The Workflow
 
-CLAUDE.md's Engineering principles section carries the foundation principles every session; this section is the human's map: the spine (the pipeline's gates in order) and the four paths (how much of the spine runs). Skill Sources below enumerates the inventory by origin.
+CLAUDE.md's Engineering principles section carries the foundation principles into every session; this section is the human's map.
 
 ### The spine
 
 The pipeline in order: `setup-workflow` once per project · `session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa → ship → land-and-deploy → document-release. Each step's trigger and mechanics live in its skill's description and body.
 
-**Artifacts are optional:** `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md`, `PROGRESS-LOG.md`, `docs/design/`, `docs/adr/`, `docs/plan/`, `docs/build/` are adopted per project as needed; nothing forces them.
+**Layers are optional; the phase folders come with the workflow:** `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md` (default on), `PROGRESS-LOG.md`, `docs/adr/` are adopted per project as needed; `docs/design/`, `docs/plan/`, `docs/build/` are the phase artifacts themselves, filled as work reaches them.
 
 ### The four paths
 
-Two axes, four paths. The docs axis picks the opening: `grill-me` keeps rulings in the conversation (quick work, nothing to maintain), `grill-with-docs` captures them as they are made (a project worth maintaining). The spine axis picks how much of the spine runs: a settled design that fits one context builds directly via `build-feature` with no feature named (it steps back to `plan-from-design` past one context); anything bigger, or any work meant to stay maintainable, runs the spine end to end. Planning always consumes a baked design, so a no-docs route bakes from the conversation first.
+Two axes, four paths. The docs axis picks the opening: `grill-me` keeps rulings in the conversation (quick work, nothing to maintain), `grill-with-docs` captures them as they are made (a project worth maintaining). The spine axis picks how much of the spine runs: a settled design that fits one context builds directly via `build-feature` with no feature named (it steps back to `plan-from-design` past one context); anything bigger, or work that needs the full cycle to stay maintainable, runs the spine end to end. Planning always consumes a baked design, so a no-docs route bakes from the conversation first.
 
 | Opening | Build directly | Plan first |
 |---|---|---|
-| `grill-me` (no docs) | toy / quick work | quick work, planned (a bake from the conversation precedes it) |
-| `grill-with-docs` (docs) | a small feature in a maintained project | the full cycle — the most maintainable route |
+| `grill-me` | toy / quick work | quick work, planned |
+| `grill-with-docs` | a small feature in a maintained project | the full cycle |
 
 ## Skill Sources
 
