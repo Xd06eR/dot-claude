@@ -22,7 +22,7 @@ How to update the harness (`~/.claude`) without silently degrading it.
 
 - CLAUDE.md is the trunk — the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md; neither restates the other. Coding rules are self-contained: they never reference CLAUDE.md (it co-loads on every injection; rules→rules extends pointers stay, since globs differ).
 - Component inventory lives in README § Skill Sources; CLAUDE.md carries no catalog.
-- The four-paths route model lives in README § The four paths; before editing anything workflow-related (CLAUDE.md's Engineering principles section, README, a workflow skill's description or body), read it and the related workflow skills.
+- The four paths (which opening work takes and how much of the spine runs) live in README § The four paths; before editing any workflow surface (CLAUDE.md's Engineering principles section, README § The Workflow, a workflow skill, or a rules file carrying workflow routing), read that section and the related workflow skills.
 
 ## Rules-file scope, naming, and lesson landing
 
