@@ -10,6 +10,38 @@ Consolidated 2026-07-30 from: `Post-context.md` (406 lines), `Post-context-expan
 
 ---
 
+## 1. Identity + working style
+
+Bar: durable facts about the user and the collaboration that no live harness file already carries; verbatim quotes only where the wording itself carries the rule.
+
+## 2. Environment + loading model
+
+Bar: machine- and account-level facts a session cannot infer and cannot change (provider setup, injection and loading mechanics, measured costs, environment failure modes).
+
+## 3. Working principles
+
+Bar: named methods and stances governing how harness work is judged, each with its why; nothing a SOTA model infers unprompted.
+
+## 4. Component standards
+
+Bar: decisions and whys for authoring and curating skills, commands, agents, rules; live rule text lives in harness-maintenance and rules, pointed at, never copied.
+
+## 5. Workflow decisions
+
+Bar: rulings that shaped the artifact and workflow system with their why; mechanics live in the workflow skills.
+
+## 6. Curation state + rejection register
+
+Bar: current inventory truth re-derived from the live tree at write time, plus one consolidated register of rejections-with-why (anti-re-proposal value only).
+
+## 7. Open items
+
+Bar: work the user has not settled; each names its owner and next concrete step.
+
+## 8. Omission register + slim source map
+
+Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
+
 ## 1. User identity + working style
 
 - **Full-Stack AI Engineer** (frontend + backend + LLM/AI integration + infra). Works at the AI-engineer level: designs specs, reviews every line, never writes code by hand. Pitch at design/trade-off level; depth over brevity when asked "why" or when a call is non-obvious.
