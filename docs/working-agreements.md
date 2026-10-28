@@ -30,6 +30,7 @@ Bar: machine- and account-level facts a session cannot infer and cannot change (
 
 - **settings.json waiver:** never flag the file, the `ENABLE_TOOL_SEARCH` value, or token placement (a per-provider toggle the user manages); only genuinely new settings may be proposed. Never commit settings.json with a token present; commit settings alone at token-free moments.
 - **Environment facts (govern cost/spend proposals):** the user holds the API key; the agent cannot pay, enroll services, or access cloud accounts — "I don't like linking AI to any platform which you will not have the access either."
+- **Memory layer off:** autoMemoryEnabled is false and no global MEMORY.md sidecar exists — rules and CLAUDE.md load in every project, strictly better than a sidecar; lessons enter through CLAUDE.md's Lesson capture (proposal-gated).
 
 ## 3. Working principles
 
@@ -72,6 +73,9 @@ Bar: current inventory truth re-derived from the live tree at write time, plus o
 - **Cost-jump bullet (>10 agents / paid API / cloud run):** rejected on environment grounds — the user holds the API key, the agent cannot pay or enroll; re-proposals re-declined. Do not re-propose.
 - **Post7-AGENTS bullet 1 (no backward compatibility, remove obsolete paths outright):** rejected — it breaks production consumers that need deprecate → migrate → remove; the author's own side-projects-only disclaimer concedes exactly this.
 - **First-loop candidates, parked:** CI failure triage, dependency-bump PRs, lint-and-fix passes, flaky-test reproduction, issue-to-PR drafts (bad first loops: architecture rewrites, auth/payments code, production deploys) — a deliberate deletion-exception preserved from the source purge; revisit only if the loop deferral lifts.
+- **Skill-folder categories** (nested directories under skills/): rejected — the loader does not discover nested directories; the tree stays flat.
+- **Wholesale harness rebuild:** rejected — "'whole restructure' and 'add every tool' are the same instinct in a new costume".
+- **Project-memory deletion:** rejected — "scar tissue, not direction... deleting guarantees recurrence"; deletions that correct wrongness or land-then-prune stay legitimate.
 
 ## 7. Open items
 
@@ -83,20 +87,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-### 3.4 → memory sweep (routing EXECUTED 2026-07-30, Wave 1; prunes land per-item)
-
-User ruling: instruction-class memories are rework inputs, not standing instructions — they fold into this routing, and each memory is pruned only when its instruction is actually written into CLAUDE.md or rules (land-then-prune, one by one; the surviving memories double as the landing checklist). No global `~/.claude/MEMORY.md` is created: harness-landed rules load in every project via `rules/common/*` + CLAUDE.md, strictly better than a sidecar file. End-state survivors (correct memory-class content): `settings-json-waiver` + the three rejected-proposal records (item 49). Prunes use `.bak`-park (untracked = no git safety net; batch-remove after all waves per item 37).
-
-49. Rejected proposals (recorded as memories, Wave 1): skill-folder categories (rejected: stay flat, the loader does not discover nested dirs); wholesale harness rebuild (rejected: "'whole restructure' and 'add every tool' are the same instinct in a new costume"); project-memory deletion (rejected: "scar tissue, not direction... deleting guarantees recurrence"; wrongness + land-then-prune deletions stay legitimate).
-50. Folded to §3.1 homes (Wave 5, CLAUDE.md Doc structure): synthesize-from-meaning (never polish the user's sentence — write the rule from its meaning in house style; complements item 9's imperative verbs); the class test (durable text must read correctly for a different session/project with the same class of need; strip session vocabulary into roles and categories).
-51. Folded to §3.2-side homes (Wave 2): rules-trim line (cut only human-facing content — keybindings, env knobs, permission advice; keep agent-attention checklists even when they restate known concepts — internalization ≠ reliable execution) → harness-maintenance.md; audit-spec self-containment (audit commands inline their full spec, never repoint — the referenced file may be the audit target; the Doc-structure ↔ harness-audit duplication is deliberate, covered by check 1) → harness-maintenance.md; catalog-authoring policy (the CLAUDE.md catalog is routing-only: phase-fired + auto-invoked names, no restated descriptions, no situational enumeration; slash = command, bare = skill) → harness-maintenance.md; loop objective-gate (an unattended loop needs a gate that can fail the work mechanically + a hard stop; "a verifier with an opinion" is not a gate) → judgment-rubrics.md (rubric 2 extension); review-scale (review scale tracks automation scale — N looped changes need N reviewed diffs; spot-check the gate itself, "gates rot") → code-review.md.
-52. In-flux, held on the checklist (user ruling 2026-07-30: the current durable forms are NOT final): superpowers-pipeline-with-claudemd-workflow (the CLAUDE.md `**Superpowers**` bullet exists, but the owned-vs-superpowers composition is still being worked through Waves 3/5 — prune after Wave 5 settles the final text); durable-files-self-contained (harness-maintenance.md carries a harness-scoped instance in house style; the general rule's final home — likely CLAUDE.md Doc structure — settles in Wave 5; prune after).
-53. Origin-tag convention: already routed via §3.2 item 23 (adoption mechanics) — content lands with the component-authoring standard in Wave 2; the memory prunes after that landing.
-
-### 3.5 Already LANDED (verify only, no edits)
-
-First-reviewer/user-is-last; steer/drive intro; consolidated batch report; memory two-tier routing; superpowers-first rule; catalog leanness (routing-not-inventory); em-dash discipline; style-match ("the tighter the scope, the stricter the match"); atomic-unit rule; change tiers + backup protocol (both superseded 2026-10-01→03, §19 — every harness edit is per-edit user-gated; git is the backup) + house style (harness-maintenance); dispatch working-set/residue + judgment rubrics (rubrics file dissolved 2026-10-01, §19); the memory protocol (the Wave-1 sweep routes instruction-class memories into §3.4; each prunes on landing); compaction discipline + compact-prep; settings waiver; auto-invoke/manual split; never-commit with the ce-optimize `optimize/*` carve-out; state-doc-not-changelog; feature/INDEX/component terminology; asymmetry rule (CLAUDE.md restating rules/ = KEEP; rules/ restating CLAUDE.md = trim to pointer — reversed 2026-10-04 to the symmetric restatement ban, §19); harness scope = Claude Code only.
 
 ## 4. Locked decisions (canonical, with the why)
 
