@@ -22,6 +22,7 @@ Bar: durable facts about the user and the collaboration that no live harness fil
 - **GitHub = human review gate:** "I actually don't do automated GitHub work by AI directly, I usually review what you generated before doing in GitHub... in GitHub, it is much more strict on the standard."
 - **Student, multi-domain; CLAUDE.md stays universal:** "As I am a student, I do many things, mostly AI work... I don't want the CLAUDE.md to be too limited to a specific structure of work, they should be high level instructions." Per-type layering lives in project CLAUDE.md and project rules.
 - **OSS artifact publication:** design/plan/ADR docs push to the same GitHub repo, open and closed source alike; push counts as publishing, checked inside the existing review pass. Per-document exceptions only: commercial strategy, operational security detail, PII/secrets, legal.
+- **Reject-on-comment:** a tool call the user rejects with a comment is a silent rejection — track landed versus rejected, and re-apply only after addressing the comment ("I think I rejected the edit due to the comment, as Claude Code reject tools when commenting.").
 
 ## 2. Environment + loading model
 
@@ -43,10 +44,18 @@ Bar: named methods and stances governing how harness work is judged, each with i
 - **Comprehension-debt:** output outpaces understanding; review scale must track automation scale — "gates rot".
 - **Deep over shallow (深模組/淺模組):** AI leans shallow — easy to build, hard to manage, lost on large projects; prefer deep modules (narrow interface, rich implementation). 規格化/流程化/模組化 — spec-ify, process-ify, modularize — are what make AI vibe coding more than a toy.
 - **Multi-agent decomposition and verification:** decompose by context boundary, never by role (role splits spend more on coordination than work); multi-agent remedies exactly three constraints — context protection, parallelization, specialization past ~20 tools — at a typical 3-10x token cost. Pool independent judgments, never debate: debate induces premature consensus, and centralized verification cuts error amplification (17.2x → 4.4x). Unfiltered review runs 12-15% precision; the verify-to-disprove stage is what reaches <1% — never ask "what's missing" freeform, LLM judges are weakest at exactly that (FineSurE's said-but-not-written alignment is the published method). Production pattern: parallel specialized finders → disproof verifier → severity ranking → the human keeps the verdict. The verification pass's named failure is early victory; the fix is an explicit complete-suite demand.
+- **Anchor edits insert, never replace:** the anchor text stays verbatim in both old_string and new_string; new content goes beside it, never over it ("Why are you keep removing unrelated part when you edit?" — three corrections).
+- **Plan-acceptance gate:** before asking the user to accept a plan, state the method — what was dispatched, what was read, which layers are covered — and expect a fact-check demand next.
+- **Doc-sync standing instruction:** durable docs carry the latest and most accurate context, no ambiguity ("All docs should be containing the latest and most accurate context. Try your best to avoid any ambiguity and unclear context."); sweep for staleness before every compact.
+- **Imperative verbs stay:** instruction bullets keep their imperative verbs — stripping them softens the rule ("Just asking, why remove the verb?").
+- **Justify-before-execute:** on a heavy plan, justify per item that it is worth doing before executing anything.
+- **Standard over house:** reason from the standard or best practice, neither from the user's CLAUDE.md preferences nor by citing a named standard ("Don't lean to my CLAUDE.md preference... You should reason about how would the docs format." / "use the standard/best practice in formatting.").
 
 ## 4. Component standards
 
 Bar: decisions and whys for authoring and curating skills, commands, agents, rules; live rule text lives in harness-maintenance and rules, pointed at, never copied.
+
+- **Generic args, never hardcoded names:** commands and templates take generic argument names — never hardcode a project's folder or file names ("Don't specifically call 'system_design/' or something else... I may use other").
 
 ## 5. Workflow decisions
 
@@ -74,81 +83,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 3. The instruction harvest (core — every durable instruction, routed by home)
-
-Cross-verified by 3 independent reads of both context docs (main context + 2 blind subagent inventories; ~96 + ~118 raw durable items deduped). Status: LANDED = already durable (verify only); W0/W2/W5 = lands in that wave of the current plan; MEM = memory candidate.
-
-### 3.1 → CLAUDE.md (lands Wave 5)
-
-1. Anchor edits insert, never replace: the anchor stays verbatim in old_string AND new_string; new content goes beside it, never over it (3 rejections: "Why are you keep removing unrelated part when you edit?").
-2. Reject-on-comment = silent rejection: track landed-vs-rejected; re-apply after addressing the comment ("I think I rejected the edit due to the comment, as Claude Code reject tools when commenting.").
-3. Commit-per-wave cadence: complete a wave's fixes, then commit before the next; heavy work staged with user checkpoints ("you should do the Part A first and then pause before Part B").
-4. Plan-acceptance gate: before asking the user to accept a plan, state the method (what was dispatched, read, which layers covered); expect a fact-check demand next.
-5. GitHub = human review gate (§1).
-6. Labor split (§1): user runs raw git commands; everything else is the agent's.
-7. Single-line Windows git commands, no `\` continuations.
-8. Doc-sync standing instruction: "All docs should be containing the latest and most accurate context. Try your best to avoid any ambiguity and unclear context... need more detailed, comprehensive, and accurate context about what it needs to do." Sync sweep before every compact.
-9. Imperative verbs never stripped from instruction bullets ("Just asking, why remove the verb?" — recurring correction, earliest L502).
-10. Restructure-over-cleanup preference (§1).
-11. No unrequested additions: surface the gap and let the user decide; never silently fill ("Just asking, why suddenly add this one? I think I didn't told you").
-12. Justify-before-execute: on heavy plans, justify per item that it is worth doing before executing ("I now want to ask whether the M3 and L2-L5, all the things listed in the plan are worth to do? … Justify it.").
-13. Standard-over-house meta-rule: reason from standard/best practice, not from the user's CLAUDE.md preferences and not by citing a named standard ("Don't lean to my CLAUDE.md preference... You should reason about how would the docs format." + "I don't want you to lean to a specific CommonMark... use the standard/best practice in formatting.").
-14. Pronoun convention: in docs, "you" = the AI agent, "I/user" = the human ("these docs are read by AI Agent (you), so make sure the pronoun is correct... no matter in coding, writing, etc.").
-
-### 3.2 → rules/common/harness-maintenance.md (lands Wave 2)
-
-**Component-authoring standard (for any future skill/command/agent):**
-
-15. Agents get a terse persona (1–3 sentences: role + specialty + responsibility; stance-conditioning, not accuracy; Anthropic's own shipped agents allow light flourish). Persona goes before the PDB block (the PDB's first rule references the persona). Commands/skills get NO persona (their body is one message in an already-framed conversation; the agent body is the entire system prompt).
-16. No H1 in agents (name in frontmatter; a name-repeat H1 is always-loaded zero-information). Skills/commands: H1 allowed when a genuine title with elaboration beyond the bare name. `# comment` inside code fences is NOT an H1.
-17. Frontmatter: name / description-with-trigger / tools / origin (+ part-of for multi-agent families), origin last, `""` quoting only when the description contains a colon. Never revert the user's hand edits via git checkout.
-18. Description = the routing surface (posture + trigger + returns); the router reads name + description only. A "## When to invoke" body section is an anti-pattern; relocate its content into the description (relocate-don't-drop: "you should still consider whether the content is useful... not blindly dropping out content"; refined 2026-10-04 — relocate the load-bearing content, bad content dies with its section).
-19. Findings contract: `- **[SEVERITY]** [file:line]: [issue] — [fix]`; house severity CRITICAL/HIGH/MEDIUM/LOW; per-agent native-scale mappings recorded in `/review-pr`.
-20. Pre-existing agents: keep unchanged unless an effectiveness case justifies it ("you should keep them unchange unless your judgement and justification really worth to change them for better effectiveness and performance"); description re-tailoring = justified (routing), cosmetic trims = reverted.
-21. Multi-exemplar standard: base formats on standard/best practice across exemplars, never on one target.
-22. Generic-args rule: never hardcode folder names in commands ("Don't specifically call 'system_design/' or something else... I may use other").
-23. Adoption mechanics: strip `disable-model-invocation: true` on adopted skills meant to stay auto-invokable; strip any self-run git mutation ("Commit your work" etc.) — the never-commit policy binds skills; tag `origin:` (`custom` = hand-built here; repo/plugin name = ported-from; multi-source merge = compound tag, N≥2 — widened from "two-source" 2026-10-04).
-24. Progressive-disclosure artifact principle: per-session artifacts get durable text holding only trigger + template; the template lives in a command body (loads on invocation, zero always-loaded cost).
-
-**Extraction pipeline:**
-
-25. Read-and-justify → extract verbatim ("preserve all the content in the original version") → remove-bad → enhance-on-surviving → tailor to the standard format → batch audit vs sources → main-context audit → double final-audit (main + subagent in parallel) → commit. Extraction ≠ rewrite ("You don't need to significantly rewrite the whole file" — two pushbacks).
-26. Generalized extraction rule: extract-and-merge whenever duplicated/overlapping content exists across the inventory.
-
-**Curation rules:**
-
-27. Keep/drop reasoned by purpose/workflow-fit, NEVER invocation count; usage frequency is supporting evidence (caveman/ponytail kept despite highest measured cost).
-28. All keep/drop/adoption verdicts are user-gated.
-29. Overlap = merge, never accumulate (context-budget → harness-audit; to-spec/to-tickets → plan-from-design/build-brief precedents).
-30. No knowledge-database components: "thin prompts · thick artifacts + context · thin skills"; pattern-DB skills "limit the model and worsen the results."
-31. A skill needing external setup beyond invoke-and-use gets removed and its docs updated.
-32. A later explicit user decision supersedes an earlier precedent (the 6 kept-as-false plugins overriding the remove-lines precedent).
-33. Propose entry-point commands, never self-invoke them (harness-audit class); workflow components auto-invoke.
-
-**Audit-execution rules:**
-
-34. Flag-and-fix: defects found mid-fix beyond the original audit get flagged and fixed too; rewriting words during reformatting is permitted.
-35. Reason-independently: audit everything against the calibration points, do not only fix what the user flagged ("You should audit the files according to those calibration points for the rest of all. Reason by yourself.").
-36. Filesystem recon cannot verify built-in skills; check the live available-skills list before claiming stale/missing.
-
-**Maintenance rules:**
-
-37. Coverage-audit before pruning any doc (verify every load-bearing item lives elsewhere first); .bak-park by default — gitignored files have no git safety net; batch-remove .bak only after all waves.
-38. Fact-check before canonizing into durable docs (adversarial verification caught 2 errors in 55 claims).
-39. Memories are living docs, updated on state change.
-40. The admission test for new always-loaded content: "is this true for every prompt, or only some?" Always-loaded = always true; everything else needs a trigger.
-41. Mention-once rule: a fact appears once per doc; repetition risks agent confusion (feeds one-home-per-topic).
-42. End-of-work necessity review: before finishing an edit batch, one pass for content that is unnecessary, not good, or repeated ("I want you to do the audit and review at last to see any content is not necessary, not good, or even repeated.").
-43. Format-calibration 5-points (the why behind harness-audit checks 4–5): blank line between distinct ideas (stick-together = primary defect; a single atomic sentence is exempt even when long); combine too-short clauses into one block; blank line before AND after every list; periods over semicolons for short clauses; sub-bullet indent = parent marker width + 1. Bold-lead-in principle bullets are a false-positive class — do NOT split them.
-
-### 3.3 → rules/orchestration (lands Wave 2)
-
-44. 3-agent merge pattern: one agent for the merge target, one for the merge content, one for the merging work, plus a justification subagent before the merge (verify concept count). Needs a dispatch-templates merge template.
-45. Double final-audit for batches: main context + subagent audit in parallel ("So you do the audit here in main context while a subagent doing as well."). **Superseded 2026-08-14 (badc7cb, accepted in the item-63 diff review):** the pass is main-context + propose-first — run the acceptance audit in main context and propose the parallel fresh-subagent pass; the mandatory auto-dispatch tripped Autonomy's ask-first every batch; a skill's own mandated fan-out fires with the skill.
-46. Subagent QA defect classes as acceptance criteria: content injection (writing own thoughts into docs), stick-together regression, code/table corruption (byte-diff every code block + table cell), brief overstep (an out-of-brief edit is a defect even when content is good). Pre-commit QA subagent sweep mandatory for bulk edits.
-47. Research dispatches include Read: a research subagent without Read cannot recover its own persisted/truncated outputs.
-48. Long-context rule: merge/bulk work goes to fresh subagents with detailed prompts ("the main context may worsen the performance of merge"); high-sensitivity verification stays in main context ("I want you to audit these three merges first by yourself in main context, no subagents.").
 
 ### 3.4 → memory sweep (routing EXECUTED 2026-07-30, Wave 1; prunes land per-item)
 
