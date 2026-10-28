@@ -14,13 +14,28 @@ Consolidated 2026-07-30 from: `Post-context.md` (406 lines), `Post-context-expan
 
 Bar: durable facts about the user and the collaboration that no live harness file already carries; verbatim quotes only where the wording itself carries the rule.
 
+- **Full-stack AI engineer** (frontend + backend + LLM/AI integration + infra): designs specs, reviews every line, never writes code by hand; pitch at the design/trade-off level, not the implementation level.
+- **Two-layer review:** the agent is the first reviewer and reviews everything comprehensively itself; the user is the final review, a backstop, not coverage — "Although I do the review manually, but I would miss something as I am human. So, you should still review them all regardlessly in detail and comprehensively."
+- **Agent drives, user steers:** "all should be done by you (the agent), I am only the user who give you ideas and ask you."
+- **Restructure appetite:** when a section reads messy, the user chooses deeper restructure over light cleanup — "Yes, probably light cleanup, but I actually want you to restructure this workflow into more effective and better performance format and structure."
+- **Git labor split, agent side:** everything git-adjacent beyond the user-run mutations is the agent's work — "I only review and you do the work for me." No attribution lines on commits.
+- **GitHub = human review gate:** "I actually don't do automated GitHub work by AI directly, I usually review what you generated before doing in GitHub... in GitHub, it is much more strict on the standard."
+- **Student, multi-domain; CLAUDE.md stays universal:** "As I am a student, I do many things, mostly AI work... I don't want the CLAUDE.md to be too limited to a specific structure of work, they should be high level instructions." Per-type layering lives in project CLAUDE.md and project rules.
+- **OSS artifact publication:** design/plan/ADR docs push to the same GitHub repo, open and closed source alike; push counts as publishing, checked inside the existing review pass. Per-document exceptions only: commercial strategy, operational security detail, PII/secrets, legal.
+
 ## 2. Environment + loading model
 
 Bar: machine- and account-level facts a session cannot infer and cannot change (provider setup, injection and loading mechanics, measured costs, environment failure modes).
 
+- **settings.json waiver:** never flag the file, the `ENABLE_TOOL_SEARCH` value, or token placement (a per-provider toggle the user manages); only genuinely new settings may be proposed. Never commit settings.json with a token present; commit settings alone at token-free moments.
+- **Environment facts (govern cost/spend proposals):** the user holds the API key; the agent cannot pay, enroll services, or access cloud accounts — "I don't like linking AI to any platform which you will not have the access either."
+
 ## 3. Working principles
 
 Bar: named methods and stances governing how harness work is judged, each with its why; nothing a SOTA model infers unprompted.
+
+- **Work-sequence principle "3M":** Make it work / Make it right / Make it fast — the user's own sequencing lineage, kin to the Rule of Three ("So the Rule of Three is similar to my previous principle of 3M?").
+- **Firing guarantees over conditional token savings:** a standing rule's reliable firing outweighs relocating it out of always-loaded context — "the reason that I don't put them into skill is that I afraid of forgetting to use them."
 
 ## 4. Component standards
 
@@ -34,6 +49,10 @@ Bar: rulings that shaped the artifact and workflow system with their why; mechan
 
 Bar: current inventory truth re-derived from the live tree at write time, plus one consolidated register of rejections-with-why (anti-re-proposal value only).
 
+### Rejection register
+
+- **Cost-jump bullet (>10 agents / paid API / cloud run):** rejected on environment grounds — the user holds the API key, the agent cannot pay or enroll; re-proposals re-declined. Do not re-propose.
+
 ## 7. Open items
 
 Bar: work the user has not settled; each names its owner and next concrete step.
@@ -41,23 +60,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 1. User identity + working style
-
-- **Full-Stack AI Engineer** (frontend + backend + LLM/AI integration + infra). Works at the AI-engineer level: designs specs, reviews every line, never writes code by hand. Pitch at design/trade-off level; depth over brevity when asked "why" or when a call is non-obvious.
-- **Two-layer review:** the agent is the first reviewer and reviews everything comprehensively itself ("Although I do the review manually, but I would miss something as I am human. So, you should still review them all regardlessly in detail and comprehensively."); the user is the final review, a backstop, not coverage.
-- **Agent drives, user steers:** "all should be done by you (the agent), I am only the user who give you ideas and ask you."
-- **Restructure appetite:** when a section reads messy, the user chooses deeper restructure over light cleanup ("Yes, probably light cleanup, but I actually want you to restructure this workflow into more effective and better performance format and structure.").
-- **Git labor split:** the agent never runs `git commit`/`push`/destructive ops — it outputs exact commands as text; the user runs them. Everything else git-adjacent (merge-conflict resolution, review, verification) is the agent's work: "I only review and you do the work for me." No attribution on commits. Descriptive subject line (descriptive over terse — but short: the length preference died 2026-10-03, "the commit message is too long" / "Try to make it short"; single-line subject, details proven by the diff). One logical change per commit. Single-line Windows git commands, no `\` continuations.
-- **Commit-per-wave cadence:** "I kind of want to complete them all first. Then, we commit it afterward before moving to the next wave."
-- **GitHub = human review gate:** "I actually don't do automated GitHub work by AI directly, I usually review what you generated before doing in GitHub... in GitHub, it is much more strict on the standard."
-- **settings.json waiver:** never flag the file, the `ENABLE_TOOL_SEARCH` value, or token placement (per-provider toggle the user manages). Only genuinely new settings may be proposed. Token dance: NEVER commit settings.json with a token present; commit settings alone at token-free moments.
-- **Modes ended 2026-09-05** (caveman + ponytail uninstalled; the extraction record and the full-not-ultra / wenyan rejections live in item 77(c)).
-- **Work-sequence principle "3M":** Make it work / Make it right / Make it fast — the user's own name for the lineage behind CLAUDE.md's Test/Iterate bullets ("So the Rule of Three is similar to my previous principle of 3M?").
-- **Student, multi-domain, CLAUDE.md stays universal:** "As I am a student, I do many things, mostly AI work... I don't want the CLAUDE.md to be too limited to a specific structure of work, they should be high level instructions" — the identity-level why beneath the CLAUDE.md slimming arcs; per-type layering lives in project CLAUDE.md / project rules.
-- **Environment facts (govern cost/spend proposals):** the user holds the API key; the agent cannot pay, enroll services, or access cloud accounts ("I don't like linking AI to any platform which you will not have the access either"); the >10-agents/paid-API/cloud-run cost-jump ask-first bullet was cut on these grounds and re-proposals were re-declined — do not re-propose.
-- **OSS artifact publication:** design/plan/ADR docs push to the same GitHub repo, open and closed source alike (push counts as publishing; checked inside the existing review pass); per-document exceptions only — commercial strategy, operational security detail, PII/secrets, legal.
-- **Firing guarantees over conditional token savings:** "the reason that I don't put them into skill is that I afraid of forgetting to use them" — a standing rule's reliable firing outweighs relocating it out of always-loaded context.
 
 ## 2. Philosophy inputs (Post1–Post7)
 
