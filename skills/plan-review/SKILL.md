@@ -38,16 +38,9 @@ Every `plan-reviewer` prompt names exactly three things:
 
 - **The plan:** its absolute path, or the inline plan text if there is no file.
 - **One lens file, by path:** exactly one of the four lenses in `~/.claude/skills/plan-review/lenses/` (`ceo.md`, `design.md`, `devex.md`, `eng.md`), passed as its absolute path.
-- **The report-contract reminder:** walk every dimension in the lens
-  - calibrate to the plan's depth: a strategy or scope plan gets capability-level findings with "the implementer must prove ___" obligations; an implementation-ready plan gets method- and codepath-level findings
-  - quote the plan's own lines or a repo `file:line` as evidence
-  - rank findings by severity
-  - list open questions, each tagged with the decision it blocks
-  - end with exactly one verdict (`SHIP`, `SHIP-WITH-CHANGES`, `BLOCK`, or `NEEDS-USER-DECISION`; `NOT-APPLICABLE` when the lens's scope guard finds no surface for it)
-  - state what was not covered
-  - report unverifiable claims as open questions, never as findings
+- **Depth calibration:** calibrate to the plan's depth — a strategy or scope plan gets capability-level findings with "the implementer must prove ___" obligations; an implementation-ready plan gets method- and codepath-level findings.
 
-If Step 2 triggered, add one `security-auditor` dispatch in the same turn. Tell it the artifact is a plan or design doc with no code yet, so it runs the STRIDE threat model against the described design, skips the code and infrastructure scans, and records anything it cannot verify without code as an open question.
+If Step 2 triggered, add one `security-auditor` dispatch in the same turn; state the artifact fact — a plan or design doc with no code yet.
 
 Its verdict is `SHIP` or `BLOCK`.
 
