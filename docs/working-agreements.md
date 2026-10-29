@@ -60,7 +60,7 @@ Bar: named methods and stances governing how harness work is judged, each with i
 - **Three-way restructure method:** for a contested rewrite, draft in parallel (main context + fresh subagent), apply the mechanically identical overlap first (script-verified), then walk every divergence one-by-one for user verdicts — the divergence review is where the value lands.
 - **Live-test protocol:** when a reworked surface goes into real-session use, commit mid-arc and let the user's hand edits land on top; the next session reads the diff, judges every change against the harness principles, and reverts only the bad ones with reasons — the user's reasons win conflicts.
 - **No agent time estimates:** wall-clock inputs are invisible to the agent (review speed, permission prompts, machine latency, subagent runtimes), so any time estimate is a fabricated number; false precision harms planning more than no estimate.
-- **Restoring a deleted rule needs live evidence:** "the problem no longer occurs" is contaminated evidence while the rule is still active during the observation window; the valid grounds are severity, form (a pure negative constraint is the weakest), and whether a safety net exists.
+- **Restoring a deleted rule needs live evidence:** an observation that the problem no longer occurs is contaminated evidence while the rule is still active during the window; the valid grounds are severity, form (a pure negative constraint is the weakest), and whether a safety net exists.
 
 ## 4. Component standards
 
