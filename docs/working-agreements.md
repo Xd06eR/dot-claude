@@ -163,6 +163,7 @@ Bar: current inventory truth re-derived from the live tree at write time, plus o
 - **CE skips, user-gated (never installed; no git record, so carried here):** ce-retune (no A/B benchmark harness), ce-compound (the memory protocol owns repo learnings), ce-strategy (no product-strategy docs), ce-pov (research+judgment covers adopt questions), ce-ideate (ideas arrive in conversation), ce-product-pulse (no live product plumbing). Do not re-propose.
 - **Disabled plugins are deliberate keeps:** disabled is a parking state for future need, not residue — removal needs a real obsolescence case, never staleness alone ("I may need to use them in future").
 - **redesign-existing-projects stays separate from design-taste-frontend:** upgrade-in-place vs new-UI-from-brief are distinct usages; upstream keeps them separate; zero checklist duplication. Do not re-propose the merge.
+- **mattpocock user-ignores, never installed (no git record, so carried here):** triage, batch-grill-me, setup-ts-deep-modules — user-ignored at curation with no need-moment in this harness's workflows (wayfinder and to-questionnaire from the same list were later adopted, reversing their ignores). Do not re-propose.
 
 ## 7. Open items
 
