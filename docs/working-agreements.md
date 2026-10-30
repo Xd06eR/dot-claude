@@ -71,6 +71,8 @@ Bar: named methods and stances governing how harness work is judged, each with i
 - **Superset lenses and verdict contracts:** two review lenses seated on one checklist produce correlated agreement that reads as confirmation — every lens owns a distinct checklist; and a verdict contract carries an explicit not-applicable value, because a scope-guarded reviewer otherwise improvises a silent pass.
 - **Table edits byte-diff the whole structure:** deleting or editing a table column means diffing header, separator, and rows alike — the separator row is the silently missed one.
 - **Prefer mechanical checks for earned rules:** a pitfall's durable fix prefers a mechanical check (hook, lint, CI) over a prose rule — the check fires where prose relies on attention.
+- **Adversarial review is briefed finding-only:** the bulk-audit pass runs map → main-context audit → adversarial fresh-subagent review → apply → summary, and the adversarial reviewer is briefed with file:line + finding only, never the auditor's reasoning — a brief that carries the reasoning anchors the reviewer in the auditor's frame and turns the pass into confirmation of it.
+- **Content-preservation scan on consolidation edits:** scan the deletion side of the diff (`git diff | grep '^-[^-]'`) for lost backticks and acronyms, and keep the per-file word-count delta non-negative — losses hide in deletions, invisible to a read of the result; byte-diffing every code block and table cell lives in the dispatch protocol's merge criteria.
 
 ## 4. Component standards
 
@@ -88,6 +90,8 @@ Bar: decisions and whys for authoring and curating skills, commands, agents, rul
 - **Fixedness is proportional to mechanical consumption:** fixed skeleton headings exist only for machine-carried blocks (checklist syntax, contract tables); everything a human reads stays free-format.
 - **Aspects and lenses are the user's control surface:** review-family skills name their aspects or lenses at invocation — the naming is the trim lever, symmetric with description routing.
 - **Locality: no caller-specific exceptions in general-purpose skills:** a skill serving many callers never carries one caller's exception; the invoking skill owns its own steps' staffing.
+- **Format calibration for durable text:** blank line between distinct ideas, combining too-short clauses into one block, blank line before and after every list, periods over semicolons for short clauses, sub-bullet indent = parent marker width + 1. Stick-together (a multi-claim block without blank-line separation) is the primary defect — a single atomic sentence is exempt even when long; hard-wrap (manual screen-wrap mid-sentence) is always a defect. Bold-lead-in principle bullets are a false-positive class — never split them.
+- **Size flags calibrate judgment, never cap:** components carry no numeric size caps — shape bars govern; a length flag triggers review, never a reflexive split, and a flat in-skill reference is a fine arrangement (motion-ui at 749 lines was judged not sprawl).
 
 ## 5. Workflow decisions
 
@@ -163,18 +167,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 5. Standards produced (reusable)
-
-- **Format 5-points:** §3.2 item 43.
-- **Extraction pipeline:** §3.2 items 25–26.
-- **Component-authoring standard:** §3.2 items 15–24.
-- **Audit method (5-phase):** map → audit (main reads working set) → adversarial review (fresh subagent, briefed with file:line + finding only, not the auditor's reasoning) → apply per change tier → summary. No self-verification: a fresh context accepts.
-- **Change tiers:** self-serve (dead-ref name fixes, MEMORY.md index) → apply + show diff; ask-first (semantic change to CLAUDE.md/rules/settings/hooks/paths/plugins) → list only; never (wholesale rewrite of a working file, git commit/push, credentials). **Superseded 2026-10-01→03:** the tiers dissolved — every harness edit is per-edit user-gated (harness-maintenance's Edit protocol), so CLAUDE.md Autonomy covers every class; the never class (git/credentials) stands unchanged.
-- **Content-preservation check:** `git diff | grep '^-[^-]'` scanned for backticks/acronym losses + per-file word-count delta non-negative; byte-diff every code block + table cell.
-- **Size budgets:** (harness-maintenance's own Size-budget section deleted 2026-10-03 — "you auto review is kind of bad... now all our rules are not verbose, so we don't need it"; these figures remain historical calibration) any single rules file ~8 KB; the unscoped set ~40 KB total (measured ~18.3 KB); per-project memory index ~30 lines (condense threshold — distinct from the global `~/.claude/MEMORY.md` ≤15-line creation cap in §4); agents >200 lines flagged; description word-flag superseded 2026-10-04 — no numeric caps, the one-to-three-sentence shape bar governs; SKILL.md >400 lines flagged (a flag triggers review, not a reflexive split — motion-ui at 749 lines was judged NOT sprawl: a flat in-skill reference is a fine arrangement); CLAUDE.md chain >300 lines flagged (harness-audit group G owns the thresholds).
-- **HW / ST:** hard-wrap (manual screen-wrap mid-sentence; always a defect) / stick-together (multi-claim block without blank-line separation; calibrated — atomic single sentences exempt even when long).
-- **House severity scale:** CRITICAL (block) / HIGH (warn) / MEDIUM (info) / LOW (note).
 
 ## 6. The corrections registry (never re-instruct the agent twice)
 
