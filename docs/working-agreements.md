@@ -38,6 +38,7 @@ Bar: machine- and account-level facts a session cannot infer and cannot change (
 - **Output-cap mechanics:** unrecognized gateway model IDs default to a 32000-token output cap and thinking counts against it, so a long analysis turn dies before its first Write; the raise is CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000 in settings env (going higher rejected: the excess clamps to the provider ceiling and deepens the silent-generation window). Subagent cap deaths have no auto-resume on any version, and a resumed agent that emits nothing after the message lands does not recover — interrupt and dispatch fresh.
 - **Task-tool denies are dead config:** the TaskCreate/TaskGet/TaskList/TaskUpdate denies in settings.json predate the tools' rename and match no live tool; the startup warnings on unregistered configs are the accepted price.
 - **CC-switch rewrites settings.json wholesale on profile switch:** hand-edit settings.json only after the session's final switch, or the edit is overwritten.
+- **Permission-edit posture:** a permission change that sends anything out — including query text through an allowed lookup — is flagged to the user before it lands, and every proposed entry is grounded in a doc the user can read first, never asserted from memory ("why? point that docs to me.").
 
 ## 3. Working principles
 
@@ -73,6 +74,8 @@ Bar: named methods and stances governing how harness work is judged, each with i
 - **Prefer mechanical checks for earned rules:** a pitfall's durable fix prefers a mechanical check (hook, lint, CI) over a prose rule — the check fires where prose relies on attention.
 - **Adversarial review is briefed finding-only:** the bulk-audit pass runs map → main-context audit → adversarial fresh-subagent review → apply → summary, and the adversarial reviewer is briefed with file:line + finding only, never the auditor's reasoning — a brief that carries the reasoning anchors the reviewer in the auditor's frame and turns the pass into confirmation of it.
 - **Content-preservation scan on consolidation edits:** scan the deletion side of the diff (`git diff | grep '^-[^-]'`) for lost backticks and acronyms, and keep the per-file word-count delta non-negative — losses hide in deletions, invisible to a read of the result; byte-diffing every code block and table cell lives in the dispatch protocol's merge criteria.
+- **Rename-parks are live until the user rules:** a `.bak`-style rename parks a file, it is not a deletion signal — never clean up parked files without the user's word ("Don't delete it, I only renamed this, it is not a backup.").
+- **Unclear instructions are a root cause, not an excuse:** "even though there are instructions, but you (the agent) still sometimes make the mistakes. It may due to the instructions are unclear" — when a standing instruction fails repeatedly, trade its breadth for unambiguity; contradictory guidance is an invisible tax (clash).
 
 ## 4. Component standards
 
@@ -92,6 +95,7 @@ Bar: decisions and whys for authoring and curating skills, commands, agents, rul
 - **Locality: no caller-specific exceptions in general-purpose skills:** a skill serving many callers never carries one caller's exception; the invoking skill owns its own steps' staffing.
 - **Format calibration for durable text:** blank line between distinct ideas, combining too-short clauses into one block, blank line before and after every list, periods over semicolons for short clauses, sub-bullet indent = parent marker width + 1. Stick-together (a multi-claim block without blank-line separation) is the primary defect — a single atomic sentence is exempt even when long; hard-wrap (manual screen-wrap mid-sentence) is always a defect. Bold-lead-in principle bullets are a false-positive class — never split them.
 - **Size flags calibrate judgment, never cap:** components carry no numeric size caps — shape bars govern; a length flag triggers review, never a reflexive split, and a flat in-skill reference is a fine arrangement (motion-ui at 749 lines was judged not sprawl).
+- **Rules are agent-facing, never user-facing:** rules files carry the agent's attention-directing material only — keybindings, environment setup, and permission advice belong to user-facing docs, not rules.
 
 ## 5. Workflow decisions
 
@@ -167,49 +171,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 6. The corrections registry (never re-instruct the agent twice)
-
-User corrections of agent behavior, by class. Each is a durable rule; the L### refs live in the source docs (§12).
-
-1. **Over-rewrite:** extraction preserves advantages; never significantly rewrite the whole file (L2166, L2915).
-2. **Blind dropping:** relocate useful content instead of dropping it (L2943).
-3. **Single-target calibration:** base standards on best practice across exemplars (L2943).
-4. **Accepting without reading:** agent reviews everything itself; user is backstop only (L704).
-5. **Silent rejection:** a user comment on a tool call = the edit is rejected; re-apply after addressing (L836 + many instances).
-6. **Anchor-replace deletes:** edits anchored on an existing block must insert, never replace (3f1a L1784/L1952/L1969).
-7. **Copied wording:** synthesize from the user's meaning, never polish their sentence (L4659; 3 rejections).
-8. **Dropped verbs:** never strip imperative verbs from instruction bullets (L502, 3f1a L488).
-9. **Em-dash as default connector:** off by default; draft with colon/period/comma first (recurring).
-10. **Style inconsistency:** match the section's existing convention exactly (L1426; bold-label-colon break).
-11. **Session-flavoring:** durable text written to the current session instead of the class (compact-prep first draft); the class test: reads correctly for a different session/project with the same need.
-12. **Ephemeral citations:** durable files never cite session-scoped/untracked sources ("such a low level mistake that must not happen"); no file-name examples narrowing a general rule.
-13. **Too-specific naming:** no provider names in durable docs (L2751: "All good, but don't mention Kimi/GLM as this is too specific.").
-14. **Changelog in state docs:** CLAUDE.md is a state doc, not a log (L2183).
-15. **Documenting disabled skills:** the agent only sees available skills; never document the disabled set (L3264).
-16. **Deleting rename-parks:** `.bak` renames are live parks until the user says otherwise (L2484: "Don't delete it, I only renamed this, it is not a backup.").
-17. **Scope creep:** no unrequested additions; flag the gap, let the user decide (L6397).
-18. **Labor-split inversion:** user runs raw git; agent does everything else including merge conflicts and review (L6586/L6594).
-19. **Cutting without coverage proof:** verify coverage before deleting content ("does our CLAUDE.md already have all of these?" — bullet-by-bullet map).
-20. **Asserting unverified state:** "check it first, you are wrong about the skilloverrides" (L3197); challenge unsourced claims (L3067).
-21. **Human-facing content in rules:** rules are for the agent, not the user; cut keybindings/env/permission advice; keep attention-directing checklists (L6090 + the 3 trim-line rejections L6233).
-22. **KB-as-skill:** knowledge databases limit the model; guidelines ≠ patterns (L690, L826, L6331, L854).
-23. **Duplication across docs:** if CLAUDE.md mentions it, don't repeat it elsewhere (L4760); mention-once (L5270/L5302).
-24. **Hardcoded specifics in reusable components:** no folder names in commands (L413); generic args.
-25. **Missing artifacts:** the numbered checklist belongs in every plan (L359 — user caught it missing).
-26. **Lean-to-house / authority citation:** reason from standard/best practice, not from the user's file or a named standard (L517, L723).
-27. **Fixing only the flagged:** audit the whole against the calibration, reason independently (L560).
-28. **Context waste:** subagents for bulk so main context stays lean (L560, L805, L1565); but high-sensitivity verification in main context (L1641).
-29. **Brief overstep:** subagent acceptance includes scope compliance, not just content quality (Post6 parser incident).
-30. **Content injection:** subagents must not write their own thoughts/examples into docs (L1021 defect class).
-31. **Plan-acceptance without method:** explain what was dispatched/read/covered before asking acceptance (3f1a L163/L169).
-32. **Premature execution:** justify per item before executing heavy plans (L6537); propose-first gate (proposal + todo before work).
-33. **References-after-source:** when splitting a file, write the reference files BEFORE shrinking the source (Wave 6b delete-scare rejection).
-34. **Restating standing rules in per-session artifacts:** compact instructions carry no auto-loaded restatements; resume prompts never repeat auto-loaded instructions (compact-prep slimming correction).
-35. **Unclear instructions as root cause:** "even though there are instructions, but you (the agent) still sometimes make the mistakes. It may due to the instructions are unclear" — trade breadth for unambiguity; contradictory guidance is an invisible tax (clash).
-36. **Privacy/permissions posture:** deny only destructive actions; allow read-only to stop prompts; recheck allow-list safety; "Just use the most common one, don't overuse"; flag anything sending data out; show the docs before a settings edit ("why? point that docs to me.").
-37. **Compact-instruction calibration (2026-07-30):** the compact instruction is a positive `Keep:` list only — one block, phrase-length items, no Drop clause (the Negation failure mode: naming what to exclude drags it into the summarizer's context; absence is the drop mechanism), no examples (anchoring). The resume prompt is written in the user's voice — "you" = the agent, "I" = the user — never third-person "the user" narration. Both corrections landed in `commands/compact-prep.md` after web research confirmed the standard (positive preserve-list; ~60% utilization timing; the auto-compact loss list: exact paths, errors verbatim, debugging steps, decisions with rationale, config values).
-38. **rtk proxy garbles complex shell pipelines (2 incidents):** a research agent's `find` and a `grep | sort | uniq` verification pipeline both came back garbled through the proxy; switch to the dedicated tools (Grep/Glob) instead of routed shell chains.
 
 ## 7. Curation verdicts + inventory state
 
