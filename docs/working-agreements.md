@@ -92,6 +92,7 @@ Bar: decisions and whys for authoring and curating skills, commands, agents, rul
 - **House skill style (mattpocock lineage):** terse, accurate terms, free phase transitions; one skill = one specific purpose; other sources complement, never set the bar. Drops are usage-based only and never silent — every drop records its reason.
 - **Skills take natural-language invocation:** a skill is an SOP for a task, never a parameter parser — "YOU DON'T SKILL IS JUST THE SOP FOR A TASK" — so a body never enumerates input combinations and placeholder-argument parsing is banned outright.
 - **Fixedness is proportional to mechanical consumption:** fixed skeleton headings exist only for machine-carried blocks (checklist syntax, contract tables); everything a human reads stays free-format.
+- **Every agent-consumed artifact gets a named format spec:** one spec per artifact family (CONTEXT-FORMAT, ADR-FORMAT), lazily created, with a thin pointer from its entry point; the artifact's format lives in the spec.
 - **Aspects and lenses are the user's control surface:** review-family skills name their aspects or lenses at invocation — the naming is the trim lever, symmetric with description routing.
 - **Locality: no caller-specific exceptions in general-purpose skills:** a skill serving many callers never carries one caller's exception; the invoking skill owns its own steps' staffing.
 - **Format calibration for durable text:** blank line between distinct ideas, combining too-short clauses into one block, blank line before and after every list, periods over semicolons for short clauses, sub-bullet indent = parent marker width + 1. Stick-together (a multi-claim block without blank-line separation) is the primary defect — a single atomic sentence is exempt even when long; hard-wrap (manual screen-wrap mid-sentence) is always a defect. Bold-lead-in principle bullets are a false-positive class — never split them.
@@ -179,12 +180,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 9. Design-phase artifacts (adopted)
-
-- **CONTEXT.md** = the project's cross-session design map + domain glossary, one file with sections: Glossary (terms with `_Avoid_` banned synonyms, per the owned CONTEXT-FORMAT), Relationships (how terms connect), Flagged ambiguities (terms still unsettled), Design state (doc inventory, settled decisions, current focus). Lazy-created; domain-modeling maintains it inline; plan-from-design consumes it as standing context. Solves "design too big for one session": any session re-grounds from CONTEXT.md.
-- **OPEN-QUESTIONS.md** = the durable ambiguity log: questions flagged during design discussion, one per line with owner/status; resolved ones move to an archive file (the user's Story Engine pattern) or fold into design docs. grill-me/grill-with-docs resolve questions out of it; plan-from-design treats a non-empty file as a flag (the affected area is not baseline).
-- Meta-convention (mattpocock dogfood, confirmed): every agent-consumed artifact gets a named format spec, lazy creation, and a thin pointer from the entry point.
 
 ## 10. Session-only judgments (not carried forward, by design)
 
