@@ -96,6 +96,7 @@ Bar: decisions and whys for authoring and curating skills, commands, agents, rul
 - **Format calibration for durable text:** blank line between distinct ideas, combining too-short clauses into one block, blank line before and after every list, periods over semicolons for short clauses, sub-bullet indent = parent marker width + 1. Stick-together (a multi-claim block without blank-line separation) is the primary defect — a single atomic sentence is exempt even when long; hard-wrap (manual screen-wrap mid-sentence) is always a defect. Bold-lead-in principle bullets are a false-positive class — never split them.
 - **Size flags calibrate judgment, never cap:** components carry no numeric size caps — shape bars govern; a length flag triggers review, never a reflexive split, and a flat in-skill reference is a fine arrangement (motion-ui at 749 lines was judged not sprawl).
 - **Rules are agent-facing, never user-facing:** rules files carry the agent's attention-directing material only — keybindings, environment setup, and permission advice belong to user-facing docs, not rules.
+- **Owned components are tailored descendants, not copies:** every ported component deliberately differs from its source — format standardization, retargeted references, house extras; a drift comparison hunts content deltas only, because style deltas are the tailoring itself, never a defect; no blind re-syncing.
 
 ## 5. Workflow decisions
 
@@ -118,6 +119,8 @@ Bar: rulings that shaped the artifact and workflow system with their why; mechan
 ## 6. Curation state + rejection register
 
 Bar: current inventory truth re-derived from the live tree at write time, plus one consolidated register of rejections-with-why (anti-re-proposal value only).
+
+- **Owned inventory:** 54 skills, 9 agents, no commands; provenance catalog = README § Skill Sources.
 
 ### Rejection register
 
@@ -157,6 +160,9 @@ Bar: current inventory truth re-derived from the live tree at write time, plus o
 - **retro (mattpocock):** not adopted — a genuine gap but beta and overlapping the review gates. Revisit on promotion.
 - **AI Hero dictionary evaluation:** their artifact frame validates this workflow; their Subagent entry was already stale. One landing: build-brief's empirical feature-size test. No further adoption.
 - **A done is a done:** completed arcs' scratch scaffolding (logs, handoffs, source clones) is not kept past its fold — the harness files keep evolving and recovery is git history plus transcripts.
+- **CE skips, user-gated (never installed; no git record, so carried here):** ce-retune (no A/B benchmark harness), ce-compound (the memory protocol owns repo learnings), ce-strategy (no product-strategy docs), ce-pov (research+judgment covers adopt questions), ce-ideate (ideas arrive in conversation), ce-product-pulse (no live product plumbing). Do not re-propose.
+- **Disabled plugins are deliberate keeps:** disabled is a parking state for future need, not residue — removal needs a real obsolescence case, never staleness alone ("I may need to use them in future").
+- **redesign-existing-projects stays separate from design-taste-frontend:** upgrade-in-place vs new-UI-from-brief are distinct usages; upstream keeps them separate; zero checklist duplication. Do not re-propose the merge.
 
 ## 7. Open items
 
@@ -171,18 +177,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 7. Curation verdicts + inventory state
-
-**Owned inventory (2026-07-30):** 39 skills, 6 commands, 11 agents, 24 rules files (84 KB; unscoped ~35 KB). Origins, full audit DONE 2026-07-30 (10 mistags fixed): custom 3 (compact-prep, harness-audit, teach-back); ECC 13 (11 skills + database-reviewer, react-build-resolver); gstack 14 (12 skills + plan-reviewer, security-auditor — both upstream-orphaned: gstack no longer ships agents; keep deliberately); mattpocock 13 (12 skills + spec-reviewer); taste-skill 2; compound-engineering 1 (ce-optimize); pr-review-toolkit 3 (comment-analyzer, pr-test-analyzer, type-design-analyzer); code-review 1 (lens-review); compounds 6: silent-failure-hunter = ECC + pr-review-toolkit, code-simplifier = pr-review-toolkit + code-simplifier, code-reviewer + review-pr = pr-review-toolkit + mattpocock, plan-from-design + build-brief = custom + mattpocock. Convention: merge of two sources → compound tag; single-source tailored extraction tags the source; only genuinely hand-built stays custom. Provenance taxonomy: pr-review-toolkit and code-simplifier are marketplace PLUGINS; ECC is a REPO.
-
-**Keep/drop rulings:** dropped skills/git-guardrails-claude-code (redundant installer; the hook is git-tracked); merged git-workflow → development-workflow; pruned 7 plugins (claude-code-setup, code-review, frontend-design, ralph-loop, commit-commands, code-simplifier, pr-review-toolkit) with extraction per the pipeline; 6 plugins kept disabled (codex, github, hookify, impeccable, supabase, vercel — "I may need to use them in future"); keep list reasoned by purpose (caveman, ponytail, both MCPs, karpathy-skills, skill-creation trio, document-skills, LSP plugins); eval-harness / loop-design-check / inherit-legacy-style user-ruled KEEP 2026-07-29 (eval-harness SUPERSEDED: pruned 2026-08-18 — Claude-Code-session EDD deck, not LLM tooling; the other two re-confirmed KEEP 2026-08-19); ce-optimize PRUNED 2026-08-18 (orphaned CE optimization-loop engine chaining to non-existent ce-code-review/ce-compound); skill-folder categories REJECTED (stay flat); redesign-existing-projects NOT merged into design-taste-frontend (distinct usage; never resurrect — re-confirmed 2026-08-19 against upstream evidence: separate skills upstream, zero checklist duplication). Never-installed upstream verdicts (no git history, so carried here): CE skips (2026-07-29, user-gated) — ce-retune (no A/B benchmark harness), ce-compound (memory protocol owns repo learnings), ce-strategy (no product-strategy docs), ce-pov (research+judgment covers adopt questions), ce-ideate (ideas arrive in conversation), ce-product-pulse (no live product plumbing); mattpocock user-ignores — wayfinder, triage, batch-grill-me, to-questionnaire, setup-ts-deep-modules (the later user ruling supersedes the earlier watch-item framing). ce-optimize's `max_total_cost_usd` is a soft orchestrator estimate — treat it as an iteration-count proxy under a non-Anthropic provider, not a billing guarantee (not carried in the ported skill body).
-
-**Superpowers KEEP evidence (2026-07-30):** 14 skills, no commands/agents; ~5.2 KB/session (2,154 B descriptions + 3,063 B using-superpowers SessionStart injection, re-fires per clear/compact). Verdicts: KEEP-PLUGIN 8 (writing-plans, executing-plans, subagent-driven-development, verification-before-completion, receiving-code-review, using-git-worktrees, using-superpowers, dispatching-parallel-agents), OWNED-WINS 2 (systematic-debugging vs diagnose; requesting-code-review vs /review-pr + /lens-review), COMPLEMENTARY 4 (brainstorming, test-driven-development, finishing-a-development-branch, writing-skills). subagent-driven-development = the build engine (compaction-safe ledger, bounded fix loop); verification-before-completion + receiving-code-review = zero owned coverage.
-
-**Upstream drift (2026-07-30, user-gated adoptions pending):** gstack `ship` gains the Distribution Pipeline Check (~25 lines); gstack `land-and-deploy` gains VERSION-drift stop + PR-body accuracy check (review-staleness optional — needs state we lack); everything else CURRENT or deliberately divergent (make-pdf upstream became a compiled CLI — keep owned instructions; ECC all 14 CURRENT; taste-skill both CURRENT). New-component candidates: gstack `retro`, `cso` (careful/freeze lean-skip — overlap with existing hooks + Autonomy); ECC `react-performance`, `postgres-patterns`, `production-audit`; taste `output-skill`. Extraction-fidelity recoveries: 4 frontend-design items (pre-build anti-default revision pass + ASCII-wireframe layout ideation → design-consultation; CSS specificity gotcha → design-html; orchestrated-moment motion line → motion-patterns/ai-tells); borderline: `clean_gone` worktree-aware stale-branch cleanup (commit-commands plugin) — recreate on demand, no install. mattpocock leftovers: `Negation` entry into writing-great-skills/GLOSSARY.md (6 lines); `Tautological tests` section into tdd/tests.md (16 lines).
-
-**Owned = tailored descendants, by design:** every ported component differs from its source deliberately (format standardization, cross-ref retargeting to harness-local equivalents, house extras — several owned files are supersets of their sources). Drift analysis hunts CONTENT deltas only; style deltas are the tailoring, never a defect; no blind re-syncing.
 
 ## 8. The audit-comment demands → wave map
 
