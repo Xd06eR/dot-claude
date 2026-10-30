@@ -1,4 +1,4 @@
-# Allowlist: ignore all root-level files and directories except what we track
+# Allowlist: ignore everything except the paths re-allowed below
 *
 
 # Repo files
@@ -11,7 +11,10 @@
 !RTK.md
 !settings.json
 
-# Claude Code extensions (agents, hooks, rules, skills)
+# Harness state (the canon)
+!CANON.md
+
+# Claude Code component dirs (agents, commands, hooks, rules, skills)
 !agents/
 !agents/**
 !commands/
@@ -26,10 +29,6 @@
 # Harness project rules (nested project-rules dir — auto-loads only when working in this repo)
 !.claude/
 !.claude/**
-
-# Context files
-!docs/
-!docs/**
 
 # Backup files — never tracked
 **/*.bak
