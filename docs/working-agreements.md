@@ -73,6 +73,7 @@ Bar: named methods and stances governing how harness work is judged, each with i
 - **Table edits byte-diff the whole structure:** deleting or editing a table column means diffing header, separator, and rows alike — the separator row is the silently missed one.
 - **Prefer mechanical checks for earned rules:** a pitfall's durable fix prefers a mechanical check (hook, lint, CI) over a prose rule — the check fires where prose relies on attention.
 - **Adversarial review is briefed finding-only:** the bulk-audit pass runs map → main-context audit → adversarial fresh-subagent review → apply → summary, and the adversarial reviewer is briefed with file:line + finding only, never the auditor's reasoning — a brief that carries the reasoning anchors the reviewer in the auditor's frame and turns the pass into confirmation of it.
+- **Audit flags are diagnosis, not verdict:** findings from a review or audit pass are leads to verify, never instructions to execute; a buried gotcha can be load-bearing, so triage findings by evidence, never by prominence. The verification step lives in dispatch-protocol's No self-verification.
 - **Content-preservation scan on consolidation edits:** scan the deletion side of the diff (`git diff | grep '^-[^-]'`) for lost backticks and acronyms, and keep the per-file word-count delta non-negative — losses hide in deletions, invisible to a read of the result; byte-diffing every code block and table cell lives in the dispatch protocol's merge criteria.
 - **Rename-parks are live until the user rules:** a `.bak`-style rename parks a file, it is not a deletion signal — never clean up parked files without the user's word ("Don't delete it, I only renamed this, it is not a backup.").
 - **Unclear instructions are a root cause, not an excuse:** "even though there are instructions, but you (the agent) still sometimes make the mistakes. It may due to the instructions are unclear" — when a standing instruction fails repeatedly, trade its breadth for unambiguity; contradictory guidance is an invisible tax (clash).
@@ -178,26 +179,6 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 ## 8. Omission register + slim source map
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
-
-## 8. The audit-comment demands → wave map
-
-All 15 points of `Post-audit-comment.md`, mapped. The comment carries its own self-moderation ("For full restructure, maybe I exaggerated the situation") — the mandate is audit-driven improvement, not wholesale rewrite:
-
-1. Global MEMORY.md from per-project memory + context-doc decisions → Wave 1.
-2. CLAUDE.md full restructure (less direction/constraints/examples; preferences vs rules; unclear instructions cause non-compliance; hard-wrap/stick-together complaints = the known HW/ST classes; emphasis on important instructions; 5 proactive behaviors; accurate-terms principle; deep-vs-shallow modules) → Wave 5 (emphasis mechanism: placement + brevity + hard-rule framing + single-sourcing, never repetition).
-3. The less/fewer principle applies inventory-wide, tailored to the user's style → all waves.
-4. Rules audit one-by-one + tidy common/orchestration + file-set standardization → Wave 2.
-5. CLAUDE.md = high-level guidance, rules = context-specific/path-scoped → endorsed (split axis = load-trigger, not topic; relocation saves zero tokens since both always-load) → Waves 2 + 5.
-6. Two workflows (superpowers vs own) → superpowers KEEP as the pipeline, own workflow stays the frame (locked).
-7. harness-audit → real generic audit protocol (audit any harness or project, exhaustive/meticulous/comprehensive, study /doctor) → Wave 4 (add installation-health group + improvement detection). Post6 caveat for the rewrite: auditor flags are diagnosis-not-verdict — a buried gotcha can be load-bearing.
-8. compact-prep → lighter compact instruction + resume prompt → Wave 4.
-9. plan-from-design + build-brief: cross-session design problem (CONTEXT.md + OPEN-QUESTIONS.md — user-proposed, mattpocock-aligned); transform design docs → specs/plans; decompose into features; per-feature specific prompts (build-briefs); INDEX as the dependency menu → Wave 4 (both commands already carry the Wave-11 mattpocock merges: tracer bullets, expand–contract, blocking edges, granularity quiz).
-10. mattpocock chain similarity → extract useful content (to-spec → plan-from-design, to-tickets → build-brief, implement stays a skill) → done in Wave 11 + Wave 3 leftovers.
-11. Agents audit: all needed, dispatch paths, no silos → Wave 3.
-12. Skills audit: all needed, invocation paths, no irrelevant skills → Wave 3.
-13. Cross-referencing between components → Waves 3–4 (zero-silo check).
-14. Whole-inventory audit, one by one, exhaustively → Waves 2–4 + final Wave 8 dogfood run.
-15. diagnose → diagnosing-bugs rename question → keep `diagnose` (locked); description clarity check in Wave 3.
 
 ## 9. Design-phase artifacts (adopted)
 
