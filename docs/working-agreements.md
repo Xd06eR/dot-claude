@@ -181,9 +181,8 @@ Bar: work the user has not settled; each names its owner and next concrete step.
 
 Bar: what was deliberately dropped and why (anti-archaeology), plus surviving primary sources and how to read them.
 
-## 10. Session-only judgments (not carried forward, by design)
-
-P-prefix artifact naming (the Post-*.md family itself); wave mechanics and numbering history; L### refs and commit hashes (the refs live in the source docs); transcript paths and recovery mechanics (census tables, .output drain analysis, subagent-dir mapping — the method "never raw-load; python-extract a line map, then targeted reads" survives as a rule); keep/drop verdicts for specific components beyond §7's state (state lives in git history + README); the contradiction registry (all 7 resolved); the task log (state); UNVERIFIED philosophy figures (Post4's "9/10 builders", "520/17,022 skills"); the 9 settle-by tests (answered); built-in mechanics trivia (skillOverrides 4 states, version floors) beyond what §4 records. Listing these here is the proof nothing dropped silently.
+- **Consolidation-pass omissions, session-only by design:** the Post-* source family's P-naming; wave mechanics and numbering history; L### refs and commit hashes (the refs live in the source docs); transcript recovery mechanics beyond the reading method below (census tables, .output drain analysis, subagent-dir mapping); per-component keep/drop narration beyond the rejection register (state lives in git history + README); the contradiction registry (all seven resolved); the task log (superseded by the state-doc model); UNVERIFIED source figures (never confirmable, never carried); the settle-by tests (answered); built-in mechanics trivia (skillOverrides states, version floors) beyond the Environment section's records. Listing them here is the proof nothing dropped silently.
+- **Transcript reading method:** never raw-load a session transcript; python-extract a line map first, then targeted reads of the mapped ranges.
 
 ## 11. Open action items
 
