@@ -186,14 +186,8 @@ Bar: what was deliberately dropped and why (anti-archaeology), plus surviving pr
 
 - **Consolidation-pass omissions, session-only by design:** the Post-* source family's P-naming; wave mechanics and numbering history; L### refs and commit hashes (the refs live in the source docs); transcript recovery mechanics beyond the reading method below (census tables, .output drain analysis, subagent-dir mapping); per-component keep/drop narration beyond the rejection register (state lives in git history + README); the contradiction registry (all seven resolved); the task log (superseded by the state-doc model); UNVERIFIED source figures (never confirmable, never carried); the settle-by tests (answered); built-in mechanics trivia (skillOverrides states, version floors) beyond the Environment section's records. Listing them here is the proof nothing dropped silently.
 - **Transcript reading method:** never raw-load a session transcript; python-extract a line map first, then targeted reads of the mapped ranges.
-
-## 12. Source map (for deep verification only — never raw-load transcripts)
-
-- **Source-of-truth hierarchy (user-locked):** the raw transcripts + the user's written comment files win over every derived doc, this file included; derived docs drifted across compactions. On any conflict, verify against the transcript per the method below.
-- `Post-context.md` (406 lines) + `Post-context-expanded.md` (951 lines): the full canon with L### refs and verbatim quotes; appendices A–E carry the ancestor-session sweep, the skipped-layer census, the subagent-output sweep, the mattpocock 41-skill map, and the CE 32-skill map.
-- Transcripts: `1c829964-eabb-485a-b16d-089f5e82b400.jsonl` (11.8 MB, the rework arc 2026-07-20 → 07-25); `3f1a6a33-0a56-435a-9106-e73ef637e555.jsonl` (3.4 MB, recovery session 2026-07-26 → 07-28, cited as 3f1a L###); `7d100865-4e47-4fb2-92a3-0c929f1069b1.jsonl` (25 MB, the ANCESTOR session 2026-07-11 → 07-17: 4-phase workflow, phase-transit commands, catalog leanness, auto-invoke split, origin: convention, rules-trim line, first two memories all born there).
-- Reading method: python-extract a line map (type/timestamp/snippet), then targeted full-text pulls. Never raw-load.
-- Execution plan: the round-2 plan lives in `.scratch/checklist.md` below the divider; `plans/i-found-three-post-fancy-rainbow.md` (Waves 0–11 record) is history.
+- **Source-of-truth hierarchy:** the raw transcripts and the user's written comment files win over every derived doc, this canon included; derived docs drifted across compactions. On any conflict, verify against the transcript per the reading method above.
+- **Consolidation sources are historical:** the Post-* consolidation docs were pruned once the canonization harvest was cross-verified; the rework-arc session transcripts (the rework arc, the recovery session, the ancestor session) are no longer in the projects dir. Consolidation-era recovery is git history; current-session transcripts remain in the projects dir.
 
 ## 13. F fix-batch session (2026-09-26 → 09-28)
 
