@@ -34,6 +34,7 @@ One shape, written in the user's voice — "you" = the agent, "I" = the user; ne
 - Re-ground reads: the durable docs, in read order.
 - The next task + its gate, stated as a hard condition where one exists.
 - Further directives as the session needs them (a warning, an ordering, a method note), within the same cap.
+- No restatements of always-loaded rules: the fresh session already carries them.
 - Output as one fenced block: blank line between blocks (e.g. a directive, a note, a numbered step), at most 15 lines including blanks.
 
 ## 4. Present
