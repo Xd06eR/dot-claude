@@ -1,6 +1,8 @@
 #!/bin/bash
 # PreToolUse(Bash) guardrail: block dangerous git/gh mutations by accident.
 # The user runs all git/gh mutations manually (CLAUDE.md Git section).
+# Also rejects 'git -C <path>' (global-flag position only): it breaks the
+# allow-list prefix match and prompts the user; plain git runs allowed.
 # Greps the raw hook JSON directly: no jq/sed.
 # An embedded quote would truncate a sed capture and hide a dangerous tail.
 # Patterns are word-anchored: near-misses like "gitcommittee" never block.
@@ -25,13 +27,19 @@ DANGEROUS_PATTERNS=(
   '\bgit'"$GIT_GFLAGS"'[[:space:]]+(checkout|restore)[[:space:]]+(--[[:space:]]+)?\.'
   '\bgh[[:space:]]+(pr|release|repo|issue|gist|workflow|secret|variable|run)[[:space:]]+(create|merge|close|edit|delete|comment|review|ready|run|set|fork|cancel|rerun)\b'
   '\bgh[[:space:]]+api\b[^"]*(-X[[:space:]=]*([Pp][Oo][Ss][Tt]|[Pp][Uu][Tt]|[Pp][Aa][Tt][Cc][Hh]|[Dd][Ee][Ll][Ee][Tt][Ee])|--method[[:space:]=]*([Pp][Oo][Ss][Tt]|[Pp][Uu][Tt]|[Pp][Aa][Tt][Cc][Hh]|[Dd][Ee][Ll][Ee][Tt][Ee])|-[fF]\b|--raw-field|--input)'
-  # gh auth token prints the stored OAuth token: a credential channel, not a mutation.
-  '\bgh[[:space:]]+auth[[:space:]]+token\b'
 )
 for p in "${DANGEROUS_PATTERNS[@]}"; do
   if echo "$INPUT" | grep -qE "$p"; then
-    echo "BLOCKED: command matches '$p'. The user runs git mutations manually." >&2
+    echo "BLOCKED: command matches '$p'. Git/gh mutations are denied." >&2
     exit 2
   fi
 done
+if echo "$INPUT" | grep -qE '\bgh[[:space:]]+auth[[:space:]]+token\b'; then
+  echo "BLOCKED: 'gh auth token' prints the stored OAuth token. Credential output is denied." >&2
+  exit 2
+fi
+if echo "$INPUT" | grep -qE '\bgit([[:space:]]+(-c[[:space:]]+\S+|--\S+))*[[:space:]]+-C\b'; then
+  echo "BLOCKED: 'git -C <path>' is denied. Run plain git from the working directory." >&2
+  exit 2
+fi
 exit 0
