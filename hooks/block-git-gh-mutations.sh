@@ -30,7 +30,7 @@ DANGEROUS_PATTERNS=(
 )
 for p in "${DANGEROUS_PATTERNS[@]}"; do
   if echo "$INPUT" | grep -qE "$p"; then
-    echo "BLOCKED: command matches '$p'. Git/gh mutations are denied." >&2
+    echo "BLOCKED: Git/gh mutations are denied." >&2
     exit 2
   fi
 done

@@ -12,7 +12,7 @@ INPUT=$(cat)
 SECRET_PATTERNS=( '[ =/"'"'"'\\]\.env' '\.ssh' '\.aws' '\.config[\\/]gh' '\.credentials' )
 for p in "${SECRET_PATTERNS[@]}"; do
   if echo "$INPUT" | grep -qiE "$p"; then
-    echo "BLOCKED: command matches secret-path '$p'. Reading credential files is denied." >&2
+    echo "BLOCKED: Reading credential files is denied." >&2
     exit 2
   fi
 done
