@@ -61,6 +61,8 @@ Every retry changes the input, a lever, or the method; two failed methods on one
 
 ## 4. No self-verification
 
+Every verification dispatch is adversarial: sent to refute the work, never to confirm it.
+
 Acceptance mechanics:
 
 - **Code:** paste the check's decisive output (passing or failing lines, not the full transcript); if no runnable check exists, write one first.
