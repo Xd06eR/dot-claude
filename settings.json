@@ -6,6 +6,7 @@
   "autoCompactEnabled": false,
   "autoMemoryEnabled": false,
   "autoUpdatesChannel": "latest",
+  "cleanupPeriodDays": 365,
   "disableBundledSkills": true,
   "disableClaudeAiConnectors": true,
   "disableRemoteControl": true,
