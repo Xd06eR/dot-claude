@@ -1,12 +1,10 @@
-# Canon
+# Harness Canon
 
-The consolidated decisions file for this harness — durable facts and rulings with their why. It is a state doc: the text states what IS; chronicle and superseded forms live in git history. The user's verbatim words are kept where the wording itself carries the rule, typos preserved. It also carries the live rule text for harness maintenance: the rules for components, rules files, and methods live here; [harness-maintenance.md](.claude/rules/harness-maintenance.md) holds the edit gates and the map that loads this file.
+The durable rulings of this harness with their why, and the live rulebook for its maintenance: components, rules files, settings, and methods live here, while [harness-maintenance.md](.claude/rules/harness-maintenance.md) holds the edit gates and the map that loads this file.
 
 ---
 
 ## 1. Skills, commands, and agents
-
-Bar: the rule text and rulings for authoring and curating skills, commands, and agents; the live text lives here, and harness-maintenance keeps only the gates and the map.
 
 - **Persona and headings:** agents get a terse persona (1–3 sentences covering role, specialty, responsibility) at the top of the body, and no H1. Commands and skills get no persona; an H1 only when a genuine title beyond the bare name.
 - **Frontmatter:** `name`, `description`, then `disable-model-invocation` and `argument-hint` when present, `tools` (agent allowlist; omit for all), `origin`; add `part-of` when the component belongs to another (e.g., `plan-reviewer` to `plan-review`). `origin` is `custom` (hand-built here), the source name (ported-from: plugins by plugin name, repos by repo name), or `A + B` (multi-source merge). Quote `description` with `""` only when it contains a colon. `argument-hint` marks required slots with `<>`, optional with `[]`; a complete-sentence question hint stays unbracketed; quote it only when YAML requires (a leading `[` or an inner colon). Model-invoked is the default; user-invoked (`disable-model-invocation: true`) is the user's call per component.
@@ -32,8 +30,6 @@ Bar: the rule text and rulings for authoring and curating skills, commands, and 
 
 ## 2. Rules files and the trunk
 
-Bar: the rule text and rulings for rules files and the instruction trunk: loading scope, frontmatter synchronization, naming, lesson landing, and where a rule lives.
-
 - **CLAUDE.md is the trunk:** the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md; neither restates the other. Coding rules are self-contained: they never reference CLAUDE.md (it co-loads on every injection; rules→rules extends pointers stay, since globs differ).
 - **Loading scope:** unscoped (loads every session of every project; only when true for every prompt); project-scope (lives in a project's `.claude/rules/` and loads only there); `paths:`-scoped (loads on matching files). Everything not universal takes one of the latter two.
 - **Scoped-frontmatter synchronization:** files sharing a glob block change it together or not at all; a taxonomy change sweeps every file carrying the block.
@@ -42,8 +38,6 @@ Bar: the rule text and rulings for rules files and the instruction trunk: loadin
 - **Globs declare the need-moment:** a scoped rule's glob states when the rule is needed, derived from the actual use case; token savings are a by-product, never the motive.
 
 ## 3. Settings, environment, and loading
-
-Bar: machine- and account-level facts a session cannot infer and cannot change (provider setup, injection and loading mechanics, measured costs, environment failure modes).
 
 - **Built-ins beyond the inventory:** Claude Code ships built-ins that never appear in the tracked inventory — hidden commands (/init, /doctor) live in the product itself, so a filesystem listing alone never proves a command or component missing; check the session's live listings first. Adjudicated states: bundled skills stay disabled; a same-name project skill replaces a bundled one in the injection; /doctor stays (user-typable diagnostics, model-hidden); bundled claude-api stays dead while the configured provider cannot serve it (re-evaluate on provider change).
 - **Security-plugin layer:** the plugin has three layers. The write-time pattern warnings inject deterministic warnings when a write matches a dangerous pattern; they are the only deterministic net and stay on. The two LLM review layers stay off via the shared master switch ENABLE_CODE_SECURITY_REVIEW in settings env: the Stop-hook diff review hijacks the turn boundary on findings, and commit-time review is permanently dead because the user runs every commit. If commit-time security review is ever wanted, the route is the Review phase's security-auditor under the user's gate, never the plugin's layers. The un-gated per-prompt baseline capture (subprocess latency, zero tokens) is the accepted residual cost of keeping the pattern layer.
@@ -54,8 +48,6 @@ Bar: machine- and account-level facts a session cannot infer and cannot change (
 - **settings.json edit protocol:** scripted JSON rewrites corrupted the file once (recovered from git); changes go through the Edit tool only. The provider token is removable on demand — the user strips it for full-file reads during permission work and re-adds after.
 
 ## 4. Curation and probing methods
-
-Bar: named methods and stances governing how harness work is judged, each with its why; nothing a SOTA model infers unprompted.
 
 - **Admission test for standing context:** context is a standing cost paid on every request, guilty until proven useful. Delete in blocks, not lines: sentence-level cuts sit inside eval noise. Rules land as judgment ("X is usually right here because <reason>"), never bare. Every always-loaded instruction is re-tested against the inference bar whenever standing context is restructured; relocation fixes home-correctness, never permanence, and what survives lives exactly once.
 - **Restoring a deleted rule needs live evidence:** an observation that the problem no longer occurs is contaminated evidence while the rule is still active during the window; the valid grounds are severity, form (a pure negative constraint is the weakest), and whether a safety net exists.
@@ -70,20 +62,6 @@ Bar: named methods and stances governing how harness work is judged, each with i
 
 ## 5. Standing stances
 
-Bar: adjudicated guards and postures, each with its standing condition.
-
 - **Disabled plugins are deliberate keeps:** disabled is a parking state for future need, not residue — removal needs a real obsolescence case, never staleness alone.
 - **Review-agent inlining, rejected:** the review agents' tool gating is load-bearing, so inlining their review into the invoking skill or a merged agent drops the curated-tool backstop the dispatch relies on.
 - **AI-IP posture, adjudicated accept-risk:** AI-code copyright and GPL contamination are accepted risks — an awareness item with no enforceable mechanism, reopened only by a material change in law or platform policy.
-
-## 6. Open items
-
-Bar: work the user has not settled; each names its owner and next concrete step.
-
-- **Standing caveats on rewrite verification:** four limits, each open until its detector exists: (1) no metrics prove a rewrite improves model behavior (the less-direction philosophy rests on Anthropic's evidence, not local measurement); (2) real auto-invocation behavior is unverifiable headlessly (probes are false-negative-prone), so description quality is judged statically; (3) scoped-rules compaction survival is unobserved, watched only at natural compactions; (4) cross-session drift is invisible from inside one session; a whole-inventory audit is the only detector. Owner: the user; reopen triggers: a local eval harness, a working headless routing probe, an observed compaction, the next whole-inventory audit.
-
-## 7. Source map
-
-Bar: surviving primary sources and how to read them.
-
-- **Transcript reading method:** never raw-load a session transcript; python-extract a line map first, then targeted reads of the mapped ranges. Transcript timestamps are UTC while local records run UTC+8; a same-evening UTC event carries the next day's local date.
