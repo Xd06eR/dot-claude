@@ -44,9 +44,9 @@ Bar: decisions and whys for authoring and curating skills, commands, agents, rul
 - **Description protected classes:** the corpus at floor keeps description content in five protected classes — symptom and match words, mis-invocation guards, genuine-overlap cede clauses, deliverable definitions, dispatch-mode clauses; a trim cuts outside these, never inside.
 - **Description-walk bar and precedents:** the bar — terse unless genuinely needed or sibling overlap exists; the review unit is the skill's own body plus its callees' bodies (callees' callees wait for their own turn). Precedents: a negation guard whose positive trigger already scopes is deletable; a cede clause whose boundary the sibling's body enforces is a second home — cut; under-claims are description bugs too; the user-invoked bar in practice is stance-only, enumeration allowed for /-menu picking; third-person "the user" is the trigger convention, and person never depends on invocation mode — a "you" safe in /-menu text becomes the agent-runs-commands misreading after a mode flip; invocation mode is multi-axis (frequency, flow weight and risk, discovery value, adequacy of the no-skill fallback); descriptions open with an imperative or a noun phrase, first-verb -s normalizes; scope statements use "existing", with "legacy" only as a subset trigger match word; no synonym rotation between description and body — named theory stays named; after the clause audit, re-check for a concept written twice and compress second mentions. Forgetting-fear asymmetry: high-frequency skills suit user-invoked; low-frequency skills need the listing as their discovery mechanism.
 
-## 4. Rejection register
+## 4. Standing stances
 
-Bar: one consolidated register of rejections-with-why (anti-re-proposal value only).
+Bar: adjudicated guards and postures, each with its standing condition.
 
 - **Disabled plugins are deliberate keeps:** disabled is a parking state for future need, not residue — removal needs a real obsolescence case, never staleness alone.
 - **Review-agent inlining, rejected:** the review agents' tool gating is load-bearing, so inlining their review into the invoking skill or a merged agent drops the curated-tool backstop the dispatch relies on.
