@@ -6,17 +6,18 @@ Private backup of global agent configuration: system instructions, agent definit
 
 | Path | Description |
 |---|---|
-| `CLAUDE.md` | Global system instructions |
-| `RTK.md` | Proxy configuration |
-| `settings.json` | Agent settings and environment |
+| `.claude/rules/` | Harness-only rule modules (project-scope: load only when working in this repo) |
 | `agents/` | Agent definitions (9) |
 | `hooks/` | Lifecycle hooks (git/gh mutation + secret-path guards) |
 | `rules/` | Instruction rule modules |
-| `.claude/rules/` | Harness-only rule modules (project-scope: load only when working in this repo) |
 | `skills/` | Skill modules, 54 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
+| `CANON.md` | Consolidated harness rulings |
+| `CLAUDE.md` | Global system instructions |
 | `README.md` | This document |
+| `RTK.md` | Proxy configuration |
+| `settings.json` | Agent settings and environment |
 
 Plugin activation state (`enabledPlugins`) is serialized in `settings.json`. No separate plugin artifacts are tracked (`plugins/` is a rebuildable multi-GB cache).
 
