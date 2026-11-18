@@ -56,7 +56,7 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 | [reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | 2 | api-security, llm-security |
 | Custom | 10 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back, plan-from-design (+ mattpocock + superpowers), build-brief (+ mattpocock), build-feature (+ mattpocock + superpowers) |
 
-Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in `.claude/rules/harness-maintenance.md`.
+Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in CANON.md.
 
 ## Excluded Data
 
