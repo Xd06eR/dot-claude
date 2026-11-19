@@ -66,6 +66,9 @@ Options:
   --to <target>     terminal (default) or file; file writes under dumps/
                     beside this script. --what all always writes a file —
                     the whole request is too large for the terminal.
+  --prompt <text>   prompt for the probe run (default: "reply with the single
+                    word ok"); any prompt works — the requests it triggers
+                    are captured too, including subagent requests
   --help            print this usage and exit
 
 Removing a tool: add its bare name to permissions.deny (e.g. "Monitor").
@@ -76,12 +79,13 @@ Environment:
   CLAUDE_CONFIG_DIR config dir holding settings.json (default: ~/.claude)`;
 
 function parseArgs(argv) {
-  const out = { what: null, raw: false, to: "terminal", help: false };
+  const out = { what: null, raw: false, to: "terminal", help: false, prompt: "reply with the single word ok" };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     const [key, inline] = arg.split("=");
     if (key === "--help") out.help = true;
     else if (key === "--raw") out.raw = true;
+    else if (key === "--prompt") out.prompt = inline ?? argv[++i];
     else if (key === "--what" || key === "--to") {
       const value = inline ?? argv[++i];
       if (key === "--what") out.what = value;
@@ -469,7 +473,7 @@ if (!claudeBin) {
 }
 
 const inlineSettings = JSON.stringify({ env: { ANTHROPIC_BASE_URL: `http://127.0.0.1:${PORT}` } });
-const child = spawn(claudeBin, ["-p", "--settings", inlineSettings, "reply with the single word ok"], {
+const child = spawn(claudeBin, ["-p", "--settings", inlineSettings, FLAG.prompt], {
   cwd: process.cwd(),
   stdio: ["ignore", "ignore", "ignore"],
 });
