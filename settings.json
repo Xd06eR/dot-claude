@@ -180,6 +180,7 @@
       "CronList",
       "ListAgents",
       "DesignSync",
+      "Monitor",
       "ScheduleWakeup",
       "TaskOutput",
       "TodoWrite",
