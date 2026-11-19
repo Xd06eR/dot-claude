@@ -1,6 +1,7 @@
 #!/bin/bash
 # PreToolUse(Bash) guardrail: block dangerous git/gh mutations by accident.
 # The user runs all git/gh mutations manually (CLAUDE.md Git section).
+# Derived from Matt Pocock's block-dangerous-git.sh: https://github.com/mattpocock/skills/blob/main/skills/misc/git-guardrails-claude-code/scripts/block-dangerous-git.sh
 # Also rejects 'git -C <path>' (global-flag position only): it breaks the
 # allow-list prefix match and prompts the user; plain git runs allowed.
 # Greps the raw hook JSON directly: no jq/sed.
