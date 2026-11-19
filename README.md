@@ -10,6 +10,7 @@ My git-tracked agent harness for Claude Code, kept at `~/.claude`.
 | `agents/` | Agent definitions (9) |
 | `hooks/` | Lifecycle hooks (git/gh mutation + secret-path guards) |
 | `rules/` | Instruction rule modules |
+| `scripts/` | Probe scripts (proxy.mjs: Claude Code payload audit) |
 | `skills/` | Skill modules, 54 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |

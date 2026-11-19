@@ -26,6 +26,11 @@
 !skills/
 !skills/**
 
+# Probe scripts
+!scripts/
+!scripts/**
+scripts/dumps/
+
 # Harness project rules (nested project-rules dir — auto-loads only when working in this repo)
 !.claude/
 !.claude/**
