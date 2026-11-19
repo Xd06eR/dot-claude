@@ -15,8 +15,6 @@
   "enableArtifact": false,
   "enabledPlugins": {
     "chrome-devtools-mcp@claude-plugins-official": false,
-    "claude-md-management@claude-plugins-official": true,
-    "context7@claude-plugins-official": false,
     "playwright@claude-plugins-official": false,
     "pyright-lsp@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
