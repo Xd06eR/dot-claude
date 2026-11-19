@@ -248,14 +248,14 @@ function printAudit(reqJson, inputTokens, version) {
   const pct = (b) => (total ? ((b / total) * 100).toFixed(1) : "0.0");
 
   console.log(`\n[agent-proxy] Claude Code ${version} · payload ${total.toLocaleString()} B` +
-    (inputTokens != null ? ` · ${inputTokens.toLocaleString()} input tokens (provider-counted)` : ""));
-  console.log(`\ntools: ${tools.length} definitions · ${toolsBytes.toLocaleString()} B, ranked by size`);
+    (inputTokens != null ? ` · ${inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(total).toLocaleString()} tok`));
+  console.log(`\ntools: ${tools.length} definitions · ${toolsBytes.toLocaleString()} B (~${estTokens(toolsBytes).toLocaleString()} tok), ranked by size`);
   const w = Math.max(...tools.map((t) => t.name.length), 4);
   for (const t of tools) console.log(`  ${t.name.padEnd(w)}  ${String(t.bytes).padStart(7)} B  ~${String(Math.round(t.bytes / 4)).padStart(5)} tok  ${pct(t.bytes).padStart(5)}%`);
-  console.log(`\ninjected context: ${ctxBytes.toLocaleString()} B`);
-  for (const f of ctx.files) console.log(`  ${f.bytes.toLocaleString().padStart(7)} B  ${f.name}`);
-  for (const o of ctx.other) console.log(`  ${o.bytes.toLocaleString().padStart(7)} B  ${o.name}`);
-  console.log(`\nsystem prompt: ${sysBytes.toLocaleString()} B`);
+  console.log(`\ninjected context: ${ctxBytes.toLocaleString()} B (~${estTokens(ctxBytes).toLocaleString()} tok)`);
+  for (const f of ctx.files) console.log(`  ${f.bytes.toLocaleString().padStart(7)} B  ~${String(Math.round(f.bytes / 4)).padStart(5)} tok  ${f.name}`);
+  for (const o of ctx.other) console.log(`  ${o.bytes.toLocaleString().padStart(7)} B  ~${String(Math.round(o.bytes / 4)).padStart(5)} tok  ${o.name}`);
+  console.log(`\nsystem prompt: ${sysBytes.toLocaleString()} B (~${estTokens(sysBytes).toLocaleString()} tok)`);
 }
 
 /** Emit the flagged output for one main request: --what × --raw × --to.
