@@ -1,6 +1,6 @@
-# ~/.claude Agent Configuration
+# ~/.claude Agent Harness
 
-Global agent configuration: system instructions, agent definitions, skill modules, rule sets, and hooks.
+My git-tracked agent harness for Claude Code, kept at `~/.claude`.
 
 ## Tracked Configuration
 
@@ -13,7 +13,7 @@ Global agent configuration: system instructions, agent definitions, skill module
 | `skills/` | Skill modules, 54 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
-| `CANON.md` | Consolidated harness rulings |
+| `CANON.md` | Harness rulings and maintenance rulebook |
 | `CLAUDE.md` | Global system instructions |
 | `README.md` | This document |
 | `RTK.md` | Proxy configuration |
@@ -42,37 +42,33 @@ Two axes, four paths. The docs axis picks the opening: `grill-me` keeps rulings 
 
 ## Skill Sources
 
-Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record provenance. A `(+ source)` note marks content merged in from another source.
+Every skill in `skills/` and every agent in `agents/` is an owned, tracked file, edited here directly. The sources below record each component's primary origin; full merge provenance lives in each file's frontmatter `origin`.
 
 | Source | Count | Components |
 |--------|-------|------------|
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 16 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, teach, to-questionnaire, wayfinder, wizard, tdd (+ superpowers), diagnosing-bugs (+ superpowers + gstack + ECC), writing-for-agents (+ superpowers + deepseek-harness + claude-plugins-official); agent `spec-reviewer` |
-| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend (+ impeccable), redesign-existing-projects (+ impeccable) |
-| [ECC](https://github.com/affaan-m/ECC) | 10 skills + 2 agents | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y (+ impeccable), make-interfaces-feel-better (+ impeccable + deepseek-harness), motion-ui (+ impeccable), loop-design-check (+ gstack), inherit-legacy-style; agents `database-reviewer`, `silent-failure-hunter` (+ pr-review-toolkit) |
-| [gstack](https://github.com/garrytan/gstack) | 10 skills + 2 agents | ship, qa, diagram, land-and-deploy, document-release, document-generate, design-build (+ impeccable), design-consultation (+ impeccable), design-variants (+ impeccable), plan-review (+ impeccable, + its `lenses/`); agents `plan-reviewer`, `security-auditor` (no upstream: gstack ships skills only, so these are maintained locally) |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 16 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, teach, to-questionnaire, wayfinder, wizard, tdd, diagnosing-bugs, writing-for-agents; agent `spec-reviewer` |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
+| [ECC](https://github.com/affaan-m/ECC) | 10 skills + 2 agents | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agents `database-reviewer`, `silent-failure-hunter` |
+| [gstack](https://github.com/garrytan/gstack) | 10 skills + 2 agents | ship, qa, diagram, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review; agents `plan-reviewer`, `security-auditor` |
 | [superpowers](https://github.com/obra/superpowers) | 2 | receiving-code-review, verification-before-completion |
-| [claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 1 skill + 4 agents | code-review (pr-review-toolkit + mattpocock + code-review plugin + gstack); agents `code-reviewer` (pr-review-toolkit + mattpocock), `pr-test-analyzer` (pr-review-toolkit), `type-design-analyzer` (pr-review-toolkit), `code-simplifier` (pr-review-toolkit + code-simplifier plugin + deepseek-harness) |
+| [claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 1 skill + 4 agents | code-review; agents `code-reviewer`, `pr-test-analyzer`, `type-design-analyzer`, `code-simplifier` |
 | [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |
 | [reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | 2 | api-security, llm-security |
-| Custom | 10 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back, plan-from-design (+ mattpocock + superpowers), build-brief (+ mattpocock), build-feature (+ mattpocock + superpowers) |
+| Custom | 10 | bake-design, compact-pair, design-audit, open-questions, session-sync, setup-workflow, teach-back, plan-from-design, build-brief, build-feature |
 
-Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in CANON.md.
+Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in [CANON.md](CANON.md).
 
 ## Hooks
 
-`settings.json` wires three PreToolUse `Bash` hooks. Both scripts are tracked (re-clone restores them); their header comments are the source of truth for the exact patterns.
+`settings.json` wires three PreToolUse `Bash` hooks; the two guard scripts are tracked in `hooks/` and their header comments are the source of truth.
 
 | Hook | Purpose |
 |------|---------|
-| `rtk hook claude` | Token-optimized CLI proxy. Requires RTK on `PATH`; see `RTK.md`. |
-| `~/.claude/hooks/block-git-gh-mutations.sh` | Enforces CLAUDE.md's Git section mechanically: blocks `git` commit/push and destructive ops plus `gh` writes, so all mutations stay user-run. |
-| `~/.claude/hooks/block-secret-paths.sh` | Closes the Bash bypass of the Read-deny: blocks commands touching `.env`, `~/.ssh`, `~/.aws`, `~/.config/gh`, `.credentials` (see Security below). |
+| `rtk hook claude` | Token-optimized CLI proxy; requires RTK on `PATH` |
+| `~/.claude/hooks/block-git-gh-mutations.sh` | Blocks `git`/`gh` mutations, keeping them user-run |
+| `~/.claude/hooks/block-secret-paths.sh` | Blocks commands touching secret paths |
 
 ## Quick Reference
-
-### RTK
-
-The `PreToolUse` Bash hook requires RTK on `PATH`; usage and the command set live in `RTK.md`.
 
 ### Restore MCP servers
 
@@ -82,11 +78,9 @@ User-scope MCP registrations live in `~/.claude.json`, which is per-machine and 
 claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp
 ```
 
-Register the plain URL as shown: the official context7 plugin's `?client=claude-code-plugin` URL is auth-gated (the plugin is disabled for this reason). Verify with `claude mcp list` (expect `Connected`).
+Register the plain URL as shown. Verify with `claude mcp list` (expect `Connected`).
 
 ## Security & credentials
-
-**Provider connection details (API key, base URL, model name) are local-only.** CC-Switch writes them into `settings.json` per machine; those hunks are never staged (genuine config changes are hunk-staged around them), so the tracked file carries no provider fields and a fresh clone starts clean.
 
 **Adding a new credential:**
 
