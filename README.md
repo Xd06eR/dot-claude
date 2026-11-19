@@ -1,6 +1,6 @@
 # ~/.claude Agent Configuration
 
-Private backup of global agent configuration: system instructions, agent definitions, skill modules, rule sets, and hooks.
+Global agent configuration: system instructions, agent definitions, skill modules, rule sets, and hooks.
 
 ## Tracked Configuration
 
@@ -58,15 +58,6 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 
 Not updated from upstream: upstream changes are adoption candidates, gated per the extraction philosophy in CANON.md.
 
-## Excluded Data
-
-All other paths are excluded by the allowlist pattern. Excluded data falls into four categories:
-
-1. **Runtime artifacts** — logs, caches, session transcripts, file history, environment snapshots, telemetry, etc.
-2. **Plugin artifacts** — machine-specific caches and lockfiles under `plugins/`. These are rebuilt on each host.
-3. **Authentication credentials** — `.credentials.json` (OAuth tokens), etc.; requires interactive re-authentication after restore.
-4. **Scratch working docs** — `.scratch/` holds one-time session working files; ignored by the allowlist's catch-all and never committed, and anything durable in them is canonized into the tracked files.
-
 ## Hooks
 
 `settings.json` wires three PreToolUse `Bash` hooks. Both scripts are tracked (re-clone restores them); their header comments are the source of truth for the exact patterns.
@@ -79,44 +70,9 @@ All other paths are excluded by the allowlist pattern. Excluded data falls into 
 
 ## Quick Reference
 
-### Initialize the repo
-
-Fresh machine (`~/.claude` does not exist):
-
-```bash
-git clone https://github.com/Xd06eR/dot-claude.git ~/.claude
-```
-
-Existing `.claude` (has runtime data, caches, etc.):
-
-```bash
-cd ~/.claude
-git init
-git remote add origin https://github.com/Xd06eR/dot-claude.git
-git pull origin main
-```
-
-Only configuration files are tracked. Logs, caches, and session data remain untouched. Sync an existing machine with `git -C ~/.claude pull`.
-
 ### RTK
 
 The `PreToolUse` Bash hook requires RTK on `PATH`; usage and the command set live in `RTK.md`.
-
-### Restore plugins
-
-Plugin artifacts are excluded. `settings.json` contains `enabledPlugins`: Claude Code reads it on startup and installs the enabled plugins automatically. No manual install step required.
-
-If auto-install fails, the commands below mirror the enabled set in `settings.json` (`claude-plugins-official` is built in):
-
-```bash
-claude plugin install claude-md-management@claude-plugins-official
-claude plugin install pyright-lsp@claude-plugins-official
-claude plugin install security-guidance@claude-plugins-official
-claude plugin install skill-creator@claude-plugins-official
-claude plugin install typescript-lsp@claude-plugins-official
-```
-
-The list skips the disabled entries: their `false` flags are tracked in `settings.json` and restore as-is.
 
 ### Restore MCP servers
 
@@ -130,7 +86,7 @@ Register the plain URL as shown: the official context7 plugin's `?client=claude-
 
 ## Security & credentials
 
-**Provider connection details (API key, base URL, model name) are local-only.** CC-Switch writes them into `settings.json` per machine; those hunks are never staged (genuine config changes are hunk-staged around them), so the tracked file carries no provider fields and a fresh clone starts clean. Keep the repo private; rotate on exposure.
+**Provider connection details (API key, base URL, model name) are local-only.** CC-Switch writes them into `settings.json` per machine; those hunks are never staged (genuine config changes are hunk-staged around them), so the tracked file carries no provider fields and a fresh clone starts clean.
 
 **Adding a new credential:**
 
