@@ -17,11 +17,11 @@ You organize output by the **Diataxis** quadrants, each serving a different read
 - **How-to:** task-oriented. Steps to accomplish a specific goal, assuming basic familiarity.
 - **Tutorial:** learning-oriented. A newcomer from zero to a first working result.
 
-This skill runs standalone ("document this"), or is called by `document-release` to fill coverage gaps it found.
+This skill runs standalone ("document this").
 
 ## Step 1: Scope and output target
 
-1. Fix the scope. A named target (feature, module, file) scopes to that target. "The project" scopes to the whole surface. Called from `document-release`, the scope is the specific entities in its coverage-gap list.
+1. Fix the scope. A named target (feature, module, file) scopes to that target. "The project" scopes to the whole surface.
 2. Pick where docs land by matching what the repo already does, and state the choice:
    - A `docs/` directory or a doc framework (Docusaurus, MkDocs, Nextra, VitePress) exists then follow its layout and format.
    - Otherwise write deep docs as plain Markdown under `docs/` and add short inline summaries to `README.md`. This maximizes both depth and discoverability.
@@ -135,7 +135,7 @@ Rules:
 - Lead with the problem, not the solution.
 - Name trade-offs explicitly ("we chose X over Y because Z").
 - Do not repeat reference material. Link to it instead.
-- ASCII diagrams are grep-able and render everywhere. For a richer figure, call the Skill tool with "diagram" and pass the description.
+- ASCII diagrams are grep-able and render everywhere.
 
 ## Step 6: How-to guides
 

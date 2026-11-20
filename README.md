@@ -11,7 +11,7 @@ My git-tracked agent harness for Claude Code, kept at `~/.claude`.
 | `hooks/` | Lifecycle hooks (git/gh mutation + secret-path guards) |
 | `rules/` | Instruction rule modules |
 | `scripts/` | Probe scripts (proxy.mjs: Claude Code payload audit) |
-| `skills/` | Skill modules, 54 (see Skill Sources) |
+| `skills/` | Skill modules, 47 (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |
 | `.gitignore` | Allowlist configuration |
 | `CANON.md` | Harness rulings and maintenance rulebook |
@@ -28,7 +28,7 @@ CLAUDE.md's Engineering principles section carries the foundation principles int
 
 ### The spine
 
-The pipeline in order: `setup-workflow` once per project · `session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa → ship → land-and-deploy → document-release. Each step's trigger and mechanics live in its skill's description and body.
+The pipeline in order: `setup-workflow` once per project · `session-sync` at session start and end · then per feature: grill-me / grill-with-docs → bake-design → plan-from-design → (plan-review, flexible) → build-brief → build-feature → (code-review, flexible) → qa. Each step's trigger and mechanics live in its skill's description and body.
 
 **Layers are optional; the phase folders come with the workflow:** `OPEN-QUESTIONS.md`, `CONTEXT.md`, `TODO.md` (default on), `PROGRESS-LOG.md`, `docs/adr/` are adopted per project as needed; `docs/design/`, `docs/plan/`, `docs/build/` are the phase artifacts themselves, filled as work reaches them.
 
@@ -48,9 +48,9 @@ Every skill in `skills/` and every agent in `agents/` is an owned, tracked file,
 | Source | Count | Components |
 |--------|-------|------------|
 | [mattpocock/skills](https://github.com/mattpocock/skills) | 16 skills + 1 agent | codebase-design, domain-modeling, grill-me, grill-with-docs, grilling, handoff, improve-codebase-architecture, prototype, research, teach, to-questionnaire, wayfinder, wizard, tdd, diagnosing-bugs, writing-for-agents; agent `spec-reviewer` |
-| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 2 | design-taste-frontend, redesign-existing-projects |
-| [ECC](https://github.com/affaan-m/ECC) | 10 skills + 2 agents | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, search-first, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check, inherit-legacy-style; agents `database-reviewer`, `silent-failure-hunter` |
-| [gstack](https://github.com/garrytan/gstack) | 10 skills + 2 agents | ship, qa, diagram, land-and-deploy, document-release, document-generate, design-build, design-consultation, design-variants, plan-review; agents `plan-reviewer`, `security-auditor` |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) | 1 | design-taste-frontend |
+| [ECC](https://github.com/affaan-m/ECC) | 8 skills + 2 agents | agent-architecture-audit, agent-introspection-debugging, database-migrations, e2e-testing, frontend-a11y, make-interfaces-feel-better, motion-ui, loop-design-check; agents `database-reviewer`, `silent-failure-hunter` |
+| [gstack](https://github.com/garrytan/gstack) | 6 skills + 2 agents | qa, document-generate, design-build, design-consultation, design-variants, plan-review; agents `plan-reviewer`, `security-auditor` |
 | [superpowers](https://github.com/obra/superpowers) | 2 | receiving-code-review, verification-before-completion |
 | [claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 1 skill + 4 agents | code-review; agents `code-reviewer`, `pr-test-analyzer`, `type-design-analyzer`, `code-simplifier` |
 | [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) | 1 | trim-session-leakage |

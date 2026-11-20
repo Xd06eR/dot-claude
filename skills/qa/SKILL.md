@@ -200,8 +200,6 @@ Include:
 - Summary: total found, fixes applied (verified/best-effort/reverted counts), deferred issues, and the health-score delta (baseline to final).
 - A one-line PR-ready summary: "QA found N issues, fixed M, health score X to Y."
 
-When the report comes back clean, `ship` takes the branch out.
-
 ### Backlog capture
 
 If the repo keeps a backlog file (`TODO.md`, `TODOS.md`, or equivalent): add each deferred issue as an entry carrying its severity, category, and repro steps, following the file's existing format, and annotate any entry this run fixed ("Fixed by qa, <date>"). Skip silently if none exists.
@@ -229,6 +227,6 @@ git commit -m "fix(qa): <short description> (ISSUE-001)"
 5. **Test like a user during exploration.** Read source only in the fix phase.
 6. **Check console after every interaction.** Non-visual JS errors are still bugs.
 7. **Depth over breadth.** 5-10 well-evidenced issues beat 20 vague ones.
-8. **One commit per fix.** Never bundle; `ship` takes the branch out.
+8. **One commit per fix.** Never bundle.
 9. **Revert on regression.** If a fix makes things worse, discard the edit immediately and defer the issue.
 10. **Stay inside the working repo.** Report, screenshots, and baseline live under the output dir; write no state or metrics anywhere else.
