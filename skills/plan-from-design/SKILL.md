@@ -1,6 +1,7 @@
 ---
 name: plan-from-design
-description: Turn canonical design docs into per-component spec + implementation plan pairs. Use when the user asks to plan from the canonical design docs.
+description: Turn canonical design docs into per-component spec + implementation plan pairs.
+disable-model-invocation: true
 argument-hint: "[design docs dir or files] [feature]"
 origin: custom + mattpocock + superpowers
 ---

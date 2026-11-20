@@ -1,6 +1,7 @@
 ---
 name: bake-design
-description: Promote settled, user-approved design into a canonical design doc. Use when the user asks to bake or canonicalize a settled design, or after a build that changed what a canonical doc states; never while the design is still open or unapproved.
+description: Promote settled, user-approved design into a canonical design doc.
+disable-model-invocation: true
 argument-hint: "[register entry #NN — omit to bake this session's conversation]"
 origin: custom
 ---

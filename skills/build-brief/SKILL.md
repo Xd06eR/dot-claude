@@ -1,6 +1,7 @@
 ---
 name: build-brief
-description: Produce one comprehensive build brief per feature from the project's spec and plan docs. Use when the user asks to build a planned feature that has no build brief yet.
+description: Produce one comprehensive build brief per feature from the project's spec and plan docs.
+disable-model-invocation: true
 argument-hint: <feature ... | all>
 origin: custom + mattpocock
 ---

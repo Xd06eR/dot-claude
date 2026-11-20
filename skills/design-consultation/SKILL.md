@@ -1,6 +1,7 @@
 ---
 name: design-consultation
-description: Define or revise a project's visual system through an opinionated consultation. Use when a project has no design system yet and needs its visual foundation set before UI work begins, or when an existing design system needs revision. Returns one coherent system with rationale, captured in DESIGN.md.
+description: Define or revise a project's visual system through an opinionated consultation. Returns one coherent system with rationale, captured in DESIGN.md.
+disable-model-invocation: true
 origin: gstack + impeccable
 ---
 
