@@ -57,12 +57,13 @@ reports what that request carried: tool schemas ranked by size, injected
 context per source, the system prompt, and input tokens counted by the
 provider.
 
-Options:
-  --what <scope>    also emit the captured request:
-                    system  the system prompt alone
-                    all     the whole request (system prompt, tool schemas,
-                            messages, response)
-  --raw             emit raw JSON instead of readable Markdown
+Options (orthogonal: scope x format x destination):
+  --what <scope>    how much of the request to emit, layered on the report:
+                    system  + the system prompt
+                    all     + tool schemas, messages, and the response
+  --raw             machine form instead of readable Markdown: the system
+                    array (system) or the request body verbatim (all);
+                    requires --what
   --to <target>     terminal (default) or file; file writes under dumps/
                     beside this script. --what all always writes a file —
                     the whole request is too large for the terminal.
@@ -79,41 +80,41 @@ Environment:
   CLAUDE_CONFIG_DIR config dir holding settings.json (default: ~/.claude)`;
 
 function parseArgs(argv) {
-  const out = { what: null, raw: false, to: "terminal", help: false, prompt: "reply with the single word ok" };
+  const out = { what: null, raw: false, to: "terminal", help: false, hadError: false, prompt: "reply with the single word ok" };
+  const bad = (msg) => { console.error(msg); out.help = true; out.hadError = true; };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     const [key, inline] = arg.split("=");
     if (key === "--help") out.help = true;
     else if (key === "--raw") out.raw = true;
-    else if (key === "--prompt") out.prompt = inline ?? argv[++i];
+    else if (key === "--prompt") {
+      out.prompt = inline ?? argv[++i];
+      if (!out.prompt) bad("--prompt expects a value");
+    }
     else if (key === "--what" || key === "--to") {
       const value = inline ?? argv[++i];
       if (key === "--what") out.what = value;
       else out.to = value;
     } else {
-      console.error(`unknown option: ${arg}`);
-      out.help = true;
+      bad(`unknown option: ${arg}`);
     }
   }
+  if (out.help && out.hadError) return out;
+  if (out.what !== null && !["system", "all"].includes(out.what)) bad(`--what expects system or all, got: ${out.what}`);
+  if (out.raw && out.what === null) bad("--raw requires --what (raw exists only where the request has wire data)");
+  if (!["terminal", "file"].includes(out.to)) bad(`--to expects terminal or file, got: ${out.to}`);
   if (out.help) return out;
-  if (out.what !== null && !["system", "all"].includes(out.what)) {
-    console.error(`--what expects system or all, got: ${out.what}`);
-    out.help = true;
-  }
-  if (!["terminal", "file"].includes(out.to)) {
-    console.error(`--to expects terminal or file, got: ${out.to}`);
-    out.help = true;
-  }
   if (out.what === "all" && out.to === "terminal") {
-    console.log("[agent-proxy] --what all is too large for the terminal — writing to file");
+    console.error("[agent-proxy] --what all is too large for the terminal — writing to file");
     out.to = "file";
   }
   return out;
 }
 
 const FLAG = parseArgs(process.argv.slice(2));
-if (FLAG.help) { console.log(USAGE); process.exit(0); }
-const VERSION = execSync("claude --version", { shell: true }).toString().match(/([\d.]+)/)?.[1] || "unknown";
+if (FLAG.help) { console.log(USAGE); process.exit(FLAG.hadError ? 1 : 0); }
+let VERSION = "unknown";
+try { VERSION = execSync("claude --version", { shell: true }).toString().match(/([\d.]+)/)?.[1] || "unknown"; } catch { /* claude missing: the spawn below reports it cleanly */ }
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DUMP_DIR = path.join(HERE, "dumps");
@@ -126,7 +127,9 @@ const estTokens = (bytes) => Math.round(bytes / 4);
  * A single turn fires many as housekeeping — pure noise here, so skip them. */
 const isTokenCount = (reqPath) => reqPath.includes("count_tokens");
 
-const REDACT = new Set(["authorization", "x-api-key", "api-key"]);
+/** Any header that looks like a credential is redacted in rendered output —
+ * custom gateways authenticate with headers beyond the standard three. */
+const isSecretHeader = (k) => /auth|key|token|secret|cookie/i.test(k);
 
 /** Strip hop-by-hop and encoding headers so the captured response is readable,
  * recompute content-length, and pass auth through untouched so the real request
@@ -142,135 +145,232 @@ function forwardHeaders(headers, body) {
   return out;
 }
 
-/** Dump path under dumps/: <stamp>-<scope>.<md|json>. */
+/** Dump path under dumps/: <stamp>-<scope>.<md|json>; same-millisecond writes
+ * (parallel subagent fan-out) get a -2, -3 suffix instead of overwriting. */
 function dumpName(scope, ext) {
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-  return path.join(DUMP_DIR, `${stamp}-${scope}.${ext}`);
+  let file = path.join(DUMP_DIR, `${stamp}-${scope}.${ext}`);
+  let n = 2;
+  while (fs.existsSync(file)) file = path.join(DUMP_DIR, `${stamp}-${scope}-${n++}.${ext}`);
+  return file;
 }
 
 // ---------------------------------------------------------------------------
 // The audit: rank what's in the request
 // ---------------------------------------------------------------------------
 
-/** Measure every removable region of the request and rank the tools by size.
- * This is the whole point of the proxy — the numbers you cut against. */
-function auditRequest(reqJson, realInputTokens) {
-  const tools = Array.isArray(reqJson?.tools) ? reqJson.tools : [];
-  const toolRows = tools
-    .map((t) => {
-      const bytes = Buffer.byteLength(JSON.stringify(t));
-      return { name: t?.name ?? "(unnamed)", bytes, tokens: estTokens(bytes) };
-    })
-    .sort((a, b) => b.bytes - a.bytes);
-
-  const toolsBytes = toolRows.reduce((n, r) => n + r.bytes, 0);
-  const systemBytes = reqJson?.system ? Buffer.byteLength(JSON.stringify(reqJson.system)) : 0;
-  const totalBytes = Buffer.byteLength(JSON.stringify(reqJson ?? {}));
-
-  return {
-    toolRows,
-    toolCount: toolRows.length,
-    toolsBytes,
-    systemBytes,
-    totalBytes,
-    realInputTokens,
-  };
-}
-
-/** The ranked table, as Markdown. The hero of the whole document. */
+/** The audit block for the Markdown dump — the same object and numbers the
+ * terminal report renders, in Markdown form. */
 function renderAudit(a) {
-  const pct = (b) => (a.totalBytes ? ((b / a.totalBytes) * 100).toFixed(1) : "0.0");
-  const rows = a.toolRows
-    .map((r) => `| ${r.name} | ${r.bytes.toLocaleString()} | ~${r.tokens.toLocaleString()} | ${pct(r.bytes)}% |`)
-    .join("\n");
-
+  const pct = (b) => (a.total ? ((b / a.total) * 100).toFixed(1) : "0.0");
   return [
     "<audit>",
     "",
-    a.realInputTokens != null
-      ? `**${a.realInputTokens.toLocaleString()} input tokens** billed for this request (from the response usage).`
-      : "",
-    "",
-    `- **tools**: ${a.toolCount} definitions, ${a.toolsBytes.toLocaleString()} bytes (~${estTokens(a.toolsBytes).toLocaleString()} tokens)`,
-    `- **system prompt**: ${a.systemBytes.toLocaleString()} bytes (~${estTokens(a.systemBytes).toLocaleString()} tokens)`,
-    `- **total request**: ${a.totalBytes.toLocaleString()} bytes`,
+    `- **Claude Code ${a.version} · payload ${a.total.toLocaleString()} B**` +
+      (a.inputTokens != null ? ` · ${a.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(a.total).toLocaleString()} tok`),
+    `- **tools**: ${a.tools.length} definitions · ${a.toolsBytes.toLocaleString()} B (~${estTokens(a.toolsBytes).toLocaleString()} tok)`,
+    `- **system prompt**: ${a.sysBytes.toLocaleString()} B (~${estTokens(a.sysBytes).toLocaleString()} tok)`,
+    `- **injected context**: ${a.ctxBytes.toLocaleString()} B (~${estTokens(a.ctxBytes).toLocaleString()} tok)`,
     "",
     "**Tools, ranked by size:**",
     "",
-    "| tool | bytes | ~tokens | % of request |",
+    "| tool | bytes | ~tokens | % of payload |",
     "| --- | --: | --: | --: |",
-    rows,
+    ...a.tools.map((t) => `| ${t.name} | ${t.bytes.toLocaleString()} | ~${estTokens(t.bytes).toLocaleString()} | ${pct(t.bytes)}% |`),
+    "",
+    "**Injected context:**",
+    "",
+    "| section | bytes | ~tokens |",
+    "| --- | --: | --: |",
+    ...(a.sections.some((s) => s.kind === "memory") ? [`| memory files | ${a.memoryBytes.toLocaleString()} | ~${estTokens(a.memoryBytes).toLocaleString()} |`] : []),
+    ...a.sections.map((s) => `| ${s.kind === "memory" ? "  " : ""}${s.name} | ${s.bytes.toLocaleString()} | ~${estTokens(s.bytes).toLocaleString()} |`),
     "",
     "</audit>",
   ].join("\n");
 }
 
-/** Context injected around the prompt: first user message (CLAUDE.md and rule
- * files as "Contents of <file>" attachments) plus system-role messages
- * (environment block, MCP server instructions). */
-function contextBreakdown(reqJson) {
+/** The request's context sections, split on content anchors (raw-grounded):
+ * memory files (msg[0] "Contents of <file>" attachments) plus the system-role
+ * message's hidden sections — environment, agents, skills carry no headings of
+ * their own. Labels follow /context's vocabulary. */
+function contextSections(reqJson) {
   const flat = (c) => (typeof c === "string" ? c : (Array.isArray(c) ? c.map((p) => p.text || "").join("\n") : ""));
-  const files = [];
-  const other = [];
+  const sections = [];
   (reqJson.messages || []).forEach((msg, i) => {
-    const text = flat(msg.content);
     if (i === 0 && msg.role === "user") {
-      const marker = /Contents of (.+?) \(/g;
-      const positions = [];
-      let m;
-      while ((m = marker.exec(text))) positions.push({ name: m[1], at: m.index });
-      if (!positions.length) { other.push({ name: "user instructions", bytes: Buffer.byteLength(text) }); return; }
-      if (text.slice(0, positions[0].at).trim()) other.push({ name: "instructions preamble", bytes: Buffer.byteLength(text.slice(0, positions[0].at)) });
-      positions.forEach((p, j) => {
-        const end = j + 1 < positions.length ? positions[j + 1].at : text.length;
-        files.push({ name: path.basename(p.name), bytes: Buffer.byteLength(text.slice(p.at, end)) });
-      });
-    } else if (msg.role === "system") {
-      for (const h of text.split(/^(?=# )/m)) {
-        if (h.trim()) other.push({ name: (h.match(/^# (.+)$/m) || [, "system injection"])[1].slice(0, 40), bytes: Buffer.byteLength(h) });
+      // structural split: attachment parts (<system-reminder> wrappers) vs the
+      // prompt part — the prompt is its own content part, never counted as
+      // injected context
+      const parts = Array.isArray(msg.content) ? msg.content : [{ text: flat(msg.content) }];
+      const files = [];
+      let preamble = 0;
+      let prompt = 0;
+      for (const part of parts) {
+        const t = part.text ?? "";
+        if (t.includes("<system-reminder>")) {
+          const marker = /Contents of (.+?) \(/g;
+          const positions = [];
+          let m;
+          while ((m = marker.exec(t))) positions.push({ name: m[1], at: m.index });
+          if (!positions.length) { preamble += Buffer.byteLength(t); continue; }
+          let cursor = 0;
+          positions.forEach((p, j) => {
+            const end = j + 1 < positions.length ? positions[j + 1].at : t.length;
+            if (p.at > cursor) preamble += Buffer.byteLength(t.slice(cursor, p.at));
+            files.push({ name: path.basename(p.name), bytes: Buffer.byteLength(t.slice(p.at, end)), kind: "memory" });
+            cursor = end;
+          });
+          if (cursor < t.length) preamble += Buffer.byteLength(t.slice(cursor));
+        } else if (t.trim()) {
+          prompt += Buffer.byteLength(t);
+        }
       }
+      if (preamble) sections.push({ name: "memory preamble", bytes: preamble, kind: "memory" });
+      sections.push(...files);
+      if (prompt) sections.push({ name: "prompt", bytes: prompt, kind: "prompt" });
+    } else if (msg.role === "system") {
+      segmentSystemMessage(flat(msg.content), sections);
     }
   });
-  return { files, other };
+  return sections;
+}
+
+/** Split a system-role injection: environment up to the agents anchor, agents
+ * up to the MCP region, per-server "## " blocks, and the skills catalogue (a
+ * heading-less paragraph of "- name: description" lines — detected even when
+ * no MCP servers exist). Any span the anchors do not cover is reported as
+ * "other"; bytes are never dropped. */
+function segmentSystemMessage(text, out) {
+  const covered = [];
+  const push = (name, start, end) => {
+    if (end > start) {
+      out.push({ name, bytes: Buffer.byteLength(text.slice(start, end)), kind: "system" });
+      covered.push([start, end]);
+    }
+  };
+  const envAt = Math.max(0, text.indexOf("# Environment"));
+  let agentsAt = text.indexOf("Available agent types for the Agent tool:");
+  const mcpAt = text.indexOf("# MCP Server Instructions");
+  if (agentsAt < 0) agentsAt = mcpAt < 0 ? text.length : mcpAt;
+  push("environment", envAt, agentsAt);
+  // skills anchor: first entry-like paragraph after the agents block (skip the
+  // agents paragraph itself — agent entries match the same shape)
+  const scanFrom = mcpAt >= 0 ? mcpAt : agentsAt;
+  const region = text.slice(scanFrom);
+  const paras = region.split(/\n\s*\n/);
+  const isEntry = (l) => /^- \S[^\n]*: /.test(l);
+  let roff = 0, agentsParaSeen = mcpAt >= 0, skillsAt = -1;
+  for (const p of paras) {
+    const rel = region.indexOf(p, roff);
+    roff = rel + p.length;
+    if (!agentsParaSeen) {
+      if (p.includes("Available agent types")) agentsParaSeen = true;
+      continue;
+    }
+    const lines = p.split("\n").filter((l) => l.trim());
+    const entryLike = lines.filter(isEntry).length;
+    if (entryLike >= 3 && entryLike / lines.length >= 0.6) { skillsAt = scanFrom + rel; break; }
+  }
+  push("agents", agentsAt, mcpAt >= 0 ? mcpAt : (skillsAt >= 0 ? skillsAt : text.length));
+  if (mcpAt >= 0) {
+    // per-server "## " blocks; the region preamble folds into the first block
+    const rest = text.slice(mcpAt);
+    const rparas = rest.split(/\n\s*\n/);
+    let roffset = 0, server = null, serverStart = 0;
+    for (const p of rparas) {
+      const at = rest.indexOf(p, roffset);
+      roffset = at + p.length;
+      const hm = p.match(/^## (.+)$/m);
+      if (!hm) continue;
+      if (server) {
+        // subsequent server: close the previous block; the first block keeps
+        // serverStart 0 so the region preamble folds into it
+        push(`MCP server instructions: ${server}`, mcpAt + serverStart, mcpAt + at);
+        serverStart = at;
+      }
+      server = hm[1].trim();
+    }
+    const regionEnd = skillsAt >= 0 ? skillsAt : text.length;
+    if (server) push(`MCP server instructions: ${server}`, mcpAt + serverStart, regionEnd);
+    else push("MCP server instructions", mcpAt, regionEnd);
+  }
+  if (skillsAt >= 0) push("skills", skillsAt, text.length);
+  // residual: uncovered spans are reported, never dropped
+  let cursor = 0;
+  for (const [s, e] of covered.slice().sort((a, b) => a[0] - b[0])) {
+    if (s > cursor) push("other", cursor, s);
+    cursor = Math.max(cursor, e);
+  }
+  if (cursor < text.length) push("other", cursor, text.length);
+}
+
+/** The single audit object every output renders: measured sections, tool
+ * schemas, totals, and provider-counted input tokens. */
+function buildAudit(reqJson, inputTokens, version) {
+  const tools = (reqJson.tools || [])
+    .map((t) => ({ name: t.name ?? "(unnamed)", bytes: Buffer.byteLength(JSON.stringify(t)) }))
+    .sort((a, b) => b.bytes - a.bytes);
+  const toolsBytes = tools.reduce((s, t) => s + t.bytes, 0);
+  const sysBytes = Buffer.byteLength(JSON.stringify(reqJson.system || []));
+  const sections = contextSections(reqJson);
+  const ctxBytes = sections.filter((s) => s.kind !== "prompt").reduce((s, x) => s + x.bytes, 0);
+  return {
+    version,
+    tools,
+    toolsBytes,
+    sysBytes,
+    sections,
+    memoryBytes: sections.filter((s) => s.kind === "memory").reduce((s, x) => s + x.bytes, 0),
+    ctxBytes,
+    total: sysBytes + toolsBytes + ctxBytes,
+    inputTokens,
+  };
 }
 
 /** The report: every number measured from the captured request — identity and
  * headline first, then per-section totals, then detail. */
-function printAudit(reqJson, inputTokens, version) {
-  const tools = (reqJson.tools || [])
-    .map((t) => ({ name: t.name, bytes: Buffer.byteLength(JSON.stringify(t)) }))
-    .sort((a, b) => b.bytes - a.bytes);
-  const toolsBytes = tools.reduce((s, t) => s + t.bytes, 0);
-  const sysBytes = Buffer.byteLength(JSON.stringify(reqJson.system || []));
-  const ctx = contextBreakdown(reqJson);
-  const ctxBytes = [...ctx.files, ...ctx.other].reduce((s, x) => s + x.bytes, 0);
-  const total = sysBytes + toolsBytes + ctxBytes;
-  const pct = (b) => (total ? ((b / total) * 100).toFixed(1) : "0.0");
-
-  console.log(`\n[agent-proxy] Claude Code ${version} · payload ${total.toLocaleString()} B` +
-    (inputTokens != null ? ` · ${inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(total).toLocaleString()} tok`));
-  console.log(`\ntools: ${tools.length} definitions · ${toolsBytes.toLocaleString()} B (~${estTokens(toolsBytes).toLocaleString()} tok), ranked by size`);
-  const w = Math.max(...tools.map((t) => t.name.length), 4);
-  for (const t of tools) console.log(`  ${t.name.padEnd(w)}  ${String(t.bytes).padStart(7)} B  ~${String(Math.round(t.bytes / 4)).padStart(5)} tok  ${pct(t.bytes).padStart(5)}%`);
-  console.log(`\ninjected context: ${ctxBytes.toLocaleString()} B (~${estTokens(ctxBytes).toLocaleString()} tok)`);
-  for (const f of ctx.files) console.log(`  ${f.bytes.toLocaleString().padStart(7)} B  ~${String(Math.round(f.bytes / 4)).padStart(5)} tok  ${f.name}`);
-  for (const o of ctx.other) console.log(`  ${o.bytes.toLocaleString().padStart(7)} B  ~${String(Math.round(o.bytes / 4)).padStart(5)} tok  ${o.name}`);
-  console.log(`\nsystem prompt: ${sysBytes.toLocaleString()} B (~${estTokens(sysBytes).toLocaleString()} tok)`);
+function printAudit(audit) {
+  const pct = (b) => (audit.total ? ((b / audit.total) * 100).toFixed(1) : "0.0");
+  console.log(`\n[agent-proxy] Claude Code ${audit.version} · payload ${audit.total.toLocaleString()} B` +
+    (audit.inputTokens != null ? ` · ${audit.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(audit.total).toLocaleString()} tok`));
+  console.log(`\ntools: ${audit.tools.length} definitions · ${audit.toolsBytes.toLocaleString()} B (~${estTokens(audit.toolsBytes).toLocaleString()} tok), ranked by size`);
+  const w = Math.max(...audit.tools.map((t) => t.name.length), 4);
+  for (const t of audit.tools) console.log(`  ${t.name.padEnd(w)}  ${String(t.bytes).padStart(7)} B  ~${String(Math.round(t.bytes / 4)).padStart(5)} tok  ${pct(t.bytes).padStart(5)}%`);
+  console.log(`\ninjected context: ${audit.ctxBytes.toLocaleString()} B (~${estTokens(audit.ctxBytes).toLocaleString()} tok)`);
+  let inMemory = false;
+  for (const s of audit.sections) {
+    if (s.kind === "memory" && !inMemory) {
+      console.log(`  ${audit.memoryBytes.toLocaleString().padStart(7)} B  ~${String(Math.round(audit.memoryBytes / 4)).padStart(5)} tok  memory files`);
+      inMemory = true;
+    }
+    const indent = s.kind === "memory" ? "    " : "  ";
+    console.log(`${indent}${s.bytes.toLocaleString().padStart(7)} B  ~${String(Math.round(s.bytes / 4)).padStart(5)} tok  ${s.name}`);
+  }
+  console.log(`\nsystem prompt: ${audit.sysBytes.toLocaleString()} B (~${estTokens(audit.sysBytes).toLocaleString()} tok)`);
 }
 
-/** Emit the flagged output for one main request: --what × --raw × --to.
- * Default (no --what): nothing — the report above is the whole output. */
-function emitOutput(reqJson, rawBody, c, inputTokens) {
-  if (!FLAG.what) return;
+/** Emit the flagged output for one main request. Output is layered: the
+ * report first, then the scope's increment. --raw picks the machine form of
+ * the scope (system array / request body verbatim); --to picks the sink. On
+ * the terminal the text report has already printed, so only the increment is
+ * appended. */
+function emitOutput(reqJson, rawBody, c, audit) {
+  const scope = FLAG.what || "default";
+  if (!FLAG.what && FLAG.to === "terminal") return; // plain default: the report is the whole output
   let content;
-  if (FLAG.what === "system") {
-    content = FLAG.raw ? JSON.stringify(reqJson.system, null, 2) : renderSystem(reqJson.system);
+  if (FLAG.raw) {
+    content = scope === "system" ? JSON.stringify(reqJson.system, null, 2) : rawBody;
+  } else if (FLAG.to === "file") {
+    const reportMd = renderAudit(audit);
+    if (scope === "default") content = reportMd;
+    else if (scope === "system") content = reportMd + "\n\n" + ["<system-prompt>", "", renderSystem(reqJson.system), "", "</system-prompt>"].join("\n");
+    else content = renderMarkdown({ reqJson, timestamp: new Date().toISOString(), method: c.method, path: c.path, statusCode: c.statusCode, headers: c.headers }, audit, c.markdown);
   } else {
-    content = FLAG.raw ? rawBody : renderMarkdown({ reqJson, timestamp: new Date().toISOString(), method: c.method, path: c.path, statusCode: c.statusCode, headers: c.headers }, auditRequest(reqJson, inputTokens), c.markdown);
+    content = renderSystem(reqJson.system); // terminal increment (--what all never reaches here: forced to file)
   }
   if (FLAG.to === "file") {
     fs.mkdirSync(DUMP_DIR, { recursive: true });
-    const file = dumpName(FLAG.what, FLAG.raw ? "json" : "md");
+    const file = dumpName(scope === "default" ? "report" : scope, FLAG.raw ? "json" : "md");
     fs.writeFileSync(file, content);
     console.log(`\n[agent-proxy] wrote ${file}`);
   } else {
@@ -314,7 +414,7 @@ function renderTools(tools) {
 function imagePlaceholder(b) {
   const src = b.source ?? {};
   const bytes = typeof src.data === "string" ? src.data.length : 0;
-  return `\`[image: ${src.media_type ?? "unknown"}, ${bytes} base64 chars — full data in .request.txt]\``;
+  return `\`[image: ${src.media_type ?? "unknown"}, ${bytes} base64 chars — full data in the raw dump]\``;
 }
 
 function renderContent(content) {
@@ -394,7 +494,7 @@ function decodeResponse(raw) {
 
 function renderMarkdown(c, audit, responseMd) {
   const headers = Object.entries(c.headers).map(([k, v]) =>
-    `${k}: ${REDACT.has(k.toLowerCase()) ? "[REDACTED]" : Array.isArray(v) ? v.join(", ") : v ?? ""}`
+    `${k}: ${isSecretHeader(k) ? "[REDACTED]" : Array.isArray(v) ? v.join(", ") : v ?? ""}`
   );
   const req = c.reqJson;
   const parts = [
@@ -434,8 +534,9 @@ function handle(req, res) {
           if (!Array.isArray(reqJson.tools) || reqJson.tools.length === 0) return; // sidecalls carry no tools
           try {
             const { markdown, inputTokens } = decodeResponse(Buffer.concat(respChunks).toString("utf8"));
-            printAudit(reqJson, inputTokens, VERSION);
-            emitOutput(reqJson, body.toString("utf8"), { method: req.method ?? "POST", path: reqPath, statusCode: up.statusCode ?? 0, headers: req.headers, markdown }, inputTokens);
+            const audit = buildAudit(reqJson, inputTokens, VERSION);
+            printAudit(audit);
+            emitOutput(reqJson, body.toString("utf8"), { method: req.method ?? "POST", path: reqPath, statusCode: up.statusCode ?? 0, headers: req.headers, markdown }, audit);
           } catch (err) {
             console.error(`[agent-proxy] could not render: ${err.message}`);
           }
@@ -457,18 +558,27 @@ function handle(req, res) {
 // settings.json env block, where the shell ANTHROPIC_BASE_URL route can
 // silently fail), wait for it to finish, exit.
 const server = http.createServer(handle);
+server.on("error", (err) => {
+  console.error(`[agent-proxy] cannot listen on 127.0.0.1:${PORT} (${err.code}) — set PORT`);
+  process.exit(1);
+});
 await new Promise((resolve) => server.listen(PORT, "127.0.0.1", () => {
-  console.log(`[agent-proxy] listening on 127.0.0.1:${PORT}`);
-  console.log(`[agent-proxy] forwarding to ${UPSTREAM_URL.href}`);
+  console.error(`[agent-proxy] listening on 127.0.0.1:${PORT}`);
+  console.error(`[agent-proxy] forwarding to ${UPSTREAM_URL.href}`);
   resolve();
 }));
 
 // Spawn the resolved binary directly (no shell) so the inline JSON reaches
-// claude unquoted-mangled. CLAUDE_BIN overrides the lookup.
-const claudeBin = process.env.CLAUDE_BIN
-  || execSync(process.platform === "win32" ? "where claude" : "command -v claude", { shell: true }).toString().trim().split(/\r?\n/)[0];
+// claude unquoted-mangled. CLAUDE_BIN overrides the lookup; a .cmd/.bat shim
+// is rejected — it needs a shell, which would mangle the inline JSON.
+let claudeBin = process.env.CLAUDE_BIN || "";
 if (!claudeBin) {
-  console.error("agent-proxy: claude not found on PATH — set CLAUDE_BIN");
+  try {
+    claudeBin = execSync(process.platform === "win32" ? "where claude" : "command -v claude", { shell: true }).toString().trim().split(/\r?\n/)[0] || "";
+  } catch { /* not on PATH */ }
+}
+if (!claudeBin || /\.(cmd|bat)$/i.test(claudeBin)) {
+  console.error("agent-proxy: claude executable not found (or resolved to a .cmd shim) — set CLAUDE_BIN to the binary");
   process.exit(1);
 }
 
@@ -477,7 +587,11 @@ const child = spawn(claudeBin, ["-p", "--settings", inlineSettings, FLAG.prompt]
   cwd: process.cwd(),
   stdio: ["ignore", "ignore", "ignore"],
 });
-console.log(`[agent-proxy] probing: one headless claude run`);
+child.on("error", (err) => {
+  console.error(`agent-proxy: could not launch claude (${err.message}) — set CLAUDE_BIN`);
+  server.close(() => process.exit(1));
+});
+console.error(`[agent-proxy] probing: one headless claude run`);
 
 await new Promise((r) => child.on("exit", r));
 await new Promise((r) => server.close(r));
