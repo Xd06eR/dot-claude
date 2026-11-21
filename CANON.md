@@ -36,14 +36,10 @@ The durable rulings of this harness with their why, and the live rulebook for it
 
 ## 4. Rules files and the trunk
 
-- **CLAUDE.md is the trunk:** the home of preferences and instructions for the user's work; harness-work rules live here, not there. Rules files are extensions of CLAUDE.md; neither restates the other. Coding rules are self-contained; they never reference CLAUDE.md (it co-loads on every injection; rules→rules extends pointers stay, since globs differ).
-- **Loading scope:** unscoped (loads every session of every project; only when true for every prompt); project-scope (lives in a project's `.claude/rules/` and loads only there); `paths:`-scoped (loads on matching files). Everything not universal takes one of the latter two.
-- **Scoped-frontmatter synchronization:** files sharing a glob block change it together or not at all; a taxonomy change sweeps every file carrying the block.
-- **File naming:** a folder's namespace-primary rule file is named `index.md` (the folder carries the namespace); specialist files with narrower globs keep their aspect names (`security.md`, `testing.md`).
-- **Lesson landing:** harness lessons follow the proposal gate in [CLAUDE.md § Lesson capture](CLAUDE.md#lesson-capture); the accepted rule lands in the owning harness file.
-- **Globs declare the need-moment:** a scoped rule's glob states when the rule is needed, derived from the actual use case; token savings are a by-product, never the motive.
-- **Glob-deserve test for merges:** every absorbed member must deserve the shared glob, not merely happen to share it. Accepted approximation costs stand (use-* basename false positives, app/ and pages/ over-fire on Angular-style trees, middleware.ts matching non-Next files, web/testing missing Playwright's tests/ default, fastapi.md path globs false-positiving on same-named dirs, no vue/svelte/astro glob — the harness is tuned to the user's React stack); each fix's over-fire risk exceeds its gap's cost.
-- **Reinforcement across consumption moments is not duplication:** the same rule recurring where each consumption moment needs it is reinforcement; mention-once (the trunk's rule) governs only within a single consumption moment.
+- **CLAUDE.md is the trunk:** it carries preferences and instructions for the user's work; harness rules live in this file, not the trunk. Rules files are extensions of CLAUDE.md; neither restates the other. Coding rules never reference CLAUDE.md (it is already in context whenever rules load); pointers to sibling rules files stay.
+- **File naming:** a folder's primary rule file is `index.md` (the folder name carries the namespace); specialist files with narrower globs are named for their subject (`security.md`, `testing.md`).
+- **Globs declare the need-moment:** a scoped rule's glob states when the rule is needed, derived from a real use case; token savings are a by-product, never the motive. Members of a shared glob must deserve it, not merely happen to share it; files sharing a glob block change it together or not at all; an approximation stays unfixed as long as its fix's over-fire risk exceeds its gap's cost.
+- **Reinforcement across consumption moments is not duplication:** the same rule may appear in each consumption moment that needs it; mention-once (the trunk's rule) applies only within one.
 
 ## 5. Permissions and protection layers
 
