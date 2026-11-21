@@ -55,7 +55,9 @@ const USAGE = `Usage: node proxy.mjs [options]
 Runs one headless Claude Code command through a local logging proxy and
 reports what that request carried: tool schemas ranked by size, injected
 context per source, the system prompt, and input tokens counted by the
-provider.
+provider. The probe target is the current working directory — its project
+context (CLAUDE.md, .claude/, .mcp.json) loads into the payload; dumps/
+always lands beside this script, never in the probed project.
 
 What you get (one line per outcome):
   node proxy.mjs                       report on the terminal
@@ -118,8 +120,8 @@ try { VERSION = execSync("claude --version", { shell: true }).toString().match(/
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DUMP_DIR = path.join(HERE, "dumps");
 
-/** Rough token estimate for display. Real input tokens come from the response
- * usage; this is only for ranking the request before the reply arrives. */
+/** Rough per-item token estimate (bytes / 4). The real input total comes from
+ * the response usage; per-item counts are not reported by the provider. */
 const estTokens = (bytes) => Math.round(bytes / 4);
 
 /** count_tokens calls send content but get back only a number, never a reply.
