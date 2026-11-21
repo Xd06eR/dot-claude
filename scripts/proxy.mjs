@@ -65,6 +65,10 @@ What you get (one line per outcome):
   node proxy.mjs --what system --save  report + system prompt, dumps/system.md
   node proxy.mjs --raw                 request body verbatim, dumps/all.json
 
+Each conversation (session or subagent) keeps one dump — the latest request
+replaces earlier ones, tagged -subagent; the terminal report still prints
+per request.
+
 Options:
   --what <scope>    default (the report alone), system, or all
   --save            write the Markdown output to dumps/ beside this script
@@ -321,6 +325,7 @@ function buildAudit(reqJson, inputTokens, version) {
   const ctxBytes = sections.filter((s) => s.kind !== "prompt").reduce((s, x) => s + x.bytes, 0);
   return {
     version,
+    subagent: (typeof reqJson.system === "string" ? reqJson.system : (reqJson.system || []).map((b) => b.text || "").join("\n")).includes("cc_is_subagent=true"),
     tools,
     toolsBytes,
     sysBytes,
@@ -336,7 +341,7 @@ function buildAudit(reqJson, inputTokens, version) {
  * headline first, then per-section totals, then detail. */
 function printAudit(audit) {
   const pct = (b) => (audit.total ? ((b / audit.total) * 100).toFixed(1) : "0.0");
-  console.log(`\n[agent-proxy] Claude Code ${audit.version} · payload ${audit.total.toLocaleString()} B` +
+  console.log(`\n[agent-proxy] Claude Code ${audit.version}${audit.subagent ? " · subagent" : ""} · payload ${audit.total.toLocaleString()} B` +
     (audit.inputTokens != null ? ` · ${audit.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(audit.total).toLocaleString()} tok`));
   console.log(`\ntools: ${audit.tools.length} definitions · ${audit.toolsBytes.toLocaleString()} B (~${estTokens(audit.toolsBytes).toLocaleString()} tok), ranked by size`);
   const w = Math.max(...audit.tools.map((t) => t.name.length), 4);
@@ -362,15 +367,39 @@ function writeDump(scope, ext, content) {
   const file = dumpName(scope, ext);
   fs.writeFileSync(file, content);
   console.log(`\n[agent-proxy] wrote ${file}`);
+  return file;
 }
 
 /** Emit the flagged output for one main request. Outcomes map one-to-one to
  * the usage table: --raw writes the body verbatim; --save (or --what all)
  * writes the scope's Markdown; a scope on the terminal appends its increment
- * after the report. */
+ * after the report. Each conversation (session or subagent) keeps one dump —
+ * the latest request replaces earlier ones, tagged -subagent. */
+const DUMPED_SHAPES = new Map();
+
 function emitOutput(reqJson, rawBody, c, audit) {
+  // shape fingerprint: system+tools anatomy plus the first message — constant
+  // across one conversation's turns (so they dedup), different between
+  // parallel same-type subagents (so siblings each keep a dump)
+  const firstMsg = JSON.stringify(reqJson.messages?.[0]?.content ?? "");
+  const shape = `${audit.subagent}|${audit.sysBytes}|${audit.toolsBytes}|${audit.tools.length}|${firstMsg.length}|${firstMsg.slice(1, 81)}`;
+  const replacePrior = (file) => {
+    const prior = DUMPED_SHAPES.get(shape);
+    if (prior && prior !== file) {
+      try {
+        fs.rmSync(prior, { force: true });
+        console.error("[agent-proxy] a later request of this conversation replaced the earlier dump");
+      } catch {
+        // Windows: a locked prior (editor, antivirus) stays; the next
+        // same-conversation write retries the unlink
+        console.error("[agent-proxy] could not remove the earlier dump (file locked) — it stays");
+      }
+    }
+    DUMPED_SHAPES.set(shape, file);
+  };
+  const tag = audit.subagent ? "-subagent" : "";
   if (FLAG.raw) {
-    writeDump("all", "json", rawBody);
+    replacePrior(writeDump(`all${tag}`, "json", rawBody));
     return;
   }
   const scope = FLAG.what || "default";
@@ -380,7 +409,7 @@ function emitOutput(reqJson, rawBody, c, audit) {
     if (scope === "default") content = reportMd;
     else if (scope === "system") content = reportMd + "\n\n" + ["<system-prompt>", "", renderSystem(reqJson.system), "", "</system-prompt>"].join("\n");
     else content = renderMarkdown({ reqJson, timestamp: new Date().toISOString(), method: c.method, path: c.path, statusCode: c.statusCode, headers: c.headers }, audit, c.markdown);
-    writeDump(scope === "default" ? "report" : scope, "md", content);
+    replacePrior(writeDump(`${scope === "default" ? "report" : scope}${tag}`, "md", content));
     return;
   }
   if (scope === "system") console.log(`\n${renderSystem(reqJson.system)}`);
