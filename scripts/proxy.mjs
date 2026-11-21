@@ -124,6 +124,10 @@ const DUMP_DIR = path.join(HERE, "dumps");
  * the response usage; per-item counts are not reported by the provider. */
 const estTokens = (bytes) => Math.round(bytes / 4);
 
+/** Wire basis for text spans: JSON-escaped size, matching how system and
+ * tools are measured, so all categories share one byte basis. */
+const wire = (s) => Buffer.byteLength(JSON.stringify(s)) - 2;
+
 /** count_tokens calls send content but get back only a number, never a reply.
  * A single turn fires many as housekeeping — pure noise here, so skip them. */
 const isTokenCount = (reqPath) => reqPath.includes("count_tokens");
@@ -160,32 +164,38 @@ function dumpName(scope, ext) {
 // The audit: rank what's in the request
 // ---------------------------------------------------------------------------
 
-/** The audit block for the Markdown dump — the same object and numbers the
- * terminal report renders, in Markdown form. */
+/** The audit block for the Markdown dump — the same categories and numbers
+ * the terminal report renders, in Markdown form. */
 function renderAudit(a) {
-  const pct = (b) => (a.total ? ((b / a.total) * 100).toFixed(1) : "0.0");
+  const { rows, wireBytes, tok } = categoryRows(a);
+  const pct = (b) => (wireBytes ? ((b / wireBytes) * 100).toFixed(1) : "0.0");
+  const files = a.sections.filter((s) => s.kind === "memory");
   return [
     "<audit>",
     "",
-    `- **Claude Code ${a.version} · payload ${a.total.toLocaleString()} B**` +
-      (a.inputTokens != null ? ` · ${a.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(a.total).toLocaleString()} tok`),
-    `- **tools**: ${a.tools.length} definitions · ${a.toolsBytes.toLocaleString()} B (~${estTokens(a.toolsBytes).toLocaleString()} tok)`,
-    `- **system prompt**: ${a.sysBytes.toLocaleString()} B (~${estTokens(a.sysBytes).toLocaleString()} tok)`,
-    `- **injected context**: ${a.ctxBytes.toLocaleString()} B (~${estTokens(a.ctxBytes).toLocaleString()} tok)`,
-    ...((p) => p ? [`- **prompt**: ${p.bytes.toLocaleString()} B (excluded from the totals)`] : [])(a.sections.find((s) => s.kind === "prompt")),
+    `- **Claude Code ${a.version}${a.subagent ? " · subagent" : ""} · request ${wireBytes.toLocaleString()} B**` +
+      (a.inputTokens != null ? ` · ${a.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(wireBytes).toLocaleString()} tok`),
+    ...(a.inputTokens != null ? ["", "Per-item tokens are allocated proportionally from the provider-counted total."] : ["", "Per-item tokens are estimated at bytes/4 (no usage in the response)."]),
+    "",
+    "**Estimated usage by category:**",
+    "",
+    `| Category | Bytes | ${a.inputTokens != null ? "Tokens" : "~Tokens"} | Percentage |`,
+    "| --- | --: | --: | --: |",
+    ...rows.map(([name, bytes]) => `| ${name} | ${bytes.toLocaleString()} | ${tok(bytes).toLocaleString()} | ${pct(bytes)}% |`),
     "",
     "**Tools, ranked by size:**",
     "",
-    "| tool | bytes | ~tokens | % of payload |",
-    "| --- | --: | --: | --: |",
-    ...a.tools.map((t) => `| ${t.name} | ${t.bytes.toLocaleString()} | ~${estTokens(t.bytes).toLocaleString()} | ${pct(t.bytes)}% |`),
-    "",
-    "**Injected context:**",
-    "",
-    "| section | bytes | ~tokens |",
-    "| --- | --: | --: |",
-    ...(a.sections.some((s) => s.kind === "memory") ? [`| memory files | ${a.memoryBytes.toLocaleString()} | ~${estTokens(a.memoryBytes).toLocaleString()} |`] : []),
-    ...a.sections.filter((s) => s.kind !== "prompt").map((s) => `| ${s.kind === "memory" ? "  " : ""}${s.name} | ${s.bytes.toLocaleString()} | ~${estTokens(s.bytes).toLocaleString()} |`),
+    "| Tool | Server | Bytes | Tokens | Percentage |",
+    "| --- | --- | --: | --: | --: |",
+    ...a.tools.map((t) => `| ${t.name} | ${t.server} | ${t.bytes.toLocaleString()} | ${tok(t.bytes).toLocaleString()} | ${pct(t.bytes)}% |`),
+    ...(files.length ? [
+      "",
+      "**Memory files:**",
+      "",
+      "| Type | Bytes | Tokens | Path |",
+      "| --- | --: | --: | --- |",
+      ...files.map((f) => `| ${f.type ?? "—"} | ${f.bytes.toLocaleString()} | ${tok(f.bytes).toLocaleString()} | ${f.path ?? f.name} |`),
+    ] : []),
     "",
     "</audit>",
   ].join("\n");
@@ -206,6 +216,7 @@ function contextSections(reqJson) {
       const parts = Array.isArray(msg.content) ? msg.content : [{ text: flat(msg.content) }];
       const files = [];
       let preamble = 0;
+      let attachments = 0;
       let prompt = 0;
       for (const part of parts) {
         const t = part.text ?? "";
@@ -214,21 +225,36 @@ function contextSections(reqJson) {
           const positions = [];
           let m;
           while ((m = marker.exec(t))) positions.push({ name: m[1], at: m.index });
-          if (!positions.length) { preamble += Buffer.byteLength(t); continue; }
+          if (!positions.length) { attachments += wire(t); continue; }
           let cursor = 0;
           positions.forEach((p, j) => {
-            const end = j + 1 < positions.length ? positions[j + 1].at : t.length;
-            if (p.at > cursor) preamble += Buffer.byteLength(t.slice(cursor, p.at));
-            files.push({ name: path.basename(p.name), bytes: Buffer.byteLength(t.slice(p.at, end)), kind: "memory" });
+            let end = j + 1 < positions.length ? positions[j + 1].at : t.length;
+            if (p.at > cursor) preamble += wire(t.slice(cursor, p.at));
+            // the file span starts after its "Contents of <path> (<type>):"
+            // header line — the row measures the file content, the header
+            // line itself lands in the preamble
+            const start = (t.indexOf("\n", p.at) + 1) || p.at;
+            preamble += wire(t.slice(p.at, start));
+            // the last file's span ends at a nested reminder block (git status
+            // and friends trailing in the same part), not at the part end
+            if (j + 1 === positions.length) {
+              const nested = t.indexOf("<system-reminder>", start);
+              if (nested >= 0 && nested < end) end = nested;
+            }
+            if (end > start) files.push({ name: path.basename(p.name), path: p.name, bytes: wire(t.slice(start, end)), kind: "memory" });
+            else files.push({ name: path.basename(p.name), path: p.name, bytes: 0, kind: "memory" });
             cursor = end;
           });
-          if (cursor < t.length) preamble += Buffer.byteLength(t.slice(cursor));
+          // trailing session text (git status and friends) after the last file
+          // in the same part is a session attachment, not file content
+          if (cursor < t.length) attachments += wire(t.slice(cursor));
         } else if (t.trim()) {
-          prompt += Buffer.byteLength(t);
+          prompt += wire(t);
         }
       }
       if (preamble) sections.push({ name: "memory preamble", bytes: preamble, kind: "memory" });
       sections.push(...files);
+      if (attachments) sections.push({ name: "session attachments (git status, IDE state)", bytes: attachments, kind: "session" });
       if (prompt) sections.push({ name: "prompt", bytes: prompt, kind: "prompt" });
     } else if (msg.role === "system") {
       segmentSystemMessage(flat(msg.content), sections);
@@ -246,7 +272,7 @@ function segmentSystemMessage(text, out) {
   const covered = [];
   const push = (name, start, end) => {
     if (end > start) {
-      out.push({ name, bytes: Buffer.byteLength(text.slice(start, end)), kind: "system" });
+      out.push({ name, bytes: wire(text.slice(start, end)), kind: "system" });
       covered.push([start, end]);
     }
   };
@@ -255,16 +281,21 @@ function segmentSystemMessage(text, out) {
   const mcpAt = text.indexOf("# MCP Server Instructions");
   if (agentsAt < 0) agentsAt = mcpAt < 0 ? text.length : mcpAt;
   push("environment", envAt, agentsAt);
-  // skills anchor: a paragraph of "- name: description" lines after the agents
-  // block — distinguished from agent entries (same shape) by a higher entry
-  // count, no agents anchor line, and no non-entry paragraph following it.
-  // Where the agents list itself splits across paragraphs, the residual keeps
-  // every byte; only the agents/skills label can be wrong.
+  // skills anchor: the run of "- name: description" paragraphs after the
+  // agents block — starts at the first paragraph with a higher entry count
+  // and no agents anchor line, ends at the first non-entry paragraph; blocks
+  // after the run land in the residual. Where the agents list itself splits
+  // across paragraphs, the residual keeps every byte; only the agents/skills
+  // label can be wrong.
   const scanFrom = mcpAt >= 0 ? mcpAt : agentsAt;
   const region = text.slice(scanFrom);
   const paras = region.split(/\n\s*\n/);
   const isEntry = (l) => /^- \S[^\n]*: /.test(l);
-  let roff = 0, agentsParaSeen = mcpAt >= 0, skillsAt = -1;
+  const isEntryPara = (p) => {
+    const lines = p.split("\n").filter((l) => l.trim());
+    return lines.length > 0 && lines.filter(isEntry).length / lines.length >= 0.6;
+  };
+  let roff = 0, agentsParaSeen = mcpAt >= 0, skillsAt = -1, skillsEnd = -1;
   for (let i = 0; i < paras.length; i++) {
     const p = paras[i];
     const rel = region.indexOf(p, roff);
@@ -275,10 +306,21 @@ function segmentSystemMessage(text, out) {
     }
     const lines = p.split("\n").filter((l) => l.trim());
     const entryLike = lines.filter(isEntry).length;
-    const trailing = paras.slice(i + 1).filter((q) => q.trim());
-    if (entryLike >= 5 && entryLike / lines.length >= 0.6 && !p.includes("Available agent types")
-      && trailing.every((q) => { const ql = q.split("\n").filter((l) => l.trim()); return ql.filter(isEntry).length / ql.length >= 0.6; })) {
-      skillsAt = scanFrom + rel;
+    if (entryLike >= 5 && entryLike / lines.length >= 0.6 && !p.includes("Available agent types")) {
+      // the "The following skills are available" intro line belongs to the
+      // skills section, not to the region before it
+      let start = rel;
+      if (i > 0 && paras[i - 1].includes("The following skills are available")) {
+        start = region.indexOf(paras[i - 1]);
+      }
+      skillsAt = scanFrom + start;
+      let end = rel + p.length;
+      let j = i + 1;
+      while (j < paras.length && isEntryPara(paras[j])) {
+        end = region.indexOf(paras[j], end) + paras[j].length;
+        j++;
+      }
+      skillsEnd = scanFrom + end;
       break;
     }
   }
@@ -305,7 +347,7 @@ function segmentSystemMessage(text, out) {
     if (server) push(`MCP server instructions: ${server}`, mcpAt + serverStart, regionEnd);
     else push("MCP server instructions", mcpAt, regionEnd);
   }
-  if (skillsAt >= 0) push("skills", skillsAt, text.length);
+  if (skillsAt >= 0) push("skills", skillsAt, skillsEnd);
   // residual: uncovered spans are reported, never dropped
   let cursor = 0;
   for (const [s, e] of covered.slice().sort((a, b) => a[0] - b[0])) {
@@ -317,51 +359,89 @@ function segmentSystemMessage(text, out) {
 
 /** The single audit object every output renders: measured sections, tool
  * schemas, totals, and provider-counted input tokens. */
-function buildAudit(reqJson, inputTokens, version) {
+function buildAudit(reqJson, inputTokens, version, wireBytes) {
   const tools = (reqJson.tools || [])
-    .map((t) => ({ name: t.name ?? "(unnamed)", bytes: Buffer.byteLength(JSON.stringify(t)) }))
+    .map((t) => ({ name: t.name ?? "(unnamed)", server: /^mcp__([^_]+)__/.exec(t.name ?? "")?.[1] ?? "built-in", bytes: Buffer.byteLength(JSON.stringify(t)) }))
     .sort((a, b) => b.bytes - a.bytes);
   const toolsBytes = tools.reduce((s, t) => s + t.bytes, 0);
-  const sysBytes = Buffer.byteLength(JSON.stringify(reqJson.system || []));
+  const mcpToolsBytes = tools.filter((t) => t.server !== "built-in").reduce((s, t) => s + t.bytes, 0);
+  const sysBytes = reqJson.system ? Buffer.byteLength(JSON.stringify(reqJson.system)) : 0;
   const sections = contextSections(reqJson);
+  const promptBytes = sections.filter((s) => s.kind === "prompt").reduce((s, x) => s + x.bytes, 0);
   const ctxBytes = sections.filter((s) => s.kind !== "prompt").reduce((s, x) => s + x.bytes, 0);
+  // conversation after msg[0]: user/assistant turns only — system-role
+  // injections are already measured as sections; an empty tail contributes
+  // nothing (no phantom "[]" wrapper bytes)
+  const later = (reqJson.messages || []).slice(1).filter((m) => m.role === "user" || m.role === "assistant");
+  const laterBytes = later.length ? Buffer.byteLength(JSON.stringify(later)) : 0;
+  const userDir = path.join(os.homedir(), ".claude");
+  for (const s of sections) {
+    if (s.path) s.type = s.path.startsWith(userDir) ? "User" : (s.path.startsWith(process.cwd()) ? "Project" : "—");
+  }
+  const requestBytes = sysBytes + toolsBytes + ctxBytes + promptBytes + laterBytes;
   return {
     version,
     subagent: (typeof reqJson.system === "string" ? reqJson.system : (reqJson.system || []).map((b) => b.text || "").join("\n")).includes("cc_is_subagent=true"),
     tools,
     toolsBytes,
+    mcpToolsBytes,
     sysBytes,
     sections,
     memoryBytes: sections.filter((s) => s.kind === "memory").reduce((s, x) => s + x.bytes, 0),
     ctxBytes,
-    total: sysBytes + toolsBytes + ctxBytes,
+    promptBytes,
+    messagesBytes: promptBytes + laterBytes,
+    requestBytes,
+    wireBytes: wireBytes ?? requestBytes,
+    overheadBytes: Math.max(0, (wireBytes ?? requestBytes) - requestBytes),
     inputTokens,
   };
 }
 
-/** The report: every number measured from the captured request — identity and
- * headline first, then per-section totals, then detail. */
+/** /context-style category rows, shared by both renderers; the rows plus
+ * Wire overhead sum to wireBytes exactly (messages excludes msg[0]'s
+ * attachments, which are counted under Memory files). Token allocation:
+ * bytes scaled by inputTokens / wireBytes, so the column sums to the
+ * provider total within rounding; bytes/4 fallback when usage is absent. */
+function categoryRows(audit) {
+  const sec = (pred) => audit.sections.filter(pred).reduce((s, x) => s + x.bytes, 0);
+  const rows = [
+    ["System prompt", audit.sysBytes],
+    ["System tools", audit.toolsBytes - audit.mcpToolsBytes],
+    ["MCP tools", audit.mcpToolsBytes],
+    ["MCP server instructions", sec((s) => s.kind === "system" && s.name.startsWith("MCP server instructions"))],
+    ["Custom agents", sec((s) => s.name === "agents")],
+    ["Memory files", audit.memoryBytes],
+    ["Skills", sec((s) => s.name === "skills")],
+    ["Environment", sec((s) => s.name === "environment")],
+    ["Session attachments", sec((s) => s.kind === "session")],
+    ["Messages", audit.messagesBytes],
+  ];
+  const other = sec((s) => s.kind === "system" && !["agents", "skills", "environment"].includes(s.name) && !s.name.startsWith("MCP server instructions"));
+  if (other) rows.push(["Other", other]);
+  if (audit.overheadBytes) rows.push(["Wire overhead", audit.overheadBytes]);
+  const tokPerByte = audit.inputTokens != null && audit.wireBytes ? audit.inputTokens / audit.wireBytes : 0.25;
+  const tok = (bytes) => Math.round(bytes * tokPerByte);
+  return { rows, wireBytes: audit.wireBytes, tok };
+}
+
+/** The report: /context-style categories first, then the ranked tool table
+ * and the memory files with their origin. */
 function printAudit(audit) {
-  const pct = (b) => (audit.total ? ((b / audit.total) * 100).toFixed(1) : "0.0");
-  console.log(`\n[agent-proxy] Claude Code ${audit.version}${audit.subagent ? " · subagent" : ""} · payload ${audit.total.toLocaleString()} B` +
-    (audit.inputTokens != null ? ` · ${audit.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(audit.total).toLocaleString()} tok`));
-  console.log(`\ntools: ${audit.tools.length} definitions · ${audit.toolsBytes.toLocaleString()} B (~${estTokens(audit.toolsBytes).toLocaleString()} tok), ranked by size`);
+  const { rows, wireBytes, tok } = categoryRows(audit);
+  const pct = (b) => (wireBytes ? ((b / wireBytes) * 100).toFixed(1) : "0.0");
+  console.log(`\n[agent-proxy] Claude Code ${audit.version}${audit.subagent ? " · subagent" : ""} · request ${wireBytes.toLocaleString()} B` +
+    (audit.inputTokens != null ? ` · ${audit.inputTokens.toLocaleString()} input tokens (provider-counted)` : ` · ~${estTokens(wireBytes).toLocaleString()} tok`));
+  console.log(`\nEstimated usage by category:` + (audit.inputTokens != null ? "  (tokens allocated from the provider total)" : "  (tokens estimated at bytes/4)"));
+  for (const [name, bytes] of rows) console.log(`  ${name.padEnd(24)} ${String(bytes.toLocaleString()).padStart(8)} B  ${String(tok(bytes)).padStart(6)} tok  ${pct(bytes).padStart(5)}%`);
+  console.log(`\nTools, ranked by size:`);
   const w = Math.max(...audit.tools.map((t) => t.name.length), 4);
-  for (const t of audit.tools) console.log(`  ${t.name.padEnd(w)}  ${String(t.bytes).padStart(7)} B  ~${String(Math.round(t.bytes / 4)).padStart(5)} tok  ${pct(t.bytes).padStart(5)}%`);
-  console.log(`\ninjected context: ${audit.ctxBytes.toLocaleString()} B (~${estTokens(audit.ctxBytes).toLocaleString()} tok)`);
-  let inMemory = false;
-  for (const s of audit.sections) {
-    if (s.kind === "prompt") continue;
-    if (s.kind === "memory" && !inMemory) {
-      console.log(`  ${audit.memoryBytes.toLocaleString().padStart(7)} B  ~${String(Math.round(audit.memoryBytes / 4)).padStart(5)} tok  memory files`);
-      inMemory = true;
-    }
-    const indent = s.kind === "memory" ? "    " : "  ";
-    console.log(`${indent}${s.bytes.toLocaleString().padStart(7)} B  ~${String(Math.round(s.bytes / 4)).padStart(5)} tok  ${s.name}`);
+  for (const t of audit.tools) console.log(`  ${t.name.padEnd(w)}  ${t.server.padEnd(12)}  ${String(t.bytes.toLocaleString()).padStart(8)} B  ${String(tok(t.bytes)).padStart(6)} tok  ${pct(t.bytes).padStart(5)}%`);
+  const files = audit.sections.filter((s) => s.kind === "memory");
+  if (files.length) {
+    console.log(`\nMemory files:`);
+    for (const f of files) console.log(`  ${(f.type ?? "—").padEnd(8)} ${String(f.bytes.toLocaleString()).padStart(8)} B  ${String(tok(f.bytes)).padStart(6)} tok  ${f.path ?? f.name}`);
   }
-  const prompt = audit.sections.find((s) => s.kind === "prompt");
-  if (prompt) console.log(`\nprompt: ${prompt.bytes.toLocaleString()} B (excluded from the totals above)`);
-  console.log(`\nsystem prompt: ${audit.sysBytes.toLocaleString()} B (~${estTokens(audit.sysBytes).toLocaleString()} tok)`);
 }
 
 function writeDump(scope, ext, content) {
@@ -573,7 +653,7 @@ function handle(req, res) {
           if (!Array.isArray(reqJson.tools) || reqJson.tools.length === 0) return; // sidecalls carry no tools
           try {
             const { markdown, inputTokens } = decodeResponse(Buffer.concat(respChunks).toString("utf8"));
-            const audit = buildAudit(reqJson, inputTokens, VERSION);
+            const audit = buildAudit(reqJson, inputTokens, VERSION, body.length);
             printAudit(audit);
             emitOutput(reqJson, body.toString("utf8"), { method: req.method ?? "POST", path: reqPath, statusCode: up.statusCode ?? 0, headers: req.headers, markdown }, audit);
           } catch (err) {
