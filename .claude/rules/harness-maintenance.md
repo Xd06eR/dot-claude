@@ -4,7 +4,7 @@ How to update the harness (`~/.claude`) without silently degrading it.
 
 ## The map
 
-- **Editing this harness:** read [CANON.md](../../CANON.md) in full first; it is the harness rulebook (components, rules files, settings, methods).
+- **Editing this harness:** read [CANON.md](../../CANON.md) in full first; it is the harness rulebook.
 - **Writing or editing a skill, command, or agent:** call the Skill tool with "writing-for-agents" first; for building or benchmarking a skill, "skill-creator:skill-creator".
 - **Editing the workflow:** read [README.md](../../README.md) in full first; it maps the spine and the four paths.
 - **Seeing what Claude Code sends:** run `node ~/.claude/scripts/proxy.mjs` — it captures the whole request (system prompt, tool schemas, injected context, a subagent's prompt) with sizes and token counts; run `--help` for the full option set.
@@ -21,6 +21,7 @@ How to update the harness (`~/.claude`) without silently degrading it.
 - **Paths:** relative markdown links when read at the file (rules-tree links resolve via the injection header, a skill's companions via the invocation's base directory); absolute `~/.claude/...` when they travel to an unpredictable cwd (agent bodies, dispatch prompts, shell commands, write destinations).
 - **Component names stay bare:** `grill-me`, never `/grill-me`; slash only when quoting the command the user types (`/compact`).
 - **Canonical agent terms:** main agent, and subagents for its dispatched workers; no synonyms.
+- **Canonical invocation terms:** model-invoked and user-invoked; no synonyms.
 - **Headings and bullet labels:** sentence case for headings (first word plus proper nouns and coined phrases only; H1 document titles exempt), no trailing punctuation; bullet labels state the rule's content; element-convention labels may name the element instead; an established industry term is the strongest label form; never a synthetic coined term.
 - **No model names or tier assumptions:** the injection tells the agent what its harness offers. Write no environment conditionals. Functional `model:` frontmatter in `agents/*.md` is exempt.
 - **Caps emphasis:** ALL-CAPS words in rule text are deliberate pressure pins; never lowercase them in an edit or style pass.
