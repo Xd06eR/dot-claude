@@ -2,7 +2,7 @@
 
 My git-tracked agent harness for Claude Code.
 
-## Tracked Configuration
+## Tracked configuration
 
 | Path | Description |
 |---|---|
@@ -35,18 +35,19 @@ Two axes, four paths. The docs axis picks the opening: `grill-me` keeps rulings 
 | `grill-me` | toy / quick work | quick work, planned |
 | `grill-with-docs` | a small feature in a maintained project | the full cycle |
 
-## Skill Sources
+## Skill sources
 
 Every skill and agent carries its primary source in frontmatter `origin` (`custom` for the hand-built ones). Adopted from:
 
-- [mattpocock/skills](https://github.com/mattpocock/skills)
-- [taste-skill](https://github.com/Leonxlnx/taste-skill)
-- [ECC](https://github.com/affaan-m/ECC)
-- [gstack](https://github.com/garrytan/gstack)
-- [superpowers](https://github.com/obra/superpowers)
 - [claude-plugins-official](https://github.com/anthropics/claude-plugins-official)
 - [deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)
+- [ECC](https://github.com/affaan-m/ECC)
+- [gstack](https://github.com/garrytan/gstack)
+- [impeccable](https://github.com/pbakaus/impeccable)
+- [mattpocock/skills](https://github.com/mattpocock/skills)
 - [reverse-skill](https://github.com/zhaoxuya520/reverse-skill)
+- [superpowers](https://github.com/obra/superpowers)
+- [taste-skill](https://github.com/Leonxlnx/taste-skill)
 
 Upstream changes are adoption candidates, gated per the adoption review in [CANON.md](CANON.md#2-adopting-and-extracting-components).
 
