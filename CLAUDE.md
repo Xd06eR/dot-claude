@@ -75,6 +75,10 @@ WebFetch/WebSearch for browsing and scraping; `npx lighthouse` via Bash for perf
 
 The `playwright` and `chrome-devtools-mcp` fallbacks are disabled. When a task genuinely needs one, name it and ask the user to enable it instead of silently substituting weaker tooling.
 
+## RTK
+
+rtk is a token-optimized Bash proxy: its hook rewrites commands automatically. Chained pipelines can garble through the rewrite; use the Grep/Glob tools for multi-step filtering instead. `rtk proxy <cmd>` is the raw, unfiltered path for debugging; `rtk --help` lists the full command set.
+
 ## Lesson capture
 
 - **Proposal gate:** after a pitfall or correction, propose the rule it earns in the same session; it lands in the project's CLAUDE.md only with the user's acceptance and only if every session needs it.
@@ -90,5 +94,3 @@ The `playwright` and `chrome-devtools-mcp` fallbacks are disabled. When a task g
 
 - Never commit secrets, API keys, or credentials.
 - Never access sensitive directories, credential stores, or secret files.
-
-@RTK.md
