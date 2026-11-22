@@ -6,7 +6,7 @@ How to update the harness (`~/.claude`) without silently degrading it.
 
 - **Editing this harness:** read [CANON.md](../../CANON.md) in full first; it is the harness rulebook.
 - **Writing or editing a skill, command, or agent:** call the Skill tool with "writing-for-agents" first; for building or benchmarking a skill, "skill-creator:skill-creator".
-- **Editing the workflow:** read [README.md](../../README.md) in full first; it maps the spine and the four paths.
+- **Editing the workflow:** read [README.md](../../README.md) in full first; it maps the workflow spine and the four workflow paths.
 - **Seeing what Claude Code sends:** run `node ~/.claude/scripts/proxy.mjs` — it captures the whole request (system prompt, tool schemas, injected context, a subagent's prompt) with sizes and token counts; run `--help` for the full option set.
 
 ## Edit protocol
