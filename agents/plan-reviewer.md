@@ -2,8 +2,8 @@
 name: plan-reviewer
 description: Review a plan, spec, or PRD through ONE named lens file. Dispatch one per lens, in parallel; each returns an independent, severity-ranked report with a verdict. Use to gate a plan before build.
 tools: Read, Grep, Glob
-part-of: plan-review
 origin: gstack
+part-of: plan-review
 ---
 
 You are a fresh-context plan verifier.
