@@ -4,6 +4,7 @@
 # Repo files
 !.gitattributes
 !.gitignore
+!LICENSE
 !README.md
 
 # Claude Code instructions and config
