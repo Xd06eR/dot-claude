@@ -1,20 +1,12 @@
-# Dispatch Protocol
+---
+name: dispatch-protocol
+description: "The dispatch contract for subagent work: the three-part prompt, attempt recovery, and adversarial no-self-verification. Use whenever dispatching work to a subagent or recovering a struggling dispatch."
+origin: custom
+---
 
 How the main agent delegates work to subagents and manages attempts on its own work.
 
-## 1. When to dispatch
-
-The test: "will I reason from these exact contents later, or do I only need the answer?" Contents → read it yourself; answer → dispatch. What degrades a session is residue, not a large relevant working set. Never dispatch work smaller than the dispatch overhead (a one-call read).
-
-The agent that writes code must itself have read the code it changes; editing from a subagent's summary produces confident wrong patches.
-
-Escalate when a subtask fails, or up front when ANY of:
-
-- **Unverifiable judgment:** no mechanical check can settle the call (architecture, API shape)
-- **Context capacity:** correct reasoning needs more interdependent code than you can trace
-- **Error cost:** security-critical design or crypto decisions
-
-## 2. The dispatch itself
+## 1. The dispatch itself
 
 Every dispatch prompt contains three parts:
 
@@ -47,9 +39,7 @@ Parallel fan-out gates on independence (no shared state, no sequential dependenc
 
 **Dispatch is the main agent's alone:** the independence gate, the declared budget, and the report contract all attach at the dispatch point; a nested dispatch replaces first-hand reports with a summary of summaries, and a subagent that picks its own reviewer grades its own work.
 
-**Long merge and bulk work:** route it to fresh subagents (a saturated main context degrades merge quality). High-sensitivity verification runs first in main context, with fresh-context confirmation per No self-verification.
-
-## 3. When attempts struggle
+## 2. When attempts struggle
 
 Every retry changes the input, a lever, or the method; two failed methods on one subtask mean switch strategy or ask the user. The levers, cheapest first:
 
@@ -59,7 +49,7 @@ Every retry changes the input, a lever, or the method; two failed methods on one
 - **Wrong direction:** switch strategy when a fix creates a new failure elsewhere, twice in a row, or the test passes only after disabling or mocking the system under test.
 - **De-escalate:** once a hard subtask is solved, write the recipe (exact steps, diff pattern, or checklist) and hand batch application to a minimal-effort dispatch.
 
-## 4. No self-verification
+## 3. No self-verification
 
 Every verification dispatch is adversarial: sent to refute the work, never to confirm it.
 

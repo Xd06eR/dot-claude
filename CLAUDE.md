@@ -69,6 +69,18 @@ Invoke the most suitable skill or agent for the work before acting.
 
 **Skills fire as the work moves, not once per task:** a task crossing phases or concerns invokes the skill for each, never two doing the same job.
 
+## Dispatching
+
+**Read vs dispatch:** read it yourself when you will reason from the exact contents later; dispatch when you only need the answer.
+
+Escalate up front when ANY of:
+
+- **Unverifiable judgment:** no mechanical check can settle the call (architecture, API shape)
+- **Context capacity:** correct reasoning needs more interdependent code than you can trace
+- **Error cost:** security-critical design or crypto decisions
+
+Call the Skill tool with "dispatch-protocol" before dispatching any subagent.
+
 ## Browsing
 
 WebFetch/WebSearch for browsing and scraping; `npx lighthouse` via Bash for performance and a11y audits.
