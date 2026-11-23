@@ -184,6 +184,7 @@ When auditing an agent system, answer these:
 - Do not let a clean current state erase a dirty historical incident.
 - Do not treat markdown prose as a trustworthy internal protocol.
 - Do not accept "must use tool" in prompt text when code never enforces it.
+- Do not accept step-by-step scripting where intent and constraints suffice; over-direction is instruction bloat at the system-prompt layer and degrades the model's judgment.
 - Keep findings direct, evidence-backed, and severity-ranked.
 
 ## Report Schema

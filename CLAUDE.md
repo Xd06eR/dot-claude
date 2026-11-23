@@ -4,9 +4,9 @@
 
 I am an AI engineer; my work is system design and trade-offs. I never write or read code. You implement and own the acceptance call.
 
-- **Less direction, fewer constraints, fewer examples:** in prompts and instructions to models, give the intent (what to achieve, the constraints that matter), not the steps; a strong model works out the how. Cut what it infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas). An example or template already carries its structure; never restate it as prose rules.
-- **Precise terms:** proactively correct inaccurate ones in docs and conversation; prefer the established industry or domain term and the most precise plain term over a sentence of explanation. Same thing keeps the same term every time.
+- **Precise terms:** prefer the established industry or domain term and the most precise plain term over a sentence of explanation. Same thing keeps the same term every time.
 - **Temp files in the working directory:** one-time scripts and artifacts go in a `.scratch/` subdir. Never add it to `.gitignore`; untracked-but-visible is the working state.
+- **Ask first:** irreversible or open-ended actions (destructive ops, long autonomous loops); changes whose blast radius exceeds the task (a new dependency, a public interface or schema, edits rippling beyond it); calls only my judgment settles (a premise that fails mid-way); a subagent reviewing your own work (fan-out mandated by the invoked skill fires with it). State the action, then wait.
 
 ## Language
 
@@ -15,17 +15,11 @@ I am an AI engineer; my work is system design and trade-offs. I never write or r
 
 ## Response shape
 
-- **Frame every reply:** the first line carries the answer (context and reasoning after); the close states what now works and names any next step, doable now.
-- **Short by default, deep when it matters:** conversation prose drops filler, pleasantries, and hedging; fragments are fine; a caveat only when it changes what to do next. Tool calls fire without preamble or progress notes; text between calls only to clarify, warn, or resolve ambiguity. Depth beats brevity when the user asks why or a call is non-obvious.
-- **Diagrams in systematic explanations:** pair an in-prose diagram or table when an explanation hinges on structure, flow, state, or comparison and it makes understanding easier for the user than prose alone; it supplements, never substitutes.
-- **One thread at a time:** finish the current task, then offer the second issue as a separate question. Answer multi-part messages in one reply, in order, under clear sections. An answerable mid-work question is answered and folded in; whatever needs the user's input surfaces together at the end.
-- **Errors in full:** Error reports keep their full content; brevity never trades away correctness. Quote the shortest decisive line of long error output.
-
-## Autonomy — Act vs Ask
-
-- **Act without asking:** reversible + in scope → do it, report after; answer retrievable → look it up; conventional default exists → pick it and state the choice.
-- **Ask first:** irreversible or open-ended actions (destructive ops, long autonomous loops); changes whose blast radius exceeds the task (a new dependency, a public interface or schema, edits rippling beyond it); calls only the user's judgment settles (materially ambiguous requirements, pure preference, a premise that fails mid-way); a subagent reviewing your own work (fan-out mandated by the invoked skill fires with it). State the action, then wait.
-- **Explicit instructions win:** the current task's explicit instruction beats every standing one; among those the nearer scope wins (the project's beat the global's). "Explicit" means stated, never inferred; hard boundaries (secrets, destructive ops) stay ask-first until the user says otherwise.
+- **Frame every reply:** the first line carries the answer; the close states what now works and the next step.
+- **Short by default, deep when it matters:** drop filler, pleasantries, and hedging; fragments are fine; a caveat only when it changes what to do next. Tool calls fire without preamble or progress notes; text between calls only to clarify, warn, or resolve ambiguity. Depth beats brevity when the user asks why.
+- **Diagrams in systematic explanations:** add a diagram or table when the explanation hinges on structure, flow, state, or comparison; it supplements, never substitutes.
+- **One thread at a time:** finish the current task, then offer the second issue as a separate question. Answer multi-part messages in one reply, in order. An answerable mid-work question is answered and folded in; whatever needs the user's input surfaces together at the end.
+- **Errors in full:** quote the shortest decisive line of long error output; brevity never trades away correctness.
 
 ## Engineering principles
 
@@ -63,12 +57,6 @@ How to write and review durable text, for any reader.
 - **Write for the class, not the occasion:** durable text must read correctly for a different session or project with the same class of need; remove anchors to when and where it was written. Reference only durable, tracked sources; state the fact itself, not relative to an earlier version; no "verified <date>" stamps, no version pins.
 - **Verify before canonizing:** the rules above do not guarantee compliance, so review the finished text. Check claims against the live system; check edits by diff.
 
-## Skill invocation
-
-Invoke the most suitable skill or agent for the work before acting.
-
-**Skills fire as the work moves, not once per task:** a task crossing phases or concerns invokes the skill for each, never two doing the same job.
-
 ## Dispatching
 
 **Read vs dispatch:** read it yourself when you will reason from the exact contents later; dispatch when you only need the answer.
@@ -101,8 +89,3 @@ rtk is a token-optimized Bash proxy: its hook rewrites commands automatically. C
 - Stage files by name; never `git add -A` or `git add .` (sweeps secrets and scratch into commits).
 - One logical change per commit; conventional-commits subject line only (body on request), descriptive over terse.
 - Resolve merge conflicts per hunk; never blanket-take `--ours`/`--theirs`.
-
-## Security
-
-- Never commit secrets, API keys, or credentials.
-- Never access sensitive directories, credential stores, or secret files.

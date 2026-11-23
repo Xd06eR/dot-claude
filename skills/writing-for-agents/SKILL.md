@@ -92,6 +92,10 @@ Two clause rules for whichever form you pick:
 - **No nuance clauses.** "Don't X unless it matters" reopens the negotiation the rule was meant to close. Express a real exception as its own conditional on an observable predicate.
 - **Exemption clauses don't scope.** "This limit doesn't apply to code blocks" still suppresses code blocks; the mention activates the rule against the exempt case. If part of the output must be exempt, restructure so the rule can't reach it.
 
+## Intent, not steps
+
+Give the intent — what to achieve and the constraints that matter — not the steps. Cut direction the model infers unprompted; hard rules only for the uninferable (destructive ops, security, non-obvious gotchas). An example or template already carries its structure; never restate it as prose rules.
+
 ## Pruning
 
 - Keep each meaning in a **single source of truth**: one authoritative place, so changing the behaviour is a one-place edit. **Duplication** — the same meaning in more than one place — costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank. (The accidental inverse of a leading word, which repeats a token on purpose, never the meaning.)
