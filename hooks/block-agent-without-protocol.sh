@@ -10,7 +10,11 @@
 # also carry top-level type=user and must not reset it; only user messages
 # carrying a text block or the compact-summary flag set boundaries. Compact
 # summaries land as type=user entries, so /compact resets the horizon where
-# loaded context was dropped. All patterns tolerate
+# loaded context was dropped. Skill-content deliveries also land as
+# type=user text entries, but carry sourceToolUseID back to the invoking
+# tool_use: they are the invoke's own product, not a user turn, so they
+# must not reset the horizon (otherwise every invoke lands before the
+# delivery and the gate blocks unconditionally). All patterns tolerate
 # optional serialization spaces ("type": "user").
 # Greps raw JSON: no jq/sed (embedded quotes truncate captures). The invoke
 # match needs tool name and skill name on one transcript line, so a
@@ -24,7 +28,7 @@ if [ -z "$TRANSCRIPT" ] || [ ! -f "$TRANSCRIPT" ]; then
   echo "NOTE: dispatch-protocol gate skipped (transcript unavailable)." >&2
   exit 0
 fi
-LASTUSER=$(grep -nE '"type": ?"user"' "$TRANSCRIPT" | grep -vE '"type": ?"(api-request|api-request-blob|api-request-shape|last-prompt|attachment)"' | grep -vE '"type": ?"tool_result"' | grep -E 'isCompactSummary": ?true|"type": ?"text"' | tail -1 | cut -d: -f1)
+LASTUSER=$(grep -nE '"type": ?"user"' "$TRANSCRIPT" | grep -vE '"type": ?"(api-request|api-request-blob|api-request-shape|last-prompt|attachment)"' | grep -vE '"type": ?"tool_result"' | grep -vE '"sourceToolUseID": ?"' | grep -E 'isCompactSummary": ?true|"type": ?"text"' | tail -1 | cut -d: -f1)
 if [ -z "$LASTUSER" ]; then
   LASTUSER=1
 fi
