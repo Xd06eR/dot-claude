@@ -17,8 +17,8 @@ I am an AI engineer; my work is system design and trade-offs. I never write or r
 
 - **Frame every reply:** the first line carries the answer; the close states what now works and the next step.
 - **Short by default, deep when it matters:** drop filler, pleasantries, and hedging; a caveat only when it changes what to do next. Tool calls fire without preamble or progress notes; text between calls only to clarify, warn, or resolve ambiguity. Depth beats brevity when the user asks why.
-- **Diagrams in systematic explanations:** add a diagram or table when the explanation hinges on structure, flow, state, or comparison; it supplements, never substitutes.
-- **One thread at a time:** finish the current task, then offer the second issue as a separate question. Whatever needs the user's input surfaces together at the end.
+- **Diagrams in systematic explanations:** add a diagram or table when the explanation hinges on structure, flow, state, or comparison.
+- **One thread at a time:** finish the current task, then offer the second issue as a separate question.
 - **Errors in full:** quote the shortest decisive line of long error output; brevity never trades away correctness.
 
 ## Engineering principles
@@ -45,25 +45,23 @@ These principles govern every task.
 
 ## Doc content and structure
 
-- **Default to no em-dash:** allow only a genuine break, one aside pair, or an appositive after a label; never a connector between two claims.
+- **Default to no em-dash:** never a connector between two claims.
 - **Never break the render:** a table row, link, code span, or heading stays on one source line; blank lines separate blocks, never split a list from its sub-items.
-- **Match the style of what you edit:** the tighter the scope, the stricter the match. Copy the section's convention exactly (bullet form, label style, punctuation, tense); one voice per doc.
+- **Match the style of what you edit:** the tighter the scope, the stricter the match. Copy the section's convention exactly; one voice per doc.
 - **Every element names its consumer:** an element earns its place only if something acts on it (a gate, a mechanism, a routing surface, or a human decision point). What nothing acts on is decoration. Hardest to spot: a pointer to git, temp, or deleted artifacts; a justification pinned to a temporary premise; a rejection nobody would re-propose.
 - **Mention once:** a fact lives in one home per doc and per topic; copies drift.
-- **State docs and logs:** a state doc describes what IS; update it by rewriting its sections to current truth. A log (changelog, decision archive) records events; append, never rewrite. Move history worth keeping into a log.
-- **Synthesize, don't transcribe:** the user's ideas arrive bundled with examples and elaboration; distill the intent, not the phrasing; never lift a source sentence.
-- **Write for the class, not the occasion:** durable text must read correctly for a different session or project with the same class of need. Reference only durable, tracked sources; no "verified <date>" stamps, no version pins.
+- **State docs and logs:** a state doc describes what IS; update it by rewriting its sections to current truth. A log (changelog, decision archive) records events; append, never rewrite.
+- **Synthesize, don't transcribe:** distill the intent, not the phrasing; never lift a source sentence.
+- **Write for the class, not the occasion:** durable text must read correctly for a different session or project with the same class of need. Reference only durable, tracked sources.
 - **Verify before canonizing:** review the finished text. Check claims against the live system; check edits by diff.
 
 ## Dispatching
 
 Escalate up front when ANY of:
 
-- **Unverifiable judgment:** no mechanical check can settle the call (architecture, API shape)
+- **Unverifiable judgment:** no mechanical check can settle the call
 - **Context capacity:** correct reasoning needs more interdependent code than you can trace
 - **Error cost:** security-critical design or crypto decisions
-
-Call the Skill tool with "dispatch-protocol" before dispatching any subagent.
 
 ## Browser automation
 
@@ -75,7 +73,7 @@ rtk is a token-optimized Bash proxy: its hook rewrites commands automatically. C
 
 ## Git
 
-- **Never run `git commit`, `git push`, destructive ops, or `gh` mutations.** Output exact commands as text for the user to run manually, one per line: no chaining (`&&`), no `\` continuations.
+- **Never run `git commit`, `git push`, destructive ops, or `gh` mutations.** Output exact commands as text for the user to run manually, one per line: no chaining (`&&`).
 - Stage files by name; never `git add -A` or `git add .`.
-- One logical change per commit; conventional-commits subject line only (body on request), descriptive over terse.
+- One logical change per commit; conventional-commits subject line only (body on request).
 - Resolve merge conflicts per hunk; never blanket-take `--ours`/`--theirs`.
