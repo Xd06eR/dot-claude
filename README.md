@@ -53,13 +53,14 @@ Upstream changes are adoption candidates, gated per the adoption review in [CANO
 
 ## Hooks
 
-`settings.json` wires three PreToolUse `Bash` hooks; the two guard scripts are tracked in `hooks/` and their header comments are the source of truth.
+`settings.json` wires PreToolUse hooks on `Bash` and `Agent`; the guard scripts are tracked in `hooks/` and their header comments are the source of truth.
 
 | Hook | Purpose |
 |------|---------|
 | `rtk hook claude` | Token-optimized Bash proxy; requires RTK on `PATH` |
 | `~/.claude/hooks/block-git-gh-mutations.sh` | Blocks dangerous `git`/`gh` mutations, keeping them user-run |
 | `~/.claude/hooks/block-secret-paths.sh` | Backstops the Read-deny for secret paths |
+| `~/.claude/hooks/block-agent-without-protocol.sh` | Blocks subagent dispatches with no prior dispatch-protocol skill invoke |
 
 ## Restore MCP servers
 

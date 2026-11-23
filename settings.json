@@ -51,6 +51,15 @@
           }
         ],
         "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "~/.claude/hooks/block-agent-without-protocol.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Agent"
       }
     ]
   },
