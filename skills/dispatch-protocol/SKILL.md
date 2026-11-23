@@ -39,6 +39,8 @@ Parallel fan-out gates on independence (no shared state, no sequential dependenc
 
 **Dispatch is the main agent's alone:** the independence gate, the declared budget, and the report contract all attach at the dispatch point; a nested dispatch replaces first-hand reports with a summary of summaries, and a subagent that picks its own reviewer grades its own work.
 
+**Resume before dispatching anew.** Continuing work a subagent already holds — the next slice of the same task, follow-up questions on its report — goes to the same subagent via SendMessage, keeping its accumulated context; a fresh dispatch starts cold and re-derives what the subagent already learned. A new subagent is for new work. Exception: a failed attempt follows §2, never a resume.
+
 ## 2. When attempts struggle
 
 Every retry changes the input, a lever, or the method; two failed methods on one subtask mean switch strategy or ask the user. The levers, cheapest first:
