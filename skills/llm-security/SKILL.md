@@ -8,7 +8,7 @@ Adversarial methodology for authorized security assessment of LLM/agent features
 
 Before any active testing, pin the authorization basis (own system, written contract, bug-bounty scope, or CTF/lab) and the in-scope targets; a user naming a target is not by itself authorization.
 
-Defensive controls live in `~/.claude/rules/common/index.md` §LLM integration; this skill is the attack side that verifies them. Tools named below (garak, PyRIT, promptfoo) are not preinstalled; ask the user before installing anything.
+Defensive controls live in deterministic code outside the model; this skill is the attack side that verifies them. Tools named below (garak, PyRIT, promptfoo) are not preinstalled; ask the user before installing anything.
 
 ## 1. Map the attack surface
 

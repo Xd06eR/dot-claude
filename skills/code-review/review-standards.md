@@ -6,7 +6,7 @@ Before marking code complete:
 
 - [ ] Code is readable and well-named
 - [ ] Functions are focused (<50 lines)
-- [ ] Files are cohesive (<800 lines; the typical target lives in `~/.claude/rules/common/index.md` § Coding style)
+- [ ] Files are cohesive (<800 lines)
 - [ ] No deep nesting (>4 levels)
 - [ ] Errors are handled explicitly
 - [ ] No shared-state mutation (immutable patterns preferred)
