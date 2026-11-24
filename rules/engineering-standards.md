@@ -44,9 +44,9 @@ paths:
   - "**/*.mk"
 ---
 
-# Common Rules
+# Engineering Rules
 
-> Cross-language engineering rules; the language layers extend this file and carry layout and layer names.
+> Engineering rules for coding work: a commit-time security gate, testing policy, a quality floor, and per-language notes.
 
 ## Security
 
@@ -72,3 +72,20 @@ Before ANY commit:
 ## Development workflow
 
 - **The quality floor never cuts:** trust-boundary input validation, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested.
+
+## Python
+
+- Ship `py.typed` in typed packages so downstream type-checkers read the annotations.
+- **Verification:** `ruff check` → `ruff format` → `mypy` → `pytest`
+- **Validation:** use field constraints instead of hand-written validation when Pydantic can express the rule.
+- Enable ruff's `S` rule family (the flake8-bandit rules) in project config: scanning runs within the existing `ruff check` step. Standalone bandit covers rules ruff has not implemented (some S4xx are preview-only); use it only for those.
+- Measure coverage with `pytest --cov=src` (pytest-cov).
+
+## React
+
+- Do not use `useEffect`; reach for derived state during render, event handlers, or a server-state library instead.
+- Accessibility patterns live in the `frontend-a11y` skill; E2E in the `e2e-testing` skill.
+
+### XSS via `dangerouslySetInnerHTML`
+
+CRITICAL: every usage is a code review halt: first-party input (document the source); user-derived input sanitized at the same call site (API-boundary sanitization only when every consumer is verified); sanitizer allowlists tags, never denylists.

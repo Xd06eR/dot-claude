@@ -9,7 +9,7 @@ My git-tracked agent harness for Claude Code.
 | `.claude/rules/` | Harness rule modules (project-scope: loads only in this repo) |
 | `agents/` | Agent definitions |
 | `hooks/` | Hooks (git/gh mutation + secret-path guards) |
-| `rules/` | Engineering rule modules (common + language layers) |
+| `rules/` | Engineering rules |
 | `scripts/` | Probe scripts (proxy.mjs: Claude Code payload audit) |
 | `skills/` | Skill modules (see Skill Sources) |
 | `.gitattributes` | Line ending normalization (LF) |

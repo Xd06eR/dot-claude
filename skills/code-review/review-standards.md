@@ -13,7 +13,7 @@ Before marking code complete:
 - [ ] No hardcoded thresholds, delays, or limits (use named constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
-- [ ] Test coverage meets the new-code baseline (per `~/.claude/rules/common/index.md`)
+- [ ] Test coverage meets the new-code baseline (per `~/.claude/rules/engineering-standards.md`)
 
 ## Security review triggers
 
@@ -31,7 +31,7 @@ Before marking code complete:
 
 ### Security
 
-The mandatory checks in `~/.claude/rules/common/index.md` own this list.
+The mandatory checks in `~/.claude/rules/engineering-standards.md` own this list.
 
 ### Performance
 

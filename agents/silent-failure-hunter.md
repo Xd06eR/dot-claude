@@ -95,7 +95,7 @@ Look for patterns that hide errors:
 
 ### 5. Validate against project standards
 
-Ensure compliance with the project's error-handling requirements as stated in CLAUDE.md and `~/.claude/rules/<lang>/`. Do not assume a specific logging library, error-ID registry, or telemetry tool; read the project's own conventions and apply them. Tests should not be fixed by disabling them; errors should not be fixed by bypassing them.
+Ensure compliance with the project's error-handling requirements as stated in CLAUDE.md and `~/.claude/rules/engineering-standards.md`. Do not assume a specific logging library, error-ID registry, or telemetry tool; read the project's own conventions and apply them. Tests should not be fixed by disabling them; errors should not be fixed by bypassing them.
 
 ## Severity
 
