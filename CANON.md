@@ -24,7 +24,6 @@ The durable rulings of this harness with their why, and the live rulebook for it
 
 - **CLAUDE.md is the trunk:** it carries preferences and instructions for the user's work; harness rules live in this file, not the trunk. The rules file is an extension of CLAUDE.md; neither restates the other. Coding rules never reference CLAUDE.md (it is already in context whenever rules load).
 - **Trunk voice:** the How-to-work-with-me section speaks as the user in the first person, with the agent as you; every other trunk section refers to the user in the third person. A pronoun leak in either direction reads as the wrong vantage.
-- **Globs declare the need-moment:** a scoped rule's glob states when the rule is needed, derived from a real use case; token savings are a by-product, never the motive. Members of a shared glob must deserve it, not merely happen to share it; files sharing a glob block change it together or not at all; an approximation stays unfixed as long as its fix's over-fire risk exceeds its gap's cost.
 - **Reinforcement across consumption moments is not duplication:** the same rule may appear in each consumption moment that needs it; mention-once (the trunk's rule) applies only within one.
 
 ## 4. Permissions and protection layers
