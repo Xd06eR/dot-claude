@@ -1,6 +1,6 @@
 ---
 name: design-taste-frontend
-description: "Anti-slop frontend skill that designs marketing-grade UI straight from the brief: infers the direction and ships the interface without a design-doc artifact. Use when building landing pages, portfolios, or marketing UI that must not look templated. Not for dashboards, data tables, or multi-step product UI. For a settled direction, use design-build; for a from-scratch visual system, use design-consultation."
+description: "Anti-slop frontend skill that designs UI straight from the brief: infers the direction and ships the interface without a design-doc artifact. Use for quick, direct visual design work. For a settled direction, use design-build; for a discussed and maintained design system, use design-consultation."
 origin: taste-skill + impeccable
 ---
 
