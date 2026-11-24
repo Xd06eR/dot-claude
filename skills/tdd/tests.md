@@ -43,6 +43,9 @@ Red flags:
 - Test breaks when refactoring without behavior change
 - Test name describes HOW not WHAT
 - Verifying through external means instead of interface
+- Depends on timing or unrelated global state
+- Needs expensive infrastructure for a small fix
+- Would be deleted right after proving the fix
 
 ```typescript
 // BAD: Bypasses interface to verify

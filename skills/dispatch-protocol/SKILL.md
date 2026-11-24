@@ -1,7 +1,7 @@
 ---
 name: dispatch-protocol
 description: "The dispatch contract for subagent work: the three-part prompt, attempt recovery, and adversarial no-self-verification. Use whenever dispatching work to a subagent or recovering a struggling dispatch."
-origin: custom
+origin: custom + pstack
 ---
 
 How the main agent delegates work to subagents and manages attempts on its own work.
@@ -13,6 +13,8 @@ Every dispatch prompt contains three parts:
 1. **Goal and motivation:** what to produce and why the main agent needs it.
 2. **Acceptance criteria:** checkable statements. "Works" is not checkable; "`pytest tests/test_auth.py` exits 0" is. A criterion that cites a rule points at its file and section.
 3. **Report format:** what comes back, and in what form.
+
+Every brief stands alone: the subagent sees nothing outside the prompt and the files it points at.
 
 **File-homed content is pointed at, never paraphrased:** when governing rules, format specs, or source materials live in files, the prompt opens with the read order, ahead of the three parts: an ordered list of locators (name + absolute path + section), governing files before task materials, with each conditional locator carrying its condition. The prompt never restates, compresses, or summarizes file-homed content: a paraphrase silently re-authors the rule, carrying the main agent's compressions and misreadings. Session state too bulky for the prompt is persisted to `.scratch/` and joins the read order rather than being summarized into it. What has no file home (goal, motivation, session decisions) is stated in the prompt.
 
@@ -27,6 +29,7 @@ Per task type, the acceptance criteria must cover:
 
 Report contract, binding on every subagent:
 
+- A dispatch with a pass/fail predicate (build, review, verification) leads its report with one status: PASS, ISSUES, or BLOCKED, each backed by evidence. One that can prove defects lists every defect it can prove, not only the first.
 - Return conclusions, decisions, findings, and `file:line` evidence in full: everything the main agent needs to act on and to judge the work, including the reasoning behind non-obvious calls. No size limit ever forces dropping substance.
 - Exclude only residue: raw file contents, full command transcripts, re-derivable bulk.
 - A compliance claim cites the governing file and section; an uncited claim ("follows the guidelines") is treated as unverified.
@@ -35,7 +38,7 @@ Report contract, binding on every subagent:
 - Never dispatches subagents; work that outgrows one context is returned as a split proposal.
 - Always state what was NOT covered.
 
-Parallel fan-out gates on independence (no shared state, no sequential dependency between chunks) and declares its budget up front, with a hard stop.
+Parallel fan-out gates on independence (no shared state, no sequential dependency between chunks) and declares its budget up front, with a hard stop. When a brief names exact identifiers or a method (SHAs, sample count, unit, order), the worker records them in its result; a result missing them is respawned once, then recorded as a gap, and a gap never counts as a pass. A worker that drops out is noted, and the fan-out proceeds with N-1.
 
 **Dispatch is the main agent's alone:** the independence gate, the declared budget, and the report contract all attach at the dispatch point; a nested dispatch replaces first-hand reports with a summary of summaries, and a subagent that picks its own reviewer grades its own work.
 

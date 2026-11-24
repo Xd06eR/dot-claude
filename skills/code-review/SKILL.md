@@ -2,7 +2,7 @@
 name: code-review
 description: Comprehensive code review of a diff or PR. Run when a diff needs an independent pass before it ships. Returns deduplicated, severity-ranked findings.
 argument-hint: "[fixed-point] [aspects: all | code | tests | errors | types | spec | simplify]"
-origin: pr-review-toolkit + mattpocock + code-review plugin + gstack
+origin: pr-review-toolkit + mattpocock + code-review plugin + gstack + pstack
 ---
 
 The invocation may name a fixed point and review aspects; with no aspects named, run the default core defined in step 4.
@@ -46,6 +46,8 @@ The invocation may name a fixed point and review aspects; with no aspects named,
 5. **Launch Review Agents**
 
    Issue all selected finding-producing agent dispatches in a single turn so they run in parallel. Each prompt carries the captured diff scope; spec-reviewer's prompt also carries the resolved spec path or fetched contents. Collect every report before aggregation.
+
+   Every dispatch prompt carries the evidence contract: a finding that claims misbehavior (a bug, a broken error path, a race, a regression) must name the exact command that proves it, the output the command printed, and the expected output. Findings settled by reading (coverage, type design, spec fidelity, style) are exempt. Each prompt also carries: a search that finds nothing is an answer; never invent a caller or an API.
 
 6. **Aggregate Results**
 
@@ -94,8 +96,9 @@ The invocation may name a fixed point and review aspects; with no aspects named,
 Each finding-producing agent returns findings independently; without this step, the same defect reported by two agents appears twice, and findings are not severity-normalized or ranked.
 
 1. **Collect.** Gather every finding from every dispatched finding-producing agent. Each finding carries the contract: location (`file:line` or range) + severity (`CRITICAL` / `HIGH` / `MEDIUM` / `LOW`) + issue + fix.
-2. **Dedup.** Merge findings that target the same `file:line` (or overlapping line ranges) and the same issue. Each merged entry cites every contributing agent, e.g. `[code-reviewer, type-design-analyzer]`. Do not drop a finding only one agent produced; do not double-count identical findings from two agents.
-3. **Normalize.** Group by severity bucket using this scale:
+2. **Verify.** Grade each behavioral finding's evidence on the ladder: said-so < pointed file:line < walked failure path < ran the real code < reproduced in the running app. Re-run its command: output that reproduces the claimed failure keeps the finding; output that does not drops it; a command that cannot run here marks it unproven. CRITICAL and HIGH require a run: a behavioral claim below "ran the real code" is downgraded, never a blocker.
+3. **Dedup.** Merge findings that target the same `file:line` (or overlapping line ranges) and the same issue. Merge findings that share a root cause into one entry listing every location, even across agents. Each merged entry cites every contributing agent, e.g. `[code-reviewer, type-design-analyzer]`. Do not drop a finding only one agent produced; do not double-count identical findings from two agents.
+4. **Normalize.** Group by severity bucket using this scale:
 
    | Level | Meaning | Action |
    |-------|---------|--------|
@@ -105,10 +108,10 @@ Each finding-producing agent returns findings independently; without this step, 
    | LOW | Style or minor suggestion | **NOTE** - Optional |
 
    Calibrate the report: one substantiated blocker outweighs a list of nits. Deliberate half-built work the change leaves behind (a spike, harness, scaffold, phased feature, blast-radius buffer, incidental cleanup) is not a defect; report it only when accidental or when the change half-repairs it.
-4. **Rank and output.** CRITICAL first, then HIGH, MEDIUM, LOW. Each entry: severity, location, issue, contributing agent(s), fix.
-5. **Per-agent tally.** Append a one-line count per dispatched finding-producing agent (pre-dedup count), so no agent's contribution is hidden by dedup.
-6. **Ship/block recommendation.** Block if any CRITICAL; otherwise ship. HIGH findings are ship-with-caution, not block.
-7. **Empty case.** If zero findings, say so explicitly. Do not imply clean by silence.
+5. **Rank and output.** CRITICAL first, then HIGH, MEDIUM, LOW. Each entry: severity, location, issue, contributing agent(s), fix.
+6. **Per-agent tally.** Append a one-line count per dispatched finding-producing agent (pre-dedup count), so no agent's contribution is hidden by dedup.
+7. **Ship/block recommendation.** Block if any CRITICAL; otherwise ship. HIGH findings are ship-with-caution, not block.
+8. **Empty case.** If zero findings, say so explicitly: zero verified findings after the verify pass is a valid result. Do not imply clean by silence, and do not manufacture findings to fill the report.
 
 ## `code-simplifier` gating
 

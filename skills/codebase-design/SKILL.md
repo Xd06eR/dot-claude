@@ -1,7 +1,7 @@
 ---
 name: codebase-design
 description: Shared vocabulary and principles for designing deep modules (module, interface, depth, seam, adapter, leverage, locality). Use when designing or improving a module's interface, deciding where a seam goes, or making code more testable or AI-navigable. For scanning a codebase for deepening candidates, use improve-codebase-architecture.
-origin: mattpocock
+origin: mattpocock + pstack
 ---
 
 Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
@@ -62,6 +62,7 @@ When designing an interface, ask:
 - **The deletion test.** Imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.
 - **The interface is the test surface.** Callers and tests cross the same seam. If you want to test *past* the interface, the module is probably the wrong shape.
 - **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a seam unless something actually varies across it.
+- **Repeated workarounds are a design signal.** The same workaround appearing at unrelated call sites, or a type forced into `any` or a cast to make a call compile, means the interface is wrong: redesign the module instead of patching the next call site.
 
 ## Designing for testability
 

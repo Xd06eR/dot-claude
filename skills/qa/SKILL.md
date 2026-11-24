@@ -1,7 +1,7 @@
 ---
 name: qa
 description: "Use on a working web app: drives it in a real browser like a user and returns a severity-ranked bug report with repro steps, fixing the fixable ones as tight working-tree edits."
-origin: gstack
+origin: gstack + pstack
 ---
 
 Drive a web app like a real user: click everything, fill every form, check every state.
@@ -132,6 +132,7 @@ Two evidence tiers:
 
 - **Interactive bug:** screenshot before the action, perform it, screenshot the result; write repro steps referencing both.
 - **Static bug:** one screenshot showing the problem plus a description.
+- **State-changing action:** also verify the side effect alongside the visible result (the row written, the file saved, the message sent), not only the success screen.
 
 After capturing any screenshot, Read the file so it is visible inline to the user. A screenshot the user cannot see is not evidence.
 
@@ -175,8 +176,8 @@ For each fixable issue, in severity order:
 
 1. **Locate source:** grep for the error text, component name, or route. Glob for files matching the affected page. Only touch files directly responsible for the bug.
 2. **Reproduce:** re-run the issue's recorded repro steps against the current build before editing anything; an earlier fix in this loop may already have changed the behavior. A bug that no longer reproduces is deferred, not fixed blind.
-3. **Regression test first (red):** if the repo already has a test framework and the bug is not pure CSS, write the failing test before the fix: read 2-3 nearby test files to match their conventions, extend an existing fixture or table where one covers the boundary, and never add a production seam for the test. Use the smallest level that reaches the bug: unit for logic, integration for state or requests, E2E only when smaller levels miss it. Assert the correct behavior (not "it renders"), watch it fail for the right reason, and attribute it in the language's comment syntax: `Regression: ISSUE-NNN — <short description>`. If the repo has no test framework, flag that and skip. Do not add a test dependency mid-QA; that is an ask-first change the user makes deliberately.
-4. **Fix:** read the source, then make the minimal change that resolves it. One concern at a time, tight diff. Do not refactor adjacent code, add features, or fix a symptom where the root cause is one guard upstream that every caller routes through.
+3. **Regression test first (red):** if the repo already has a test framework and the bug is not pure CSS, write the failing test before the fix: read 2-3 nearby test files to match their conventions, extend an existing fixture or table where one covers the boundary, and never add a production seam for the test. Use the smallest level that reaches the bug: unit for logic, integration for state or requests, E2E only when smaller levels miss it. When the regression test is E2E, call the Skill tool with "e2e-testing" for the Playwright rules before writing it. Assert the correct behavior (not "it renders"), watch it fail for the right reason, and attribute it in the language's comment syntax: `Regression: ISSUE-NNN — <short description>`. If the repo has no test framework, flag that and skip. Do not add a test dependency mid-QA; that is an ask-first change the user makes deliberately.
+4. **Fix:** read the source, then make the minimal change that resolves it. One concern at a time, tight diff. Do not refactor adjacent code, add features, or fix a symptom where the root cause is one guard upstream that every caller routes through. For an Accessibility-category fix, call the Skill tool with "frontend-a11y" and fix to its checklist.
 5. **Re-test:** the regression test (if any) now passes; navigate back to the affected page, screenshot the after-state, re-check console. Confirm the fix took effect and introduced no new error.
 6. **Classify:** **verified** (re-test confirms, no new errors), **best-effort** (applied but not fully verifiable, e.g. needs external state), or **reverted** (made things worse: edit the file back to its pre-fix state and mark the issue deferred).
 

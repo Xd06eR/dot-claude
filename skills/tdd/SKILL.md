@@ -1,7 +1,7 @@
 ---
 name: tdd
 description: "Test-driven development. Use on any feature or bug build: the build runs test-first (red → green) by default. Also use when writing or reviewing tests."
-origin: mattpocock + superpowers
+origin: mattpocock + superpowers + pstack
 ---
 
 TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle: consult them before and during the loop, not after.
@@ -34,6 +34,12 @@ When the shape of that interface is itself in question (how deep the module is, 
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **A hard-to-write test is a design signal.** Simplify the interface, inject the dependency, or write the wished-for API and its assertion first. `codebase-design` has the vocabulary for the interface questions.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see `code-review`), not the red → green implementation cycle.
+
+## Bug fixes: when the test path is bad
+
+For a bug fix, prefer no new test over a bad test. When the only test that would catch the bug would be a bad test (red flags in [tests.md](tests.md)) or needs infrastructure out of proportion to the fix, say so and use the closest executable check instead: a targeted script, a manual repro command, browser automation, a snapshot comparison, a log assertion, or a focused integration check.
+
+The reply names the evidence: the failing-before test or check and the failure it produced, the passing-after run, or why failing-before could not be shown and what ran instead.
 
 ## Rationalizations
 

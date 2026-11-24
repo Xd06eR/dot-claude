@@ -45,6 +45,7 @@ Every skill and agent carries its primary source in frontmatter `origin` (`custo
 - [gstack](https://github.com/garrytan/gstack)
 - [impeccable](https://github.com/pbakaus/impeccable)
 - [mattpocock/skills](https://github.com/mattpocock/skills)
+- [pstack](https://github.com/cursor/plugins/tree/main/pstack)
 - [reverse-skill](https://github.com/zhaoxuya520/reverse-skill)
 - [superpowers](https://github.com/obra/superpowers)
 - [taste-skill](https://github.com/Leonxlnx/taste-skill)

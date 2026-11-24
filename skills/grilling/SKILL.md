@@ -1,7 +1,7 @@
 ---
 name: grilling
 description: Grill the user relentlessly about a plan, decision, or idea. Use when the user asks to be grilled or wants their thinking stress-tested.
-origin: mattpocock
+origin: mattpocock + pstack
 ---
 
 Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.
@@ -25,5 +25,7 @@ Word each question so "yes" accepts your recommended answer.
 Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
 
 Finding _facts_ is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, etc.), dispatch a subagent to find it; don't ask the user for anything you could look up yourself. Don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait for the subagent to report; ask the rest of the frontier now. The _decisions_ are the user's: put each to them and wait.
+
+When the ask itself is still raw, sharpen it in the first rounds: what would a top professional in this field do here that the plan does not ask for; what is the rawest material to start from, instead of what has already been digested; which specific methods and tools apply; and what, other than you or the user, would show the result is right. A choice an experiment can settle is settled by a prototype; product and preference choices stay with the user.
 
 The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding.
