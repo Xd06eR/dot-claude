@@ -15,6 +15,7 @@ paths:
 ## Coding style
 
 - **Verification:** `ruff check` → `ruff format` → `mypy` → `pytest`
+- **Validation:** use field constraints instead of hand-written validation when Pydantic can express the rule.
 
 ## Security
 
@@ -23,9 +24,3 @@ paths:
 ## Testing
 
 - Measure coverage with `pytest --cov=src` (pytest-cov).
-
-## FastAPI
-
-- Keep routers thin; move persistence and business behavior into services or CRUD helpers.
-- Use field constraints instead of hand-written validation when Pydantic can express the rule.
-- Validate JWT expiry, issuer, audience, and algorithm.
