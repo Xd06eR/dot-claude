@@ -2,6 +2,7 @@
 paths:
   - "**/*.py"
   - "**/*.pyi"
+  - "**/pyproject.toml"
   - "**/*.ts"
   - "**/*.tsx"
   - "**/*.js"
@@ -23,6 +24,7 @@ paths:
   - "**/*.zsh"
   - "**/*.ps1"
   - "**/*.bat"
+  - "**/*.cmd"
   - "**/*.sql"
   - "**/*.graphql"
   - "**/*.gql"
@@ -42,50 +44,51 @@ paths:
   - "**/Dockerfile*"
   - "**/Makefile"
   - "**/*.mk"
+  - "**/package.json"
+  - "**/requirements*.txt"
+  - "**/tsconfig*.json"
+  - "**/*.mdx"
 ---
 
 # Engineering Rules
 
-> Engineering rules for coding work: a commit-time security gate, testing policy, a quality floor, and per-language notes.
-
 ## Security
 
-### Mandatory security checks
-
 Before ANY commit:
+
 - [ ] No hardcoded secrets (API keys, passwords, tokens)
 - [ ] All user inputs validated
 - [ ] SQL injection prevention (parameterized queries)
 - [ ] XSS prevention (sanitized HTML)
-- [ ] CSRF tokens on cookie-authenticated web apps (N/A for header-token APIs)
-- [ ] Authentication/authorization verified
+- [ ] CSRF tokens on cookie-authenticated web apps
+- [ ] Every new route/endpoint has an explicit authn/authz decision (authenticated by default; public only by declaration)
 - [ ] Auth/access checks fail closed on error; security-relevant events (auth failures, denials) logged
 - [ ] Rate limiting / anti-automation on auth and resource-intensive endpoints
 - [ ] Error messages don't leak sensitive data
 - [ ] Dependencies vetted: audit run on add (`npm audit` / `pip-audit`), versions pinned, new packages checked for maintenance and provenance
 - [ ] SSRF guards on outbound fetches; path-traversal guards on file paths
+- [ ] No unsanitized user input in log messages (log injection)
+- [ ] Auth checks enforced in the data layer, never only in the client
+- [ ] Privileged service keys (service-role, admin) never reach the client bundle; client code uses the least-privilege key with row-level security
 
 ## Testing
 
-- **Coverage target:** ≥80% baseline for new code. Coverage is a floor, not evidence. Language-specific testing rules may refine targets per layer. Test weight tracks the change: new behavior and logic carry the baseline and the TDD loop; reversible, low-impact changes that mirror existing implementation need no new tests. Broaden or repeat testing only when new changes, failures, or unresolved concerns justify it.
+- **Coverage target:** ≥80% baseline for new code. Coverage is a floor, not evidence. Test weight tracks the change: new behavior and logic carry the baseline and the TDD loop; reversible, low-impact changes that mirror existing implementation need no new tests. Broaden or repeat testing only when new changes, failures, or unresolved concerns justify it.
+- **Formal verification:** when tests cannot reach the case that breaks a race, retry, state machine, or parser, propose a TLA+ model; when a small critical algorithm must hold for all inputs, propose a Lean proof. Always a proposal, never unilateral: adoption is the user's call.
+- **Failing tests are reported, never gamed:** never delete, skip, or weaken a failing test or assertion to make the suite pass; report the failure and fix the code, or surface the conflict to the user.
+- **A fix that follows an API change ships a distinguishing test:** at least one test input derived from the change note or release note that separates old from new behavior, not only typical inputs.
 
 ## Development workflow
 
 - **The quality floor never cuts:** trust-boundary input validation, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested.
+- **Search before you build:** before writing a new helper or utility, search the codebase for an existing implementation and extend it; a parallel reimplementation of an existing utility is a defect.
+- **A catch earns its place:** a catch names the error it handles and either recovers or re-raises; a catch that swallows (empty body, log-and-forget, silent default) is a defect. A deliberate fallback carries its reason inline and a failure-path test.
+- **Every suppression carries its justification inline** (lint disable, type ignore, coverage ignore); a suppression that masks a correctness failure gets fixed, not kept.
+- **Concurrency gets a second read:** after writing threaded or async code, re-read it for shared mutable state and un-joined tasks; a concurrency fix ships with a stress or repeated-run test.
 
-## Python
+## Comments
 
-- Ship `py.typed` in typed packages so downstream type-checkers read the annotations.
-- **Verification:** `ruff check` → `ruff format` → `mypy` → `pytest`
-- **Validation:** use field constraints instead of hand-written validation when Pydantic can express the rule.
-- Enable ruff's `S` rule family (the flake8-bandit rules) in project config: scanning runs within the existing `ruff check` step. Standalone bandit covers rules ruff has not implemented (some S4xx are preview-only); use it only for those.
-- Measure coverage with `pytest --cov=src` (pytest-cov).
-
-## React
-
-- Do not use `useEffect`; reach for derived state during render, event handlers, or a server-state library instead.
-- Accessibility patterns live in the `frontend-a11y` skill; E2E in the `e2e-testing` skill.
-
-### XSS via `dangerouslySetInnerHTML`
-
-CRITICAL: every usage is a code review halt: first-party input (document the source); user-derived input sanitized at the same call site (API-boundary sanitization only when every consumer is verified); sanitizer allowlists tags, never denylists.
+- A comment carries only the non-obvious why that code cannot express: an invariant, a constraint's origin, or a deliberate shortcut's ceiling and upgrade path.
+- A comment that states a rule the code must obey ("do not remove", "keep in sync", "never call before X") is a missing check: encode it as a type, runtime check, test, or lint rule.
+- Fix workarounds instead of explaining them; a comment that justifies a shortcut's existence ("for now", "temporary", "hack") marks the spot to fix, not to document.
+- No process narration ("// step 2", "// now validate"): structure and names carry the flow.
