@@ -13,7 +13,7 @@ Before marking code complete:
 - [ ] No hardcoded thresholds, delays, or limits (use named constants or config)
 - [ ] No console.log or debug statements
 - [ ] Tests exist for new functionality and assert behavior (not tautologies)
-- [ ] Test coverage meets the new-code baseline (per `~/.claude/rules/engineering-standards.md`)
+- [ ] Coverage measured to find untested paths; new behavior and logic carry tests (per `~/.claude/rules/engineering-standards.md`)
 
 ## Security review triggers
 
