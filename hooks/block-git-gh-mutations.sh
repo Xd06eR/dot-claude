@@ -1,5 +1,5 @@
 #!/bin/bash
-# PreToolUse(Bash) guardrail: block dangerous git/gh mutations by accident.
+# PreToolUse(Bash) accident guardrail: block dangerous git/gh mutations.
 # The user runs all git/gh mutations manually (CLAUDE.md Git section).
 # Derived from Matt Pocock's block-dangerous-git.sh: https://github.com/mattpocock/skills/blob/main/skills/misc/git-guardrails-claude-code/scripts/block-dangerous-git.sh
 # Also rejects 'git -C <path>' (global-flag position only): it breaks the
@@ -7,6 +7,8 @@
 # Greps the raw hook JSON directly: no jq/sed.
 # An embedded quote would truncate a sed capture and hide a dangerous tail.
 # Patterns are word-anchored: near-misses like "gitcommittee" never block.
+# The bare 'push -f|--force' net is deliberately wider than the git-anchored
+# patterns: force-push stays blocked through flag-form evasions.
 # String literals inside a command match too (echo "git push") — rare, accepted.
 # Accident guardrail, not a security boundary.
 # Residuals, accepted: quoting/flag-order bypasses (git "commit" -m x,
